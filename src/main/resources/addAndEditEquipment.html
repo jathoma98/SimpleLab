@@ -1,0 +1,284 @@
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<link rel="stylesheet" href="css/info.css">
+<link rel="stylesheet" href="css/equipment.css">
+<head>
+<meta charset="utf-8">
+<title>Equipment</title>
+</head>
+<body class="body">
+    <div class="info-top">
+        <div class="info-top-header">Hi,User</div>
+        <div class="dropdown">
+            <img class="dropdownimg" src="image/name.png">
+            <div class="dropdown-content">
+                <a href="#">Home</a>
+                <a href="#">My Course</a>
+                <a href="#">My Lab</a>
+                <a href="#">Equipment</a>
+                <a href="#">Sign Out</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="Eq-sidebar">
+        <div class="Eq-sidebar-container">
+            <div class="Eq-search">
+                <input class="Eq-search-textfield" type="text" name="search" value="">
+            </div>
+            <div class="Eq-search-btn">
+                <input type="image" src="image/search.png" alt="Submit" width="40" height="40">
+            </div>
+        </div>
+
+        <div class="Eq-sidebar-container">
+            <div class="Eq-item">
+                <div class="Eq-item-img">
+                    <input type="image" src="image/beaker.png" alt="Submit" width="60" height="60">
+                </div>
+                <div class="Eq-item-name">beaker 1</div>
+            </div>
+            <div class="Eq-item">
+                <div class="Eq-item-img">
+                    <input type="image" src="image/beaker.png" alt="Submit" width="60" height="60">
+                </div>
+                <div class="Eq-item-name">beaker 2</div>
+            </div>
+        </div>
+
+        <div class="Eq-sidebar-container">
+            <div class="Eq-item">
+                <div class="Eq-item-img">
+                    <input type="image" src="image/beaker.png" alt="Submit" width="60" height="60">
+                </div>
+                <div class="Eq-item-name">beaker 3</div>
+            </div>
+            <div class="Eq-item">
+                <div class="Eq-item-img">
+                    <input type="image" src="image/measuring_cylinder.png" alt="Submit" width="60" height="60">
+                </div>
+                <div class="Eq-item-name">500ml measuring cylinder</div>
+            </div>
+        </div>
+
+        <div class="Eq-sidebar-container">
+            <div class="Eq-item">
+                <div class="Eq-item-img">
+                    <input type="image" src="image/measuring_cylinder.png" alt="Submit" width="60" height="60">
+                </div>
+                <div class="Eq-item-name">500ml measuring cylinder</div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="Eq-mainbody">
+        <div class="Eq-mainbody-header">
+            <p>Equipment Name</p>
+        </div>
+        <div class="Eq-mainblock">
+            <div class="Eq-mainbody-top">
+                <div class="Eq-mainbody-top-img">
+                    <input type="image" src="image/upload.png" alt="Submit" width="300" height="300">
+                </div>
+                
+                <div class="Eq-property">
+                    <div class="type">
+                        <div class="type-name">
+                            <p>Type: </p>
+                        </div>
+                        <div class="type-ridio">
+                            <div class="radio">
+                                <input type="radio" name="type" id="identity" value="">
+                                Measuring Type
+                            </div>
+
+                            <div class="radio">
+                                <input type="radio" name="type" id="reaction" value="">
+                                reaction Type
+                            </div> 
+
+                            <div class="radio">
+                                <input type="radio" name="type" id="vessel" value="">
+                                Vessel Type
+                            </div>
+
+                            <div class="radio">
+                                <input type="radio" name="type" id="heating" value="">
+                                Heating Type
+                            </div> 
+
+                            <div class="radio">
+                                <input type="radio" name="type" id="other" value="">
+                                Other
+                                <input class="radio_text" type="text" name="other_reason" />​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="type">
+                        <div class="type-name">
+                            <p>security: </p>
+                        </div>
+                        <div class="type-ridio">
+                            <div class="radio">
+                                <input type="radio" name="security" id="security" value="">
+                                Private
+                            </div>
+
+                            <div class="radio">
+                                <input type="radio" name="security" id="security" value="">
+                                Public
+                            </div> 
+
+                        </div>
+                    </div>
+
+
+
+                    
+                    <div class="type">
+                        <div>
+
+                            <div class="property_container">
+                                <div class="property_container_title"><p>name: </p></div>
+                                <div class="property_container_tf">
+                                    <input class="property_container_textfield" id="name" type="text" name="name" />​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                                </div>
+                            </div>
+
+                            <div class="property_container">
+                                <div class="property_container_title"><p>max valume: </p></div>
+                                <div class="property_container_tf">
+                                    <input class="property_container_textfield" id="maxValume" type="text" name="maxValume" />​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                                </div>
+                            </div>
+
+                            <div class="property_container">
+                                <div class="property_container_title"><p>accuracy: </p></div>
+                                <div class="property_container_tf">
+                                    <input class="property_container_textfield" id="accuracy" type="text" name="accuracy" />​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="type">
+                        <div>
+                            <div class="property_container">
+                                <div class="property_container_title"><p>max temperature: </p></div>
+                                <div class="property_container_tf">
+                                    <input class="property_container_textfield" id="maxtemp" type="text" name="maxtemp" />​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                                </div>
+                            </div>
+
+                            <div class="property_container">
+                                <div class="property_container_title"><p>min temperature: </p></div>
+                                <div class="property_container_tf">
+                                    <input class="property_container_textfield" id="mintemp" type="text" name="mintemp" />​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="Eq-mainbody-bot">
+
+                <div class="property_container">
+                    <div class="property_container_title"><p>compounds in Container:</p></div>
+                </div>
+                <div class="property_container">
+                    <div class="property_container_title"><p>compounds name: </p></div>
+                    <div class="property_container_tf">
+                        <input class="property_container_textfield" id="compoundsName" type="text" name="compoundsName" />​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                    </div>
+                </div>
+
+                <div class="property_container">
+                    <div class="property_container_title"><p>Chemical expression: </p></div>
+                    <div class="property_container_tf">
+                        <input class="property_container_textfield" id="chemicalExpression" type="text" name="chemicalExpression" />​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                    </div>
+                </div>
+
+                <div class="property_container">
+                    <div class="property_container_title"><p>Valume /Quantity: </p></div>
+                    <div class="property_container_tf">
+                        <input class="property_container_textfield" id="valume" type="text" name="valume" />​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                    </div>
+                </div>
+
+                <div class="property_container">
+                    <div class="property_container_title"><p>Concentration: </p></div>
+                    <div class="property_container_tf">
+                        <input class="property_container_textfield" id="concentration" type="text" name="concentration" />​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                    </div>
+                </div>
+
+                <div class="property_container">
+                    <div class="property_container_title"><p>Temperature: </p></div>
+                    <div class="property_container_tf">
+                        <input class="property_container_textfield" id="temperature" type="text" name="temperature" />​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                    </div>
+                </div>
+
+                <div class="property_container">
+                    <div class="property_container_title"><p>Color: </p></div>
+                    <div class="property_container_tf">
+                        <input class="property_container_textfield" id="color" type="text" name="color" />​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                    </div>
+                </div>
+
+                <div class="property_container">
+                    <div class="property_container_title"><p>PH: </p></div>
+                    <div class="property_container_tf">
+                        <input class="property_container_textfield" id="ph" type="text" name="ph" />​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                    </div>
+                </div>
+
+                
+                
+            </div>
+
+            <input  id = "savebtn" class= "savebtn" type="button" value = "Save" />
+
+
+
+
+
+        </div>
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     
+</body>
+</html>

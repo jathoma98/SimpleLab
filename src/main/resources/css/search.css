@@ -1,0 +1,24 @@
+.search-radio{
+	float:left;
+	width: 900px;
+}
+
+.radio{
+	margin-top: 10px;
+	height:20px;
+	float:left;
+	width: 200px;
+}
+
+.search_text{
+	position: absolute;
+	left:400px;
+	top:45px;
+	height: 35px;
+	width: 700px;
+
+}
+
+
+
+

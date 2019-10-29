@@ -1,0 +1,282 @@
+
+/*@author: Chenxing He*/
+.Eq-sidebar{
+	margin-top: 70px;
+	position:absolute;
+	width: 200px;
+	height:800px;
+	border:2px solid black;
+	background: dodgerblue;
+	float: left;
+}
+
+.Eq-sidebar-container{
+	width:200px;
+	height: 80px;
+	/*background: green;*/ 
+}
+
+.Eq-search{
+	float: left;
+}
+
+.Eq-search-textfield{
+	margin-top: 5px;
+	width: 150px;
+	height: 40px;
+}
+
+.Eq-search-btn{
+	margin-top: 5px;
+	margin-left: 5px;
+	float: left;
+}
+
+.Eq-item{
+	width: 50px;
+	height: 60px;
+	float: left;
+	margin-left: 30px;
+}
+
+.Eq-mainbody{
+	position: absolute;
+	left:280px;
+	top:80px;
+	width: 100%;
+	height: 100%;
+	max-width: 1600px;
+	min-width: 600px;
+	max-height: 800px;
+	min-height: 600px;
+	border:2px solid black;
+}
+
+.Eq-mainbody-header{
+	line-height: 30px;
+	font-size: 21;
+	position: absolute;
+	width: 100%;
+	max-width: 1600px;
+	min-width: 600px;
+	height: 40px
+	border:2px solid black;
+	float: left;
+	margin:5px; 
+	/*background: green;*/
+}
+
+.Eq-mainblock{
+	position: absolute;
+	top:100px;
+	left:30px;
+	float: left;
+	/*border:2px solid black;*/
+	width: 100%;
+	height: 100%;
+	max-width: 1550px;
+	min-width: 600px;
+	max-height: 680px;
+	min-height: 600px;
+}
+
+.Eq-mainbody-top{
+	width:100%;
+	max-width: 1550px;
+	min-width: 600px;
+	height: 300px;
+	float: left;
+	/*background: green;
+	border:2px solid black;*/
+
+}
+.Eq-mainbody-top-img{
+	width: 150px;
+	height: 150px;
+	float: left;
+}
+
+.Eq-property{
+	position: absolute;
+	left:300;
+	width:100%;
+	max-width: 1225px;
+	min-width: 600px;
+	height: 300px;
+	float: left;
+	/*border:2px solid black;*/
+	margin-left: 20px;
+
+}
+.type{
+	width:100%;
+	max-width: 1375px;
+	min-width: 600px;
+	height: 75px;
+	/*background: pink;*/
+}
+.type-name{
+	float:left;
+	height: 75px;
+	/*background: pink;*/
+	width: 75px;
+}
+.type-radio{
+	float:left;
+	width: 900px;
+}
+
+.radio{
+	margin-top: 20px;
+	height:40px;
+	float:left;
+	width: 200px;
+}
+.radio_text{
+
+	width:130px;
+	height: 35px;
+	font-size: 20;
+}
+
+.property_container{
+	position: relative;
+	float:left;
+	height: 75px;
+	/*background: red;*/
+	width: 400px;
+
+}
+
+.property_container_title{
+	margin:0;
+	padding:0;
+	width: 100px;
+	height: 75px;
+	font-size: 20;
+	float:left;
+}
+
+.property_container_tf{
+	float:left;
+	width: 200px;
+	height: 75px;
+}
+
+.property_container_textfield{
+	margin-top: 20px;
+	width:200px;
+	height: 35px;
+	font-size: 20;
+}
+
+.Eq-mainbody-bot{
+	width:100%;
+	max-width: 1550px;
+	min-width: 600px;
+	height: 400px;
+	float: left;
+	/*background: green;*/
+}
+
+.savebtn{
+	position: absolute;
+	left:1300px;
+	top:600px;
+	width: 150px;
+	height: 50px;
+	background-color: dodgerblue;
+	border-radius: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
