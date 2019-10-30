@@ -6,7 +6,7 @@
 	width: 200px;
 	height:800px;
 	border:2px solid black;
-	background: dodgerblue;
+	background: linear-gradient(to bottom right,#465EFB,60%, #C2FFD8);
 	float: left;
 }
 

@@ -6,7 +6,12 @@
 <script src="jquery-ui.js"></script>
 <head>
 <meta charset="utf-8">
-<title>Create Lab</title>
+<title>Do Lab</title>
+<script>
+  $(function() {
+    $( "#dialog" ).dialog();
+  }); 
+</script>
 
 </head>
 <body class="body">
@@ -72,45 +77,11 @@
                 <div class="Eq-item-name">500ml measuring cylinder</div>
             </div>
         </div>
+
     </div>
 
 
     <div class="Lab-mainbody">
-        <div class="steps">
-            <div class="onestep">
-                <img class="stepimg" src="image/step.png">
-                <p class="steptext">One</p>
-            </div>
-
-            <div class="onestep">
-                <img class="stepimg" src="image/step.png">
-                <p class="steptext2">Two</p>
-            </div>
-
-            <div class="onestep">
-                <img class="stepimg" src="image/step.png">
-                <p class="steptext3">Three</p>
-            </div>
-
-            <div class="onestep">
-                <img class="stepimg" src="image/step.png">
-                <p class="steptext4">Four</p>
-            </div>
-
-            <div class="onestep">
-                <img class="stepimg" src="image/step.png">
-                <p class="steptext5">Five</p>
-            </div>
-
-            <div class="onestep">
-                <img class="stepimg" src="image/step.png">
-                <p class="steptext6">Six</p>
-            </div>
-
-
-        </div>
-
-
         <div>
             <img class="Lab-mainbody-item1" src="image/measuring_cylinder.png">
         </div>
@@ -119,20 +90,23 @@
             <img  class="Lab-mainbody-item2" src="image/beaker.png">
         </div>
 
-        <!-- ---------------------dialog------------------------ -->
-    <div class="proportion-dialog">
+<!-- ---------------------dialog------------------------ -->
+    <div class="dialog">
         <div class="dialog_header">
-            <div class="proportion-dialog-title">Please drag result item to box below</div>
-            <div>
-                <img class="proportion-dialog-img" src="image/unknownitem.png">
+            <div class="dialog-title">Please enter number of liquid</div>
+            <div class="dialog-text">
+                <input type="textfield"  class="dialog-tf">
             </div>
-            <div class="proportion-dialog-btns">
-                <button class="proportion-dialog-btn">confirm</button>
-                <button class="proportion-dialog-btn">cancel</button>
+            <div class="dialog-btns">
+                <button class="dialog-btn">confirm</button>
+                <button class="dialog-btn">cancel</button>
             </div>
         </div>
     </div>
 <!-- --------------------------------------------- -->
+
+
+
 
 
 
