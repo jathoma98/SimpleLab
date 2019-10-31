@@ -1,5 +1,6 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<link rel="stylesheet" href="css/info.css">
+<link rel="stylesheet" href="../../resources/css/info.css">
+<link rel="stylesheet" href="../../resources/css/search.css">
 <head>
 <meta charset="utf-8">
 <title>Teacher Course</title>
@@ -8,7 +9,7 @@
     <div class="info-top">
         <div class="info-top-header">Hi,User</div>
         <div class="dropdown">
-            <img class="dropdownimg" src="image/name.png">
+            <img class="dropdownimg" src="../../resources/image/name.png">
             <div class="dropdown-content">
                 <a href="#">Home</a>
                 <a href="#">My Course</a>
@@ -43,10 +44,49 @@
     <div class="mainblock">
         <div class="mainblock-header">
             <div class="mainblock-header-name">
-                <h1>Courses</h1>
+                <h1>Search</h1>
             </div>
-            <div class="mainblock-header-editimg"><img src="image/add.png"></div>
-            <div class="mainblock-header-editimg"><img src="image/search.png"></div>
+
+            <div class="search">
+                <div class="search_radio">
+                    <div class="radio">
+                        <input type="radio" name="type" id="Course" value="">
+                        Course
+                    </div>
+
+                    <div class="radio">
+                        <input type="radio" name="type" id="Lab" value="">
+                        Lab
+                    </div> 
+
+                    <div class="radio">
+                        <input type="radio" name="type" id="Equipment" value="">
+                        Equipment
+                    </div>
+
+                    <div class="radio">
+                        <input type="radio" name="type" id="Student" value="">
+                        Student
+                    </div> 
+
+                    <div class="radio">
+                        <input type="radio" name="type" id="Teacher" value="">
+                        Teacher
+                    </div>
+                        
+                </div>
+                <input class="search_text" type="textfield" name="search">
+                
+            </div>
+
+           
+
+
+            <div class="mainblock-header-editimg"><img src="../../resources/image/search.png"></div>
+
+
+
+
         </div>
 
         <div class="mainblock-body">

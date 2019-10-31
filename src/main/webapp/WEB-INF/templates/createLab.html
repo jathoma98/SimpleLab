@@ -1,24 +1,19 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<link rel="stylesheet" href="css/info.css">
-<link rel="stylesheet" href="css/equipment.css">
-<link rel="stylesheet" href="css/createLab.css">
-<script src="jquery-1.9.1.js"></script>
-<script src="jquery-ui.js"></script>
+<link rel="stylesheet" href="../../resources/css/info.css">
+<link rel="stylesheet" href="../../resources/css/equipment.css">
+<link rel="stylesheet" href="../../resources/css/createLab.css">
+<script src="../resources/static/js/libs/jquery-1.9.1.js"></script>
+<script src="../resources/static/js/libs/jquery-ui.js"></script>
 <head>
 <meta charset="utf-8">
-<title>Do Lab</title>
-<script>
-  $(function() {
-    $( "#dialog" ).dialog();
-  }); 
-</script>
+<title>Create Lab</title>
 
 </head>
 <body class="body">
     <div class="info-top">
         <div class="info-top-header">Hi,User</div>
         <div class="dropdown">
-            <img class="dropdownimg" src="image/name.png">
+            <img class="dropdownimg" src="../../resources/image/name.png">
             <div class="dropdown-content">
                 <a href="#">Home</a>
                 <a href="#">My Course</a>
@@ -35,20 +30,20 @@
                 <input class="Eq-search-textfield" type="text" name="search" value="">
             </div>
             <div class="Eq-search-btn">
-                <input type="image" src="image/search.png" alt="Submit" width="40" height="40">
+                <input type="image" src="../../resources/image/search.png" alt="Submit" width="40" height="40">
             </div>
         </div>
 
         <div class="Eq-sidebar-container">
             <div class="Eq-item">
                 <div class="Eq-item-img">
-                    <input type="image" src="image/beaker.png" alt="Submit" width="60" height="60">
+                    <input type="image" src="../../resources/image/beaker.png" alt="Submit" width="60" height="60">
                 </div>
                 <div class="Eq-item-name">beaker 1</div>
             </div>
             <div class="Eq-item">
                 <div class="Eq-item-img">
-                    <input type="image" src="image/beaker.png" alt="Submit" width="60" height="60">
+                    <input type="image" src="../../resources/image/beaker.png" alt="Submit" width="60" height="60">
                 </div>
                 <div class="Eq-item-name">beaker 2</div>
             </div>
@@ -57,13 +52,13 @@
         <div class="Eq-sidebar-container">
             <div class="Eq-item">
                 <div class="Eq-item-img">
-                    <input type="image" src="image/beaker.png" alt="Submit" width="60" height="60">
+                    <input type="image" src="../../resources/image/beaker.png" alt="Submit" width="60" height="60">
                 </div>
                 <div class="Eq-item-name">beaker 3</div>
             </div>
             <div class="Eq-item">
                 <div class="Eq-item-img">
-                    <input type="image" src="image/measuring_cylinder.png" alt="Submit" width="60" height="60">
+                    <input type="image" src="../../resources/image/measuring_cylinder.png" alt="Submit" width="60" height="60">
                 </div>
                 <div class="Eq-item-name">500ml measuring cylinder</div>
             </div>
@@ -72,41 +67,80 @@
         <div class="Eq-sidebar-container">
             <div class="Eq-item">
                 <div class="Eq-item-img">
-                    <input type="image" src="image/measuring_cylinder.png" alt="Submit" width="60" height="60">
+                    <input type="image" src="../../resources/image/measuring_cylinder.png" alt="Submit" width="60" height="60">
                 </div>
                 <div class="Eq-item-name">500ml measuring cylinder</div>
             </div>
         </div>
-
     </div>
 
 
     <div class="Lab-mainbody">
-        <div class="tips">
-            <p class="formula-text">formula: H20+CO2=H2CO3</p>
-            <p class="formula-text">tips: here will show the tips for the step one</p>
-            
-        </div>
-
-
-        <div>
-            <img class="Lab-mainbody-item1" src="image/measuring_cylinder.png">
-        </div>
-
-        <div>
-            <img  class="Lab-mainbody-item2" src="image/beaker.png">
-        </div>
-
-<!-- ---------------------dialog------------------------ -->
-    <div class="dialog">
-        <div class="dialog_header">
-            <div class="dialog-title">Please enter number of liquid</div>
-            <div class="dialog-text">
-                <input type="textfield"  class="dialog-tf">
+        <div class="steps">
+            <div class="onestep">
+                <img class="stepimg" src="../../resources/image/step.png">
+                <p class="steptext">One</p>
             </div>
-            <div class="dialog-btns">
-                <button class="dialog-btn">confirm</button>
-                <button class="dialog-btn">cancel</button>
+
+            <div class="onestep">
+                <img class="stepimg" src="../../resources/image/step.png">
+                <p class="steptext2">Two</p>
+            </div>
+
+            <div class="onestep">
+                <img class="stepimg" src="../../resources/image/step.png">
+                <p class="steptext3">Three</p>
+            </div>
+
+            <div class="onestep">
+                <img class="stepimg" src="../../resources/image/step.png">
+                <p class="steptext4">Four</p>
+            </div>
+
+            <div class="onestep">
+                <img class="stepimg" src="../../resources/image/step.png">
+                <p class="steptext5">Five</p>
+            </div>
+
+            <div class="onestep">
+                <img class="stepimg" src="../../resources/image/step.png">
+                <p class="steptext6">Six</p>
+            </div>
+
+
+        </div>
+
+
+        <div>
+            <img class="Lab-mainbody-item1" src="../../resources/image/measuring_cylinder.png">
+        </div>
+
+        <div>
+            <img  class="Lab-mainbody-item2" src="../../resources/image/beaker.png">
+        </div>
+
+        <!-- ---------------------dialog------------------------ -->
+    <div class="proportion-dialog">
+        <div class="dialog_header">
+            <div class="proportion-dialog-title">Please drag result item to box below</div>
+            <div>
+                <img class="proportion-dialog-img" src="../../resources/image/unknownitem.png">
+            </div>
+
+            <div class="dialog-tips">
+                <div >
+                    <input class="formula" id="formula" type="text" name="" value="" placeholder="please enter the formula for step one"
+                    onfocus="this.placeholder=''" onblur="this.placeholder='please enter the formula for step one'">
+                </div>
+                <div>
+                    <input class="dialog-tip-text" id="formula" type="text" name="" value="" placeholder="please enter the formula for step one"
+                    onfocus="this.placeholder=''" onblur="this.placeholder='please enter the tips for step one'">
+                </div>
+            </div>
+
+            <div class="proportion-dialog-btns">
+                <button class="proportion-dialog-btn">confirm</button>
+                <button class="proportion-dialog-btn">cancel</button>
             </div>
         </div>
     </div>
@@ -114,14 +148,11 @@
 
 
 
-
-
-
     </div>
 
     <div class="itembar">
         <div>
-            <img class="itembar_img" src="image/unknownitem.png">
+            <img class="itembar_img" src="../../resources/image/unknownitem.png">
         </div>
         <div>
             <div class="item_container">
