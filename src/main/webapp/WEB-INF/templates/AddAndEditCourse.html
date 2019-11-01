@@ -1,6 +1,6 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<link rel="stylesheet"  th:href="@{css/AddAndEditCourse.css}">
-<link rel="stylesheet"  th:href="@{css/info.css}">
+<link rel="stylesheet" th:href="@{../css/info.css}">
+<link rel="stylesheet" th:href="@{../css/AddAndEditCourse.css}">
 <head>
 <meta charset="utf-8">
 <title>add and edit course</title>
@@ -9,7 +9,7 @@
     <div class="info-top">
         <div class="info-top-header">Hi,User</div>
         <div class="dropdown">
-            <img class="dropdownimg" src="image/name.png">
+            <img class="dropdownimg" src="../img/name.png">
             <div class="dropdown-content">
                 <a href="#">Home</a>
                 <a href="#">My Course</a>
@@ -22,6 +22,11 @@
 
     <div class="teacher-info">
         <div class="text-info">
+            <div class="coursename">
+                <p class="coursenametitle">name: </p>
+                <input class="coursenametext" id="coursename" type="text" name="" value="" placeholder="Please enter course name here"
+                onfocus="this.placeholder=''" onblur="this.placeholder='Please enter course name here'">
+            </div>
             <p class="des_title">Description: </p>
             <textarea class="textarea">
                 This is a course description area.  
@@ -41,7 +46,7 @@
                     <p>Course name one</p>
                     <p>Course name two</p>
                     <p>Course name three</p>
-                    <div class="mainblock-header-editimg"><img src="image/add.png"></div>
+                    <div class="mainblock-header-editimg"><img src="../img/add.png"></div>
                 </div>
         </div>
 
@@ -56,7 +61,7 @@
                 <p>Lab name one</p>
                 <p>Lab name two</p>
                 <p>Lab name three</p>
-                <div class="mainblock-header-editimg"><img src="image/add.png"></div>
+                <div class="mainblock-header-editimg"><img src="../img/add.png"></div>
             </div>
 
         </div>

@@ -1,93 +1,90 @@
 
 /*@author: Chenxing He*/
 .Eq-sidebar{
-	margin-top: 70px;
+	top: 8%;
 	position:absolute;
-	width: 200px;
-	height:800px;
+	width: 13%;
+	height:85%;
+	margin-left: 0.5%;
 	border:2px solid black;
-	background: linear-gradient(to bottom right,#465EFB,60%, #C2FFD8);
+	background: linear-gradient(to bottom right,#465EFB,50%, #C2FFD8);
 	float: left;
 }
 
 .Eq-sidebar-container{
-	width:200px;
-	height: 80px;
+	width:100%;
+	height: 10%;
 	/*background: green;*/ 
 }
 
 .Eq-search{
+	width: 80%;
 	float: left;
 }
 
 .Eq-search-textfield{
 	margin-top: 5px;
-	width: 150px;
-	height: 40px;
+	width: 100%;
+	height:40px;
 }
 
 .Eq-search-btn{
-	margin-top: 5px;
-	margin-left: 5px;
+	width:40px;
+	/*margin-right: 10%;*/
+	float: right;
+}
+
+.Eq-add-btn{
+	margin-top: 50px;
+	margin-left: 75px;
 	float: left;
 }
 
 .Eq-item{
-	width: 50px;
-	height: 60px;
+	width: 40%;
+	height: 80%;
 	float: left;
-	margin-left: 30px;
+	margin-left: 8%;
+	/*background: green;*/
 }
 
 .Eq-mainbody{
+	margin: 0;
+	padding: 0;
 	position: absolute;
-	left:280px;
-	top:80px;
-	width: 100%;
-	height: 100%;
-	max-width: 1600px;
-	min-width: 600px;
-	max-height: 800px;
-	min-height: 600px;
+	left:14.5%;
+	top:8%;
+	width: 85%;
+	height: 85%;
 	border:2px solid black;
 }
 
 .Eq-mainbody-header{
-	line-height: 30px;
 	font-size: 21;
 	position: absolute;
-	width: 100%;
-	max-width: 1600px;
-	min-width: 600px;
-	height: 40px
+	width: 98%;
+	height: 10%
 	border:2px solid black;
 	float: left;
-	margin:5px; 
+	margin-left: 0.5%;
 	/*background: green;*/
 }
-
 .Eq-mainblock{
 	position: absolute;
-	top:100px;
-	left:30px;
+	top:10%;
+	left:0.5%;
 	float: left;
 	/*border:2px solid black;*/
 	width: 100%;
-	height: 100%;
-	max-width: 1550px;
-	min-width: 600px;
-	max-height: 680px;
-	min-height: 600px;
+	height: 90%;
 }
 
 .Eq-mainbody-top{
-	width:100%;
-	max-width: 1550px;
-	min-width: 600px;
-	height: 300px;
+	width:95%;
+	height: 50%;
 	float: left;
-	/*background: green;
-	border:2px solid black;*/
+	/*background: green;*/
+	/*border:2px solid black;*/
 
 }
 .Eq-mainbody-top-img{
@@ -98,43 +95,40 @@
 
 .Eq-property{
 	position: absolute;
-	left:300;
-	width:100%;
-	max-width: 1225px;
-	min-width: 600px;
-	height: 300px;
+	left:20%;
+	width:75%;
+	height: 50%;
 	float: left;
-	/*border:2px solid black;*/
-	margin-left: 20px;
-
+	/*background: red;*/
 }
 .type{
 	width:100%;
-	max-width: 1375px;
-	min-width: 600px;
-	height: 75px;
+	height: 25%;
 	/*background: pink;*/
 }
 .type-name{
 	float:left;
-	height: 75px;
-	/*background: pink;*/
-	width: 75px;
+	height: 100%;
+	/*background: red;*/
+	width: 8%;
 }
 .type-radio{
 	float:left;
-	width: 900px;
+	width: 90%;
+	height: 100%;
+	/*background:red;*/
 }
 
 .radio{
-	margin-top: 20px;
-	height:40px;
+	margin-top: 25px;
+	height:100%;
 	float:left;
-	width: 200px;
+	width: 18%;
+	align-content: center;
 }
 .radio_text{
-
-	width:130px;
+	top:0;
+	width:100px;
 	height: 35px;
 	font-size: 20;
 }
@@ -144,14 +138,14 @@
 	float:left;
 	height: 75px;
 	/*background: red;*/
-	width: 400px;
+	width: 31%;
 
 }
 
 .property_container_title{
 	margin:0;
 	padding:0;
-	width: 100px;
+	width: 40%;
 	height: 75px;
 	font-size: 20;
 	float:left;
@@ -159,7 +153,7 @@
 
 .property_container_tf{
 	float:left;
-	width: 200px;
+	width: 50%;
 	height: 75px;
 }
 
@@ -171,10 +165,8 @@
 }
 
 .Eq-mainbody-bot{
-	width:100%;
-	max-width: 1550px;
-	min-width: 600px;
-	height: 400px;
+	width:99%;
+	height: 50%;
 	float: left;
 	/*background: green;*/
 }

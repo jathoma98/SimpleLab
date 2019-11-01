@@ -2,16 +2,17 @@
 */
 
 .body{
-	background: linear-gradient(to bottom right,#465EFB,50%, #C2FFD8);
+	margin:0;
+	padding:0;
+	width: 100%;
+	/*background: linear-gradient(to bottom right,#465EFB,50%, #C2FFD8);*/
 }
 
 
 
 .info-top{
 	width: 100%;
-	max-width: 1875px;
-	min-width: 300px;
-    height: 60px;
+    height: 5%;
     border-color: black;
     border-width: 2px;
     position: absolute;
@@ -23,8 +24,8 @@
 
 
 .info-top-header{
-	width:200px;
-    height: 40px;
+	width:60%;
+    height: 100%;
     float: left;
     font-size:30;
     margin-top: 10px;
@@ -32,15 +33,13 @@
 
 .dropdown{
     float: right;
-    margin-right: 30px;
-    margin-top:10px;
-    position: relative;
+    margin-right: 20px;
   	display: inline-block;
   	background: linear-gradient(to bottom right,#465EFB,50%, #C2FFD8);
 }
 .dropdownimg{
-	width: 40px;
-    height: 40px;
+    height: 100%;
+    padding-right: : 100%;
 }
 .dropdown-content {
   display: none;
@@ -71,35 +70,43 @@
 
 
 .teacher-info{
-	position:absolute;
-	margin-top: 60px;
+	top:5%;
+	position:relative;
+	/*margin-top: 60px;*/
 	width: 100%;
-	height: 150px;
+	height: 20%;
 	/*background: yellow;*/
 }
 
 .text-info{
-	position:absolute;
-	width:1000px;
-	height:125;
-	left:0;
-    top:0;
-    right:0;
-    bottom: 0;
-	margin:auto;
+	width:75%;
+	height:100%;
 	/*background: green;*/
+	margin-left: 12.5%;
+}
+
+.text-info-row1{
+	width: 100%;
+	height: 50%;
+	/*background: red;*/
+}
+.text-info-row2{
+	top:50%;
+	width: 100%;
+	height: 50%;
+	/*background: red;*/
 }
 
 .container1{
-	width: 500px;
-	height: 50px;
+	width: 35%;
+	height: 100%;
 	float: left;
 	/*background: pink;*/
 }
 .container2{
 	float: right;
-	width: 500px;
-	height: 50px;
+	width: 35%;
+	height: 100%;
 	/*background: pink;*/
 	/*margin-left: 10px;*/
 }
@@ -107,8 +114,8 @@
 	font-weight: bold;
 	margin:0;
 	padding: 0;
-	width: 250px;
-	height: 50px;
+	width: 70%;
+	height: 60%;
 	font-size: 20;
 	float: left;
 }
@@ -123,56 +130,54 @@
 
 
 .bot{
-	left:0;
-    top:0;
-    right:0;
-    bottom: 0;
-	margin:auto;
-	width:1300;
 	position: absolute;
-	margin-top: 260px;
-	height:700px;
+	margin-left: 12.5%;
+    top:25%;
+	width:75%;
+	height:70%;
+	/*background: green;*/
+	/*border:2px solid red;*/
+
 }
 .block{
-	width: 400px;
-	margin: 10px;
+	width: 32.5%;
 	border:2px solid black;
-	height:650;
+	height:100%;
 	float: left;
 
 }
 .block-header{
-	width: 400px;
-	height: 30px;
+	width: 100%;
+	height: 6%;
 	border:2px solid black;
 }
 .block-header-name{
 	font-size:28;
 	float: left;
-	padding-left: 5px;
+	padding-left: 5%;
 }
 
 .block-header-more{
 	font-size:28;
 	float: right;
-	padding-right:5px;
+	padding-right:5%;
 }
 .content{
 	/*background: white;*/
-	margin-top: 40px;
 	border:2px solid black;
-	height: 600px;
-	width: 380px;
-	margin-left: auto;
-	margin-right: auto;
+	height: 93%;
+	width: 100%;
+	/*margin-left: auto;
+	margin-right: auto;*/
 
 }
 /*----------------------course page--------------------*/
 .sidebar{
-	margin-top: 70px;
+	margin-top: 4%;
 	position:absolute;
-	width: 250px;
-	height:800px;
+	width: 13%;
+	margin-left:0.5%;
+	height:85%;
 	border:2px solid black;
 	background: linear-gradient(to bottom right,#465EFB,50%, #C2FFD8);
 	float: left;
@@ -180,9 +185,9 @@
 }
 
 .sidebar-container{
-	width:200px;
+	width:100%;
 	/*background: green; */
-	height: 400px;
+	height: 50%;
 	position: absolute;
 	left:0;
     top:0;
@@ -195,16 +200,16 @@
 
 .sidebar-box{
 	margin:0;
-	padding: 0;
+	padding:0;
 	text-align: center;
-	width: 200px;
-	height:70px;
+	width: 100%;
+	height:17%;
 
 }
 .sidebar-btn{
 	font-size:30;
-	width: 200px;
-	height:70px;
+	width: 80%;
+	height:100%;
 	background-color: dodgerblue;
 	-webkit-transition-duration: 0.4s; /* Safari */
 	transition-duration: 0.4s;
@@ -218,57 +223,48 @@
 
 .mainblock{
 	position: absolute;
-	left:280px;
-	top:80px;
-	width: 100%;
-	height: 100%;
-	max-width: 1600px;
-	min-width: 300px;
-	max-height: 800px;
-	min-height: 300px;
+	left:14.5%;
+	top:8%;
+	width: 85%;
+	height: 85%;
 	border:2px solid black;
 }
 .mainblock-header{
 	position: absolute;
-	width: 100%;
-	max-width: 1600px;
-	min-width: 300px;
-	height: 70px
+	width: 99%;
+	height: 10%;
 	border:2px solid black;
 	float: left;
-	margin:5px;
-
+	margin: 0.5%;
 }
 
 .mainblock-header-name{
-	margin:5px;
-	width: 200px;
-	height: 70px;
+	margin:1%;
+	width: 15%;
+	height: 98%;
 	font-size: 20;
-	line-height: 15px;
+	line-height: 100%;
 	padding-left: 10px;
 	float: left;
 }
 
 .mainblock-header-editimg{
 	margin-top: 10px;
-	height: 70px;
+	height: 100%;
 	width: 70px;
 	float: left;
 	opacity: 0.8;
-	margin-left: 20px;
+	margin-left: 1%;
 }
 .mainblock-header-editimg>img{width: 100%;}
 
 .mainblock-body{
-	width: 100%;
-	max-width: 1570px;
-	min-width: 300px;
-	height: 690px;
+	width: 99%;
+	height: 86%;
 	position: absolute;
-	top:100px;
+	top:12%;
 	border:2px solid black;
-	margin-left: 10px;
+	margin-left: 0.5%;
 
 }
 
@@ -288,41 +284,33 @@
 
 .stmainblock{
 	position: absolute;
-	left:150px;
-	top:220px;
-	width: 100%;
-	height: 100%;
-	max-width: 1600px;
-	min-width: 300px;
-	max-height: 700px;
-	min-height: 300px;
+	left:10%;
+	top:24%;
+	width: 80%;
+	height: 70%;
 	border:2px solid black;
 }
 .stmainblock-header{
 	position: absolute;
-	width: 100%;
-	max-width: 1600px;
-	min-width: 300px;
-	height: 70px
+	width: 90%;
+	height: 10%
 	border:2px solid black;
 	float: left;
-	margin:5px;
 
 }
 
 .stmainblock-header-name{
-	margin:5px;
-	width: 200px;
-	height: 70px;
+	margin:10px;
+	width: 20%;
+	height: 100%;
 	font-size: 20;
 	line-height: 15px;
-	padding-left: 10px;
 	float: left;
 }
 
 .stmainblock-header-editimg{
 	margin-top: 10px;
-	height: 70px;
+	height: 100%;
 	width: 70px;
 	float: left;
 	opacity: 0.8;
@@ -332,13 +320,10 @@
 
 .stmainblock-body{
 	width: 100%;
-	max-width: 1570px;
-	min-width: 300px;
-	height: 580px;
+	height: 87%;
 	position: absolute;
-	top:100px;
-	border:2px solid black;
-	margin-left: 10px;
+	top:12%;
+	/*border:2px solid black;*/
 
 }
 

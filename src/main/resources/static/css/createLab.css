@@ -2,14 +2,10 @@
 
 .Lab-mainbody{
 	position: absolute;
-	left:280px;
-	top:80px;
-	width: 100%;
-	height: 100%;
-	max-width: 1100px;
-	min-width: 600px;
-	max-height: 800px;
-	min-height: 300px;
+	left:14.5%;
+	top:8%;
+	width: 63.5%;
+	height: 85%;
 	border:2px solid black;
 }
 
@@ -26,82 +22,6 @@
     background: background: linear-gradient(to bottom right,#465EFB,50%, #C2FFD8);
     
 }
-
-.steps{
-    position: absolute;
-    left:0px;
-    top:0px;
-    width: 100%;
-    height: 80px;
-    max-width: 1100px;
-    min-width: 600px;
-    /*border:2px solid black;
-    background: green;*/
-}
-
-.onestep{
-    width: 80px;
-    height: 80px;
-    float: left;
-    margin-left: 50px;
-}
-
-.stepimg{
-    width: 80px;
-    height: 80px;
-}
-
-.steptext{
-    position: absolute;
-    width: 80px;
-    height: 80px;
-    left:65px;
-    top:0px;
-    font-size: 25;
-}
-.steptext2{
-    position: absolute;
-    width: 80px;
-    height: 80px;
-    left:200px;
-    top:0px;
-    font-size: 25;
-}
-.steptext3{
-    position: absolute;
-    width: 80px;
-    height: 80px;
-    left:325px;
-    top:0px;
-    font-size: 25;
-}
-.steptext4{
-    position: absolute;
-    width: 80px;
-    height: 80px;
-    left:460px;
-    top:0px;
-    font-size: 25;
-}
-.steptext5{
-    position: absolute;
-    width: 80px;
-    height: 80px;
-    left:595px;
-    top:0px;
-    font-size: 25;
-}
-.steptext6{
-    position: absolute;
-    width: 80px;
-    height: 80px;
-    left:730px;
-    top:0px;
-    font-size: 25;
-}
-
-
-
 
 .Lab-mainbody-item1{
 	position: absolute;
@@ -123,18 +43,18 @@
 
 
 .itembar{
-	left:1400;
-	margin-top: 70px;
+    left:79%;
+	top:8%;
 	position:absolute;
-	width: 500px;
-	height:800px;
+	width:20%;
+	height:85%;
 	border:2px solid black;
 	/*background: dodgerblue;*/
 	float: right;
 }
 
 .itembar_img{
-	padding-left: 150px;
+	margin-left: 10%;
 	width: 300px;
 	height: 300px;
 }
@@ -144,16 +64,17 @@
 .item_container{
 	position: relative;
 	float:left;
-	height: 75px;
+	height: 50px;
 	/*background: red;*/
-	width: 250px;
+	width: 100%;
+    margin-left: 15%
 
 }
 
 .item_container_text{
 	margin:0;
 	padding:0;
-	width: 125px;
+	width: 50%;
 	height: 75px;
 	font-size: 20;
 	float:left;
@@ -195,11 +116,11 @@
 
 .proportion-dialog{
     width:400px;
-    height: 300px;
+    height: 400px;
     position: absolute;
     border:2px solid black;
     left:550px;
-    top:400px;
+    top:350px;
     background: linear-gradient(to bottom right,#465EFB,50%, #C2FFD8);
     border-radius: 5px;
 
@@ -214,10 +135,6 @@
 
 
 }
-
-
-
-
 
 .proportion-dialog-img{
     width:150px; 
@@ -253,19 +170,104 @@
     height: 30px;
     margin-left: 50px;
     margin-top: 10px;
+    /*background: red;*/
 }
 
+.quantityset{
+    width: 300px;
+    height: 30px;
+    margin-left: 50px;
+    margin-top: 10px;
+}
+.quantity{
+    width: 32%;
+    height: 30px;
+
+}
+
+.proportion-dialog-btns{
+    width: 400px;
+    height: 30px;
+}
 
 .proportion-dialog-btn{
     width:100px; 
     height: 30px;
-    background: linear-gradient(to bottom right,#465EFB,50%, #C2FFD8);;
+    background: linear-gradient(to bottom right,#465EFB,50%, #C2FFD8);
     margin-left: 75px;
-    margin-top: 60px;
+    margin-top: 100px;
     border-radius: 5px;
 }
 
+.data{
+    height: 80%;
+    width:100%;
+   /* background: green;*/
+}
+.btn_set{
+    top:100px;
+    width: 100%;
+    height: 20%;
+    /*background: red;*/
 
+}
+
+.btnstyle{
+    margin-top: 1%;
+    width: 49%;
+    height: 75px;
+    background: linear-gradient(to bottom right,#465EFB,50%, #C2FFD8);;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.tipsdropdown{
+    float: left;
+    margin-right: 10px;
+    display: inline-block;
+    background: linear-gradient(to bottom right,#465EFB,50%, #C2FFD8);
+}
+.tipsdropdownimg{
+    height: 75px;
+    width: 75px;
+}
+
+
+.tipsdropdown-content {
+  display: none;
+  position: absolute;
+  left:0;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  background: linear-gradient(to bottom right,#465EFB,50%, #C2FFD8);
+}
+
+.tipsdropdown-content p {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.tipsdropdown-content p:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.tipsdropdown:hover .tipsdropdown-content {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.tipsdropdown:hover .dropbtn {background-color: #3e8e41;}
 
 
 
