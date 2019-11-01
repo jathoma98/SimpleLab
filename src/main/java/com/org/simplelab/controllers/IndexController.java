@@ -14,4 +14,10 @@ public class IndexController {
     public String root() {
         return "redirect:/login";
     }
+
+    @RequestMapping("test")
+    public String test() {
+        return "index";
+    }
+
 }

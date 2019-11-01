@@ -1,0 +1,2 @@
+spring:
+  spring.thymeleaf.cache: false
