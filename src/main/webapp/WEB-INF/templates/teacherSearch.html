@@ -1,5 +1,6 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <link rel="stylesheet" th:href="@{../css/info.css}">
+<link rel="stylesheet" th:href="@{../css/search.css}">
 <head>
 <meta charset="utf-8">
 <title>Teacher Course</title>
@@ -43,21 +44,68 @@
     <div class="mainblock">
         <div class="mainblock-header">
             <div class="mainblock-header-name">
-                <h1>Courses</h1>
+                <h1>Search</h1>
             </div>
-            <a href="../../../teacher/createCourse"><div class="mainblock-header-editimg"><img src="../img/add.png"></div></a>
-            <a href="../../../teacher/teacherSearch"><div class="mainblock-header-editimg"><img src="../img/search.png"></div></a>
+
+            <div class="search">
+                <div class="search_radio">
+                    <div class="radio">
+                        <input type="radio" name="type" id="Course" value="">
+                        Course
+                    </div>
+
+                    <div class="radio">
+                        <input type="radio" name="type" id="Lab" value="">
+                        Lab
+                    </div> 
+
+                    <div class="radio">
+                        <input type="radio" name="type" id="Equipment" value="">
+                        Equipment
+                    </div>
+
+                    <div class="radio">
+                        <input type="radio" name="type" id="Student" value="">
+                        Student
+                    </div> 
+
+                    <div class="radio">
+                        <input type="radio" name="type" id="Teacher" value="">
+                        Teacher
+                    </div>
+                        
+                </div>
+                <input class="search_text" type="textfield" name="search">
+                
+            </div>
+
+           
+
+
+            <div class="mainblock-header-editimg"><img src="../img/search.png"></div>
+
+
+
+
         </div>
 
         <div class="mainblock-body">
-            <div class="headertext"><a href="">Course 1</a></div>
-            <div class="textfield">
+            <div class="searchheader">
+                <a href="">Course 1</a>
+                <div><img class="search_add" src="../img/add.png"></div>
+            </div>
+            <div class="searchtextfield">
+                <br>
                 <h2>description:</h2>
                 <p>this is a sample course ******* ******* **************** * ****** ******** ******* ********* ****** *********** ****** ***** *********** **** ******* ***** ***** ***** ******* ***** ********* ***** ********</p>
             </div>
 
-            <div class="headertext"><a href="">Course 2</a></div>
-            <div class="textfield">
+            <div class="searchheader">
+                <a href="">Course 2</a>
+                <div><img class="search_add" src="../img/add.png"></div>
+            </div>
+            <div class="searchtextfield">
+                <br>
                 <h2>description:</h2>
                 <p>this is a sample course 2 ******* ******* **************** * ****** ******** ******* ********* ****** *********** ****** ***** *********** **** ******* ***** ***** ***** ******* ***** ********* ***** ********</p>
             </div>
