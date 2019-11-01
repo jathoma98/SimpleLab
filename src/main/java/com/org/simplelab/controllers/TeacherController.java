@@ -11,7 +11,7 @@ public class TeacherController {
         return "teacherInfo";
     }
 
-    @RequestMapping("/teacherCourse")
+    @RequestMapping("/course")
     public String course(){
         return "teacherCourse";
     }
@@ -33,11 +33,16 @@ public class TeacherController {
 
     @RequestMapping("/createEquipment")
     public String createEquipment(){
-        return "createEquipment";
+        return "addAndEditEquipment";
     }
 
     @RequestMapping("/createLab")
     public String createLab(){
         return "createLab";
+    }
+
+    @RequestMapping("/teacherSearch")
+    public String teacherSearch(){
+        return "teacherSearch";
     }
 }

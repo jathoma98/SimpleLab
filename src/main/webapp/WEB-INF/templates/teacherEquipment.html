@@ -10,10 +10,10 @@
         <div class="dropdown">
             <img class="dropdownimg" src="../img/name.png">
             <div class="dropdown-content">
-                <a href="#">Home</a>
-                <a href="#">My Course</a>
-                <a href="#">My Lab</a>
-                <a href="#">Equipment</a>
+                <a href="../../../teacher">Home</a>
+                <a href="../../../teacher/course">My Course</a>
+                <a href="../../../teacher/lab">My Lab</a>
+                <a href="../../../teacher/equipment">Equipment</a>
                 <a href="#">Sign Out</a>
             </div>
         </div>
@@ -22,16 +22,16 @@
     <div class="sidebar">
         <div class="sidebar-container">
             <div class="sidebar-box">
-                <input  id = "sidebar-btn" class= "sidebar-btn" type="button" value = "Home" />
+                <input  id = "sidebar-btn" class= "sidebar-btn" type="button" value = "Home" onclick="window.location.href='../../../teacher'" />
             </div>
             <div class="sidebar-box">
-                <input  id = "sidebar-btn" class= "sidebar-btn" type="button" value = "Course" />
+                <input  id = "sidebar-btn" class= "sidebar-btn" type="button" value = "Course" onclick="window.location.href='../../../teacher/course'" />
             </div>
             <div class="sidebar-box">
-                <input  id = "sidebar-btn" class= "sidebar-btn" type="button" value = "Equipment" />
+                <input  id = "sidebar-btn" class= "sidebar-btn" type="button" value = "Equipment" onclick="window.location.href='../../../teacher/equipment'"/>
             </div>
             <div class="sidebar-box">
-                <input  id = "sidebar-btn" class= "sidebar-btn" type="button" value = "Lab" />
+                <input  id = "sidebar-btn" class= "sidebar-btn" type="button" value = "Lab" onclick="window.location.href='../../../teacher/lab'" />
             </div>
             <div class="sidebar-box">
                 <input  id = "sidebar-btn" class= "sidebar-btn" type="button" value = "Sign Out" />
@@ -45,8 +45,8 @@
             <div class="mainblock-header-name">
                 <h1>Equipments</h1>
             </div>
-            <div class="mainblock-header-editimg"><img src="../img/add.png"></div>
-            <div class="mainblock-header-editimg"><img src="../img/search.png"></div>
+            <a href="../../../teacher/createEquipment"><div class="mainblock-header-editimg"><img src="../img/add.png"></div></a>
+            <a href="../../../teacher/teacherSearch"><div class="mainblock-header-editimg"><img src="../img/search.png"></div></a>
         </div>
 
         <div class="mainblock-body">
