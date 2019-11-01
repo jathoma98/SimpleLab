@@ -1,7 +1,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<link rel="stylesheet" th:href="@{../css/info.css}">
-<link rel="stylesheet" th:href="@{../css/equipment.css}">
-<link rel="stylesheet" th:href="@{../css/createLab.css}">
+<link rel="stylesheet" th:href="@{../../css/info.css}">
+<link rel="stylesheet" th:href="@{../../css/equipment.css}">
+<link rel="stylesheet" th:href="@{../../css/createLab.css}">
 <script src="jquery-1.9.1.js"></script>
 <script src="jquery-ui.js"></script>
 <head>
@@ -18,13 +18,11 @@
     <div class="info-top">
         <div class="info-top-header">Lab Name</div>
         <div class="dropdown">
-            <img class="dropdownimg" src="../img/name.png">
+            <img class="dropdownimg" src="../../img/name.png">
             <div class="dropdown-content">
-                <a href="#">Home</a>
-                <a href="#">My Course</a>
-                <a href="#">My Lab</a>
-                <a href="#">Equipment</a>
-                <a href="#">Sign Out</a>
+                <a href="../../student">Home</a>
+                <a href=../../../course>My Course</a>
+                <a href="../../">Sign Out</a>
             </div>
         </div>
     </div>
@@ -35,20 +33,20 @@
                 <input class="Eq-search-textfield" type="text" name="search" value="">
             </div>
             <div class="Eq-search-btn">
-                <input type="image" src="../img/search.png" alt="Submit" width="40" height="40">
+                <input type="image" src="../../img/search.png" alt="Submit" width="40" height="40">
             </div>
         </div>
 
         <div class="Eq-sidebar-container">
             <div class="Eq-item">
                 <div class="Eq-item-img">
-                    <input type="image" src="../img/beaker.png" alt="Submit" width="60" height="60">
+                    <input type="image" src="../../img/beaker.png" alt="Submit" width="60" height="60">
                 </div>
                 <div class="Eq-item-name">beaker 1</div>
             </div>
             <div class="Eq-item">
                 <div class="Eq-item-img">
-                    <input type="image" src="../img/beaker.png" alt="Submit" width="60" height="60">
+                    <input type="image" src="../../img/beaker.png" alt="Submit" width="60" height="60">
                 </div>
                 <div class="Eq-item-name">beaker 2</div>
             </div>
@@ -57,13 +55,13 @@
         <div class="Eq-sidebar-container">
             <div class="Eq-item">
                 <div class="Eq-item-img">
-                    <input type="image" src="../img/beaker.png" alt="Submit" width="60" height="60">
+                    <input type="image" src="../../img/beaker.png" alt="Submit" width="60" height="60">
                 </div>
                 <div class="Eq-item-name">beaker 3</div>
             </div>
             <div class="Eq-item">
                 <div class="Eq-item-img">
-                    <input type="image" src="../img/measuring_cylinder.png" alt="Submit" width="60" height="60">
+                    <input type="image" src="../../img/measuring_cylinder.png" alt="Submit" width="60" height="60">
                 </div>
                 <div class="Eq-item-name">500ml measuring cylinder</div>
             </div>
@@ -72,7 +70,7 @@
         <div class="Eq-sidebar-container">
             <div class="Eq-item">
                 <div class="Eq-item-img">
-                    <input type="image" src="../img/measuring_cylinder.png" alt="Submit" width="60" height="60">
+                    <input type="image" src="../../img/measuring_cylinder.png" alt="Submit" width="60" height="60">
                 </div>
                 <div class="Eq-item-name">500ml measuring cylinder</div>
             </div>
@@ -90,11 +88,11 @@
 
 
         <div>
-            <img class="Lab-mainbody-item1" src="../img/measuring_cylinder.png">
+            <img class="Lab-mainbody-item1" src="../../img/measuring_cylinder.png">
         </div>
 
         <div>
-            <img  class="Lab-mainbody-item2" src="../img/beaker.png">
+            <img  class="Lab-mainbody-item2" src="../../img/beaker.png">
         </div>
 
 <!-- ---------------------dialog------------------------ -->
@@ -200,7 +198,8 @@
 			<button class="btnstyle">undo procedure</button>
             <button class="btnstyle">Save</button>
             <button class="btnstyle">remove</button>
-            <button class="btnstyle">quit Lab</button>
+            <a href=../../../student/course><button class="btnstyle">quit Lab</button></a>
+
     	</div>
         
     </div>

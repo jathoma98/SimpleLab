@@ -12,19 +12,19 @@ public class StudentController {
         return "studentInfo";
     }
 
-    @RequestMapping("/Course")
+    @RequestMapping("/course")
     public String course(){
         return "studentCourse";
     }
 
-    @RequestMapping("/lab")
+    @RequestMapping("/course/lab")
     public String lab(){
         return "doLab";
     }
 
-    @RequestMapping("/createLab")
-    public String createLab(){
-        return "createLab";
-    }
 
+    @RequestMapping("/search")
+    public String search(){
+        return "search";
+    }
 }

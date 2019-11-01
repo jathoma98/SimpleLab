@@ -40,4 +40,9 @@ public class TeacherController {
     public String createLab(){
         return "createLab";
     }
+
+    @RequestMapping("/search")
+    public String search(){
+        return "search";
+    }
 }
