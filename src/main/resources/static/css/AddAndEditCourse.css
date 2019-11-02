@@ -80,3 +80,13 @@
 	margin-right: auto;*/
 
 }
+
+.coursesavebtn{
+	position: absolute;
+	left:1300px;
+	top:600px;
+	width: 150px;
+	height: 50px;
+	background-color: dodgerblue;
+	border-radius: 10px;
+}
