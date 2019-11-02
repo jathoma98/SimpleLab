@@ -1,91 +1,161 @@
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<link rel="stylesheet" th:href="@{../css/info.css}">
-<head>
-<meta charset="utf-8">
-<title>Teacher info</title>
-</head>
-<body class="body">
-    <div class="info-top">
-        <div class="info-top-header">Hi,User</div>
-        <div class="dropdown">
-            <img class="dropdownimg" src="../img/name.png">
-            <div class="dropdown-content">
-                <a href="../../../teacher">Home</a>
-                <a href="../../../teacher/course">My Course</a>
-                <a href="../../../teacher/lab">My Lab</a>
-                <a href="../../../teacher/equipment">Equipment</a>
-                <a href="#">Sign Out</a>
-            </div>
+ <html>
+    <head>
+      <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+
+    <body>
+      <nav>
+        <div class="nav-wrapper cyan lighten-1 row">
+          <a href="#" class="brand-logo offset-s1">Logo</a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="">Sass</a></li>
+            <li><a href="">Components</a></li>
+            <li><a href="">JavaScript</a></li>
+          </ul>
         </div>
-    </div>
+      </nav>
+      <nav>
+        <div class="nav-wrapper cyan lighten-1 row">
+          <div class="col s4">
+            <a href="#!" class="breadcrumb">First</a>
+            <a href="#!" class="breadcrumb">Second</a>
+            <a href="#!" class="breadcrumb">Third</a>
+          </div>
+        </div>
+      </nav>
 
-    <div class="teacher-info">
-        <div class="text-info">
-            <div class="text-info-row1">
-                <div class="container1">
-                    <div class="text-container"><p>name:  Username</p></div>
-                </div>
+      <!-- course block -->
+      <div class="container row">
+        <div>
+          <blockquote class="blue-text lighten-3">
+            Course
+          </blockquote>
+        </div>
+        <table class="striped centered responsive-table hoverable">
+          <thead>
+            <tr>
+                <th>Name</th>
+                <th>Item Name</th>
+                <th>Item Price</th>
+            </tr>
+          </thead>
 
-                <div class="container2">
-                    <div class="text-container"><p>password: ********</p></div>
-                    <div class="editimg"><img src="../img/edit.png"></div>
-                </div>
-            </div>
+          <tbody>
+            <tr>
+              <td>Alvin</td>
+              <td>Eclair</td>
+              <td>$0.87</td>
+            </tr>
+            <tr>
+              <td>Alan</td>
+              <td>Jellybean</td>
+              <td>$3.76</td>
+            </tr>
+            <tr>
+              <td>Jonathan</td>
+              <td>Lollipop</td>
+              <td>$7.00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+       <!-- course block -->
+      <div class="container">
+        <div class="row">
+          <blockquote class="blue-text lighten-3 pink col s7">
+            Course
+          </blockquote>
+          
+          <div class="fixed-action-btn">
+            <a class="btn-floating btn-large red">
+              <i class="large material-icons">mode_edit</i>
+            </a>
+            <ul>
+              <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+              <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+              <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+              <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+            </ul>
+          </div>
+
+
+
+
+        </div>
+        <table class="striped centered responsive-table hoverable">
+          <thead>
+            <tr>
+                <th>Name</th>
+                <th>Item Name</th>
+                <th>Item Price</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>Alvin</td>
+              <td>Eclair</td>
+              <td>$0.87</td>
+            </tr>
+            <tr>
+              <td>Alan</td>
+              <td>Jellybean</td>
+              <td>$3.76</td>
+            </tr>
+            <tr>
+              <td>Jonathan</td>
+              <td>Lollipop</td>
+              <td>$7.00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+       <!-- course block -->
+      <div class="container row">
+        <div>
+          <blockquote class="blue-text lighten-3">
+            Course
+          </blockquote>
+        </div>
+        <table class="table striped centered responsive-table hoverable ">
+          <thead>
+            <tr>
+                <th>Name</th>
+                <th>Item Name</th>
+                <th>Item Price</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>Alvin</td>
+              <td>Eclair</td>
+              <td>$0.87</td>
+            </tr>
+            <tr>
+              <td>Alan</td>
+              <td>Jellybean</td>
+              <td>$3.76</td>
+            </tr>
+            <tr>
+              <td>Jonathan</td>
+              <td>Lollipop</td>
+              <td>$7.00</td>
+            </tr>
             
-            <div class="text-info-row2">
-                <div class="container1">
-                    <div class="text-container"><p>school: Stonybrook</p> </div>
-                    <div class="editimg"><img src="../img/edit.png"></div>
-                </div>
-
-                <div class="container2">
-                    <div class="text-container"><p>email: **********@gmail.com</p></div>
-                    <div class="editimg"><img src="../img/edit.png"></div>
-                </div>
-            </div>  
-        </div>
-    </div>
-
-    <div class="bot">
-        <div class="block">
-            <div class="block-header">
-                <div class="block-header-name">Course</div>
-                <div class="block-header-more"><a href="../../../teacher/course">more</a></div>
-            </div>
-            <div class="content">
-                    <p>Course name one</p>
-                    <p>Course name two</p>
-                    <p>Course name three</p>
-            </div>
-        </div>
-
-        <div class="block">
-            <div class="block-header">
-                <div class="block-header-name">Lab</div>
-                <div class="block-header-more"><a href="../../../teacher/lab">more</a></div>
-                
-            </div>
-            <div class="content">
-                    <p >Lab name one</p>
-                    <p>Lab name two</p>
-                    <p>Lab name three</p>
-            </div>
-
-        </div>
-
-        <div class="block">
-            <div class="block-header">
-                <div class="block-header-name">Equipment</div>
-                <div class="block-header-more"><a href="../../../teacher/equipment">more</a></div>
-                
-            </div>
-            <div class="content">
-                    <p>Equipment name one</p>
-                    <p>Equipment name two</p>
-                    <p>Equipment name three</p>
-            </div>
-        </div>
-    </div>
+          </tbody>
+        </table>
+      </div>
 
 
 
@@ -95,6 +165,24 @@
 
 
 
-     
-</body>
-</html>
+
+
+
+
+
+
+
+      <!--JavaScript at end of body for optimized loading-->
+      <script type="text/javascript" src="js/materialize.min.js"></script>
+    </body>
+
+    <script type="text/javascript">
+      
+      document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.fixed-action-btn');
+        var instances = M.FloatingActionButton.init(elems, {
+          direction: 'left'
+        });
+      });
+    </script>
+  </html>
