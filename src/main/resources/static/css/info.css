@@ -18,3 +18,8 @@
 .my_gray{
 	background: #bdbdbd;
 }
+
+.upload_pic{
+	height:300px ;
+	width: 300px;
+}

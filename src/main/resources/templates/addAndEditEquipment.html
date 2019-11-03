@@ -102,19 +102,201 @@
     </nav>
     <br>
 
+
 <!--**********************************************************************main body*********************************************************************************************************-->
 <!--**********************************************************************main body*********************************************************************************************************-->
 <!--**********************************************************************main body*********************************************************************************************************-->
-    <div class="container">
-        <nav>
-            <div class="nav-wrapper" style="background: #f1cc36">
-                <a href="#!" class="brand-logo">Equipment name</a>
-<!--                <ul class="right hide-on-med-and-down">-->
-<!--                    <li><a class="modal-trigger" href="#courseModal"><i class="material-icons">add</i></a></li>-->
-<!--                    <li><a href=""><i class="material-icons">delete</i></a></li>-->
-<!--                </ul>-->
+    <div class="row">
+
+        <div class="col s2">
+            <nav>
+                <div class="nav-wrapper" style="background: #f1cc36">
+                    <a href="#!" class="brand-logo"><i class="material-icons">view_list</i>item sets</a>
+                </div>
+            </nav>
+            <ul class="collapsible col s12" >
+                <li>
+                    <div class="collapsible-header">
+                        Chemistry 123
+                        <a href="" class="col s2 right "><i class=" circle material-icons ">add</i></a>
+                    </div>
+                    <div class="collapsible-body">
+                        <span>put items here</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header">
+                        Chemistry 111
+                        <a href="" class="col s2 right "><i class=" circle material-icons ">add</i></a>
+                    </div>
+                    <div class="collapsible-body">
+                        <span>put items here</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header">
+                        Chemistry 122
+                        <a href="" class="col s2 right "><i class=" circle material-icons ">add</i></a>
+                    </div>
+                    <div class="collapsible-body">
+                        <span>put items here</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="container col s10">
+            <div class="row hoverable">
+                <nav>
+                    <div class="nav-wrapper" style="background: #f1cc36">
+                        <a href="#!" class="brand-logo"><i class="material-icons">info</i>Container Detail</a>
+                    </div>
+                </nav>
+                <div class="col s3 valign-wrapper">
+                    <div class="center ">
+                        <img class="upload_pic" src="../img/upload.png">
+                    </div>
+                </div>
+                <div class="col s9">
+                    <form class="col s12">
+                        <div class="row">
+                            <div class=" col s1">
+                                <h5>Type:</h5>
+                            </div>
+                            <div class=" col s11">
+                                <form action="#">
+                                    <p class="col s2">
+                                        <label>
+                                            <input class="with-gap" name="group1" type="radio" checked />
+                                            <span>Measuring Type</span>
+                                        </label>
+                                    </p>
+                                    <p class="col s2">
+                                        <label>
+                                            <input class="with-gap" name="group1" type="radio" />
+                                            <span>Heating Type</span>
+                                        </label>
+                                    </p>
+                                    <p class="col s2">
+                                        <label>
+                                            <input class="with-gap" name="group1" type="radio"  />
+                                            <span>Raction Type</span>
+                                        </label>
+                                    </p>
+                                    <p class="col s2">
+                                        <label>
+                                            <input class="with-gap" name="group1" type="radio" />
+                                            <span>Vessel Type</span>
+                                        </label>
+                                    </p>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s1">
+                                <h5>security:</h5>
+                            </div>
+                            <div class="col s11">
+                                <form action="#">
+                                    <p class="col s2">
+                                        <label>
+                                            <input class="with-gap" name="group2" type="radio" checked />
+                                            <span>Public</span>
+                                        </label>
+                                    </p>
+                                    <p class="col s2">
+                                        <label>
+                                            <input class="with-gap" name="group2" type="radio" />
+                                            <span>Private</span>
+                                        </label>
+                                    </p>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="input-field col s6">
+                            <input id="equipmentName" type="text" class="validate">
+                            <label for="equipmentName">name</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input id="maxValume" type="text" class="validate">
+                            <label for="maxValume">Max Valume</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input id="maxTemperature" type="text" class="validate">
+                            <label for="maxTemperature">Max Temperature</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input id="minTemperature" type="text" class="validate">
+                            <label for="minTemperature">Min Temperature</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input id="accuracy" type="text" class="validate">
+                            <label for="minTemperature">Min Temperature</label>
+                        </div>
+
+
+                    </form>
+                </div>
             </div>
-        </nav>
+
+            <div class="row hoverable">
+                <nav>
+                    <div class="nav-wrapper" style="background: #dd0052;">
+                        <a href="#!" class="brand-logo"><i class="material-icons">info</i>compound in container</a>
+                    </div>
+                </nav>
+                <form class="row">
+                    <div class="input-field col s4">
+                        <input id="compoundName" type="text" class="validate">
+                        <label for="compoundName">Compound Name</label>
+                    </div>
+                    <div class="input-field col s4">
+                        <input id="chemistryExpression" type="text" class="validate">
+                        <label for="chemistryExpression">Chemistry Expression</label>
+                    </div>
+                    <div class="input-field col s4">
+                        <input id="ph" type="text" class="validate">
+                        <label for="ph">PH</label>
+                    </div>
+                    <div class="input-field col s4">
+                        <input id="color" type="text" class="validate">
+                        <label for="color">Color</label>
+                    </div>
+                    <div class="input-field col s4">
+                        <input id="volume" type="text" class="validate">
+                        <label for="volume">Volume</label>
+                    </div>
+                    <div class="input-field col s4">
+                        <input id="concerntation" type="text" class="validate">
+                        <label for="concerntation">Concerntation</label>
+                    </div>
+                    <div class="input-field col s4">
+                        <input id="temperature" type="text" class="validate">
+                        <label for="temperature">Temperature</label>
+                    </div>
+
+                </form>
+            </div>
+
+
+
+
+
+        </div><!--     container bot   -->
+
     </div>
 
 
@@ -143,13 +325,14 @@
 
 
     <!--JavaScript at end of body for optimized loading-->
-    <script type="text/javascript" src="libs/materialize.min.js"></script>
+    <script type="text/javascript" th:src="@{../libs/materialize.min.js}"></script>
 </body>
 
 <script>
 $(document).ready(function(){
-$('.modal').modal();
-$('.dropdown-trigger').dropdown();
+    $('.modal').modal();
+    $('.dropdown-trigger').dropdown();
+    $('.tabs').tabs();
 });
 </script>
 <script type="text/javascript">
@@ -159,19 +342,20 @@ $('.dropdown-trigger').dropdown();
         var instances = M.FloatingActionButton.init(elems, {direction: 'right'});
     });
 
-document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.collapsible');
-    var instances = M.Collapsible.init(elems, {
-        accordion: true
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.collapsible');
+        var instances = M.Collapsible.init(elems, {
+            accordion: false
+        });
     });
-
     document.addEventListener('DOMContentLoaded', function() {
         var elems = document.querySelectorAll('.dropdown-trigger');
         var instances = M.Dropdown.init(elems, {
             hover: true
         });
     });
-});
+
+
 </script>
 
 </html>
