@@ -1,4 +1,3 @@
-package com.org.simplelab.database;
 
-public class UserDB {
-}
+
+//Use UserEntity in entities
