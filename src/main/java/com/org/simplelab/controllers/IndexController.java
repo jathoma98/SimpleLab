@@ -1,7 +1,11 @@
 package com.org.simplelab.controllers;
 
+import com.org.simplelab.database.Entities.Course;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(path="/")
@@ -16,8 +20,9 @@ public class IndexController {
     }
 
     @RequestMapping("test")
-    public String test() {
-        return "index";
+    public String test(HttpSession sc, Model model) {
+        model.addAttribute("course", new Course("12", "course", "10-2-2009"));
+            return "index";
     }
 
 }

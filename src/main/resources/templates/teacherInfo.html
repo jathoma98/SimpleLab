@@ -1,4 +1,4 @@
-<html>
+<html xmlns:th = "http://www.thymeleaf.org">
 <head>
   <!--Import Google Icon Font-->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -99,7 +99,12 @@
     </tr>
     </thead>
 
-    <tbody>
+    <tbody th:remove = "all-but-first">
+    <tr th:each="course : ${list_of_course}">
+      <td th:text="${course.id}">id</td>
+      <td th:text="${course.name}">name</td>
+      <td th:text="${course.create_day}">2018-02-20</td>
+    </tr>
     <tr>
       <td>Alvin</td>
       <td>Eclair</td>
