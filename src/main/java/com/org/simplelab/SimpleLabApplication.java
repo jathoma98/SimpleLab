@@ -1,6 +1,6 @@
 package com.org.simplelab;
 
-import com.org.simplelab.database.repositories.UserRepository;
+import com.org.simplelab.database.DBManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import org.thymeleaf.templateresolver.FileTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
-@EnableMongoRepositories(basePackageClasses = {UserRepository.class})
+@EnableMongoRepositories(basePackages = {"com.org.simplelab.database.repositories"})
 @SpringBootApplication
 public class SimpleLabApplication {
 

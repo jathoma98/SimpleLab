@@ -13,6 +13,7 @@ public class User implements Serializable {
     private String id;
 
     private String username;
+    private byte[] pass_hash;
     private String firstname;
     private String lastname;
     private String institution;
@@ -20,7 +21,18 @@ public class User implements Serializable {
     private String answer;
     private String role;
 
+    //metadata field for interacting with DB tests
+    public String _metadata;
+
     public User() {
+    }
+
+    /**
+     * Use this method to set passwords.
+     * @param password - the password to be hashed and stored.
+     */
+    public void setPassword(String password){
+        this.setPass_hash(DBManager.getHash(password));
     }
 
     public String getId() {
@@ -37,6 +49,14 @@ public class User implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public byte[] getPass_hash() {
+        return pass_hash;
+    }
+
+    private void setPass_hash(byte[] pass_hash) {
+        this.pass_hash = pass_hash;
     }
 
     public String getFirstname() {
