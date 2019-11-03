@@ -7,6 +7,7 @@ public class Course implements Serializable {
     String name;
     String create_day;
     String own_uuid;
+    String description;
     List<String> list_of_uuid; //Student ID
     List<String> list_of_ulid; //Lab ID
 
@@ -19,6 +20,14 @@ public class Course implements Serializable {
         this.own_uuid = own_uuid;
         this.list_of_uuid = list_of_uuid;
         this.list_of_ulid = list_of_ulid;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getUcid() {
