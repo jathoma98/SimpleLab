@@ -31,7 +31,7 @@
     <div class="modal-content">
       <ul class="collapsible">
         <li >
-          <div class="collapsible-header"><i class="material-icons">filter_drama</i>C</div>
+          <div class="collapsible-header" style="background: #00acc1;"><i class="material-icons">info</i>Account Info</div>
           <div class="row collapsible-body">
             <form class="col s12">
               <div class="row">
@@ -54,11 +54,17 @@
                   <label for="email">Email</label>
                 </div>
               </div>
+              <div class="row">
+                  <button class="btn waves-effect waves-light right modal-close" type="submit" name="action">Submit
+                    <i class="material-icons right">send</i>
+                  </button>
+              </div>
+
             </form>
           </div>
         </li>
         <li>
-          <div class="collapsible-header"><i class="material-icons">place</i>Second</div>
+          <div class="collapsible-header" style="background: #f1cc36"><i class="material-icons">security</i>Password</div>
           <div class="collapsible-body">
             <form class="col s12">
               <div class="row">
@@ -67,7 +73,7 @@
                   <label for="password">Password</label>
                 </div>
                 <div class="input-field col s2">
-                  <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                  <button class="btn waves-effect waves-light modal-close" type="submit" name="action">Submit
                     <i class="material-icons right">send</i>
                   </button>
                 </div>
@@ -75,16 +81,11 @@
             </form>
           </div>
         </li>
-        <li>
-          <div class="collapsible-header"><i class="material-icons">whatshot</i>Third</div>
-          <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-        </li>
       </ul>
-
-
     </div>
     <div class="modal-footer">
-      <a href="" class="modal-close  btn-flat">Save</a>
+      <button class="waves-effect waves-light modal-close btn" style="background:#dd0052" type="submit" name="action">Save
+      </button>
     </div>
   </div>
 
@@ -153,7 +154,7 @@
         <div class="modal-content">
           <ul class="collapsible">
             <li >
-              <div class="collapsible-header"><i class="material-icons">filter_drama</i>C</div>
+              <div class="collapsible-header" style="background: #00acc1"><i class="material-icons">info</i>Info</div>
               <div class="row collapsible-body">
                 <form class="col s12">
                   <div class="row">
@@ -167,7 +168,7 @@
                       <div class="row">
                         <div class="input-field col s12">
                           <textarea id="textarea1" class="materialize-textarea"></textarea>
-                          <label for="textarea1">Textarea</label>
+                          <label for="textarea1">Course Decription</label>
                         </div>
                       </div>
                     </form>
@@ -177,12 +178,79 @@
               </div>
             </li>
             <li>
-              <div class="collapsible-header"><i class="material-icons">place</i>Second</div>
-              <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+              <div class="collapsible-header" style="background: #f1cc36"><i class="material-icons">perm_identity</i>Students</div>
+              <div class="collapsible-body">
+                <div class="row">
+                  <div class="input-field col s6">
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <h6>Students name four</h6>
+                      </div>
+                      <div class="input-field col s12">
+                        <h6>Students name four</h6>
+                      </div>
+                      <div class="input-field col s12">
+                        <h6>Students name four</h6>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="input-field col s6">
+                    <div class="input-field col s4">
+                      <input id="searchLab" type="text" class="validate">
+                      <label for="searchLab">Student Name</label>
+                    </div>
+                    <div class="input-field col s2">
+                      <a><i class="material-icons">search</i></a>
+                    </div>
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <h6>Lab name four</h6>
+                      </div>
+                      <div class="input-field col s12">
+                        <h6>Lab name four</h6>
+                      </div>
+                      <div class="input-field col s12">
+                        <h6>Lab name four</h6>
+                      </div>
+                    </div>
+
+
+                  </div>
+                </div>
+              </div>
             </li>
             <li>
-              <div class="collapsible-header"><i class="material-icons">whatshot</i>Third</div>
-              <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+              <div class="collapsible-header" style="background:#dd0052"><i class="material-icons">laptop</i>Labs</div>
+              <div class="collapsible-body">
+                <div class="row">
+                  <div class="input-field col s6">
+                    <h6>Lab name one</h6>
+                    <h6>Lab name two</h6>
+                    <h6>Lab name three</h6>
+                    <h6>Lab name four</h6>
+                  </div>
+                  <div class="input-field col s6">
+                    <div class="input-field col s4">
+                      <input id="searchStudent" type="text" class="validate">
+                      <label for="searchStudent">Student Name</label>
+                    </div>
+                    <div class="input-field col s2">
+                      <a><i class="material-icons">search</i></a>
+                    </div>
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <h6>Lab name four</h6>
+                      </div>
+                      <div class="input-field col s12">
+                        <h6>Lab name four</h6>
+                      </div>
+                      <div class="input-field col s12">
+                        <h6>Lab name four</h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </li>
           </ul>
 
