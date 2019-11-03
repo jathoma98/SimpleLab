@@ -2,8 +2,9 @@
 <head>
   <!--Import Google Icon Font-->
   <link th:href="@{https://fonts.googleapis.com/icon?family=Material+Icons}" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{../css/info.css}">
   <!--Import materialize.css-->
-  <link type="text/css" rel="stylesheet" th:href="@{css/materialize.min.css}"  media="screen,projection"/>
+  <link type="text/css" rel="stylesheet" th:href="@{../css/materialize.min.css}"  media="screen,projection"/>
   <script src="/libs/jquery-1.9.1.js"></script>
   <!--Let browser know website is optimized for mobile-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -84,40 +85,24 @@
       </ul>
     </div>
     <div class="modal-footer">
-      <button class="waves-effect waves-light modal-close btn" style="background:#dd0052" type="submit" name="action">Save
+      <button class="waves-effect waves-light modal-close btn" style="background:#dd0052" type="submit" name="action">
+        Save
       </button>
     </div>
   </div>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <nav>
   <div class="nav-wrapper row" style="background: #00acc1">
     <div class="col s12 valign-wrapper" style="background: #00b8ce; height: 30px; margin-top: 20px;">
-      <a href="#!" class="breadcrumb">First</a>
-      <a href="#!" class="breadcrumb">Second</a>
-      <a href="#!" class="breadcrumb">Third</a>
+      <a href="" class="breadcrumb">Home</a>
+<!--      <a href="#!" class="breadcrumb"></a>-->
+<!--      <a href="#!" class="breadcrumb"></a>-->
     </div>
   </div>
 </nav>
-
+  <br>
 <div class="container row">
 <!--  -->
 <!--  <blockquote>-->
@@ -137,20 +122,21 @@
 <!--    </div>-->
 
 <!--  </blockquote>-->
-    <br>
-<!--  Course block-->
+<!-- ****************************************************************Course Block************************************************************************************************************-->
+<!-- ****************************************************************Course Block************************************************************************************************************-->
+<!-- ****************************************************************Course Block************************************************************************************************************-->
     <div class="hoverable">
       <nav>
         <div class="nav-wrapper" style="background: #f1cc36">
           <a href="#!" class="brand-logo">Course</a>
           <ul class="right hide-on-med-and-down">
-            <li><a class="modal-trigger" href="#modal1"><i class="material-icons">add</i></a></li>
+            <li><a class="modal-trigger" href="#courseModal"><i class="material-icons">add</i></a></li>
             <li><a href=""><i class="material-icons">delete</i></a></li>
           </ul>
         </div>
       </nav>
       <!-- Modal Structure -->
-      <div id="modal1" class="modal">
+      <div id="courseModal" class="modal">
         <div class="modal-content">
           <ul class="collapsible">
             <li >
@@ -158,9 +144,13 @@
               <div class="row collapsible-body">
                 <form class="col s12">
                   <div class="row">
-                    <div class="input-field col s12">
+                    <div class="input-field col s6">
                       <input id="course_name" type="text" class="validate">
                       <label for="course_name">Course Name</label>
+                    </div>
+                    <div class="input-field col s6">
+                      <input id="course_code" type="text" class="validate">
+                      <label for="course_code">Course Code</label>
                     </div>
                   </div>
                   <div class="row">
@@ -182,17 +172,24 @@
               <div class="collapsible-body">
                 <div class="row">
                   <div class="input-field col s6">
-                    <div class="row">
-                      <div class="input-field col s12">
-                        <h6>Students name four</h6>
-                      </div>
-                      <div class="input-field col s12">
-                        <h6>Students name four</h6>
-                      </div>
-                      <div class="input-field col s12">
-                        <h6>Students name four</h6>
-                      </div>
-                    </div>
+                    <table>
+                      <thead>
+                      <tr>
+                        <th>Name</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td>Alvin</td>
+                      </tr>
+                      <tr>
+                        <td>Alan</td>
+                      </tr>
+                      <tr>
+                        <td>Jonathan</td>
+                      </tr>
+                      </tbody>
+                    </table>
                   </div>
                   <div class="input-field col s6">
                     <div class="input-field col s4">
@@ -202,18 +199,24 @@
                     <div class="input-field col s2">
                       <a><i class="material-icons">search</i></a>
                     </div>
-                    <div class="row">
-                      <div class="input-field col s12">
-                        <h6>Lab name four</h6>
-                      </div>
-                      <div class="input-field col s12">
-                        <h6>Lab name four</h6>
-                      </div>
-                      <div class="input-field col s12">
-                        <h6>Lab name four</h6>
-                      </div>
-                    </div>
-
+                    <table>
+                      <thead>
+                      <tr>
+                        <th>Search result</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td>Alvin</td>
+                      </tr>
+                      <tr>
+                        <td>Alan</td>
+                      </tr>
+                      <tr>
+                        <td>Jonathan</td>
+                      </tr>
+                      </tbody>
+                    </table>
 
                   </div>
                 </div>
@@ -224,30 +227,51 @@
               <div class="collapsible-body">
                 <div class="row">
                   <div class="input-field col s6">
-                    <h6>Lab name one</h6>
-                    <h6>Lab name two</h6>
-                    <h6>Lab name three</h6>
-                    <h6>Lab name four</h6>
+                    <table>
+                      <thead>
+                      <tr>
+                        <th>Name</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td>Alvin</td>
+                      </tr>
+                      <tr>
+                        <td>Alan</td>
+                      </tr>
+                      <tr>
+                        <td>Jonathan</td>
+                      </tr>
+                      </tbody>
+                    </table>
                   </div>
                   <div class="input-field col s6">
-                    <div class="input-field col s4">
+                    <div class="input-field col s5">
                       <input id="searchStudent" type="text" class="validate">
-                      <label for="searchStudent">Student Name</label>
+                      <label for="searchStudent">Lab Name</label>
                     </div>
-                    <div class="input-field col s2">
-                      <a><i class="material-icons">search</i></a>
+                    <div class="input-field col s1">
+                      <a href=""><i class="material-icons">search</i></a>
                     </div>
-                    <div class="row">
-                      <div class="input-field col s12">
-                        <h6>Lab name four</h6>
-                      </div>
-                      <div class="input-field col s12">
-                        <h6>Lab name four</h6>
-                      </div>
-                      <div class="input-field col s12">
-                        <h6>Lab name four</h6>
-                      </div>
-                    </div>
+                    <table>
+                      <thead>
+                      <tr>
+                        <th>Search Result</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td>Alvin</td>
+                      </tr>
+                      <tr>
+                        <td>Alan</td>
+                      </tr>
+                      <tr>
+                        <td>Jonathan</td>
+                      </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
@@ -256,9 +280,9 @@
 
 
         </div>
-        <div class="modal-footer">
-          <a href="" class="modal-close  btn-flat">Save</a>
-        </div>
+        <button class="waves-effect waves-light modal-close right btn" style="background:#dd0052" type="submit" name="action">
+          Save
+        </button>
       </div>
 
 
@@ -295,18 +319,105 @@
     <br>
 
 
-  <!-- Lab block -->
+  <!-- ****************************************************************Lab Block************************************************************************************************************-->
+  <!-- ****************************************************************Lab Block************************************************************************************************************-->
+  <!-- ****************************************************************Lab Block************************************************************************************************************-->
     <div class="hoverable">
       <nav>
         <div class="nav-wrapper " style="background:#dd0052">
-          <a href="#!" class="brand-logo"><i class="material-icons">laptop</i>Lab</a>
+          <a href="#!" class="brand-logo">Lab</a>
           <ul class="right hide-on-med-and-down">
-            <li><a href=""><i class="material-icons">search</i></a></li>
-            <li><a href=""><i class="material-icons">add</i></a></li>
+            <li><a class="modal-trigger" href="#labModal"><i class="material-icons">add</i></a></li>
             <li><a href=""><i class="material-icons">delete</i></a></li>
           </ul>
         </div>
       </nav>
+
+      <!-- Modal Structure -->
+      <div id="labModal" class="modal">
+        <div class="modal-content">
+          <ul class="collapsible">
+            <li >
+              <div class="collapsible-header" style="background: #00acc1"><i class="material-icons">info</i>Create New Lab</div>
+              <div class="row collapsible-body">
+                <form class="col s12">
+                  <div class="row">
+                    <div class="input-field col s6">
+                      <input id="lab_name" type="text" class="validate">
+                      <label for="lab_name">Lab Name</label>
+                    </div>
+                    <div class="input-field col s6">
+                      <input id="lab_code" type="text" class="validate">
+                      <label for="lab_code">Lab Code</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <form class="col s12">
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <textarea id="labtextarea" class="materialize-textarea"></textarea>
+                          <label for="labtextarea">Lab Decription</label>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <button class="btn waves-effect waves-light right modal-close" type="submit" name="action">Continue
+                          <i class="material-icons right">send</i>
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+
+                </form>
+              </div>
+            </li>
+            <li>
+              <div class="collapsible-header" style="background: #f1cc36"><i class="material-icons">laptop</i>Search for Labs</div>
+              <div class="collapsible-body">
+                <div class="row">
+                  <div class="input-field col s12">
+                    <div class="input-field col s10">
+                      <input id="modalsearchLab" type="text" class="validate">
+                      <label for="searchLab">Student Name</label>
+                    </div>
+                    <div class="input-field col s2">
+                      <a><i class="material-icons">search</i></a>
+                    </div>
+                    <table>
+                      <thead>
+                      <tr>
+                        <th>Search result</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td>Lab one</td>
+                      </tr>
+                      <tr>
+                        <td>Lab two</td>
+                      </tr>
+                      <tr>
+                        <td>Lab three</td>
+                      </tr>
+                      </tbody>
+                    </table>
+
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+
+
+        </div>
+        <button class="waves-effect waves-light modal-close right btn" style="background:#dd0052" type="submit" name="action">
+          Save
+        </button>
+      </div>
+
+
+
+
+
 
 
       <table class="striped centered responsive-table">
@@ -339,20 +450,99 @@
     </div>
       <br>
 
-
-
-  <!-- Equipment block -->
+  <!-- ****************************************************************Equipment Block************************************************************************************************************-->
+  <!-- ****************************************************************Equipment Block************************************************************************************************************-->
+  <!-- ****************************************************************Equipment Block************************************************************************************************************-->
     <div class="hoverable">
       <nav>
         <div class="nav-wrapper" style="background: #bdbdbd">
-          <a href="#!" class="brand-logo"><i class="material-icons">inbox</i>Equipment</a>
+          <a href="#!" class="brand-logo">Equipment</a>
           <ul class="right hide-on-med-and-down">
-            <li><a href="sass.html"><i class="material-icons">search</i></a></li>
-            <li><a href="badges.html"><i class="material-icons">add</i></a></li>
-            <li><a href="collapsible.html"><i class="material-icons">delete</i></a></li>
+            <li><a class="modal-trigger" href="#equipmentModal"><i class="material-icons">add</i></a></li>
+            <li><a href=""><i class="material-icons">delete</i></a></li>
           </ul>
         </div>
       </nav>
+
+      <!-- Modal Structure -->
+      <div id="equipmentModal" class="modal">
+        <div class="modal-content">
+          <ul class="collapsible">
+            <li >
+              <div class="collapsible-header" style="background: #00acc1"><i class="material-icons">info</i>Create New Equipment</div>
+              <div class="row collapsible-body">
+                <form class="col s12">
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <input id="Equipment_name" type="text" class="validate">
+                      <label for="lab_name">Equipment Name</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <form class="col s12">
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <textarea id="equipmenttextarea" class="materialize-textarea"></textarea>
+                          <label for="labtextarea">Equipment Decription</label>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <button class="btn waves-effect waves-light right modal-close" type="submit" name="action">Continue
+                          <i class="material-icons right">send</i>
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+
+                </form>
+              </div>
+            </li>
+            <li>
+              <div class="collapsible-header" style="background: #f1cc36"><i class="material-icons">view_module</i>Search for Equipment</div>
+              <div class="collapsible-body">
+                <div class="row">
+                  <div class="input-field col s12">
+                    <div class="input-field col s10">
+                      <input id="modalsearchequipment" type="text" class="validate">
+                      <label for="searchLab">Equipment Name</label>
+                    </div>
+                    <div class="input-field col s2">
+                      <a><i class="material-icons">search</i></a>
+                    </div>
+                    <table>
+                      <thead>
+                      <tr>
+                        <th>Search result</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td>Equipment one</td>
+                      </tr>
+                      <tr>
+                        <td>Equipment two</td>
+                      </tr>
+                      <tr>
+                        <td>Equipment three</td>
+                      </tr>
+                      </tbody>
+                    </table>
+
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+
+
+        </div>
+        <button class="waves-effect waves-light modal-close right btn" style="background:#dd0052" type="submit" name="action">
+          Save
+        </button>
+      </div>
+
+
+
 
 
       <table class="table striped centered responsive-table hoverable ">

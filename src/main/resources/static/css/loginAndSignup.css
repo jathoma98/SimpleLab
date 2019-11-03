@@ -2,7 +2,7 @@
 /*@author: Chenxing He*/
 
 .body{
-     background: linear-gradient(to bottom right,#465EFB,50%, #C2FFD8);
+     background: linear-gradient(to bottom right,#bdbdbd 25%,#00acc1 50%,#f1cc36 80%,#dd0052);
 }
 .login{
     position:absolute;
