@@ -1,6 +1,7 @@
 package com.org.simplelab.controllers;
 
 import com.org.simplelab.database.Entities.Course;
+import com.org.simplelab.database.Entities.DummyEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,11 +17,7 @@ public class TeacherController {
     @RequestMapping("")
     public String root(HttpSession sc, Model model) {
         List<Course> list_course = new LinkedList<>();
-        // set dummy data
-        for(int i = 0; i< 10; i++){
-            list_course.add(new Course(Integer.toString(i), "course_"+ i, i + "-" + i + "-" + "2019"));
-        }
-        model.addAttribute("list_of_course", list_course);
+        model.addAttribute("list_of_course", DummyEntity.getObj().list_course);
         return "teacherInfo";
     }
 
