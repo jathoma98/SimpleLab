@@ -1,9 +1,8 @@
-package com.org.simplelab.database.Entities;
+package com.org.simplelab.database.entities;
 
-import java.awt.*;
 import java.util.List;
 
-public class LabEntity {
+public class Lab {
     String ulid;
     String name;
     String description;
@@ -11,9 +10,9 @@ public class LabEntity {
     List<String> list_ueid;
     List<String> list_uuid;
 
-    public LabEntity(){};
+    public Lab(){};
 
-    public LabEntity(String ulid, String name, String description, String own_uuid, List<String> list_ueid, List<String> list_uuid) {
+    public Lab(String ulid, String name, String description, String own_uuid, List<String> list_ueid, List<String> list_uuid) {
         this.ulid = ulid;
         this.name = name;
         this.description = description;

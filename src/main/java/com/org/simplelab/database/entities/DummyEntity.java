@@ -1,4 +1,4 @@
-package com.org.simplelab.database.Entities;
+package com.org.simplelab.database.entities;
 
 import java.util.LinkedList;
 import java.util.List;
