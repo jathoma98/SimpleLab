@@ -1,73 +1,306 @@
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<link rel="stylesheet" th:href="@{../css/info.css}">
+<html xmlns:th = "http://www.thymeleaf.org">
 <head>
-<meta charset="utf-8">
-<title>Student info</title>
+    <!--Import Google Icon Font-->
+    <link th:href="@{https://fonts.googleapis.com/icon?family=Material+Icons}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{../css/info.css}">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" th:href="@{../css/materialize.min.css}"  media="screen,projection"/>
+    <script src="/libs/jquery-1.9.1.js"></script>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
-<body class="body">
-    <div class="info-top">
-        <div class="info-top-header">Hi,User</div>
-        <div class="dropdown">
-            <img class="dropdownimg" src="../img/name.png">
-            <div class="dropdown-content">
-                <a href="">Home</a>
-                <a href="../../">Sign Out</a>
-            </div>
+
+<body>
+<nav>
+    <div class="nav-wrapper row" style="background: #00acc1;">
+        <a href="#" class="brand-logo offset-s1" style="padding-top: 10px; padding-left: 10px;">Simple Lab</a>
+        <ul class="right hide-on-med-and-down">
+            <li><a class='dropdown-trigger right' href='#' data-target='dropdown1' style="margin-right: 15px;"><i class="large material-icons">account_circle</i></a></li>
+        </ul>
+    </div>
+</nav>
+<!-- Dropdown Structure -->
+<ul id='dropdown1' class='dropdown-content'>
+    <li><a href="#!">Home</a></li>
+    <li><a class="modal-trigger" href="#modalAccount">Account</a></li>
+    <li><a href="#!">Sign Out</a></li>
+</ul>
+
+
+<!-- Modal Structure -->
+<div id="modalAccount" class="modal">
+    <div class="modal-content">
+        <ul class="collapsible">
+            <li >
+                <div class="collapsible-header" style="background: #00acc1;"><i class="material-icons">info</i>Account Info</div>
+                <div class="row collapsible-body">
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input id="first_name" type="text" class="validate">
+                                <label for="first_name">First Name</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="last_name" type="text" class="validate">
+                                <label for="last_name">Last Name</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input id="school" type="text" class="validate">
+                                <label for="school">School</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="email" type="text" class="validate">
+                                <label for="email">Email</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <button class="btn waves-effect waves-light right modal-close" type="submit" name="action">Submit
+                                <i class="material-icons right">send</i>
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </li>
+            <li>
+                <div class="collapsible-header" style="background: #f1cc36"><i class="material-icons">security</i>Password</div>
+                <div class="collapsible-body">
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s10">
+                                <input id="password" type="text" class="validate">
+                                <label for="password">Password</label>
+                            </div>
+                            <div class="input-field col s2">
+                                <button class="btn waves-effect waves-light modal-close" type="submit" name="action">Submit
+                                    <i class="material-icons right">send</i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="modal-footer">
+        <button class="waves-effect waves-light modal-close btn" style="background:#dd0052" type="submit" name="action">
+            Save
+        </button>
+    </div>
+</div>
+
+
+
+<nav>
+    <div class="nav-wrapper row" style="background: #00acc1">
+        <div class="col s12 valign-wrapper" style="background: #00b8ce; height: 30px; margin-top: 20px;">
+            <a href="" class="breadcrumb">Home</a>
+            <!--      <a href="#!" class="breadcrumb"></a>-->
+            <!--      <a href="#!" class="breadcrumb"></a>-->
         </div>
     </div>
+</nav>
+<br>
+<div class="container row">
+    <!--  -->
+    <!--  <blockquote>-->
+    <!--    <div class="row" style="position: relative;">-->
+    <!--      <div class="col s1" style="position: relative;">-->
+    <!--        <div class="fixed-action-btn" style="position: relative;top:0px;">-->
+    <!--          <a class="blue-text white">-->
+    <!--            <h5>Course</h5>-->
+    <!--          </a>-->
+    <!--          <ul>-->
+    <!--            <li><a class="btn-floating green"><i class="material-icons">delete</i></a></li>-->
+    <!--            <li><a class="btn-floating yellow darken-1"><i class="material-icons">edit</i></a></li>-->
+    <!--            <li><a class="btn-floating red"><i class="material-icons">add</i></a></li>-->
+    <!--          </ul>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </div>-->
 
-    <div class="teacher-info">
-        <div class="text-info">
-            <div class="text-info-row1">
-                <div class="container1">
-                    <div class="text-container"><p>name:  Username</p></div>
-                </div>
-
-                <div class="container2">
-                    <div class="text-container"><p>password: ********</p></div>
-
-                    <div class="editimg"><img src="../img/edit.png"></div>
-                </div>
+    <!--  </blockquote>-->
+    <!-- ****************************************************************Course Block************************************************************************************************************-->
+    <!-- ****************************************************************Course Block************************************************************************************************************-->
+    <!-- ****************************************************************Course Block************************************************************************************************************-->
+    <div class="hoverable">
+        <nav>
+            <div class="nav-wrapper" style="background: #f1cc36">
+                <a href="#!" class="brand-logo headermargin">Course</a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a class="modal-trigger" href="#courseModal"><i class="material-icons">add</i></a></li>
+                    <li><a href=""><i class="material-icons">delete</i></a></li>
+                </ul>
             </div>
-            
-            <div class="text-info-row2">
-                <div class="container1">
-                    <div class="text-container"><p>school: Stonybrook</p> </div>
-                    <div class="editimg"><img src="../img/edit.png"></div>
-                </div>
+        </nav>
+        <!-- Modal Structure -->
+        <div id="courseModal" class="modal">
+            <div class="modal-content">
+                <ul class="collapsible">
+                    <li class="active">
+                        <div class="collapsible-header" style="background: #00acc1"><i class="material-icons">menu_book</i>Course</div>
+                        <div class="collapsible-body row">
+                            <div class="col s12">
+                                <div class="input-field col s7">
+                                    <input id="searchLab" type="text" class="validate">
+                                    <label for="searchLab">Course Name</label>
+                                </div>
+                                <div class="input-field col s3">
+                                    <a><i class="material-icons">search</i></a>
+                                </div>
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th>Search result</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Alvin</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Alan</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Jonathan</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
 
-                <div class="container2">
-                    <div class="text-container"><p>email: **********@gmail.com</p></div>
-                    <div class="editimg"><img src="../img/edit.png"></div>
-                </div>
-            </div>  
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+
+                <button class="waves-effect waves-light modal-close right btn" style="background:#dd0052; margin-bottom: 10px;margin-right: 50px;" type="submit" name="action">
+                    Save
+                </button>
+            </div>
         </div>
+
+
+        <table class="striped centered responsive-table">
+
+            <thead>
+            <tr>
+                <th>Course ID</th>
+                <th>Course Name</th>
+                <th>Create Date</th>
+            </tr>
+            </thead>
+
+            <tbody th:remove = "all-but-first">
+            <tr th:each="course : ${list_of_course}">
+                <td th:text="${course.ucid}">id</td>
+                <td th:text="${course.name}">name</td>
+                <td th:text="${course.create_day}">2018-02-20</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 
-    <div class="stmainblock">
-        <div class="stmainblock-header">
-            <div class="stmainblock-header-name">
-                <h1>Courses</h1>
+
+    <!-- ****************************************************************Lab Block************************************************************************************************************-->
+    <!-- ****************************************************************Lab Block************************************************************************************************************-->
+    <!-- ****************************************************************Lab Block************************************************************************************************************-->
+    <div class="hoverable">
+        <nav>
+            <div class="nav-wrapper " style="background:#dd0052">
+                <a href="#!" class="brand-logo headermargin">Lab</a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a class="modal-trigger" href="#labModal"><i class="material-icons">add</i></a></li>
+                    <li><a href=""><i class="material-icons">delete</i></a></li>
+                </ul>
             </div>
-            <a href="../../../student/search">
-            <div class="stmainblock-header-editimg"><img src="../img/search.png"></div>
-            </a>
+        </nav>
+
+        <!-- Modal Structure -->
+        <div id="labModal" class="modal">
+            <div class="modal-content">
+                <ul class="collapsible">
+                    <li class="active">
+                        <div class="collapsible-header" style="background: #f1cc36"><i class="material-icons">laptop</i>Labs</div>
+                        <div class="collapsible-body">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <div class="input-field col s7">
+                                        <input id="searchStudent" type="text" class="validate">
+                                        <label for="searchStudent">Lab Name</label>
+                                    </div>
+                                    <div class="input-field col s3">
+                                        <a href=""><i class="material-icons">search</i></a>
+                                    </div>
+                                    <table>
+                                        <thead>
+                                        <tr>
+                                            <th>Search Result</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Alvin</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Alan</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Jonathan</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+                <button class="waves-effect waves-light modal-close right btn" style="background:#dd0052; margin-bottom: 10px;margin-right: 50px;" type="submit" name="action">
+                    Save
+                </button>
+            </div>
+
         </div>
 
-        <div class="stmainblock-body">
-            <div class="headertext"><a href="../../../student/course">Course 1</a></div>
-            <div class="textfield">
-                <h2>description:</h2>
-                <p>this is a sample course ******* ******* **************** * ****** ******** ******* ********* ****** *********** ****** ***** *********** **** ******* ***** ***** ***** ******* ***** ********* ***** ********</p>
-            </div>
 
-            <div class="headertext"><a href="../../../student/course">Course 2</a></div>
-            <div class="textfield">
-                <h2>description:</h2>
-                <p>this is a sample course 2 ******* ******* **************** * ****** ******** ******* ********* ****** *********** ****** ***** *********** **** ******* ***** ***** ***** ******* ***** ********* ***** ********</p>
-            </div>
-        </div>
+
+
+
+
+
+        <table class="striped centered responsive-table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Item Name</th>
+                <th>Item Price</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+                <td>Alvin</td>
+                <td>Eclair</td>
+                <td>$0.87</td>
+            </tr>
+            <tr>
+                <td>Alan</td>
+                <td>Jellybean</td>
+                <td>$3.76</td>
+            </tr>
+            <tr>
+                <td>Jonathan</td>
+                <td>Lollipop</td>
+                <td>$7.00</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
+    <br>
+
+</div>
 
 
 
@@ -77,6 +310,41 @@
 
 
 
-     
+
+
+
+
+
+
+
+<!--JavaScript at end of body for optimized loading-->
+<script type="text/javascript" src="libs/materialize.min.js"></script>
 </body>
+<script>
+    $(document).ready(function(){
+        $('.modal').modal();
+        $('.dropdown-trigger').dropdown();
+    });
+</script>
+<script type="text/javascript">
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.fixed-action-btn');
+        var instances = M.FloatingActionButton.init(elems, {direction: 'right'});
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.collapsible');
+        var instances = M.Collapsible.init(elems, {
+            accordion: true
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.dropdown-trigger');
+            var instances = M.Dropdown.init(elems, {
+                hover: true
+            });
+        });
+    });
+</script>
 </html>

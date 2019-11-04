@@ -1,61 +1,78 @@
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<link rel="stylesheet" th:href="@{../css/loginAndSignup.css}">
+<html xmlns:th = "http://www.thymeleaf.org">
 <head>
-<meta charset="utf-8">
-<title>Sign Up</title>
+    <!--Import Google Icon Font-->
+    <link th:href="@{https://fonts.googleapis.com/icon?family=Material+Icons}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{../css/info.css}">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" th:href="@{../css/materialize.min.css}"  media="screen,projection"/>
+    <script src="/libs/jquery-1.9.1.js"></script>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
-<body class="body">
-    <div class="login">
-        <div class="login-top">Sign Up</div>
-        <div class="login-center clearfix">
-            <div class="login-center-img"><img src="../img/name.png"></div>
-            <div class="login-center-input">
-                <input id="userName" type="text" name="" value="" placeholder="please enter your username"
-                    onfocus="this.placeholder=''" onblur="this.placeholder='please enter your username'">
+
+<body class="body valign-wrapper row body">
+<div class=" col s4  white offset-s4 login_radius">
+    <div class="center">
+        <section>
+            <div class="input-field col s6">
+                <i class="material-icons prefix">account_circle</i>
+                <input id="userName" type="text" class="validate">
+                <label for="userName">User Name</label>
             </div>
-        </div>
-
-        <div class="login-center clearfix">
-            <div class="login-center-img"><img src="../img/email.png"></div>
-            <div class="login-center-input">
-                <input id="email" type="text" name="" value="" placeholder="please enter your email"
-                    onfocus="this.placeholder=''" onblur="this.placeholder='please enter your email'">
+            <div class="input-field col s6">
+                <i class="material-icons prefix">lock</i>
+                <input id="email" type="text" class="validate">
+                <label for="email">Email</label>
             </div>
-        </div>
-
-        <div class="login-center clearfix">
-            <div class="login-center-img"><img src="../img/password.png"></div>
-            <div class="login-center-input">
-                <input id= "password" type="password" name="" value="" placeholder="enter your password"
-                    onfocus="this.placeholder=''" onblur="this.placeholder='enter your password'">
+            <div class="input-field col s6">
+                <i class="material-icons prefix">lock</i>
+                <input id="sp_password" type="text" class="validate">
+                <label for="sp_password">Password</label>
             </div>
-        </div>
-
-        <div class="login-center clearfix">
-            <div class="login-center-img"><img src="../img/password.png"></div>
-            <div class="login-center-input">
-                <input id= "re_password" type="password" name="" value="" placeholder="comfirm your password"
-                    onfocus="this.placeholder=''" onblur="this.placeholder='comfirm your password'">
+            <div class="input-field col s6">
+                <i class="material-icons prefix">lock</i>
+                <input id="sp_re_password" type="text" class="validate">
+                <label for="sp_re_password">Confirm Password</label>
             </div>
-        </div>
-
-        <div class="login-center clearfix">
-            <div class="login-center-img"><img src="../img/password.png"></div>
-            <div class="login-center-input">
-                <input id= "re_password" type="password" name="" value="" placeholder="enter your school"
-                    onfocus="this.placeholder=''" onblur="this.placeholder='enter your school'">
+            <div class="input-field col s6">
+                <i class="material-icons prefix">lock</i>
+                <input id="question" type="text" class="validate">
+                <label for="question">Question to reset password</label>
             </div>
-        </div>
+            <div class="input-field col s6">
+                <i class="material-icons prefix">lock</i>
+                <input id="answer" type="text" class="validate">
+                <label for="answer">Answer for Question</label>
+            </div>
+            <form action="#">
+                <h6 class="col s4">Sign in as a:</h6>
+                <p class="col s4">
+                    <label>
+                        <input class="with-gap" name="identity" type="radio" checked />
+                        <span>Teacher</span>
+                    </label>
+                </p>
+                <p class="col s4">
+                    <label>
+                        <input class="with-gap" name="identity" type="radio" />
+                        <span>Student</span>
+                    </label>
+                </p>
+            </form>
 
-        <div class="login-center clearfix">
-            <div class="teacher"><input type="radio" name="identity" id="identity" value="Teacher">Teacher</div>  
-            <div class="student"><input type="radio" name="identity" id="identity" value="Student">Student</div>
-        </div>
+            <br>
+            <div class="row"></div>
+            <div class="row">
+                <button class="btn waves-effect waves-light right modal-close btn_margin" style="background:#dd0052; "  onclick="window.location.href='../login'" type="submit" name="action">Signup
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+        </section>
+
+    </div>
+</div>
 
 
-        <input  id = "loginbtn" class= "login-button" type="button" value = "Sign Up" onclick="window.location.href='login'" />
-        
-        <!-- <input  id = "signupbtn" class= "login-button" type="button" value = "sign up" /> -->
-    </div>    
 </body>
+
 </html>
