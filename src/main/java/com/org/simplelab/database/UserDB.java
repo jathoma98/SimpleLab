@@ -24,6 +24,28 @@ public class UserDB{
             "Anonymous"
     };
 
+    public enum UserAuthenticationStatus{
+        SUCCESSFUL,
+        FAILED
+    };
+
+    /**
+     * Attempts to authenticate a user by their given username and password.
+     * @param username - username of the user
+     * @param password - raw string password of the user
+     * @return - SUCCESSFUL if authentication is successful
+     *           FAILED otherwise
+     */
+    public UserAuthenticationStatus authenticate(String username, String password){
+        byte[] given_hashed = DBManager.getHash(password);
+        User found = findUser(username);
+        if (found == null)
+            return UserAuthenticationStatus.FAILED;
+        if (!Arrays.equals(found.getPass_hash(), given_hashed))
+            return UserAuthenticationStatus.FAILED;
+        return UserAuthenticationStatus.SUCCESSFUL;
+    }
+
     /**
      * Finds a User in the DB with the given username
      * @param username - username of the user to be found
@@ -47,10 +69,32 @@ public class UserDB{
      */
     public boolean insertUser(User user){
 
-        if (findUser(user.getUsername()) != null || isReserved(user.getUsername()))
+        if (findUser(user.getUsername()) != null
+                || isReserved(user.getUsername()))
             return false;
         userRepository.save(user);
         return true;
+    }
+
+    /**
+     * Deletes the user from the DB, given a User object or a username String.
+     * @param user Can be a User object or a String username.
+     */
+    public void deleteUser(User user){
+        deleteUser(user.getUsername());
+    }
+
+    public void deleteUser(String username){
+        userRepository.deleteByUsername(username);
+    }
+
+    /**
+     * Updates the corresponding user in the DB given a representative User object.
+     * @param user - User object representing the User to be updated.
+     */
+    public void updateUser(User user){
+        deleteUser(user);
+        userRepository.save(user);
     }
 
     /**
@@ -59,6 +103,10 @@ public class UserDB{
      */
     public void deleteByMetadata(String metadata){
         userRepository.deleteByMetadata(metadata);
+    }
+
+    public UserRepository DEBUG_getInterface(){
+        return userRepository;
     }
 
     private boolean isReserved(String username){

@@ -15,6 +15,7 @@ public class DBManager {
     /**
      * Hashes the given string.
      */
+
     public static byte[] getHash(String entry){
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
