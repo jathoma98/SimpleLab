@@ -1,5 +1,7 @@
 package com.org.simplelab.controllers;
 
+import com.org.simplelab.database.UserDB;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,13 +16,12 @@ import java.util.Map;
  */
 
 @Controller
-@RequestMapping(path="/login")
 public class LoginController{
 
-//    @Autowired
-//    UserDB userDB;
+    @Autowired
+    UserDB userDB;
 
-    @GetMapping("")
+    @GetMapping("/login")
     public String loginGet(){
         return "login";
     }
@@ -32,14 +33,24 @@ public class LoginController{
      * @param userName -username from form submission in login.html
      * @param password -password from form submission in login.html
      * @param session -current user session
-     * @return JSON hashmap for success/failure verification in login.html javascript
+     * @return JSON response with format:
+     *          { success: "true" } if authentication is successful
+     *          { success: "false" } otherwise
      */
     @ResponseBody
     @PostMapping("/login")
     public Map<String, String> login(@RequestParam("userName") String userName,
                                      @RequestParam("password") String password,
                                      HttpSession session) {
-        return new HashMap<>();
+        Map<String, String> response = new HashMap<>();
+        if (userDB.authenticate(userName, password) == UserDB.UserAuthenticationStatus.SUCCESSFUL) {
+            response.put("success", "true");
+            return response;
+        }
+        else{
+            response.put("success", "false");
+            return response;
+        }
     }
 
 
