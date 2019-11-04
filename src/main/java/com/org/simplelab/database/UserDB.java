@@ -53,6 +53,14 @@ public class UserDB{
         return true;
     }
 
+    /**
+     * Deletes all users which contain the given metadata
+     * @param metadata - metadata to be matched
+     */
+    public void deleteByMetadata(String metadata){
+        userRepository.deleteByMetadata(metadata);
+    }
+
     private boolean isReserved(String username){
         List<String> res = Arrays.asList(reserved);
         return res.contains(username);

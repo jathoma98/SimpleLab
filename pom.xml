@@ -99,6 +99,14 @@
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
 
+		<!-- for random string generation for testing -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.9</version>
+		</dependency>
+
+
 		<!-- js -->
 		<dependency>
 			<groupId>org.webjars</groupId>
