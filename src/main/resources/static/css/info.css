@@ -1,3 +1,7 @@
+.body{
+	background: linear-gradient(to bottom right,#bdbdbd 25%,#00acc1 50%,#f1cc36 80%,#dd0052);
+}
+
 .my_cran{
 	background: #00acc1;
 }
@@ -22,4 +26,22 @@
 .upload_pic{
 	height:300px ;
 	width: 300px;
+}
+
+.logo_pic{
+	height: 200px;
+	width: 200px;
+}
+
+.headermargin{
+	margin-left: 15px;
+}
+.btn_margin{
+	margin_top:15px;
+	margin-right: 15px;
+
+}
+
+.login_radius{
+	border-radius: 10px;
 }
