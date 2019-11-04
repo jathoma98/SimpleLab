@@ -1,4 +1,4 @@
-package com.org.simplelab.database.Entities;
+package com.org.simplelab.database.entities;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -25,6 +25,8 @@ public class DummyEntity {
             System.out.println(c);
             list_course.add(c);
         }
+
+        //list of 
     }
 
     static public DummyEntity getObj(){

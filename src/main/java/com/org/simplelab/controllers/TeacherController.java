@@ -1,13 +1,12 @@
 package com.org.simplelab.controllers;
 
-import com.org.simplelab.database.Entities.Course;
-import com.org.simplelab.database.Entities.DummyEntity;
+import com.org.simplelab.database.entities.Course;
+import com.org.simplelab.database.entities.DummyEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
