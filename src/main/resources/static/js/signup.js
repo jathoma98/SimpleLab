@@ -11,8 +11,8 @@ function signupbtnEvent(){
         firstname: $("#firstname").val(),
         lastname: $("#lastname").val(),
         institution: $("#institution").val(),
-        password: password,
-        repassword: repassword,
+        sp_password: password,
+        sp_re_password: repassword,
         question: $("#question").val(),
         answer: $("#answer").val(),
         identity: user_role
@@ -25,19 +25,30 @@ function signupbtnEvent(){
     }
     let user_data_json = JSON.stringify(user_data)
     console.log(user_data_json);
-    $.post("/signup/userdata", user_data_json, function (result) {
-        if (result.success === "true") {
-            window.location.href= "/login";
-        }
-        else {
-            if (result.reason === "password does not match"){
-                console.log("The password fields do not match. Please re-enter your passwords");
+    // $.post("/signup/submit", user_data_json, function (result) {
+    //     if (result.success === "true") {
+    //         window.location.href= "/login";
+    //     }
+    //     else {
+    //         console.log(result.success.error);
+    //     }
+    // })
+
+    $.ajax({
+        url: "/signup/submit",
+        type: 'POST',
+        dataType: 'json',
+        contentType: "application/json; charset=utf-8",
+        data: user_data_json,
+        success: function(result) {
+            if (result.success === "true") {
+                window.location.href= "/login";
             }
-            else if (result.reason === "username taken"){
-                console.log("The username is already taken");
+            else {
+                console.log(result.success.error);
             }
         }
-    })
+    });
 }
 
 
