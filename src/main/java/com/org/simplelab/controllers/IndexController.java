@@ -12,18 +12,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-@RequestMapping(path="/")
+@RequestMapping(path="/index")
 public class IndexController {
     /**
      * Web index page request
      * @return
      */
-    @RequestMapping("")
-    public String root() {
-        return "redirect:/login";
-    }
+//    @RequestMapping("")
+//    public String root() {
+//        return "redirect:/login";
+//    }
 
-    @RequestMapping("test")
+    @RequestMapping("/test")
     public String test(HttpSession sc, Model model) {
         model.addAttribute("course", DummyEntity.getObj().list_course.get(0));
             return "index";
