@@ -8,8 +8,8 @@ import lombok.ToString;
 /**
  * Current User field requirements:
  * all fields: cannot be empty
- * userName: length 8-32
- * password: length 8-32
+ * userName: length 4-32
+ * password: length 4-32
  *
  */
 

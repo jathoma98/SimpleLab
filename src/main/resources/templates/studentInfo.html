@@ -132,6 +132,7 @@
                 <ul class="right hide-on-med-and-down">
                     <li><a class="modal-trigger" href="#courseModal"><i class="material-icons">add</i></a></li>
                     <li><a href=""><i class="material-icons">delete</i></a></li>
+                    <li><a href=""><i class="material-icons scale-transition scale-out">delete</i></a></li>
                 </ul>
             </div>
         </nav>
@@ -321,6 +322,11 @@
 <script type="text/javascript" src="libs/materialize.min.js"></script>
 </body>
 <script>
+    $.get("/info/get_user", function(user) {
+        console.log(user.firstname);
+        $(document).ready(function () {
+        });
+    });
     $(document).ready(function(){
         $('.modal').modal();
         $('.dropdown-trigger').dropdown();

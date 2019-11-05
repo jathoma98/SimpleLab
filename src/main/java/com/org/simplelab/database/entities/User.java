@@ -19,7 +19,7 @@ public class User implements Serializable {
     private String lastname;
     private String institution;
     private String question;
-    private String answer;
+    private byte[] answer;
     private String role;
     private String email;
 
@@ -101,12 +101,12 @@ public class User implements Serializable {
         this.question = question;
     }
 
-    public String getAnswer() {
+    public byte[] getAnswer() {
         return answer;
     }
 
     public void setAnswer(String answer) {
-        this.answer = answer;
+        this.answer = DBManager.getHash(answer);
     }
 
     public String getRole() {

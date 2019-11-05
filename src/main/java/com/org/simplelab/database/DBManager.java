@@ -11,6 +11,7 @@ import java.security.MessageDigest;
 public class DBManager {
 
     public static final String USER_DOCUMENT_NAME = "user";
+    public static final String SALT = "a very salty salt";
 
     /**
      * Hashes the given string.
@@ -18,6 +19,8 @@ public class DBManager {
 
     public static byte[] getHash(String entry){
         try {
+            StringBuilder sb = new StringBuilder();
+            entry = sb.append(entry).append(SALT).toString();
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             md.update(entry.getBytes());
             return md.digest();
