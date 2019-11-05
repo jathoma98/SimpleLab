@@ -1,10 +1,6 @@
 function signupbtnEvent(){
     let user_role = $("#role").val();
     let password = $("#sp_password").val(), repassword = $("#sp_re_password").val();
-    if (password !== repassword){
-        console.log("pw != rpw")
-        return "error"
-    }
     user_data = {
         userName : $("#userName").val(),
         email: $("#email").val(),
@@ -25,14 +21,6 @@ function signupbtnEvent(){
     }
     let user_data_json = JSON.stringify(user_data)
     console.log(user_data_json);
-    // $.post("/signup/submit", user_data_json, function (result) {
-    //     if (result.success === "true") {
-    //         window.location.href= "/login";
-    //     }
-    //     else {
-    //         console.log(result.success.error);
-    //     }
-    // })
 
     $.ajax({
         url: "/signup/submit",

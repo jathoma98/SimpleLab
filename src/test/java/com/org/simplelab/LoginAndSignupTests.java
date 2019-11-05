@@ -2,15 +2,18 @@ package com.org.simplelab;
 
 import com.org.simplelab.database.UserDB;
 import com.org.simplelab.database.entities.User;
+import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -40,9 +43,10 @@ public class LoginAndSignupTests extends SpringTestConfig{
     @Test
     public void testLogin() throws Exception{
         User user = new User();
+        String password = "password";
         user._metadata = metadata;
-        user.setUsername(new StringBuilder().append("Login auth test user -- ").append(metadata).toString());
-        user.setPassword("pass");
+        user.setUsername(new StringBuilder().append("log").append(metadata).toString());
+        user.setPassword(password);
 
         userDB.insertUser(user);
 
@@ -50,7 +54,7 @@ public class LoginAndSignupTests extends SpringTestConfig{
         //test right username+pass
         this.mockMvc.perform(post("/login")
                              .param("userName", user.getUsername())
-                             .param("password", "pass"))
+                             .param("password", password))
                 //.andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json("{\"success\": \"true\"}"));
@@ -58,7 +62,7 @@ public class LoginAndSignupTests extends SpringTestConfig{
         //test wrong username
         this.mockMvc.perform(post("/login")
                 .param("userName", "probs a wrong username")
-                .param("password", "pass"))
+                .param("password", password))
                 //.andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json("{\"success\": \"false\"}"));
@@ -77,52 +81,31 @@ public class LoginAndSignupTests extends SpringTestConfig{
     @Test
     public void testSignup() throws Exception{
         String username = metadata;
-        String password = "pass";
+        String password = "password";
+        Map<String, String> rawJson = new HashMap<>();
+        rawJson.put("userName", username);
+        rawJson.put("institution", "test school");
+        rawJson.put("sp_password", password);
+        rawJson.put("email", "mail@mail.com");
+        rawJson.put("sp_re_password", password);
+        rawJson.put("question", "this si a question");
+        rawJson.put("answer", "this is the answer");
+        rawJson.put("identity", "teacher");
+
+        JSONObject json = new JSONObject(rawJson);
+        System.out.println(json.toString());
 
 
         //test valid signup
-        this.mockMvc.perform(post("/signup")
-                            .param("userName", username)
-                            .param("email", "testemail1")
-                            .param("sp_password", "pw")
-                            .param("sp_re_password", "pw")
-                            .param("question", "test question")
-                            .param("answer", "test answer")
-                            .param("identity", "teacher"))
-                //.andDo(print())
+        this.mockMvc.perform(post("/signup/userdata")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(json.toString()))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json("{'success': 'true'}"));
 
-        User found = userDB.findUser(username);
-        assertNotNull(found);
-
-        //test duplicate username
-        this.mockMvc.perform(post("/signup")
-                .param("userName", username)
-                .param("email", "testemail2")
-                .param("sp_password", "pw")
-                .param("sp_re_password", "pw")
-                .param("question", "test question")
-                .param("answer", "test answer")
-                .param("identity", "teacher"))
-                //.andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().json("{'success': 'false', 'reason': 'username taken'}"));
-
         userDB.deleteUser(username);
-        //test wrong password repeat
 
-        this.mockMvc.perform(post("/signup")
-                .param("userName", username)
-                .param("email", "testemail2")
-                .param("sp_password", "pw")
-                .param("sp_re_password", "pw_wrong")
-                .param("question", "test question")
-                .param("answer", "test answer")
-                .param("identity", "teacher"))
-                //.andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().json("{'success': 'false', 'reason': 'password does not match'}"));
 
     }
 
