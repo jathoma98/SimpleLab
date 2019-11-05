@@ -84,6 +84,7 @@ public class LoginAndSignupTests extends SpringTestConfig{
         String password = "password";
         Map<String, String> rawJson = new HashMap<>();
         rawJson.put("userName", username);
+        rawJson.put("institution", "test school");
         rawJson.put("sp_password", password);
         rawJson.put("email", "mail@mail.com");
         rawJson.put("sp_re_password", password);
