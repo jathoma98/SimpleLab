@@ -72,4 +72,9 @@ public class RequestResponse {
     public Map<String, String> map(){
         return this.responseMap;
     }
+
+    @Override
+    public String toString() {
+        return this.responseMap.toString();
+    }
 }

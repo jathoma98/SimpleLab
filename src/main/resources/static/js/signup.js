@@ -1,33 +1,42 @@
 function signupbtnEvent(){
-    let user_role = $("#role").val;
+    let user_role = $("#role").val();
     let password = $("#sp_password").val(), repassword = $("#sp_re_password").val();
     user_data = {
         userName : $("#userName").val(),
         email: $("#email").val(),
-        // institution: $("#institution").val(),
-        password: password,
-        repassword: repassword,
+        firstname: $("#firstname").val(),
+        lastname: $("#lastname").val(),
+        institution: $("#institution").val(),
+        sp_password: password,
+        sp_re_password: repassword,
         question: $("#question").val(),
         answer: $("#answer").val(),
         identity: user_role
     }
-    console.log(user_data);
-    $.post("/signup/userdata", user_data, function (result) {
-        if (result.success === "true") {
-            window.location.href= "/login";
+    for(let key in user_data){
+        if(user_data[key] == undefined || user_data[key].length == 0){
+            console.log("There is a empty field: " + key);
+            return "error";
         }
-        else {
-            if (result.error === "password does not match"){
-                console.log("The password fields do not match. Please re-enter your passwords");
+    }
+    let user_data_json = JSON.stringify(user_data)
+    console.log(user_data_json);
+
+    $.ajax({
+        url: "/signup/submit",
+        type: 'POST',
+        dataType: 'json',
+        contentType: "application/json; charset=utf-8",
+        data: user_data_json,
+        success: function(result) {
+            if (result.success === "true") {
+                window.location.href= "/login";
             }
-            else if (result.error === "username taken"){
-                console.log("The username is already taken");
-            }
-            else{
-                console.log(result.error);
+            else {
+                console.log(result.success.error);
             }
         }
-    })
+    });
 }
 
 

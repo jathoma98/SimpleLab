@@ -10,7 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -35,29 +34,32 @@ public class SignUpController {
      *                     reason: "username taken" if username is invalid
      *                             "password does not match" if password repeat doesn't match original password
      */
-    @PostMapping(value = "/userdata", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Map<String, String> signupSubmit(@RequestBody UserValidator userValidator){
+    @PostMapping(path="/submit", consumes= MediaType.APPLICATION_JSON_VALUE)
+    public  Map<String, String> submission(@RequestBody UserValidator userV) {
 
         //TODO: In signup.html, check if fields are empty
         //TODO: make the error message in signup.html look better.
-        RequestResponse rq = new RequestResponse();
-
+        RequestResponse response = new RequestResponse();
         try{
-            userValidator.validate();
-        } catch (Validator.InvalidFieldException e){
-            rq.setError(e.getMessage());
-            return rq.map();
+            userV.validate();
+        }catch(Validator.InvalidFieldException e){
+            response.setSuccess(false);
+            response.setError(e.getMessage());
+            return response.map();
         }
+        User user = userV.build();
 
-        User user = userValidator.build();
 
         if (userDB.insertUser(user) == UserDB.UserInsertionStatus.FAILED){
-            rq.setError("username taken");
-            return rq.map();
+            response.setError("username taken");
+            response.setSuccess(false);
+            return response.map();
         }
-        rq.setSuccess(true);
-        return rq.map();
+
+        response.setSuccess(true);
+        return response.map();
+
 
     }
 }
