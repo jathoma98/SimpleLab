@@ -41,25 +41,23 @@ public class SignUpController {
 
         //TODO: In signup.html, check if fields are empty
         //TODO: make the error message in signup.html look better.
-        Map<String, String> hashMap = new HashMap<>();
+        RequestResponse rq = new RequestResponse();
 
         try{
             userValidator.validate();
         } catch (Validator.InvalidFieldException e){
-            hashMap.put("success", "false");
-            hashMap.put("reason", e.getMessage());
-            return hashMap;
+            rq.setError(e.getMessage());
+            return rq.map();
         }
 
         User user = userValidator.build();
 
         if (userDB.insertUser(user) == UserDB.UserInsertionStatus.FAILED){
-            hashMap.put("success", "false");
-            hashMap.put("reason", "username taken");
-            return hashMap;
+            rq.setError("username taken");
+            return rq.map();
         }
-        hashMap.put("success", "true");
-        return hashMap;
+        rq.setSuccess(true);
+        return rq;
 
     }
 }
