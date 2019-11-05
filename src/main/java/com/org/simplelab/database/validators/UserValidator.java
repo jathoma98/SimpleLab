@@ -3,6 +3,7 @@ package com.org.simplelab.database.validators;
 import com.org.simplelab.database.entities.User;
 import lombok.Setter;
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  * Current User field requirements:
@@ -14,6 +15,7 @@ import lombok.Getter;
 
 @Getter
 @Setter
+@ToString
 public class UserValidator extends Validator {
 
     public static final int MIN_FIELD_LENGTH = 8;
@@ -34,25 +36,27 @@ public class UserValidator extends Validator {
     private String answer;
     private String identity;
 
-    private User user;
-
     public void validate() throws InvalidFieldException{
         StringBuilder errors = new StringBuilder();
 
+        //check min and max length of username
         if (userName.length() < MIN_FIELD_LENGTH ||
                 userName.length() > MAX_FIELD_LENGTH){
             errors.append(USERNAME_LENGTH_ERROR);
         }
 
+        //check that passwords match
         if (!sp_password.equals(sp_re_password)){
             errors.append(PASSWORD_MATCH_ERROR);
         }
 
+        //check password length
         if (sp_password.length() < MIN_FIELD_LENGTH ||
                 sp_password.length() > MAX_FIELD_LENGTH){
             errors.append(PASSWORD_LENGTH_ERROR);
         }
 
+        //ensure all fields are filled.
         int[] lengths = {email.length(), question.length(), answer.length()};
         for (int length: lengths){
             if (length < GLOBAL_MIN_LENGTH){
