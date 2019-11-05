@@ -32,12 +32,15 @@ public class SignUpController {
      *                     reason: "username taken" if username is invalid
      *                             "password does not match" if password repeat doesn't match original password
      */
-    @PostMapping("")
+    @PostMapping("/userdata")
     @ResponseBody
     public Map<String, String> signupSubmit(@RequestParam("userName") String username,
                                             @RequestParam("email") String email,
-                                            @RequestParam("sp_password") String password,
-                                            @RequestParam("sp_re_password") String password_repeat,
+                                            @RequestParam("institution") String institution,
+                                            @RequestParam("firstname") String firstname,
+                                            @RequestParam("lastname") String lastname,
+                                            @RequestParam("password") String password,
+                                            @RequestParam("repassword") String password_repeat,
                                             @RequestParam("question") String question,
                                             @RequestParam("answer") String answer,
                                             @RequestParam("identity") String identity){
@@ -54,6 +57,9 @@ public class SignUpController {
         User user = new User();
         user.setUsername(username);
         user.setPassword(password);
+        user.setInstitution(institution);
+        user.setFirstname(firstname);
+        user.setLastname(lastname);
         user.setEmail(email);
         user.setQuestion(question);
         user.setAnswer(answer);
