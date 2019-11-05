@@ -39,9 +39,18 @@
 .btn_margin{
 	margin_top:15px;
 	margin-right: 15px;
+	margin-bottom: 15px;
 
 }
 
 .login_radius{
 	border-radius: 10px;
+}
+
+.account_img{
+	height: 50px;
+	width: 50px;
+	margin-top: 10px;
+	margin-right: 10px;
+	/*background: pink;*/
 }
