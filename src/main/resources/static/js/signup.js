@@ -33,7 +33,7 @@ function signupbtnEvent(){
                 window.location.href= "/login";
             }
             else {
-                console.log(result.success.error);
+                console.log(result.error);
             }
         }
     });
