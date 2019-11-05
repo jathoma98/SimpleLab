@@ -35,6 +35,7 @@ public class UserValidator extends Validator {
     private String question;
     private String answer;
     private String identity;
+    private String institution;
 
     public void validate() throws InvalidFieldException{
         StringBuilder errors = new StringBuilder();
@@ -57,7 +58,7 @@ public class UserValidator extends Validator {
         }
 
         //ensure all fields are filled.
-        int[] lengths = {email.length(), question.length(), answer.length()};
+        int[] lengths = {email.length(), question.length(), answer.length(), institution.length()};
         for (int length: lengths){
             if (length < GLOBAL_MIN_LENGTH){
                 errors.append(EMPTY_FIELD);
@@ -78,6 +79,7 @@ public class UserValidator extends Validator {
         user.setQuestion(question);
         user.setAnswer(answer);
         user.setRole(identity);
+        user.setInstitution(institution);
         return user;
     };
 

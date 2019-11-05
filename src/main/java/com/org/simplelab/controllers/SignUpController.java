@@ -57,7 +57,7 @@ public class SignUpController {
             return rq.map();
         }
         rq.setSuccess(true);
-        return rq;
+        return rq.map();
 
     }
 }
