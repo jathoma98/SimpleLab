@@ -1,5 +1,5 @@
 function signupbtnEvent(){
-    let user_role = $("#role").val;
+    let user_role = $("#role").val();
     let password = $("#sp_password").val(), repassword = $("#sp_re_password").val();
     if (password !== repassword){
         console.log("pw != rpw")
@@ -8,7 +8,9 @@ function signupbtnEvent(){
     user_data = {
         userName : $("#userName").val(),
         email: $("#email").val(),
-        // institution: $("#institution").val(),
+        firstname: $("#firstname").val(),
+        lastname: $("#lastname").val(),
+        institution: $("#institution").val(),
         password: password,
         repassword: repassword,
         question: $("#question").val(),
@@ -16,13 +18,14 @@ function signupbtnEvent(){
         identity: user_role
     }
     for(let key in user_data){
-        if(user_data[key] == undefined || user_data[key].lenght == 0){
+        if(user_data[key] == undefined || user_data[key].length == 0){
             console.log("There is a empty field: " + key);
             return "error";
         }
     }
-    console.log(user_data);
-    $.post("/signup/userdata", user_data, function (result) {
+    let user_data_json = JSON.stringify(user_data)
+    console.log(user_data_json);
+    $.post("/signup/userdata", user_data_json, function (result) {
         if (result.success === "true") {
             window.location.href= "/login";
         }
