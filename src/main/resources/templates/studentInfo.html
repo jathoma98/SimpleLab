@@ -321,6 +321,11 @@
 <script type="text/javascript" src="libs/materialize.min.js"></script>
 </body>
 <script>
+    $.get("/info/get_user", function(user) {
+        console.log(user.firstname);
+        $(document).ready(function () {
+        });
+    });
     $(document).ready(function(){
         $('.modal').modal();
         $('.dropdown-trigger').dropdown();
