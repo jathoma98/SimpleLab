@@ -45,6 +45,7 @@ public class SignUpController {
         //TODO: In signup.html, check if fields are empty
         //TODO: make the error message in signup.html look better.
         Map<String, String> hashMap = new HashMap<>();
+
         if (!password.equals(password_repeat)){
             hashMap.put("success", "false");
             hashMap.put("reason", "password does not match");
