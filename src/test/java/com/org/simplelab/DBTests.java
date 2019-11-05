@@ -47,10 +47,10 @@ class DBTests extends SpringTestConfig {
 
 		//adding metadata to delete this entity later.
 		user._metadata = metadata;
-		assertTrue(userDB.insertUser(user));
+		assertEquals(userDB.insertUser(user), UserDB.UserInsertionStatus.SUCCESSFUL);
 
 		//ensure duplicate insertion returns false
-		assertFalse(userDB.insertUser(user));
+		assertEquals(userDB.insertUser(user), UserDB.UserInsertionStatus.FAILED);
 
 		//ensure duplicate insertion doesn't insert an additional instance with the same username
 		UserRepository repo = userDB.DEBUG_getInterface();

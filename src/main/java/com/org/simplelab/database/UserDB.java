@@ -2,6 +2,7 @@ package com.org.simplelab.database;
 
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.repositories.UserRepository;
+import org.omg.PortableInterceptor.SUCCESSFUL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +29,11 @@ public class UserDB{
         SUCCESSFUL,
         FAILED
     };
+
+    public enum UserInsertionStatus{
+        SUCCESSFUL,
+        FAILED
+    }
 
     /**
      * Attempts to authenticate a user by their given username and password.
@@ -67,13 +73,13 @@ public class UserDB{
      *                                  or
      *                                  The username is reserved
      */
-    public boolean insertUser(User user){
+    public UserInsertionStatus insertUser(User user){
 
         if (findUser(user.getUsername()) != null
                 || isReserved(user.getUsername()))
-            return false;
+            return UserInsertionStatus.FAILED;
         userRepository.save(user);
-        return true;
+        return UserInsertionStatus.SUCCESSFUL;
     }
 
     /**

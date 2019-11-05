@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 @Document(collection = DBManager.USER_DOCUMENT_NAME)
 public class User implements Serializable {
@@ -20,6 +21,7 @@ public class User implements Serializable {
     private String question;
     private String answer;
     private String role;
+    private String email;
 
     //metadata field for interacting with DB tests
     public String _metadata;
@@ -33,6 +35,14 @@ public class User implements Serializable {
      */
     public void setPassword(String password){
         this.setPass_hash(DBManager.getHash(password));
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getId() {
@@ -112,12 +122,14 @@ public class User implements Serializable {
         return "User{" +
                 "id='" + id + '\'' +
                 ", username='" + username + '\'' +
+                ", pass_hash=" + Arrays.toString(pass_hash) +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", institution='" + institution + '\'' +
                 ", question='" + question + '\'' +
                 ", answer='" + answer + '\'' +
                 ", role='" + role + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
 }
