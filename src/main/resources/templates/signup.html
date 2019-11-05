@@ -5,83 +5,71 @@
     <link rel="stylesheet" th:href="@{../css/info.css}">
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" th:href="@{../css/materialize.min.css}"  media="screen,projection"/>
-    <script src="/libs/jquery-1.9.1.js"></script>
+    <script th:src= "@{/libs/jquery-1.9.1.js}"></script>
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-    <script>
-        //TODO: check if the fields are empty
-        //TODO: make the alert look better
-
-        $(document).ready( () => {
-            $("#signupbtn").click(() => {
-                user_identity = $("input[name='identity']:checked").val();
-                userdata = {
-                    userName: $("#userName").val(),
-                    sp_password: $("#sp_password").val(),
-                    sp_re_password: $("#sp_re_password").val(),
-                    question: $("#question").val(),
-                    answer: $("#answer").val(),
-                    email: $("#email").val(),
-                    identity: user_identity
-                };
-                $.post("/signup", userdata, (result) => {
-                    if (result.success === "true") {
-                        window.location.href= "/login";
-                    }
-                    else {
-                        if (result.reason === "password does not match"){
-                            alert("The password fields do not match. Please re-enter your passwords");
-                        }
-                        else if (result.reason === "username taken"){
-                            alert("The username is already taken");
-                        }
-                    }
-                });
-            });
-        });
-    </script>
+    <!--signup page javascript-->
+    <script th:src = "@{/js/signup.js}"></script>
 </head>
 
 <body class="body valign-wrapper row body">
 <div class=" col s4  white offset-s4 login_radius">
     <div class="center">
+        <div class="row"></div>
+        <div class="row"></div>
         <section>
             <div class="input-field col s6">
                 <i class="material-icons prefix">account_circle</i>
-                <input id="userName" type="text" class="validate">
-                <label for="userName">User Name</label>
+                <input id="userName" placeholder="User Name" type="text" class="validate">
+                <label class="active" for="userName">User Name</label>
+            </div>
+            <div class="input-field col s6">
+                <i class="material-icons prefix">school</i>
+                <input id="institution" type="text" placeholder="Enter your institution" class="validate">
+                <label class="active" for="answer">Institution</label>
+            </div>
+
+            <div class="input-field col s6">
+                <i class="material-icons prefix">account_circle</i>
+                <input id="firstname" placeholder="First Name" type="text" class="validate">
+                <label class="active" for="firstname">First Name</label>
             </div>
             <div class="input-field col s6">
                 <i class="material-icons prefix">email</i>
-                <input id="email" type="text" class="validate">
-                <label for="email">Email</label>
+                <input id="lastname" placeholder="Last Name" type="text" class="validate">
+                <label class="active" for="lastname">Last Name</label>
             </div>
             <div class="input-field col s6">
                 <i class="material-icons prefix">lock</i>
-                <input id="sp_password" type="text" class="validate">
-                <label for="sp_password">Password</label>
+                <input id="sp_password" placeholder="Enter Your Password" type="text" class="validate">
+                <label  class="active" for="sp_password">Password</label>
             </div>
             <div class="input-field col s6">
                 <i class="material-icons prefix">lock</i>
-                <input id="sp_re_password" type="text" class="validate">
-                <label for="sp_re_password">Confirm Password</label>
+                <input id="sp_re_password" placeholder="Enter Your Password Again" type="text" class="validate">
+                <label  class="active" for="sp_re_password">Password</label>
             </div>
-            <div class="input-field col s6">
-                <i class="material-icons prefix">question_answer</i>
-                <input id="question" type="text" class="validate">
-                <label for="question">Question to reset password</label>
+            <div class="input-field col s12">
+                <i class="material-icons prefix">email</i>
+                <input id="email" placeholder="Email" type="text" class="validate">
+                <label class="active" for="email">Email</label>
             </div>
-            <div class="input-field col s6">
+            <div class="input-field col s12">
                 <i class="material-icons prefix">question_answer</i>
-                <input id="answer" type="text" class="validate">
-                <label for="answer">Answer for Question</label>
+                <input id="question" placeholder="Question use for recover password" type="text" class="validate">
+                <label class="active" for="question">Question</label>
+            </div>
+
+            <div class="input-field col s12">
+                <i class="material-icons prefix">question_answer</i>
+                <input id="answer" type="text" placeholder="Answer For the Question" class="validate">
+                <label class="active" for="answer">Answer</label>
             </div>
             <form action="#">
                 <h6 class="col s4">Sign up as a:</h6>
                 <p class="col s4">
                     <label>
-                        <input class="with-gap" value="teacher" name="identity" type="radio" checked />
+                        <input class="with-gap" id = "role" value="teacher" name="identity" type="radio" checked />
                         <span>Teacher</span>
                     </label>
                 </p>
@@ -107,5 +95,7 @@
 
 
 </body>
+
+
 
 </html>
