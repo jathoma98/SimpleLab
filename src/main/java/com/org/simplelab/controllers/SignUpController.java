@@ -23,7 +23,7 @@ public class SignUpController {
     }
 
     /**
-     * POST handler for signup data
+     * POST handler for signup user data
      * @return JSON object with params
      *                     success: true   if signup was successful
      *                              false  otherwise
