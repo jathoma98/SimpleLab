@@ -6,6 +6,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.HashMap;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -68,6 +73,59 @@ public class LoginAndSignupTests extends SpringTestConfig{
 
 
     }
+
+    @Test
+    public void testSignup() throws Exception{
+        String username = metadata;
+        String password = "pass";
+
+
+        //test valid signup
+        this.mockMvc.perform(post("/signup")
+                            .param("userName", username)
+                            .param("email", "testemail1")
+                            .param("sp_password", "pw")
+                            .param("sp_re_password", "pw")
+                            .param("question", "test question")
+                            .param("answer", "test answer")
+                            .param("identity", "teacher"))
+                //.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json("{'success': 'true'}"));
+
+        User found = userDB.findUser(username);
+        assertNotNull(found);
+
+        //test duplicate username
+        this.mockMvc.perform(post("/signup")
+                .param("userName", username)
+                .param("email", "testemail2")
+                .param("sp_password", "pw")
+                .param("sp_re_password", "pw")
+                .param("question", "test question")
+                .param("answer", "test answer")
+                .param("identity", "teacher"))
+                //.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json("{'success': 'false', 'reason': 'username taken'}"));
+
+        userDB.deleteUser(username);
+        //test wrong password repeat
+
+        this.mockMvc.perform(post("/signup")
+                .param("userName", username)
+                .param("email", "testemail2")
+                .param("sp_password", "pw")
+                .param("sp_re_password", "pw_wrong")
+                .param("question", "test question")
+                .param("answer", "test answer")
+                .param("identity", "teacher"))
+                //.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json("{'success': 'false', 'reason': 'password does not match'}"));
+
+    }
+
 
 
 
