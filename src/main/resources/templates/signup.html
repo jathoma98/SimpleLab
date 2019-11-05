@@ -8,6 +8,39 @@
     <script src="/libs/jquery-1.9.1.js"></script>
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <script>
+        //TODO: check if the fields are empty
+        //TODO: make the alert look better
+
+        $(document).ready( () => {
+            $("#signupbtn").click(() => {
+                user_identity = $("input[name='identity']:checked").val();
+                userdata = {
+                    userName: $("#userName").val(),
+                    sp_password: $("#sp_password").val(),
+                    sp_re_password: $("#sp_re_password").val(),
+                    question: $("#question").val(),
+                    answer: $("#answer").val(),
+                    email: $("#email").val(),
+                    identity: user_identity
+                };
+                $.post("/signup", userdata, (result) => {
+                    if (result.success === "true") {
+                        window.location.href= "/login";
+                    }
+                    else {
+                        if (result.reason === "password does not match"){
+                            alert("The password fields do not match. Please re-enter your passwords");
+                        }
+                        else if (result.reason === "username taken"){
+                            alert("The username is already taken");
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 </head>
 
 <body class="body valign-wrapper row body">
@@ -63,7 +96,7 @@
             <br>
             <div class="row"></div>
             <div class="row">
-                <button class="btn waves-effect waves-light right modal-close btn_margin" style="background:#dd0052; "  onclick="window.location.href='../login'" type="submit" name="action">Signup
+                <button class="btn waves-effect waves-light right modal-close btn_margin" id="signupbtn" style="background:#dd0052; " type="submit" name="action">Signup
                     <i class="material-icons right">send</i>
                 </button>
             </div>
