@@ -16,11 +16,11 @@ function signupbtnEvent(){
     for(let key in user_data){
         if(user_data[key] == undefined || user_data[key].length == 0){
             console.log("There is a empty field: " + key);
-            return "error";
+            //return "error";
         }
     }
     let user_data_json = JSON.stringify(user_data)
-    console.log(user_data_json);
+    //console.log(user_data_json);
 
     $.ajax({
         url: "/signup/submit",
@@ -33,7 +33,7 @@ function signupbtnEvent(){
                 window.location.href= "/login";
             }
             else {
-                console.log(result.error);
+                alert(result.error);
             }
         }
     });
