@@ -25,23 +25,12 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 
 //This annotation makes tests run in alphabetical order.
-@TestMethodOrder(MethodOrderer.Alphanumeric.class)
-@SpringBootTest
-class SimpleLabApplicationTests {
+class DBTests extends SpringTestConfig {
 
 	@Autowired
 	UserDB userDB;
 
-	static String metadata;
 	static String prefix = "test user -- ";
-
-	@BeforeAll
-	static void generateMetadata(){
-		int length = 25;
-		boolean useLetters = true;
-		boolean useNumbers = true;
-		metadata = RandomStringUtils.random(length, useLetters, useNumbers);
-	}
 
 	@Test
 	void aaaaa_contextLoads() {
