@@ -18,7 +18,7 @@ import lombok.ToString;
 @ToString
 public class UserValidator extends Validator {
 
-    public static final int MIN_FIELD_LENGTH = 8;
+    public static final int MIN_FIELD_LENGTH = 4;
     public static final int MAX_FIELD_LENGTH = 32;
     public static final int GLOBAL_MIN_LENGTH = 1;
 

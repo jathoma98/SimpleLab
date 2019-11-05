@@ -41,8 +41,8 @@ public class LoginAndSignupTests extends SpringTestConfig{
     public void testLogin() throws Exception{
         User user = new User();
         user._metadata = metadata;
-        user.setUsername(new StringBuilder().append("Login auth test user -- ").append(metadata).toString());
-        user.setPassword("pass");
+        user.setUsername(new StringBuilder().append("log").append(metadata).toString());
+        user.setPassword("password");
 
         userDB.insertUser(user);
 
@@ -77,7 +77,7 @@ public class LoginAndSignupTests extends SpringTestConfig{
     @Test
     public void testSignup() throws Exception{
         String username = metadata;
-        String password = "pass";
+        String password = "password";
 
 
         //test valid signup
