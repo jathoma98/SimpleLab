@@ -1,9 +1,12 @@
 package com.org.simplelab;
 
+import com.org.simplelab.database.UserDB;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 /**
@@ -21,11 +24,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public abstract class SpringTestConfig {
 
+    @Autowired
+    UserDB userDB;
+
     /**
      * Notes on metadata:
      * This metadata field is used to identify entities created during a specific test instance
-     * You should have some method at the end of your test class which deletes all the entities
-     * you created by querying the DB for this metadata.
+     * You should modify the zzzzz_cleanup method if you are inserting new entries into different DBs during tests.
      */
     static String metadata;
 
@@ -35,6 +40,12 @@ public abstract class SpringTestConfig {
         boolean useLetters = true;
         boolean useNumbers = true;
         metadata = RandomStringUtils.random(length, useLetters, useNumbers);
+    }
+
+
+    @Test
+    void zzzzz_cleanup(){
+        userDB.deleteByMetadata(metadata);
     }
 
 

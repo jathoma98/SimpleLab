@@ -27,9 +27,6 @@ import static org.junit.jupiter.api.Assertions.*;
 //This annotation makes tests run in alphabetical order.
 class DBTests extends SpringTestConfig {
 
-	@Autowired
-	UserDB userDB;
-
 	static String prefix = "test user -- ";
 
 	@Test
