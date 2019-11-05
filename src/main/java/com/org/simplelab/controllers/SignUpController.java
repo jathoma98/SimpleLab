@@ -23,7 +23,7 @@ public class SignUpController {
     }
 
     /**
-     * POST handler for signup data
+     * POST handler for signup user data
      * @return JSON object with params
      *                     success: true   if signup was successful
      *                              false  otherwise
@@ -48,6 +48,7 @@ public class SignUpController {
         //TODO: In signup.html, check if fields are empty
         //TODO: make the error message in signup.html look better.
         Map<String, String> hashMap = new HashMap<>();
+
         if (!password.equals(password_repeat)){
             hashMap.put("success", "false");
             hashMap.put("reason", "password does not match");
