@@ -1,6 +1,8 @@
 package com.org.simplelab;
 
 import com.org.simplelab.database.UserDB;
+import com.org.simplelab.database.entities.Course;
+import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;
 
 import com.org.simplelab.database.repositories.CourseRepository;
@@ -12,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.boot.web.server.LocalServerPort;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -161,6 +166,31 @@ class DBTests extends SpringTestConfig {
 
 	@Autowired
 	LabRepository labRepository;
+
+	@Test
+	void testCourse(){
+		Course c = new Course();
+		Lab l = new Lab();
+
+		l.setName("test lab");
+		c.setName("test course");
+
+		labRepository.save(l);
+
+		List<Lab> labs = new ArrayList<>();
+		labs.add(l);
+		c.setLabs(labs);
+		courseRepository.save(c);
+
+	}
+
+	@Test
+	void testgetCourse(){
+		List<Course> c = courseRepository.findAll();
+		for (Course co: c)
+			for (Lab l: co.getLabs())
+				System.out.println(l.toString());
+	}
 
 
 	@Test
