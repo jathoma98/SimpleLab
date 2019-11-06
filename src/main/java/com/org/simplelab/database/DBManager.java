@@ -11,12 +11,14 @@ import java.security.MessageDigest;
 public class DBManager {
 
     public static final String USER_DOCUMENT_NAME = "user";
+    public static final String COURSE_DOCUMENT_NAME = "course";
+    public static final String LAB_DOCUMENT_NAME = "lab";
+
     public static final String SALT = "a very salty salt";
 
     /**
      * Hashes the given string.
      */
-
     public static byte[] getHash(String entry){
         try {
             StringBuilder sb = new StringBuilder();

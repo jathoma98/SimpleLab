@@ -5,6 +5,8 @@ import lombok.Setter;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.util.regex.Pattern;
+
 /**
  * Current User field requirements:
  * all fields: cannot be empty
@@ -26,6 +28,7 @@ public class UserValidator extends Validator {
     public static final String PASSWORD_MATCH_ERROR = "The passwords do not match. \n";
     public static final String PASSWORD_LENGTH_ERROR ="The password must be between " + MIN_FIELD_LENGTH + "-" + MAX_FIELD_LENGTH + " characters in length. \n";
     public static final String EMPTY_FIELD = "Fields cannot be empty. \n";
+    public static final String INVALID_EMAIL = "The email is invalid. \n";
 
 
     private String userName;
@@ -57,14 +60,18 @@ public class UserValidator extends Validator {
             errors.append(PASSWORD_LENGTH_ERROR);
         }
 
+        //ensure the email is a valid format.
+        if (!Pattern.matches("[^@]+@[^\\.]+\\..+", email)){
+            errors.append(INVALID_EMAIL);
+        }
+
         //ensure all fields are filled.
         int[] lengths = {email.length(), question.length(), answer.length(), institution.length()};
         for (int length: lengths){
-            if (length < GLOBAL_MIN_LENGTH){
+            if (length == 0)
                 errors.append(EMPTY_FIELD);
                 break;
             }
-        }
 
         if (errors.length() > 0){
             throw new InvalidFieldException(errors.toString());

@@ -97,10 +97,10 @@ public class LoginAndSignupTests extends SpringTestConfig{
 
 
         //test valid signup
-        this.mockMvc.perform(post("/signup/userdata")
+        this.mockMvc.perform(post("/signup/submit")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(json.toString()))
-                .andDo(print())
+                //.andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json("{'success': 'true'}"));
 

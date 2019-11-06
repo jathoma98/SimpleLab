@@ -1,8 +1,12 @@
 package com.org.simplelab;
 
 import com.org.simplelab.database.UserDB;
+import com.org.simplelab.database.entities.Course;
+import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;
 
+import com.org.simplelab.database.repositories.CourseRepository;
+import com.org.simplelab.database.repositories.LabRepository;
 import com.org.simplelab.database.repositories.UserRepository;
 import org.junit.jupiter.api.*;
 import org.junit.After;
@@ -10,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.boot.web.server.LocalServerPort;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -141,10 +148,56 @@ class DBTests extends SpringTestConfig {
 		assertEquals(userDB.authenticate(user.getUsername(), password), UserDB.UserAuthenticationStatus.SUCCESSFUL);
 	}
 
+	//weird error that occurred during runtime
+	@Test
+	void User_authenticate_weird(){
+		String breaker1 = "aaaaaaaa";
+		String breaker2 = "qqqqqqqq";
+		userDB.findUser(breaker2);
+		userDB.findUser(breaker1);
+	}
+
+	/**
+	 * Begin MongoDB Course tests
+	 */
+
+	@Autowired
+	CourseRepository courseRepository;
+
+	@Autowired
+	LabRepository labRepository;
+
+	@Test
+	void testCourse(){
+		Course c = new Course();
+		Lab l = new Lab();
+
+		l.setName("test lab");
+		c.setName("test course");
+
+		labRepository.save(l);
+
+		List<Lab> labs = new ArrayList<>();
+		labs.add(l);
+		c.setLabs(labs);
+		courseRepository.save(c);
+
+	}
+
+	@Test
+	void testgetCourse(){
+		List<Course> c = courseRepository.findAll();
+		for (Course co: c)
+			for (Lab l: co.getLabs())
+				System.out.println(l.toString());
+	}
+
 
 	@Test
 	void zzzzz_cleanup(){
+
 		userDB.deleteByMetadata(metadata);
+
 	}
 
 

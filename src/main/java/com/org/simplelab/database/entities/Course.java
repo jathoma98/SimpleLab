@@ -1,92 +1,30 @@
 package com.org.simplelab.database.entities;
-import java.io.Serializable;
+import com.org.simplelab.database.DBManager;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+
 import java.util.List;
 
-public class Course implements Serializable {
-    String ucid;
-    String name;
-    String create_day;
-    String own_uuid;
-    String description;
-    List<String> list_of_uuid; //Student ID
-    List<String> list_of_ulid; //Lab ID
+@Getter
+@Setter
+@ToString
+@Document(collection = DBManager.COURSE_DOCUMENT_NAME)
+public class Course {
 
-    public Course() {}
+    //internal use
+    @Id
+    private String _id;
 
-    public Course(String ucid, String name, String create_day, String own_uuid, List<String> list_of_uuid, List<String> list_of_ulid) {
-        this.ucid = ucid;
-        this.name = name;
-        this.create_day = create_day;
-        this.own_uuid = own_uuid;
-        this.list_of_uuid = list_of_uuid;
-        this.list_of_ulid = list_of_ulid;
-    }
+    private String course_id;
+    private String name;
 
-    public String getDescription() {
-        return description;
-    }
+    //annotation causes MongoDB to store IDs of labs here.
+    @DBRef
+    private List<Lab> labs;
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getUcid() {
-        return ucid;
-    }
-
-    public void setUcid(String ucid) {
-        this.ucid = ucid;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCreate_day() {
-        return create_day;
-    }
-
-    public void setCreate_day(String create_day) {
-        this.create_day = create_day;
-    }
-
-    public String getOwn_uuid() {
-        return own_uuid;
-    }
-
-    public void setOwn_uuid(String own_uuid) {
-        this.own_uuid = own_uuid;
-    }
-
-    public List<String> getList_of_uuid() {
-        return list_of_uuid;
-    }
-
-    public void setList_of_uuid(List<String> list_of_uuid) {
-        this.list_of_uuid = list_of_uuid;
-    }
-
-    public List<String> getList_of_ulid() {
-        return list_of_ulid;
-    }
-
-    public void setList_of_ulid(List<String> list_of_ulid) {
-        this.list_of_ulid = list_of_ulid;
-    }
-
-    @Override
-    public String toString() {
-        return "Course{" +
-                "ucid='" + ucid + '\'' +
-                ", name='" + name + '\'' +
-                ", create_day='" + create_day + '\'' +
-                ", own_uuid='" + own_uuid + '\'' +
-                ", list_of_uuid=" + list_of_uuid +
-                ", list_of_ulid=" + list_of_ulid +
-                '}';
-    }
 }
