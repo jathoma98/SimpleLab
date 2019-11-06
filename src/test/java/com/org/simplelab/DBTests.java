@@ -166,30 +166,27 @@ class DBTests extends SpringTestConfig {
 
 	@Autowired
 	LabRepository labRepository;
-
+/**
 	@Test
 	void testCourse(){
+		User u = new User();
+		u.setUsername("Pogey");
+		u.setPassword("Pass");
+		u.setFirstname("jacob");
+		u.setLastname("thomas");
+
 		Course c = new Course();
-		Lab l = new Lab();
-
-		l.setName("test lab");
-		c.setName("test course");
-
-		labRepository.save(l);
-
-		List<Lab> labs = new ArrayList<>();
-		labs.add(l);
-		c.setLabs(labs);
+		c.setCourse_id("CSE308");
+		c.setName("Software Engineering");
+		c.setDescription("The course for CSE308");
+		c.setCreator(u);
 		courseRepository.save(c);
 
 	}
-
+**/
 	@Test
 	void testgetCourse(){
-		List<Course> c = courseRepository.findAll();
-		for (Course co: c)
-			for (Lab l: co.getLabs())
-				System.out.println(l.toString());
+
 	}
 
 

@@ -46,6 +46,7 @@ public class LoginController{
         if (userDB.authenticate(username, password) == UserDB.UserAuthenticationStatus.SUCCESSFUL) {
             User user = userDB.findUser(username);
             session.setAttribute("username", username);
+            session.setAttribute("user_id", user.getId());
             session.setAttribute("identity", user.getRole());
             resp.setSuccess(true);
             return resp.map();
