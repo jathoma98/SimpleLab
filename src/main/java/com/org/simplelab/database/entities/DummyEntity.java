@@ -23,9 +23,7 @@ public class DummyEntity {
         list_course = new LinkedList<>();
         /**
         for(int i = 0; i< 10; i++){
-            Course c = new Course();
-            Course.setName("name")
-            System.out.println(c);
+            Course c = new Course(Integer.toString(i), "course_"+ i, i + "-" + i + "-" + "2019", Integer.toString(i*2), list_uuid, list_ulid);
             list_course.add(c);
         }**/
 

@@ -30,13 +30,14 @@ function signupbtnEvent(){
         data: user_data_json,
         success: function(result) {
             if (result.success === "true") {
-                window.location.href= "/login";
+                window.location.href= "/";
             }
             else {
                 alert(result.error);
             }
         }
     });
+
 }
 
 

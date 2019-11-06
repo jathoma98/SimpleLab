@@ -14,8 +14,10 @@ import java.util.List;
 @RequestMapping(path="/teacher")
 public class TeacherController {
     @RequestMapping("")
-    public String root(HttpSession sc, Model model) {
+    public String root(HttpSession session, Model model) {
         List<Course> list_course = new LinkedList<>();
+        String home_navig = ((String)session.getAttribute("username")) + "'s Home";
+        model.addAttribute("home_navig", home_navig);
         model.addAttribute("list_of_course", DummyEntity.getObj().list_course);
         return "teacherInfo";
     }

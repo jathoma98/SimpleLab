@@ -5,6 +5,7 @@ import com.org.simplelab.database.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 
 import javax.servlet.http.HttpSession;
@@ -16,12 +17,13 @@ import java.util.Map;
  */
 
 @Controller
+@RequestMapping(path="/")
 public class LoginController{
 
     @Autowired
     UserDB userDB;
 
-    @GetMapping("/login")
+    @GetMapping("")
     public String loginGet(){
         return "login";
     }
@@ -60,17 +62,19 @@ public class LoginController{
     /**
      * Redirect user page base on they role in the current session.
      *
+     * @param session -current user session
+     * @return ModelAndView redirect path for different role of user
      */
-    @GetMapping("/role")
-    public String rolePageRedirect(HttpSession session) {
-        String username = (String)session.getAttribute("username" );
-        String identity = (String)session.getAttribute("identity" );
-        if( username != null && identity != null ){
-            if(identity.equals("teacher")){
-                return "redirect:/teacher";
-            }else if(identity.equals("student"))
-                return "redirect:/student";
+    @RequestMapping(value = "/role", method = RequestMethod.GET)
+    public ModelAndView rolePageRedirect(HttpSession session) {
+        String username = (String) session.getAttribute("username");
+        String identity = (String) session.getAttribute("identity");
+        if (username != null && identity != null) {
+            if (identity.equals("teacher") ) {
+                return new ModelAndView("redirect:/teacher");
+            } else if (identity.equals("student"))
+                return new ModelAndView("redirect:/student");
         }
-        return "redirect:/";
+        return new ModelAndView("redirect:/");
     }
 }
