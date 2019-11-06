@@ -59,22 +59,17 @@ public class LoginController{
     /**
      * Redirect user page base on they role in the current session.
      *
-     * @param session -current user session
-     * @return JSON response with format:
-     *          { success: "true" } if authentication is successful
-     *          { success: "false" } otherwise
      */
-    @ResponseBody
-    @PostMapping("/role")
+    @GetMapping("/role")
     public String rolePageRedirect(HttpSession session) {
         String username = (String)session.getAttribute("username" );
         String identity = (String)session.getAttribute("identity" );
         if( username != null && identity != null ){
-            if(identity == "teacher"){
-                return "redirct:/teacher";
-            }else if(identity == "student")
-                return "redirct:/student";
+            if(identity.equals("teacher")){
+                return "redirect:/teacher";
+            }else if(identity.equals("student"))
+                return "redirect:/student";
         }
-        return "redirct:/";
+        return "redirect:/";
     }
 }

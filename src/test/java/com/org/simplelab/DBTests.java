@@ -141,14 +141,13 @@ class DBTests extends SpringTestConfig {
 		assertEquals(userDB.authenticate(user.getUsername(), password), UserDB.UserAuthenticationStatus.SUCCESSFUL);
 	}
 
-	//TODO: figure this out
 	//weird error that occurred during runtime
 	@Test
 	void User_authenticate_weird(){
-		//String breaker1 = "aaaaaaaa";
-		//String breaker2 = "qqqqqqqq";
-		//userDB.findUser(breaker2);
-		//userDB.findUser(breaker2);
+		String breaker1 = "aaaaaaaa";
+		String breaker2 = "qqqqqqqq";
+		userDB.findUser(breaker2);
+		userDB.findUser(breaker1);
 	}
 
 
