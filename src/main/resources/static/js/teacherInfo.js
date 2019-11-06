@@ -20,13 +20,25 @@ function saveCourse(){
                     url: "/course/rest/loadInfo",
                     type: "GET",
                     success: function(result){
-                        for(r in result){
+                        $('#course_list tbody').empty();
+                        let len = result.length;
+                        for(let r = len-1; r >= 0; r--){
                             //TODO: Clear table
                             //TODO: build table
-                            result[r]
+                            $('#course_list tbody').append(
+                                "<tr>" +
+                                    "<td>" +
+                                        result[r].course_id +
+                                    "</td>" +
+                                    "<td>" +
+                                        result[r].name +
+                                    "</td>" +
+                                    "<td>" +
+                                        result[r].createdDate +
+                                    "</td>" +
+                                "</tr>"
+                            )
                         }
-                        
-                        console.log(result);
                  }
                 })
                 // $.get("/course/rest/loadInfo", function(result){console.log(result)} )
