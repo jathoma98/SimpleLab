@@ -184,10 +184,6 @@ class DBTests extends SpringTestConfig {
 		courseRepository.save(c);
 
 	}
-	@Test
-	void testgetCourse(){
-
-	}
 
 
 	@Test

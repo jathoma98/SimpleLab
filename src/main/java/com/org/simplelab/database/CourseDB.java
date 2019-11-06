@@ -26,6 +26,11 @@ public class CourseDB {
         return true;
     }
 
+    public List<Course> findCourse(String name){
+        List<Course> found = courseRepository.findByName(name);
+        return found.size() == 0? null: found;
+    }
+
     public List<Course> getCoursesForTeacher(String id){
         List<Course> found = courseRepository.findForTeacher(id);
         return found;

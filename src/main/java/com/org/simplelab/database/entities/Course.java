@@ -31,6 +31,8 @@ public class Course{
     private String description;
     private User creator;
 
+    private String _metadata;
+
     //annotation causes MongoDB to store IDs of labs here.
     @DBRef
     private List<Lab> labs;
