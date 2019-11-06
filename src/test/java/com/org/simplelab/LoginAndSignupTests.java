@@ -33,7 +33,7 @@ public class LoginAndSignupTests extends SpringTestConfig{
 
     @Test
     public void helloWorldRest() throws Exception{
-        this.mockMvc.perform(get("/rest_test"))
+        this.mockMvc.perform(get("/index/rest_test"))
                 //.andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json("{\"response\": \"Hello World!\"}"));

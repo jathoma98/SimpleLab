@@ -22,7 +22,7 @@ public class IndexController {
     }
 
     @ResponseBody
-    @GetMapping("rest_test")
+    @GetMapping("/rest_test")
     public Map<String, String> rest_test(){
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("response", "Hello World!");
