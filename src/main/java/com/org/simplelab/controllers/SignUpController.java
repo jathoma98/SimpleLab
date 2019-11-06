@@ -38,8 +38,6 @@ public class SignUpController {
     @PostMapping(path="/submit", consumes= MediaType.APPLICATION_JSON_VALUE)
     public  Map<String, String> submission(@RequestBody UserValidator userV) {
 
-        //TODO: In signup.html, check if fields are empty
-        //TODO: make the error message in signup.html look better.
         RequestResponse response = new RequestResponse();
         try{
             userV.validate();
