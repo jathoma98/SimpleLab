@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 @Component
@@ -62,6 +63,11 @@ public class UserDB{
         if (found.size() == 0)
             return null;
         return found.get(0);
+    }
+
+    public User findUserById(String id){
+        Optional<User> found = userRepository.findById(id);
+        return found.isPresent() ? found.get(): null;
     }
 
     /**
