@@ -17,7 +17,7 @@ import java.util.Arrays;
 public class User implements Serializable {
 
     @Id
-    private String id;
+    private String _id;
 
     private String username;
     private byte[] pass_hash;
@@ -45,6 +45,10 @@ public class User implements Serializable {
 
     public void setAnswer(String answer) {
         this.answer = DBManager.getHash(answer);
+    }
+
+    public String getId(){
+        return get_id();
     }
 
 }

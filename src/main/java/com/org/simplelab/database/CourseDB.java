@@ -26,6 +26,9 @@ public class CourseDB {
         return true;
     }
 
-    public List<Course> getCoursesForInfoPage(){return null;}
+    public List<Course> getCoursesForTeacher(String id){
+        List<Course> found = courseRepository.findForTeacher(id);
+        return found;
+    }
 
 }
