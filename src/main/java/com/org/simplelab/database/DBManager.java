@@ -19,7 +19,6 @@ public class DBManager {
     /**
      * Hashes the given string.
      */
-
     public static byte[] getHash(String entry){
         try {
             StringBuilder sb = new StringBuilder();

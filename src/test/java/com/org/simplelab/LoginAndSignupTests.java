@@ -100,7 +100,7 @@ public class LoginAndSignupTests extends SpringTestConfig{
         this.mockMvc.perform(post("/signup/submit")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(json.toString()))
-                .andDo(print())
+                //.andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json("{'success': 'true'}"));
 

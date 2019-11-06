@@ -3,6 +3,8 @@ package com.org.simplelab;
 import com.org.simplelab.database.UserDB;
 import com.org.simplelab.database.entities.User;
 
+import com.org.simplelab.database.repositories.CourseRepository;
+import com.org.simplelab.database.repositories.LabRepository;
 import com.org.simplelab.database.repositories.UserRepository;
 import org.junit.jupiter.api.*;
 import org.junit.After;
@@ -150,10 +152,22 @@ class DBTests extends SpringTestConfig {
 		userDB.findUser(breaker1);
 	}
 
+	/**
+	 * Begin MongoDB Course tests
+	 */
+
+	@Autowired
+	CourseRepository courseRepository;
+
+	@Autowired
+	LabRepository labRepository;
+
 
 	@Test
 	void zzzzz_cleanup(){
+
 		userDB.deleteByMetadata(metadata);
+
 	}
 
 
