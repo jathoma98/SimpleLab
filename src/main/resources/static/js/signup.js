@@ -1,5 +1,5 @@
 function signupbtnEvent(){
-    let user_role = $("#role").val();
+    let user_role = $("#role input[type='radio']:checked").val();
     let password = $("#sp_password").val(), repassword = $("#sp_re_password").val();
     user_data = {
         userName : $("#userName").val(),

@@ -47,7 +47,7 @@ public class TeacherController {
         return "addAndEditEquipment";
     }
 
-    @RequestMapping("/createLab")
+    @RequestMapping("/createlab")
     public String createLab(){
         return "createLab";
     }
