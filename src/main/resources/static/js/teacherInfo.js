@@ -25,7 +25,7 @@ function createLab(){
 
 function addCreate() {
     $("#setCourseText").find('input:text').val('');
-
+    $("#setCourseText").find('textarea').val('');
 }
 
 $(document).ready( function () {
