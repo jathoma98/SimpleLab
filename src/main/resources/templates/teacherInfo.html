@@ -295,7 +295,7 @@
       </div>
 
 
-      <table class="striped centered responsive-table">
+      <table id = "course_list" class="striped centered responsive-table">
 
         <thead>
         <tr>
@@ -306,10 +306,12 @@
         </thead>
 
         <tbody th:remove = "all-but-first">
-        <tr th:each="course : ${list_of_course}">
-          <td th:text="${course.course_id}">id</td>
-          <td th:text="${course.name}">name</td>
-          <td th:text="${course.createdDate}">2018-02-20</td>
+<!--        th:each="i : ${#numbers.sequence(notifications.size() - 1, 0, -1)}-->
+<!--        <tr th:each="course : ${list_of_course}">-->
+        <tr th:each="i : ${#numbers.sequence(list_of_course.size() - 1, 0, -1)}">
+          <td th:text="${list_of_course[i].course_id}">id</td>
+          <td th:text="${list_of_course[i].name}">name</td>
+          <td th:text="${list_of_course[i].createdDate}">2018-02-20</td>
         </tr>
         </tbody>
       </table>
