@@ -8,7 +8,7 @@ public class CourseValidator extends Validator{
     private String course_id;
     private String description;
 
-    public static final String EMPTY_FIELD = "Fields cannot be empty";
+    public static final String EMPTY_FIELD = "Fields cannot be empty \n";
 
     @Override
     public void validate() throws InvalidFieldException {
