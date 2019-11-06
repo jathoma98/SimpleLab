@@ -16,5 +16,8 @@ public interface CourseRepository extends MongoRepository<Course, String>{
     @Query(value = "{ 'creator._id': ?0 }", fields = "{ 'createdDate': 1 , 'course_id': 1, 'name': 1, 'description': 1 }")
     public List<Course> findForTeacher(String id);
 
+    @Query(value = "{ _metadata: ?0 }", delete = true)
+    public List<Course> deleteByMetadata(String metadata);
+
 
 }
