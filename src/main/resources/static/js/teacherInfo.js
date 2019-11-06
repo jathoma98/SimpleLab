@@ -4,7 +4,7 @@ function saveCourse(){
     let course = {
         name: $("#course_name").val(),
         course_id: $("#course_code").val(),
-        course_description: $("#course_description").val()
+        description: $("#course_description").val()
     }
     let course_json =  JSON.stringify(course)
     $.ajax({
@@ -15,14 +15,21 @@ function saveCourse(){
         data: course_json,
         success: function(result){
             if(result.success === "true"){
-                //TODO: pull the course data and rebuild course list
+                // TODO: pull the course data and rebuild course list
                 $.ajax({
-                    url:"/loadinfo",
-                    type:"GET",
-                    success(result){
+                    url: "/course/rest/loadInfo",
+                    type: "GET",
+                    success: function(result){
+                        for(r in result){
+                            //TODO: Clear table
+                            //TODO: build table
+                            result[r]
+                        }
+                        
                         console.log(result);
-                    }
+                 }
                 })
+                // $.get("/course/rest/loadInfo", function(result){console.log(result)} )
             }else{
                 alert(result.error);
             }
