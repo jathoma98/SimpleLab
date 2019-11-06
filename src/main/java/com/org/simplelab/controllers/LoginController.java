@@ -62,9 +62,7 @@ public class LoginController{
      * Redirect user page base on they role in the current session.
      *
      * @param session -current user session
-     * @return JSON response with format:
-     *          { success: "true" } if authentication is successful
-     *          { success: "false" } otherwise
+     * @return ModelAndView redirect path for different role of user
      */
     @RequestMapping(value = "/role", method = RequestMethod.GET)
     public ModelAndView rolePageRedirect(HttpSession session) {

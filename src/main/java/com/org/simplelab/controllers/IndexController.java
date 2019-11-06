@@ -14,14 +14,6 @@ import java.util.Map;
 @Controller
 @RequestMapping(path="/index")
 public class IndexController {
-    /**
-     * Web index page request
-     * @return
-     */
-//    @RequestMapping("")
-//    public String root() {
-//        return "redirect:/login";
-//    }
 
     @RequestMapping("/test")
     public String test(HttpSession sc, Model model) {
