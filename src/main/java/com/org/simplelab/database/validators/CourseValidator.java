@@ -1,7 +1,13 @@
 package com.org.simplelab.database.validators;
 
 import com.org.simplelab.database.entities.Course;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 public class CourseValidator extends Validator{
 
     private String name;
