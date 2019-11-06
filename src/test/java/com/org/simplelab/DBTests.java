@@ -166,10 +166,11 @@ class DBTests extends SpringTestConfig {
 
 	@Autowired
 	LabRepository labRepository;
-/**
+
 	@Test
 	void testCourse(){
 		User u = new User();
+		u.set_id("5dc22379913bf470ddf11e4e");
 		u.setUsername("Pogey");
 		u.setPassword("Pass");
 		u.setFirstname("jacob");
@@ -183,7 +184,6 @@ class DBTests extends SpringTestConfig {
 		courseRepository.save(c);
 
 	}
-**/
 	@Test
 	void testgetCourse(){
 
