@@ -1,5 +1,8 @@
-//Get data from text field
-
+/**
+ * Get course data from input and text area, then
+ * send to the server. If success, re-build course
+ * table.
+ */
 function saveCourse(){
     let course = {
         name: $("#course_name").val(),
@@ -20,11 +23,11 @@ function saveCourse(){
                     url: "/course/rest/loadInfo",
                     type: "GET",
                     success: function(result){
+                        //TODO: Clear table
+                        //TODO: build table
                         $('#course_list tbody').empty();
                         let len = result.length;
                         for(let r = len-1; r >= 0; r--){
-                            //TODO: Clear table
-                            //TODO: build table
                             $('#course_list tbody').append(
                                 "<tr>" +
                                     "<td>" +
@@ -39,9 +42,8 @@ function saveCourse(){
                                 "</tr>"
                             )
                         }
-                 }
+                    }
                 })
-                // $.get("/course/rest/loadInfo", function(result){console.log(result)} )
             }else{
                 alert(result.error);
             }
@@ -49,6 +51,10 @@ function saveCourse(){
     })
 }
 
+/**
+ * Clean data in pop div. when user click on
+ * add course button.
+ */
 function addCreate() {
     $("#setCourseText").find('input:text').val('');
     $("#setCourseText").find('textarea').val('');
