@@ -24,7 +24,6 @@ public class Course{
     @Id
     private String _id;
 
-    @CreatedDate
     private String createdDate;
     private String course_id;
     private String name;
