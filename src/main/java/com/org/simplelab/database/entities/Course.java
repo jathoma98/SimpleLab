@@ -24,12 +24,13 @@ public class Course{
     @Id
     private String _id;
 
-    @CreatedDate
     private String createdDate;
     private String course_id;
     private String name;
     private String description;
     private User creator;
+
+    private String _metadata;
 
     //annotation causes MongoDB to store IDs of labs here.
     @DBRef
