@@ -112,12 +112,12 @@ $(document).ready( function () {
     $("#add_course").on("click", addCreate);
     $("#save_course").on("click", saveCourse);
     $("#labEditBtn").on("click",labHideAndShow);
-    $("#labSaveBtn").on("click",labHideAndShow);
+    $("#labBackBtn").on("click",labHideAndShow);
     $("#equipEditBtn").on("click",equipHideAndShow);
-    $("#equipSaveBtn").on("click",equipHideAndShow);
+    $("#equipBackBtn").on("click",equipHideAndShow);
     $("#courseEditBtn").on("click",courseHideAndShow);
-    $("#courseSaveBtn").on("click",courseHideAndShow);
-    $("#courseDeletelBtn").on("click",coursedelete);
+    $("#courseBackBtn").on("click",courseHideAndShow);
+    $("#courseDeleteBtn").on("click",coursedelete);
 })
 
 function coursedelete(){

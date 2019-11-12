@@ -10,9 +10,9 @@ $.get("/info/get_user", function(user) {
 
 $(document).ready( function () {
     $("#courseEditBtn").on("click",courseHideAndShow);
-    $("#courseSaveBtn").on("click",courseHideAndShow);
+    $("#courseBackBtn").on("click",courseHideAndShow);
     $("#labEditBtn").on("click",labHideAndShow);
-    $("#labSaveBtn").on("click",labHideAndShow);
+    $("#labBackBtn").on("click",labHideAndShow);
 
 
 })
