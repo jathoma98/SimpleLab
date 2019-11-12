@@ -18,32 +18,7 @@ function saveCourse(){
         data: course_json,
         success: function(result){
             if(result.success === "true"){
-                // TODO: pull the course data and rebuild course list
-                $.ajax({
-                    url: "/course/rest/loadInfo",
-                    type: "GET",
-                    success: function(result){
-                        //TODO: Clear table
-                        //TODO: build table
-                        $('#course_list tbody').empty();
-                        let len = result.length;
-                        for(let r = len-1; r >= 0; r--){
-                            $('#course_list tbody').append(
-                                "<tr>" +
-                                    "<td>" +
-                                        result[r].course_id +
-                                    "</td>" +
-                                    "<td>" +
-                                        result[r].name +
-                                    "</td>" +
-                                    "<td>" +
-                                        result[r].createdDate +
-                                    "</td>" +
-                                "</tr>"
-                            )
-                        }
-                    }
-                })
+                reloadCourses();
             }else{
                 alert(result.error);
             }
@@ -51,53 +26,32 @@ function saveCourse(){
     })
 }
 
-function saveLab(){
-    let course = {
-        name: $("#lab_name").val(),
-        course_id: $("#lab_code").val(),
-        description: $("#lab_description").val()
-    }
-    let lab_json =  JSON.stringify(lab)
+function reloadCourses(){
     $.ajax({
-        url:"/lab/rest",
-        type: 'POST',
-        dataTye: 'json',
-        contentType: 'application/json; charset=utf-8',
-        data: lab_json,
+        url: "/course/rest/loadInfo",
+        type: "GET",
         success: function(result){
-            if(result.success === "true"){
-                // TODO: pull the course data and rebuild course list
-                $.ajax({
-                    url: "/lab/rest/loadInfo",
-                    type: "GET",
-                    success: function(result){
-                        //TODO: Clear table
-                        //TODO: build table
-                        $('#lab_list tbody').empty();
-                        let len = result.length;
-                        for(let r = len-1; r >= 0; r--){
-                            $('#lab_list tbody').append(
-                                "<tr>" +
-                                "<td>" +
-                                result[r].course_id +
-                                "</td>" +
-                                "<td>" +
-                                result[r].name +
-                                "</td>" +
-                                "<td>" +
-                                result[r].createdDate +
-                                "</td>" +
-                                "</tr>"
-                            )
-                        }
-                    }
-                })
-            }else{
-                alert(result.error);
+            $('#course_list tbody').empty();
+            let len = result.length;
+            for(let r = len-1; r >= 0; r--){
+                $('#course_list tbody').append(
+                    "<tr>" +
+                        "<td>" +
+                            result[r].course_id +
+                        "</td>" +
+                        "<td>" +
+                            result[r].name +
+                        "</td>" +
+                        "<td>" +
+                            result[r].createdDate +
+                        "</td>" +
+                    "</tr>"
+                )
             }
         }
     })
 }
+
 /**
  * Clean data in pop div. when user click on
  * add course button.

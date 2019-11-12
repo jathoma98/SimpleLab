@@ -2,21 +2,13 @@ package com.org.simplelab;
 
 import com.org.simplelab.database.UserDB;
 import com.org.simplelab.database.entities.Course;
-import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;
 
 import com.org.simplelab.database.repositories.CourseRepository;
 import com.org.simplelab.database.repositories.LabRepository;
 import com.org.simplelab.database.repositories.UserRepository;
 import org.junit.jupiter.api.*;
-import org.junit.After;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.apache.commons.lang3.RandomStringUtils;
-import org.springframework.boot.web.server.LocalServerPort;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
