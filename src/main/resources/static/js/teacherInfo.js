@@ -51,10 +51,58 @@ function saveCourse(){
     })
 }
 
+function saveLab(){
+    let course = {
+        name: $("#lab_name").val(),
+        course_id: $("#lab_code").val(),
+        description: $("#lab_description").val()
+    }
+    let lab_json =  JSON.stringify(lab)
+    $.ajax({
+        url:"/lab/rest",
+        type: 'POST',
+        dataTye: 'json',
+        contentType: 'application/json; charset=utf-8',
+        data: lab_json,
+        success: function(result){
+            if(result.success === "true"){
+                // TODO: pull the course data and rebuild course list
+                $.ajax({
+                    url: "/lab/rest/loadInfo",
+                    type: "GET",
+                    success: function(result){
+                        //TODO: Clear table
+                        //TODO: build table
+                        $('#lab_list tbody').empty();
+                        let len = result.length;
+                        for(let r = len-1; r >= 0; r--){
+                            $('#lab_list tbody').append(
+                                "<tr>" +
+                                "<td>" +
+                                result[r].course_id +
+                                "</td>" +
+                                "<td>" +
+                                result[r].name +
+                                "</td>" +
+                                "<td>" +
+                                result[r].createdDate +
+                                "</td>" +
+                                "</tr>"
+                            )
+                        }
+                    }
+                })
+            }else{
+                alert(result.error);
+            }
+        }
+    })
+}
 /**
  * Clean data in pop div. when user click on
  * add course button.
  */
+
 function addCreate() {
     $("#setCourseText").find('input:text').val('');
     $("#setCourseText").find('textarea').val('');
@@ -65,12 +113,4 @@ $(document).ready( function () {
     $("#save_course").on("click", saveCourse);
 });
 
-$("#course_list tr").click(function(){
-    $(this).addClass('selected').siblings().removeClass('selected');
-    let value=$(this).find('td:first').html();
-    alert(value);
-});
 
-$('.select').on('click', function(e){
-    alert($("#table tr.selected td:first").html());
-});
