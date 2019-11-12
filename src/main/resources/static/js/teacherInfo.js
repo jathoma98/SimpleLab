@@ -111,6 +111,37 @@ function addCreate() {
 $(document).ready( function () {
     $("#add_course").on("click", addCreate);
     $("#save_course").on("click", saveCourse);
-});
+    $("#labEditBtn").on("click",labHideAndShow);
+    $("#labSaveBtn").on("click",labHideAndShow);
+    $("#equipEditBtn").on("click",equipHideAndShow);
+    $("#equipSaveBtn").on("click",equipHideAndShow);
+
+})
+
+function labHideAndShow(){
+    // $(".table_check").css("display","none");
+    $(".labcheckcol").toggle();
+}
+function equipHideAndShow(){
+    // $(".table_check").css("display","none");
+    $(".equipcheckcol").toggle();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
