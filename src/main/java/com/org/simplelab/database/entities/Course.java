@@ -18,7 +18,7 @@ import java.util.List;
 @Setter
 @ToString
 @Document(collection = DBManager.COURSE_DOCUMENT_NAME)
-public class Course{
+public class Course {
 
     //internal use
     @Id
