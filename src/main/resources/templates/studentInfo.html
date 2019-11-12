@@ -9,6 +9,7 @@
     <script src="/js/sudentInfo.js"></script>
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script th:src = "@{/js/studentInfo.js}"></script>
 </head>
 
 <body>
@@ -130,9 +131,10 @@
             <div class="nav-wrapper" style="background: #f1cc36">
                 <a href="#!" class="brand-logo headermargin">Course</a>
                 <ul class="right hide-on-med-and-down">
-                    <li><a class="modal-trigger" href="#courseModal"><i class="material-icons">add</i></a></li>
-                    <li><a href=""><i class="material-icons">delete</i></a></li>
-                    <li><a href=""><i class="material-icons scale-transition scale-out">delete</i></a></li>
+                    <li class="coursecheckcol myhide"><a id="courseSaveBtn" ><i class="material-icons">save</i></a></li>
+                    <li class="coursecheckcol myhide"><a id="courseCancelBtn"  ><i class="material-icons">delete</i></a></li>
+                    <li class="coursecheckcol myshow"><a class="modal-trigger" href="#courseModal"><i class="material-icons">add</i></a></li>
+                    <li class="coursecheckcol myshow"><a id="courseEditBtn" ><i class="material-icons">edit</i></a></li>
                 </ul>
             </div>
         </nav>
@@ -212,8 +214,10 @@
             <div class="nav-wrapper " style="background:#dd0052">
                 <a href="#!" class="brand-logo headermargin">Lab</a>
                 <ul class="right hide-on-med-and-down">
-                    <li><a class="modal-trigger" href="#labModal"><i class="material-icons">add</i></a></li>
-                    <li><a href=""><i class="material-icons">delete</i></a></li>
+                    <li class="labcheckcol myhide"><a id="labSaveBtn" ><i class="material-icons">save</i></a></li>
+                    <li class="labcheckcol myhide"><a id="labCancelBtn"  ><i class="material-icons">delete</i></a></li>
+                    <li class="labcheckcol myshow"><a class="modal-trigger" href="#labModal"><i class="material-icons">add</i></a></li>
+                    <li class="labcheckcol myshow"><a id="labEditBtn" ><i class="material-icons">edit</i></a></li>
                 </ul>
             </div>
         </nav>
@@ -274,6 +278,7 @@
         <table class="striped centered responsive-table">
             <thead>
             <tr>
+                <th class="labcheckcol myhide"></th>
                 <th>Name</th>
                 <th>Item Name</th>
                 <th>Item Price</th>
@@ -282,16 +287,19 @@
 
             <tbody>
             <tr>
+                <td class="labcheckcol center myhide " ><label class=""><input type="checkbox"/><span></span></label></td>
                 <td>Alvin</td>
                 <td>Eclair</td>
                 <td>$0.87</td>
             </tr>
             <tr>
+                <td class="labcheckcol center myhide" ><label class=""><input type="checkbox"/><span></span></label></td>
                 <td>Alan</td>
                 <td>Jellybean</td>
                 <td>$3.76</td>
             </tr>
             <tr>
+                <td class="labcheckcol center myhide" ><label class=""><input type="checkbox"/><span></span></label></td>
                 <td>Jonathan</td>
                 <td>Lollipop</td>
                 <td>$7.00</td>

@@ -69,8 +69,18 @@ $(document).ready( function () {
     $("#labSaveBtn").on("click",labHideAndShow);
     $("#equipEditBtn").on("click",equipHideAndShow);
     $("#equipSaveBtn").on("click",equipHideAndShow);
-
+    $("#courseEditBtn").on("click",courseHideAndShow);
+    $("#courseSaveBtn").on("click",courseHideAndShow);
+    $("#courseDeleteBtn").on("click",coursedelete);
 })
+
+function coursedelete(){
+
+}
+
+function courseHideAndShow() {
+    $(".coursecheckcol").toggle();
+}
 
 function labHideAndShow(){
     // $(".table_check").css("display","none");
