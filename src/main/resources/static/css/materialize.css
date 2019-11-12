@@ -2999,6 +2999,8 @@ table.highlight > tbody > tr {
 
 table.highlight > tbody > tr:hover {
   background-color: rgba(242, 242, 242, 0.5);
+  /*background:lightblue;*/
+
 }
 
 table.centered thead tr th, table.centered tbody tr td {

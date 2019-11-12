@@ -54,3 +54,11 @@
 	margin-right: 10px;
 	/*background: pink;*/
 }
+
+.myhide{
+	display: none;
+}
+
+.myshow{
+	display: block;
+}

@@ -142,7 +142,7 @@
       <!-- Create Course -->
       <!-------------------------------------------------------------------------------------->
 
-      <div id="courseModal" class="modal" style="max-height: 80%;">
+      <div id="courseModal" class="modal" style="max-height: 80%; width: 80%">
 
         <div class="modal-content">
           <ul class="collapsible">
@@ -180,7 +180,7 @@
               <div class="collapsible-header" style="background: #f1cc36"><i class="material-icons">perm_identity</i>Students</div>
               <div class="collapsible-body">
                 <div class="row">
-                  <div class="input-field col s6">
+                  <div class="input-field col s4">
                     <table>
                       <thead>
                       <tr>
@@ -200,7 +200,7 @@
                       </tbody>
                     </table>
                   </div>
-                  <div class="input-field col s6">
+                  <div class="input-field col s8">
                     <div class="input-field col s10">
                       <input id="searchLab" type="text" class="validate">
                       <label for="searchLab">Student Name</label>
@@ -235,7 +235,7 @@
               <div class="collapsible-header" style="background:#dd0052"><i class="material-icons">laptop</i>Labs</div>
               <div class="collapsible-body">
                 <div class="row">
-                  <div class="input-field col s6">
+                  <div class="input-field col s4">
                     <table>
                       <thead>
                       <tr>
@@ -255,7 +255,7 @@
                       </tbody>
                     </table>
                   </div>
-                  <div class="input-field col s6">
+                  <div class="input-field col s8">
                     <div class="input-field col s10">
                       <input id="searchStudent" type="text" class="validate">
                       <label for="searchStudent">Lab Name</label>
@@ -289,9 +289,13 @@
 
 
         </div>
+        <button id = "delete_course" class="waves-effect waves-light modal-close right btn btn_margin" style="background:#dd0052;" type="submit" name="action">
+          Delete
+        </button>
         <button id = "save_course" class="waves-effect waves-light modal-close right btn btn_margin" style="background:#dd0052;" type="submit" name="action">
           Save
         </button>
+
       </div>
 
 
@@ -327,8 +331,10 @@
         <div class="nav-wrapper " style="background:#dd0052">
           <a href="#!" class="brand-logo headermargin">Lab</a>
           <ul class="right hide-on-med-and-down">
-            <li><a class="modal-trigger" href="#labModal"><i class="material-icons">add</i></a></li>
-            <li><a href=""><i class="material-icons">delete</i></a></li>
+            <li class="labcheckcol myhide"><a id="labSaveBtn" ><i class="material-icons">save</i></a></li>
+            <li class="labcheckcol myhide"><a id="labCancelBtn"  ><i class="material-icons">delete</i></a></li>
+            <li class="labcheckcol myshow"><a class="modal-trigger" href="#labModal"><i class="material-icons">add</i></a></li>
+            <li class="labcheckcol myshow"><a id="labEditBtn" ><i class="material-icons">edit</i></a></li>
           </ul>
         </div>
       </nav>
@@ -410,8 +416,12 @@
 
         </div>
         <button class="waves-effect waves-light modal-close right btn btn_margin" style="background:#dd0052;" type="submit" name="action">
+          Delete
+        </button>
+        <button class="waves-effect waves-light modal-close right btn btn_margin" style="background:#dd0052;" type="submit" name="action">
           Save
         </button>
+
       </div>
 
 
@@ -420,9 +430,10 @@
 
 
 
-      <table class="striped centered responsive-table">
+      <table class="striped centered responsive-table highlight">
         <thead>
         <tr>
+          <th class="labcheckcol myhide"></th>
           <th>Lab ID</th>
           <th>Lab Name</th>
           <th>Last Date</th>
@@ -431,16 +442,19 @@
 
         <tbody>
         <tr>
+          <th class="labcheckcol center myhide " ><label class=""><input type="checkbox"/><span></span></label></th>
           <td>Lab101</td>
           <td>aaa</td>
           <td>11/7/2019</td>
         </tr>
         <tr>
+          <th class="labcheckcol center myhide" ><label class=""><input type="checkbox"/><span></span></label></th>
           <td>Lab101</td>
           <td>aaa</td>
           <td>11/7/2019</td>
         </tr>
         <tr>
+          <th class="labcheckcol center myhide"><label class=""><input type="checkbox"/><span></span></label></th>
           <td>Lab101</td>
           <td>aaa</td>
           <td>11/7/2019</td>
@@ -458,8 +472,10 @@
         <div class="nav-wrapper" style="background: #bdbdbd">
           <a href="#!" class="brand-logo headermargin">Equipment</a>
           <ul class="right hide-on-med-and-down">
-            <li><a class="modal-trigger" href="#equipmentModal"><i class="material-icons">add</i></a></li>
-            <li><a href=""><i class="material-icons">delete</i></a></li>
+            <li class="equipcheckcol myhide"><a id="equipSaveBtn" ><i class="material-icons">save</i></a></li>
+            <li class="equipcheckcol myhide"><a id="equipCancelBtn"  ><i class="material-icons">delete</i></a></li>
+            <li class="equipcheckcol myshow"><a class="modal-trigger" href="#labModal"><i class="material-icons">add</i></a></li>
+            <li class="equipcheckcol myshow"><a id="equipEditBtn" ><i class="material-icons">edit</i></a></li>
           </ul>
         </div>
       </nav>
@@ -537,8 +553,12 @@
 
         </div>
         <button class="waves-effect waves-light modal-close right btn btn_margin" style="background:#dd0052;" type="submit" name="action">
+          Delete
+        </button>
+        <button class="waves-effect waves-light modal-close right btn btn_margin" style="background:#dd0052;" type="submit" name="action">
           Save
         </button>
+
       </div>
 
 
@@ -548,6 +568,7 @@
       <table class="table striped centered responsive-table hoverable ">
         <thead>
         <tr>
+          <th class="equipcheckcol myhide"></th>
           <th>Item ID</th>
           <th>Item Name</th>
           <th>Last Edit</th>
@@ -556,16 +577,19 @@
 
         <tbody>
         <tr>
+          <th class="equipcheckcol center myhide " ><label class=""><input type="checkbox"/><span></span></label></th>
           <td>item1</td>
           <td>beaker</td>
           <td>11/6/2019</td>
         </tr>
         <tr>
+          <th class="equipcheckcol center myhide " ><label class=""><input type="checkbox"/><span></span></label></th>
           <td>item2</td>
           <td>beaker</td>
           <td>11/6/2019</td>
         </tr>
         <tr>
+          <th class="equipcheckcol center myhide " ><label class=""><input type="checkbox"/><span></span></label></th>
           <td>item3</td>
           <td>beaker</td>
           <td>11/6/2019</td>
@@ -595,6 +619,7 @@
 <script type="text/javascript" src="libs/materialize.min.js"></script>
 </body>
 <script>
+  M.AutoInit();
   $(document).ready(function(){
     $('.modal').modal();
     $('.dropdown-trigger').dropdown();
