@@ -152,7 +152,7 @@
                 <form class="col s12">
                   <div class="row">
                     <div class="input-field col s6">
-                      <input id="course_name" type="text" class="validate">
+                      <input id="course_name" type="text" class="validate" th:value="${list_of_course[i].course_id}">
                       <label for="course_name">Course Name</label>
                     </div>
                     <div class="input-field col s6">
@@ -309,13 +309,14 @@
 <!--        th:each="i : ${#numbers.sequence(notifications.size() - 1, 0, -1)}-->
 <!--        <tr th:each="course : ${list_of_course}">-->
         <tr th:each="i : ${#numbers.sequence(list_of_course.size() - 1, 0, -1)}">
-          <td th:text="${list_of_course[i].course_id}">id</td>
+          <td><a th:text="${list_of_course[i].course_id}" class="modal-trigger" href="#courseModal">id</a></td>
           <td th:text="${list_of_course[i].name}">name</td>
           <td th:text="${list_of_course[i].createdDate}">2018-02-20</td>
         </tr>
         </tbody>
       </table>
     </div>
+<!--    <input type="button" name="select" class="select" value="select"/>-->
     <br>
 
 
@@ -431,17 +432,17 @@
 
         <tbody>
         <tr>
-          <td>Lab101</td>
+          <td><a th:href="@{/teacher/createlab}">Lab100</a></td>
           <td>aaa</td>
           <td>11/7/2019</td>
         </tr>
         <tr>
-          <td>Lab101</td>
+          <td><a th:href="@{/teacher/createlab}">Lab101</td>
           <td>aaa</td>
           <td>11/7/2019</td>
         </tr>
         <tr>
-          <td>Lab101</td>
+          <td><a th:href="@{/teacher/createlab}">Lab101</td>
           <td>aaa</td>
           <td>11/7/2019</td>
         </tr>
@@ -556,17 +557,17 @@
 
         <tbody>
         <tr>
-          <td>item1</td>
+          <td><a th:href="@{/teacher/createEquipment}">item1</a></td>
           <td>beaker</td>
           <td>11/6/2019</td>
         </tr>
         <tr>
-          <td>item2</td>
+          <td><a th:href="@{/teacher/createEquipment}">item2</td>
           <td>beaker</td>
           <td>11/6/2019</td>
         </tr>
         <tr>
-          <td>item3</td>
+          <td><a th:href="@{/teacher/createEquipment}">item3</td>
           <td>beaker</td>
           <td>11/6/2019</td>
         </tr>

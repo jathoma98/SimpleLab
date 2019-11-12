@@ -63,4 +63,14 @@ function addCreate() {
 $(document).ready( function () {
     $("#add_course").on("click", addCreate);
     $("#save_course").on("click", saveCourse);
-})
+});
+
+$("#course_list tr").click(function(){
+    $(this).addClass('selected').siblings().removeClass('selected');
+    let value=$(this).find('td:first').html();
+    alert(value);
+});
+
+$('.select').on('click', function(e){
+    alert($("#table tr.selected td:first").html());
+});
