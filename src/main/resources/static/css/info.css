@@ -63,6 +63,12 @@
 	display: block;
 }
 .mycheckbox{
-	-webkit-column-width: 100px; /* Chrome, Safari, Opera */
-	-moz-column-width: 100px; /* Firefox */
+	/*-webkit-column-width: 50px; !* Chrome, Safari, Opera *!*/
+	/*-moz-column-width: 50px; !* Firefox *!*/
+	width:10%;
+	/*background: blue;*/
+}
+.myIdColumn{
+	width:10%;
+	/*background: blue;*/
 }
