@@ -117,7 +117,7 @@ $(document).ready( function () {
     $("#equipSaveBtn").on("click",equipHideAndShow);
     $("#courseEditBtn").on("click",courseHideAndShow);
     $("#courseSaveBtn").on("click",courseHideAndShow);
-    $("#courseDeletelBtn").on("click",coursedelete);
+    $("#courseDeleteBtn").on("click",coursedelete);
 })
 
 function coursedelete(){
