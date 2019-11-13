@@ -9,7 +9,7 @@ function saveCourse(){
         course_id: $("#course_code").val(),
         description: $("#course_description").val()
     }
-    let course_json =  JSON.stringify(course)
+    let course_json =  JSON.stringify(course);
     $.ajax({
         url:"/course/rest",
         type: 'POST',
@@ -53,22 +53,31 @@ function reloadCourses(){
 }
 
 function deleteCourse(){
-    let checkValue = [];
+    let course = [];
     $("#course_list tbody tr").each(function(i,row){
         if ($(row).find('input[type="checkbox"]').is(':checked')){
-            checkValue.push($(row).find(".myIdColumn").text());
+            course[i] = {
+                name: null,
+                course_id: ($(row).find(".myIdColumn").text()),
+                description: null
+            };
         }
         else{
         }
     });
+    let course_json =  JSON.stringify(course);
     $.ajax({
         url:"/course/rest/deleteCourse",
         type: 'DELETE',
         dataTye: 'json',
         contentType: 'application/json; charset=utf-8',
-        data: JSON.stringify({checkValue}),
-        success:function(){
-            reloadCourses();
+        data: course_json,
+        success:function(result){
+            if(result.success === "true"){
+                reloadCourses();
+            }else{
+                alert(result.error);
+            }
         }
     })
 }
