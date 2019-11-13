@@ -54,7 +54,7 @@ public class CourseRESTController {
      * Takes a JSON object with required parameter "name", which is the name of the course to delete
      * Deletes the course with this name.
      */
-    @DeleteMapping("")
+    @DeleteMapping("/deleteCourse")
     public Map<String, String> deleteCourse(@RequestBody CourseValidator courseValidator,
                                             HttpSession session){
         RequestResponse response = new RequestResponse();

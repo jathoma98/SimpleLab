@@ -52,6 +52,27 @@ function reloadCourses(){
     })
 }
 
+function deleteCourse(){
+    let checkValue = [];
+    $("#course_list tbody tr").each(function(i,row){
+        if ($(row).find('input[type="checkbox"]').is(':checked')){
+            checkValue.push($(row).find(".myIdColumn").text());
+        }
+        else{
+        }
+    });
+    $.ajax({
+        url:"/course/rest/deleteCourse",
+        type: 'DELETE',
+        dataTye: 'json',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify({checkValue}),
+        success:function(){
+            reloadCourses();
+        }
+    })
+}
+
 /**
  * Clean data in pop div. when user click on
  * add course button.
@@ -65,29 +86,16 @@ function addCreate() {
 $(document).ready( function () {
     $("#add_course").on("click", addCreate);
     $("#save_course").on("click", saveCourse);
-    $("#courseDeleteBtn").on("click",deleteCourse);
     $("#labEditBtn").on("click",labHideAndShow);
     $("#labBackBtn").on("click",labHideAndShow);
     $("#equipEditBtn").on("click",equipHideAndShow);
     $("#equipBackBtn").on("click",equipHideAndShow);
     $("#courseEditBtn").on("click",courseHideAndShow);
     $("#courseBackBtn").on("click",courseHideAndShow);
-    $("#courseDeleteBtn").on("click",coursedelete);
+    $("#courseDeleteBtn").on("click",deleteCourse);
 })
 
-function deleteCourse(){
-    let checkValue = [];
-    $("#course_list tbody tr").each(function(i,row){
-        console.log(row)
-        if ($(row).find('input[type="checkbox"]').is(':checked')){
-            checkValue.push($(row).find(".courseId").text());
-        }
-        else{
-            console.log(2)
-        }
-    });
-    console.log(checkValue)
-}
+
 
 function courseHideAndShow() {
     $(".coursecheckcol").toggle();
