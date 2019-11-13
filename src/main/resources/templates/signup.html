@@ -51,8 +51,9 @@
             </div>
             <div class="input-field col s12">
                 <i class="material-icons prefix">email</i>
-                <input id="email" placeholder="Email" type="text" class="validate">
+                <input id="email" placeholder="Email" type="email" class="validate" required="" aria-required="true">
                 <label class="active" for="email">Email</label>
+                <span class="helper-text" data-error="wrong" data-success="right">Helper text</span>
             </div>
             <div class="input-field col s12">
                 <i class="material-icons prefix">question_answer</i>
@@ -95,7 +96,9 @@
 
 
 </body>
-
+<script>
+    M.AutoInit();
+</script>
 
 
 </html>
