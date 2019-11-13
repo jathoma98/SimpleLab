@@ -129,7 +129,7 @@
         <div class="nav-wrapper" style="background: #f1cc36">
           <a href="#!" class="brand-logo headermargin">Course</a>
           <ul class="right hide-on-med-and-down">
-            <li class="coursecheckcol myhide"><a id="courseSaveBtn" ><i class="material-icons">save</i></a></li>
+            <li class="coursecheckcol myhide"><a id="courseBackBtn" ><i class="material-icons">arrow_back</i></a></li>
             <li class="coursecheckcol myhide"><a id="courseDeleteBtn"  ><i class="material-icons">delete</i></a></li>
             <li class="coursecheckcol myshow"><a id = "add_course" class="modal-trigger" href="#courseModal"><i class="material-icons">add</i></a></li>
             <li class="coursecheckcol myshow"><a id="courseEditBtn" ><i class="material-icons">edit</i></a></li>
@@ -316,8 +316,8 @@
 <!--        th:each="i : ${#numbers.sequence(notifications.size() - 1, 0, -1)}-->
 <!--        <tr th:each="course : ${list_of_course}">-->
         <tr th:each="i : ${#numbers.sequence(list_of_course.size() - 1, 0, -1)}">
-          <td class="coursecheckcol center myhide " ><label class=""><input type="checkbox"/><span></span></label></td>
-          <td><a th:text="${list_of_course[i].course_id}" class="modal-trigger courseId" href="#courseModal">id</a></td>
+          <td class="coursecheckcol center myhide mycheckbox" ><label class=""><input type="checkbox"/><span></span></label></td>
+          <td class="myIdColumn"><a th:text="${list_of_course[i].course_id}" class="modal-trigger" href="#courseModal">id</a></td>
           <td th:text="${list_of_course[i].name}">name</td>
           <td th:text="${list_of_course[i].createdDate}">2018-02-20</td>
         </tr>
@@ -336,8 +336,8 @@
         <div class="nav-wrapper " style="background:#dd0052">
           <a href="#!" class="brand-logo headermargin">Lab</a>
           <ul class="right hide-on-med-and-down">
-            <li class="labcheckcol myhide"><a id="labSaveBtn" ><i class="material-icons">arrow_back</i></a></li>
-            <li class="labcheckcol myhide"><a id="labCancelBtn"  ><i class="material-icons">delete</i></a></li>
+            <li class="labcheckcol myhide"><a id="labBackBtn" ><i class="material-icons">arrow_back</i></a></li>
+            <li class="labcheckcol myhide"><a id="labDeleteBtn"  ><i class="material-icons">delete</i></a></li>
             <li class="labcheckcol myshow"><a class="modal-trigger" href="#labModal"><i class="material-icons">add</i></a></li>
             <li class="labcheckcol myshow"><a id="labEditBtn" ><i class="material-icons">edit</i></a></li>
           </ul>
@@ -438,8 +438,8 @@
       <table class="striped centered responsive-table highlight">
         <thead>
         <tr>
-          <th class="labcheckcol myhide"></th>
-          <th>Lab ID</th>
+          <th class="labcheckcol myhide mycheckbox"></th>
+          <th class="myIdColumn">Lab ID</th>
           <th>Lab Name</th>
           <th>Last Date</th>
         </tr>
@@ -447,20 +447,20 @@
 
         <tbody>
         <tr>
-          <td class="labcheckcol center myhide " ><label class=""><input type="checkbox"/><span></span></label></td>
-          <td>Lab101</td>
+          <td class="labcheckcol center myhide mycheckbox" ><label class=""><input type="checkbox"/><span></span></label></td>
+          <td class="myIdColumn">Lab101</td>
           <td>aaa</td>
           <td>11/7/2019</td>
         </tr>
         <tr>
-          <td class="labcheckcol center myhide" ><label class=""><input type="checkbox"/><span></span></label></td>
-          <td>Lab101</td>
+          <td class="labcheckcol center myhide mycheckbox" ><label class=""><input type="checkbox"/><span></span></label></td>
+          <td class="myIdColumn">Lab101</td>
           <td>aaa</td>
           <td>11/7/2019</td>
         </tr>
         <tr>
-          <td class="labcheckcol center myhide"><label class=""><input type="checkbox"/><span></span></label></td>
-          <td>Lab101</td>
+          <td class="labcheckcol center myhide mycheckbox"><label class=""><input type="checkbox"/><span></span></label></td>
+          <td class="myIdColumn">Lab101</td>
           <td>aaa</td>
           <td>11/7/2019</td>
         </tr>
@@ -477,8 +477,8 @@
         <div class="nav-wrapper" style="background: #bdbdbd">
           <a href="#!" class="brand-logo headermargin">Equipment</a>
           <ul class="right hide-on-med-and-down">
-            <li class="equipcheckcol myhide"><a id="equipSaveBtn" ><i class="material-icons">arrow_back</i></a></li>
-            <li class="equipcheckcol myhide"><a id="equipCancelBtn"><i class="material-icons">delete</i></a></li>
+            <li class="equipcheckcol myhide"><a id="equipBackBtn" ><i class="material-icons">arrow_back</i></a></li>
+            <li class="equipcheckcol myhide"><a id="equipDeleteBtn"><i class="material-icons">delete</i></a></li>
             <li class="equipcheckcol myshow"><a class="modal-trigger" href="#labModal"><i class="material-icons">add</i></a></li>
             <li class="equipcheckcol myshow"><a id="equipEditBtn" ><i class="material-icons">edit</i></a></li>
           </ul>
@@ -573,8 +573,8 @@
       <table class="table striped centered responsive-table hoverable ">
         <thead>
         <tr>
-          <th class="equipcheckcol myhide"></th>
-          <th>Item ID</th>
+          <th class="equipcheckcol myhide mycheckbox"></th>
+          <th class="myIdColumn">Item ID</th>
           <th>Item Name</th>
           <th>Last Edit</th>
         </tr>
@@ -582,20 +582,20 @@
 
         <tbody>
         <tr>
-          <th class="equipcheckcol center myhide " ><label class=""><input type="checkbox"/><span></span></label></th>
-          <td><a th:href="@{/teacher/createEquipment}">item1</a></td>
+          <td class="equipcheckcol center myhide mycheckbox " ><label class=""><input type="checkbox"/><span></span></label></td>
+          <td class="myIdColumn"><a th:href="@{/teacher/createEquipment}">item1</a></td>
           <td>beaker</td>
           <td>11/6/2019</td>
         </tr>
         <tr>
-          <th class="equipcheckcol center myhide " ><label class=""><input type="checkbox"/><span></span></label></th>
-          <td><a th:href="@{/teacher/createEquipment}">item2</a></td>
+          <td class="equipcheckcol center myhide mycheckbox" ><label class=""><input type="checkbox"/><span></span></label></td>
+          <td class="myIdColumn"><a th:href="@{/teacher/createEquipment}">item2</a></td>
           <td>beaker</td>
           <td>11/6/2019</td>
         </tr>
         <tr>
-          <th class="equipcheckcol center myhide " ><label class=""><input type="checkbox"/><span></span></label></th>
-          <td><a th:href="@{/teacher/createEquipment}">item3</a></td>
+          <td class="equipcheckcol center myhide mycheckbox" ><label class=""><input type="checkbox"/><span></span></label></td>
+          <td class="myIdColumn"><a th:href="@{/teacher/createEquipment}">item3</a></td>
           <td>beaker</td>
           <td>11/6/2019</td>
         </tr>

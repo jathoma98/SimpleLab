@@ -67,11 +67,12 @@ $(document).ready( function () {
     $("#save_course").on("click", saveCourse);
     $("#courseDeleteBtn").on("click",deleteCourse);
     $("#labEditBtn").on("click",labHideAndShow);
-    $("#labSaveBtn").on("click",labHideAndShow);
+    $("#labBackBtn").on("click",labHideAndShow);
     $("#equipEditBtn").on("click",equipHideAndShow);
-    $("#equipSaveBtn").on("click",equipHideAndShow);
+    $("#equipBackBtn").on("click",equipHideAndShow);
     $("#courseEditBtn").on("click",courseHideAndShow);
-    $("#courseSaveBtn").on("click",courseHideAndShow);
+    $("#courseBackBtn").on("click",courseHideAndShow);
+    $("#courseDeleteBtn").on("click",coursedelete);
 })
 
 function deleteCourse(){

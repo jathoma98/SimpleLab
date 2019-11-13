@@ -50,6 +50,26 @@ public class CourseRESTController {
         return response.map();
     }
 
+    /**
+     * Takes a JSON object with required parameter "name", which is the name of the course to delete
+     * Deletes the course with this name.
+     */
+    @DeleteMapping("")
+    public Map<String, String> deleteCourse(@RequestBody CourseValidator courseValidator,
+                                            HttpSession session){
+        RequestResponse response = new RequestResponse();
+        String coursename = courseValidator.getName();
+        String userId = "";
+        try{
+            userId = (String)session.getAttribute("user_id");
+        } catch (Exception e){
+            //redirect to login
+        }
+        courseDB.deleteCourseByName(userId, coursename);
+        response.setSuccess(true);
+        return response.map();
+    }
+
     @GetMapping("/loadInfo")
     public List<Course> getCourses(HttpSession session){
         String userId = "";
