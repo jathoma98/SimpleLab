@@ -18,28 +18,15 @@ import java.util.List;
 @Setter
 @ToString
 @Document(collection = DBManager.COURSE_DOCUMENT_NAME)
-public class Course {
+public class Course extends BaseDocument {
 
-    //internal use
-    @Id
-    private String _id;
-
-    private String createdDate;
     private String course_id;
     private String name;
     private String description;
     private User creator;
 
-    private String _metadata;
-
     //annotation causes MongoDB to store IDs of labs here.
     @DBRef
     private List<Lab> labs;
-
-    public Course(){
-        Date date = new Date();
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-        this.createdDate = df.format(date);
-    }
 
 }

@@ -13,11 +13,7 @@ import java.util.List;
 @Setter
 @ToString
 @Document(collection = DBManager.LAB_DOCUMENT_NAME)
-public class Lab {
-    //framework -- just for testing courses
-
-    @Id
-    private String _id;
+public class Lab extends BaseDocument{
 
     private String name;
 
