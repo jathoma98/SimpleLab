@@ -77,4 +77,10 @@ public class LoginController{
         }
         return new ModelAndView("redirect:/");
     }
+
+
+    @GetMapping("/forgotpassword")
+    public String forgotPassword(HttpSession session) {
+        return "forgotPassword";
+    }
 }

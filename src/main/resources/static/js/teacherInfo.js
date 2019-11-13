@@ -86,26 +86,26 @@ function addCreate() {
 $(document).ready( function () {
     $("#add_course").on("click", addCreate);
     $("#save_course").on("click", saveCourse);
-    $("#labEditBtn").on("click",labHideAndShow);
-    $("#labBackBtn").on("click",labHideAndShow);
-    $("#equipEditBtn").on("click",equipHideAndShow);
-    $("#equipBackBtn").on("click",equipHideAndShow);
-    $("#courseEditBtn").on("click",courseHideAndShow);
-    $("#courseBackBtn").on("click",courseHideAndShow);
     $("#courseDeleteBtn").on("click",deleteCourse);
+    $("#labEditBtn").on("click",hideAndShowLab);
+    $("#labBackBtn").on("click",hideAndShowLab);
+    $("#equipEditBtn").on("click",hideAndShowEquip);
+    $("#equipBackBtn").on("click",hideAndShowEquip);
+    $("#courseEditBtn").on("click",hideAndShowCourse);
+    $("#courseBackBtn").on("click",hideAndShowCourse);
 })
 
 
 
-function courseHideAndShow() {
+function hideAndShowCourse() {
     $(".coursecheckcol").toggle();
 }
 
-function labHideAndShow(){
+function hideAndShowLab(){
     // $(".table_check").css("display","none");
     $(".labcheckcol").toggle();
 }
-function equipHideAndShow(){
+function hideAndShowEquip(){
     // $(".table_check").css("display","none");
     $(".equipcheckcol").toggle();
 }
