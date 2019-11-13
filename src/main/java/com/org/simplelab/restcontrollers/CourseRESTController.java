@@ -45,27 +45,32 @@ public class CourseRESTController {
         User user = userDB.findUserById(userId);
         Course c = courseValidator.build();
         c.setCreator(user);
-        courseDB.insertCourse(c);
-        response.setSuccess(true);
-        return response.map();
+        if (courseDB.insertCourse(c)) {
+            response.setSuccess(true);
+            return response.map();
+        } else { //return error on duplicate ID
+            response.setSuccess(false);
+            response.setError(CourseValidator.DUPLICATE_ID);
+            return response.map();
+        }
     }
 
     /**
-     * Takes a JSON object with required parameter "name", which is the name of the course to delete
-     * Deletes the course with this name.
+     * Takes a JSON object with required parameter "course_id", which is the course id of the course to delete
+     * Deletes the course with this id.
      */
     @DeleteMapping("/deleteCourse")
     public Map<String, String> deleteCourse(@RequestBody CourseValidator courseValidator,
                                             HttpSession session){
         RequestResponse response = new RequestResponse();
-        String coursename = courseValidator.getName();
+        String course_id = courseValidator.getCourse_id();
         String userId = "";
         try{
             userId = (String)session.getAttribute("user_id");
         } catch (Exception e){
             //redirect to login
         }
-        courseDB.deleteCourseByName(userId, coursename);
+        courseDB.deleteCourseByName(userId, course_id);
         response.setSuccess(true);
         return response.map();
     }

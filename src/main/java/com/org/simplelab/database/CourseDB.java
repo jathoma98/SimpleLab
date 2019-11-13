@@ -17,6 +17,9 @@ public class CourseDB {
     CourseRepository courseRepository;
 
     public boolean insertCourse(Course c){
+        List<Course> found = findByCourseId(c.getCourse_id());
+        if (found.size() > 0)
+            return false;
         courseRepository.save(c);
         return true;
     }
@@ -24,6 +27,10 @@ public class CourseDB {
     public boolean deleteCourse(Course c){
         courseRepository.delete(c);
         return true;
+    }
+
+    public List<Course> findByCourseId(String course_id){
+        return courseRepository.findByCourse_id(course_id);
     }
 
     public List<Course> findCourse(String name){

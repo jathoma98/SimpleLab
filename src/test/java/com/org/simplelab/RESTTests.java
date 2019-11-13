@@ -46,7 +46,7 @@ public class RESTTests extends SpringTestConfig {
                             .sessionAttrs(session_atr)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(json.toString()))
-                            //.andDo(print())
+                            .andDo(print())
                             .andExpect(status().isOk())
                             .andExpect(content().json("{'success': 'true'}"));
 
@@ -59,9 +59,6 @@ public class RESTTests extends SpringTestConfig {
         //delete the course afterwards
         List<Course> found = courseDB.findCourse(metadata);
         courseDB.deleteCourse(found.get(0));
-
-
-
 
 
     }
