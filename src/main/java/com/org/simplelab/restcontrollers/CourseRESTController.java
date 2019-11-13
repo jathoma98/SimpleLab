@@ -25,6 +25,9 @@ public class CourseRESTController {
     @Autowired
     UserDB userDB;
 
+    public static final String DELETE_MAPPING = "/deleteCourse";
+    public static final String LOAD_INFO_MAPPING = "/loadInfo";
+
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> addCourse(@RequestBody CourseValidator courseValidator,
                                          HttpSession session){
@@ -59,7 +62,7 @@ public class CourseRESTController {
      * Takes a JSON object with required parameter "course_id", which is the course id of the course to delete
      * Deletes the course with this id.
      */
-    @DeleteMapping("/deleteCourse")
+    @DeleteMapping(DELETE_MAPPING)
     public Map<String, String> deleteCourse(@RequestBody CourseValidator[] toDelete,
                                             HttpSession session){
         RequestResponse response = new RequestResponse();
@@ -78,7 +81,7 @@ public class CourseRESTController {
         return response.map();
     }
 
-    @GetMapping("/loadInfo")
+    @GetMapping(LOAD_INFO_MAPPING)
     public List<Course> getCourses(HttpSession session){
         String userId = "";
         try{
