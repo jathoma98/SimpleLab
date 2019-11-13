@@ -60,17 +60,20 @@ public class CourseRESTController {
      * Deletes the course with this id.
      */
     @DeleteMapping("/deleteCourse")
-    public Map<String, String> deleteCourse(@RequestBody CourseValidator courseValidator,
+    public Map<String, String> deleteCourse(@RequestBody CourseValidator[] toDelete,
                                             HttpSession session){
         RequestResponse response = new RequestResponse();
-        String course_id = courseValidator.getCourse_id();
+        //String course_id = courseValidator.getCourse_id();
         String userId = "";
         try{
             userId = (String)session.getAttribute("user_id");
         } catch (Exception e){
             //redirect to login
         }
-        courseDB.deleteCourseByName(userId, course_id);
+        for (CourseValidator c: toDelete){
+            String course_id = c.getCourse_id();
+            courseDB.deleteCourseById(userId, course_id);
+        }
         response.setSuccess(true);
         return response.map();
     }

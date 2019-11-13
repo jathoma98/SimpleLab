@@ -38,8 +38,8 @@ public class CourseDB {
         return found.size() == 0? null: found;
     }
 
-    public void deleteCourseByName(String user_id, String course_name){
-        courseRepository.deleteByNameAndId(user_id, course_name);
+    public void deleteCourseById(String user_id, String course_id){
+        courseRepository.deleteByUIDAndCourseID(user_id, course_id);
     }
 
     public List<Course> getCoursesForTeacher(String id){

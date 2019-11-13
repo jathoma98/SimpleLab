@@ -19,8 +19,8 @@ public interface CourseRepository extends MongoRepository<Course, String>{
     @Query(value = "{ _metadata: ?0 }", delete = true)
     public List<Course> deleteByMetadata(String metadata);
 
-    @Query(value = "{ 'creator._id': ?0, 'name': ?1 }", delete = true)
-    public List<Course> deleteByNameAndId(String user_id, String name);
+    @Query(value = "{ 'creator._id': ?0, 'course_id': ?1 }", delete = true)
+    public List<Course> deleteByUIDAndCourseID(String user_id, String course_id);
 
     @Query(value = "{ 'course_id': ?0 }")
     public List<Course> findByCourse_id(String course_id);
