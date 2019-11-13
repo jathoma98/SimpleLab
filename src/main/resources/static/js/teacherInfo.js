@@ -65,17 +65,27 @@ function addCreate() {
 $(document).ready( function () {
     $("#add_course").on("click", addCreate);
     $("#save_course").on("click", saveCourse);
+    $("#courseDeleteBtn").on("click",deleteCourse);
     $("#labEditBtn").on("click",labHideAndShow);
     $("#labSaveBtn").on("click",labHideAndShow);
     $("#equipEditBtn").on("click",equipHideAndShow);
     $("#equipSaveBtn").on("click",equipHideAndShow);
     $("#courseEditBtn").on("click",courseHideAndShow);
     $("#courseSaveBtn").on("click",courseHideAndShow);
-    $("#courseDeleteBtn").on("click",coursedelete);
 })
 
-function coursedelete(){
-
+function deleteCourse(){
+    let checkValue = [];
+    $("#course_list tbody tr").each(function(i,row){
+        console.log(row)
+        if ($(row).find('input[type="checkbox"]').is(':checked')){
+            checkValue.push($(row).find(".courseId").text());
+        }
+        else{
+            console.log(2)
+        }
+    });
+    console.log(checkValue)
 }
 
 function courseHideAndShow() {

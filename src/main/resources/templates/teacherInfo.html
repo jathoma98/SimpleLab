@@ -130,7 +130,7 @@
           <a href="#!" class="brand-logo headermargin">Course</a>
           <ul class="right hide-on-med-and-down">
             <li class="coursecheckcol myhide"><a id="courseSaveBtn" ><i class="material-icons">save</i></a></li>
-            <li class="coursecheckcol myhide"><a id="courseDeletelBtn"  ><i class="material-icons">delete</i></a></li>
+            <li class="coursecheckcol myhide"><a id="courseDeleteBtn"  ><i class="material-icons">delete</i></a></li>
             <li class="coursecheckcol myshow"><a id = "add_course" class="modal-trigger" href="#courseModal"><i class="material-icons">add</i></a></li>
             <li class="coursecheckcol myshow"><a id="courseEditBtn" ><i class="material-icons">edit</i></a></li>
           </ul>
@@ -316,8 +316,8 @@
 <!--        th:each="i : ${#numbers.sequence(notifications.size() - 1, 0, -1)}-->
 <!--        <tr th:each="course : ${list_of_course}">-->
         <tr th:each="i : ${#numbers.sequence(list_of_course.size() - 1, 0, -1)}">
-          <th class="coursecheckcol center myhide " ><label class=""><input type="checkbox"/><span></span></label></th>
-          <td><a th:text="${list_of_course[i].course_id}" class="modal-trigger" href="#courseModal">id</a></td>
+          <td class="coursecheckcol center myhide " ><label class=""><input type="checkbox"/><span></span></label></td>
+          <td><a th:text="${list_of_course[i].course_id}" class="modal-trigger courseId" href="#courseModal">id</a></td>
           <td th:text="${list_of_course[i].name}">name</td>
           <td th:text="${list_of_course[i].createdDate}">2018-02-20</td>
         </tr>
