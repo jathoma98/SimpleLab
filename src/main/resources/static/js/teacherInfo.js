@@ -65,17 +65,27 @@ function addCreate() {
 $(document).ready( function () {
     $("#add_course").on("click", addCreate);
     $("#save_course").on("click", saveCourse);
-    $("#labEditBtn").on("click",hideAndShowLab);
-    $("#labBackBtn").on("click",hideAndShowLab);
-    $("#equipEditBtn").on("click",hideAndShowEquip);
-    $("#equipBackBtn").on("click",hideAndShowEquip);
-    $("#courseEditBtn").on("click",hideAndShowCourse);
-    $("#courseBackBtn").on("click",hideAndShowCourse);
-    $("#courseDeleteBtn").on("click",coursedelete);
+    $("#courseDeleteBtn").on("click",deleteCourse);
+    $("#labEditBtn").on("click",labHideAndShow);
+    $("#labBackBtn").on("click",labHideAndShow);
+    $("#equipEditBtn").on("click",equipHideAndShow);
+    $("#equipBackBtn").on("click",equipHideAndShow);
+    $("#courseEditBtn").on("click",courseHideAndShow);
+    $("#courseBackBtn").on("click",courseHideAndShow);
 })
 
-function coursedelete(){
-
+function deleteCourse(){
+    let checkValue = [];
+    $("#course_list tbody tr").each(function(i,row){
+        console.log(row)
+        if ($(row).find('input[type="checkbox"]').is(':checked')){
+            checkValue.push($(row).find(".courseId").text());
+        }
+        else{
+            console.log(2)
+        }
+    });
+    console.log(checkValue)
 }
 
 function hideAndShowCourse() {

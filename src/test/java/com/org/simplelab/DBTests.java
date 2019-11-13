@@ -159,24 +159,6 @@ class DBTests extends SpringTestConfig {
 	@Autowired
 	LabRepository labRepository;
 
-	@Test
-	void testCourse(){
-		User u = new User();
-		u.set_id("5dc22379913bf470ddf11e4e");
-		u.setUsername("Pogey");
-		u.setPassword("Pass");
-		u.setFirstname("jacob");
-		u.setLastname("thomas");
-
-		Course c = new Course();
-		c.setCourse_id("CSE308");
-		c.setName("Software Engineering");
-		c.setDescription("The course for CSE308");
-		c.setCreator(u);
-		courseRepository.save(c);
-
-	}
-
 
 	@Test
 	void zzzzz_cleanup(){

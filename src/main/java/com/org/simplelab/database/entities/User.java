@@ -14,10 +14,7 @@ import java.util.Arrays;
 @Setter
 @ToString
 @Document(collection = DBManager.USER_DOCUMENT_NAME)
-public class User implements Serializable {
-
-    @Id
-    private String _id;
+public class User extends BaseDocument implements Serializable {
 
     private String username;
     private byte[] pass_hash;
@@ -29,11 +26,6 @@ public class User implements Serializable {
     private String role;
     private String email;
 
-    //metadata field for interacting with DB tests
-    public String _metadata;
-
-    public User() {
-    }
 
     /**
      * Use this method to set passwords.
