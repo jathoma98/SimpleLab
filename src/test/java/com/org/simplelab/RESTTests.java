@@ -21,10 +21,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class RESTTests extends SpringTestConfig {
 
-    /**
-     * id: 5dc22379913bf470ddf11e4e
-     * corresponds to user: 12345
-     */
 
     private static final String user_id = "5dc3806aabb7582d6f626791";
     private static final String username = "UNIT_TEST";
@@ -69,4 +65,5 @@ public class RESTTests extends SpringTestConfig {
 
 
     }
+
 }
