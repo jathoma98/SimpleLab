@@ -56,11 +56,11 @@ function deleteCourse(){
     let course = [];
     $("#course_list tbody tr").each(function(i,row){
         if ($(row).find('input[type="checkbox"]').is(':checked')){
-            course[i] = {
+            course.push({
                 name: null,
                 course_id: ($(row).find(".myIdColumn").text()),
                 description: null
-            };
+            });
         }
         else{
         }
