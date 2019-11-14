@@ -6,9 +6,12 @@
   <!--Import materialize.css-->
   <link type="text/css" rel="stylesheet" th:href="@{../css/materialize.min.css}"  media="screen,projection"/>
   <script src="/libs/jquery-1.9.1.js"></script>
+  <script src="/libs/react.development.js.js"></script>
+  <script src="/libs/react-dom.development.js"></script>
   <!--Let browser know website is optimized for mobile-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <script th:src = "@{/js/teacherInfo.js}"></script>
+  <script th:src = "@{/js/accountInfo.js}"></script>
 </head>
 
 <body>
@@ -21,8 +24,8 @@
   <!-- Dropdown Structure -->
   <ul id='dropdown1' class='dropdown-content'>
     <li><a href="#!">Home</a></li>
-    <li><a class="modal-trigger" href="#modalAccount">Account</a></li>
-    <li><a href="#!">Sign Out</a></li>
+    <li class="accountDia"><a  class=" modal-trigger" href="#modalAccount">Account</a></li>
+    <li><a href="">Sign Out</a></li>
   </ul>
 
 
@@ -41,13 +44,13 @@
                 </div>
                 <div class="input-field col s6">
                   <input id="last_name" type="text" class="validate">
-                  <label for="last_name">Last Name</label>
+                  <label  for="last_name">Last Name</label>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s6">
-                  <input id="school" type="text" class="validate">
-                  <label for="school">School</label>
+                  <input id="institution" type="text" class="validate">
+                  <label for="institution">institution</label>
                 </div>
                 <div class="input-field col s6">
                   <input id="email" type="text" class="validate">
@@ -55,7 +58,7 @@
                 </div>
               </div>
               <div class="row">
-                  <button class="btn waves-effect waves-light right modal-close" type="submit" name="action">Submit
+                  <button id="changeName" class="btn waves-effect waves-light right modal-close" type="submit" name="action">Submit
                     <i class="material-icons right">send</i>
                   </button>
               </div>
@@ -131,12 +134,11 @@
           <ul class="right hide-on-med-and-down">
             <li class="coursecheckcol myhide"><a id="courseDeleteBtn"  ><i class="material-icons">delete</i></a></li>
             <li class="coursecheckcol myhide"><a id="courseBackBtn" ><i class="material-icons">arrow_back</i></a></li>
-            <li class="coursecheckcol myshow"><a id = "add_course" class="modal-trigger" href="#courseModal"><i class="material-icons">add</i></a></li>
+            <li class="coursecheckcol myshow"><a id = "courseAddBtn" class="modal-trigger" href="#courseModal"><i class="material-icons">add</i></a></li>
             <li class="coursecheckcol myshow"><a id="courseEditBtn" ><i class="material-icons">delete</i></a></li>
           </ul>
         </div>
       </nav>
-
 
       <!-- Modal Structure -->
 
@@ -288,15 +290,11 @@
               </div>
             </li>
           </ul>
-
-
         </div>
-        <button id = "save_course" class="waves-effect waves-light modal-close right btn btn_margin" style="background:#dd0052;" type="submit" name="action">
+        <button id = "courseSaveBtn" class="waves-effect waves-light modal-close right btn btn_margin" style="background:#dd0052;" type="submit" name="action">
           Save
         </button>
-
       </div>
-
 <!--            course list table on teacher info page-->
       <table id = "course_list" class="striped centered responsive-table">
 

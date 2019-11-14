@@ -1,3 +1,33 @@
+/*
+* reload list of course
+*/
+function reloadCourses(){
+    $.ajax({
+        url: "/course/rest/loadInfo",
+        type: "GET",
+        success: function(result){
+            $('#course_list tbody').empty();
+            let len = result.length;
+            for(let r = len-1; r >= 0; r--){
+                $('#course_list tbody').append(
+                    "<tr>" +
+                    "<td class=\"coursecheckcol center mycheckbox\" ><label><input type=\"checkbox\"/><span></span></label></td>" +
+                    "<td class = \"myIdColumn\">" +
+                    result[r].course_id +
+                    "</td>" +
+                    "<td>" +
+                    result[r].name +
+                    "</td>" +
+                    "<td>" +
+                    result[r].createdDate +
+                    "</td>" +
+                    "</tr>"
+                )
+            }
+        }
+    })
+}
+
 /**
  * Get course data from input and text area, then
  * send to the server. If success, re-build course
@@ -26,32 +56,25 @@ function saveCourse(){
     })
 }
 
-function reloadCourses(){
+function displayCourseInfo( event ){
     $.ajax({
-        url: "/course/rest/loadInfo",
-        type: "GET",
+        url:"/course/rest",
+        type: 'POST',
+        dataTye: 'json',
+        contentType: 'application/json; charset=utf-8',
+        data: course_json,
         success: function(result){
-            $('#course_list tbody').empty();
-            let len = result.length;
-            for(let r = len-1; r >= 0; r--){
-                $('#course_list tbody').append(
-                    "<tr>" +
-                        "<td class=\"coursecheckcol center mycheckbox\" ><label><input type=\"checkbox\"/><span></span></label></td>" +
-                        "<td>" +
-                            result[r].course_id +
-                        "</td>" +
-                        "<td>" +
-                            result[r].name +
-                        "</td>" +
-                        "<td>" +
-                            result[r].createdDate +
-                        "</td>" +
-                    "</tr>"
-                )
+            if(result.success === "true"){
+                reloadCourses();
+            }else{
+                alert(result.error);
             }
         }
     })
 }
+
+
+
 
 function deleteCourse(){
     let course = [];
@@ -92,31 +115,34 @@ function addCreate() {
     $("#setCourseText").find('textarea').val('');
 }
 
-$(document).ready( function () {
-    $("#add_course").on("click", addCreate);
-    $("#save_course").on("click", saveCourse);
-    $("#courseDeleteBtn").on("click",deleteCourse);
-    $("#labEditBtn").on("click",hideAndShowLab);
-    $("#labBackBtn").on("click",hideAndShowLab);
-    $("#equipEditBtn").on("click",hideAndShowEquip);
-    $("#equipBackBtn").on("click",hideAndShowEquip);
-    $("#courseEditBtn").on("click",hideAndShowCourse);
-    $("#courseBackBtn").on("click",hideAndShowCourse);
-})
-
-
 function hideAndShowCourse() {
     $(".coursecheckcol").toggle();
 }
 
 function hideAndShowLab(){
-    // $(".table_check").css("display","none");
     $(".labcheckcol").toggle();
 }
 function hideAndShowEquip(){
-    // $(".table_check").css("display","none");
     $(".equipcheckcol").toggle();
 }
+
+$(document).ready( function () {
+    //Course
+    $("#courseAddBtn").on("click", addCreate);
+    $("#courseSaveBtn").on("click", saveCourse);
+    $("#courseDeleteBtn").on("click",deleteCourse);
+    $("#courseEditBtn").on("click",hideAndShowCourse);
+    $("#courseBackBtn").on("click",hideAndShowCourse);
+    //Lab
+    $("#labEditBtn").on("click",hideAndShowLab);
+    $("#labBackBtn").on("click",hideAndShowLab);
+    //Equipment
+    $("#equipEditBtn").on("click",hideAndShowEquip);
+    $("#equipBackBtn").on("click",hideAndShowEquip);
+
+})
+
+
 
 
 

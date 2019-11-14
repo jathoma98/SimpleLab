@@ -33,6 +33,8 @@ public class UserValidator extends Validator {
 
     private String userName;
     private String email;
+    private String firstname;
+    private String lastname;
     private String sp_password;
     private String sp_re_password;
     private String question;
@@ -82,6 +84,8 @@ public class UserValidator extends Validator {
         User user = new User();
         user.setUsername(userName);
         user.setPassword(sp_password);
+        user.setFirstname(firstname);
+        user.setLastname(lastname);
         user.setEmail(email);
         user.setQuestion(question);
         user.setAnswer(answer);
