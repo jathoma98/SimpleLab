@@ -96,7 +96,6 @@ $(document).ready( function () {
 })
 
 
-
 function hideAndShowCourse() {
     $(".coursecheckcol").toggle();
 }
