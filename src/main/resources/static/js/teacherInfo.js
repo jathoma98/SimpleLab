@@ -36,6 +36,7 @@ function reloadCourses(){
             for(let r = len-1; r >= 0; r--){
                 $('#course_list tbody').append(
                     "<tr>" +
+                        "<td class=\"coursecheckcol center mycheckbox\" ><label><input type=\"checkbox\"/><span></span></label></td>" +
                         "<td>" +
                             result[r].course_id +
                         "</td>" +
