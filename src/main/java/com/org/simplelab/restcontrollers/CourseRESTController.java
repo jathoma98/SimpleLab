@@ -88,8 +88,6 @@ import java.util.Map;
     @PatchMapping(UPDATE_MAPPING)
     public Map<String, String> updateCourse(@RequestBody CourseUpdateDTO dto, HttpSession session){
         RequestResponse rsp = new RequestResponse();
-        System.out.println(dto.getCourse_id_old());
-        System.out.println(dto.getNewCourseInfo());
         List<Course> courses = courseDB.findByCourseId(dto.getCourse_id_old());
         if (courses.size() > 0){
             CourseValidator cv = dto.getNewCourseInfo();
@@ -104,10 +102,10 @@ import java.util.Map;
             found.setCourse_id(cv.getCourse_id());
             found.setName(cv.getName());
             found.setDescription(cv.getDescription());
-            if (!courseDB.updateCourse(found)){
-                rsp.setError(CourseValidator.DUPLICATE_ID);
-                return rsp.map();
-            }
+            courseDB.updateCourse(found);
+        } else {
+            rsp.setError("No course with this ID was found. ");
+            return rsp.map();
         }
 
         rsp.setSuccess(true);

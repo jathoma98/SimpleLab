@@ -25,7 +25,8 @@ public class CourseDB {
     }
 
     public boolean updateCourse(Course c){
-        return insertCourse(c);
+        courseRepository.save(c);
+        return true;
     }
 
     public boolean deleteCourse(Course c){
