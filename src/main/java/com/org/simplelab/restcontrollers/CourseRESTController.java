@@ -13,6 +13,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -80,12 +81,36 @@ import java.util.Map;
      *                  description: "Revamped Software class for Spring 2020"
      *              }
      *            }
+     * @return success:true on success
+     *         success:false on failure with possible errors:
+     *
      */
     @PatchMapping(UPDATE_MAPPING)
-    public Map<String, String> updateCourse(@RequestBody CourseUpdateDTO dto){
+    public Map<String, String> updateCourse(@RequestBody CourseUpdateDTO dto, HttpSession session){
         RequestResponse rsp = new RequestResponse();
         System.out.println(dto.getCourse_id_old());
         System.out.println(dto.getNewCourseInfo());
+        List<Course> courses = courseDB.findByCourseId(dto.getCourse_id_old());
+        if (courses.size() > 0){
+            CourseValidator cv = dto.getNewCourseInfo();
+            try{
+                cv.validate();
+            } catch (Validator.InvalidFieldException e){
+                rsp.setError(e.getMessage());
+                return rsp.map();
+            }
+            //TODO: refactor with modelmapper?
+            Course found = courses.get(0);
+            found.setCourse_id(cv.getCourse_id());
+            found.setName(cv.getName());
+            found.setDescription(cv.getDescription());
+            if (!courseDB.updateCourse(found)){
+                rsp.setError(CourseValidator.DUPLICATE_ID);
+                return rsp.map();
+            }
+        }
+
+        rsp.setSuccess(true);
         return rsp.map();
     }
 

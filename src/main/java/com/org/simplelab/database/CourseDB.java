@@ -24,6 +24,10 @@ public class CourseDB {
         return true;
     }
 
+    public boolean updateCourse(Course c){
+        return insertCourse(c);
+    }
+
     public boolean deleteCourse(Course c){
         courseRepository.delete(c);
         return true;
