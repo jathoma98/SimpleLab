@@ -72,3 +72,25 @@
 	width:10%;
 	/*background: blue;*/
 }
+
+.table tbody td{
+
+}
+
+.loginbody{
+	width:17%;
+	margin:auto;
+	left:0;
+	right:0;
+	top:0;
+	bottom: 0;
+}
+.textfieldbox{
+	margin-left: 5px;
+}
+.loginforgot{
+	margin-left:15px;
+}
+.logintext{
+	margin-right: 15px;
+}

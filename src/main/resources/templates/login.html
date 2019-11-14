@@ -7,27 +7,28 @@
     <link type="text/css" rel="stylesheet" th:href="@{../css/materialize.min.css}"  media="screen,projection"/>
     <script th:src="@{/libs/jquery-1.9.1.js}"></script>
     <script th:src="@{/js/login.js}"></script>
+    <script th:src = "@{/js/teacherInfo.js}"></script>
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 </head>
 
-<body class="body valign-wrapper row">
-    <div class=" col s2  white offset-s5 login_radius center">
+<body class="body valign-wrapper row center">
+    <div class="loginbody  white offset-s5 login_radius center">
             <div class="row">
                 <img src="../img/logo.png" class="logo_pic">
                 <section>
-                    <div class="input-field col s12">
-                        <i class="material-icons prefix">account_circle</i>
+                    <div class="input-field logintext textfieldbox">
+                        <i class="material-icons prefix ">account_circle</i>
                         <input id="userName" placeholder="Enter User Name Here" type="text" class="">
                         <label class="active" for="userName">User Name</label>
                     </div>
                     <br>
-                    <div class="input-field col s12">
-                        <i class="material-icons prefix">lock</i>
+                    <div class="input-field logintext textfieldbox">
+                        <i class="material-icons prefix ">lock</i>
                         <input id="password" placeholder="Enter Password Here" type="text" class="">
                         <label class="active"  for="password">Password</label>
-                        <a href="../forgotPassword" class="left">forgot password</a>
+                        <a href="../forgotPassword" class="left loginforgot">forgot password</a>
                         <a href="../signup" class="right">signup</a>
                     </div>
                     <br>

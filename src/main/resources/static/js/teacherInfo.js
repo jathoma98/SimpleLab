@@ -36,6 +36,7 @@ function reloadCourses(){
             for(let r = len-1; r >= 0; r--){
                 $('#course_list tbody').append(
                     "<tr>" +
+                        "<td class=\"coursecheckcol center mycheckbox\" ><label><input type=\"checkbox\"/><span></span></label></td>" +
                         "<td>" +
                             result[r].course_id +
                         "</td>" +
@@ -55,14 +56,12 @@ function reloadCourses(){
 function deleteCourse(){
     let course = [];
     $("#course_list tbody tr").each(function(i,row){
-        if ($(row).find('input[type="checkbox"]').is(':checked')){
+        if ($(row).find('input[type="checkbox"]').is(':checked')) {
             course.push({
                 name: null,
                 course_id: ($(row).find(".myIdColumn").text()),
                 description: null
             });
-        }
-        else{
         }
     });
     let course_json =  JSON.stringify(course);
@@ -81,6 +80,7 @@ function deleteCourse(){
         }
     })
 }
+
 
 /**
  * Clean data in pop div. when user click on
