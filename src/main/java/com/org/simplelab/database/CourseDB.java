@@ -17,6 +17,9 @@ public class CourseDB {
     CourseRepository courseRepository;
 
     public boolean insertCourse(Course c){
+        List<Course> found = findByCourseId(c.getCourse_id());
+        if (found.size() > 0)
+            return false;
         courseRepository.save(c);
         return true;
     }
@@ -26,13 +29,17 @@ public class CourseDB {
         return true;
     }
 
+    public List<Course> findByCourseId(String course_id){
+        return courseRepository.findByCourse_id(course_id);
+    }
+
     public List<Course> findCourse(String name){
         List<Course> found = courseRepository.findByName(name);
         return found.size() == 0? null: found;
     }
 
-    public void deleteCourseByName(String user_id, String course_name){
-        courseRepository.deleteByNameAndId(user_id, course_name);
+    public void deleteCourseById(String user_id, String course_id){
+        courseRepository.deleteByUIDAndCourseID(user_id, course_id);
     }
 
     public List<Course> getCoursesForTeacher(String id){

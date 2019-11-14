@@ -1,9 +1,14 @@
 package com.org.simplelab.database.validators;
 
+import com.org.simplelab.database.CourseDB;
 import com.org.simplelab.database.entities.Course;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.Transient;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,10 +20,12 @@ public class CourseValidator extends Validator{
     private String description;
 
     public static final String EMPTY_FIELD = "Fields cannot be empty \n";
+    public static final String DUPLICATE_ID = "That course ID has been taken. \n";
 
     @Override
     public void validate() throws InvalidFieldException {
         StringBuilder sb = new StringBuilder();
+
         int[] lengths = {name.length(), course_id.length(), description.length()};
         for (int length: lengths){
             if (length == 0){
