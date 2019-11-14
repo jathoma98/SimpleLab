@@ -7,6 +7,10 @@ import com.org.simplelab.database.entities.Course;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.database.validators.Validator;
+import com.org.simplelab.restcontrollers.dto.CourseUpdateDTO;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +30,9 @@ import java.util.Map;
     UserDB userDB;
 
     public static final String DELETE_MAPPING = "/deleteCourse";
+    public static final String UPDATE_MAPPING = "/updateCourse";
     public static final String LOAD_INFO_MAPPING = "/loadInfo";
+
 
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> addCourse(@RequestBody CourseValidator courseValidator,
@@ -59,6 +65,31 @@ import java.util.Map;
     }
 
     /**
+     *  Endpoint for updating an existing course.
+     * @param dto - Should be formatted as:
+     *            {
+     *              course_id_old: The old Course ID before update, to find in DB.
+     *            ` newCourseInfo: A Course object which has the new course info
+     *            }
+     *            example:
+     *            {
+     *              course_id_old: "CSE308",
+     *              newCourseInfo: {
+     *                  name: "Software Dev",
+     *                  course_id: "CSE316",
+     *                  description: "Revamped Software class for Spring 2020"
+     *              }
+     *            }
+     */
+    @PatchMapping(UPDATE_MAPPING)
+    public Map<String, String> updateCourse(@RequestBody CourseUpdateDTO dto){
+        RequestResponse rsp = new RequestResponse();
+        System.out.println(dto.getCourse_id_old());
+        System.out.println(dto.getNewCourseInfo());
+        return rsp.map();
+    }
+
+    /**
      * Takes a JSON object with required parameter "course_id", which is the course id of the course to delete
      * Deletes the course with this id.
      */
@@ -66,7 +97,6 @@ import java.util.Map;
     public Map<String, String> deleteCourse(@RequestBody CourseValidator[] toDelete,
                                             HttpSession session){
         RequestResponse response = new RequestResponse();
-        //String course_id = courseValidator.getCourse_id();
         String userId = "";
         try{
             userId = (String)session.getAttribute("user_id");
