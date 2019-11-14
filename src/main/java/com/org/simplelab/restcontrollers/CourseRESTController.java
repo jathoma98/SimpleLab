@@ -17,7 +17,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/course/rest")
-public class CourseRESTController {
+    public class CourseRESTController {
 
     @Autowired
     CourseDB courseDB;
