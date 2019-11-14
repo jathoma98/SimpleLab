@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 
+
 <body>
     <nav>
         <div class="nav-wrapper row" style="background: #00acc1;">
@@ -104,8 +105,8 @@
 <!--**********************************************************************main body*********************************************************************************************************-->
 <!--**********************************************************************main body*********************************************************************************************************-->
 <!--**********************************************************************main body*********************************************************************************************************-->
-    <div class="row">
-
+    <div class="row center">
+<!--        equipment side bar-->
         <div class="col s2">
             <nav>
                 <div class="nav-wrapper" style="background: #f1cc36">
@@ -143,181 +144,32 @@
             </ul>
         </div>
 
+        <div class="col s9 myborder eqmainbody ">
+            <div class="eqcreatenew">
+                <a class="waves-effect waves-light btn modal-trigger my_gray" href="#addtolabmodal">Create New</a>
+            </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-        <div class="container col s10">
-            <div class="row hoverable">
-                <nav>
-                    <div class="nav-wrapper" style="background: #f1cc36">
-                        <a href="#!" class="brand-logo"><i class="material-icons">info</i>Container Detail</a>
+<!--           select lab set Modal Structure -->
+            <div class="">
+                <div>
+                    <div class="input-field col s12">
+                        <select>
+                            <option value="" disabled selected>Choose your option</option>
+                            <option value="1">Option 1</option>
+                            <option value="2">Option 2</option>
+                            <option value="3">Option 3</option>
+                        </select>
+                        <label>Materialize Select</label>
                     </div>
-                </nav>
-                <div class="col s3 valign-wrapper">
-                    <div class="center ">
-                        <img class="upload_pic" src="../img/upload.png">
+                    <div class="">
+                        <a href="#!" class=" waves-effect waves-green btn-flat" >send</a>
                     </div>
-                </div>
-                <div class="col s9">
-                    <form class="col s12">
-                        <div class="row">
-                            <div class=" col s1">
-                                <h5>Type:</h5>
-                            </div>
-                            <div class=" col s11">
-                                <form action="#">
-                                    <p class="col s2">
-                                        <label>
-                                            <input class="with-gap" name="group1" type="radio" checked />
-                                            <span>Measuring Type</span>
-                                        </label>
-                                    </p>
-                                    <p class="col s2">
-                                        <label>
-                                            <input class="with-gap" name="group1" type="radio" />
-                                            <span>Heating Type</span>
-                                        </label>
-                                    </p>
-                                    <p class="col s2">
-                                        <label>
-                                            <input class="with-gap" name="group1" type="radio"  />
-                                            <span>Raction Type</span>
-                                        </label>
-                                    </p>
-                                    <p class="col s2">
-                                        <label>
-                                            <input class="with-gap" name="group1" type="radio" />
-                                            <span>Vessel Type</span>
-                                        </label>
-                                    </p>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col s1">
-                                <h5>security:</h5>
-                            </div>
-                            <div class="col s11">
-                                <form action="#">
-                                    <p class="col s2">
-                                        <label>
-                                            <input class="with-gap" name="group2" type="radio" checked />
-                                            <span>Public</span>
-                                        </label>
-                                    </p>
-                                    <p class="col s2">
-                                        <label>
-                                            <input class="with-gap" name="group2" type="radio" />
-                                            <span>Private</span>
-                                        </label>
-                                    </p>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="input-field col s6">
-                            <input id="equipmentName" type="text" class="validate">
-                            <label for="equipmentName">name</label>
-                        </div>
-                        <div class="input-field col s6">
-                            <input id="maxValume" type="text" class="validate">
-                            <label for="maxValume">Max Valume</label>
-                        </div>
-                        <div class="input-field col s6">
-                            <input id="maxTemperature" type="text" class="validate">
-                            <label for="maxTemperature">Max Temperature</label>
-                        </div>
-                        <div class="input-field col s6">
-                            <input id="minTemperature" type="text" class="validate">
-                            <label for="minTemperature">Min Temperature</label>
-                        </div>
-                        <div class="input-field col s6">
-                            <input id="accuracy" type="text" class="validate">
-                            <label for="minTemperature">Min Temperature</label>
-                        </div>
-
-
-                    </form>
                 </div>
             </div>
 
-            <div class="row hoverable">
-                <nav>
-                    <div class="nav-wrapper" style="background: #dd0052;">
-                        <a href="#!" class="brand-logo"><i class="material-icons">info</i>compound in container</a>
-                    </div>
-                </nav>
-                <form class="row">
-                    <div class="input-field col s4">
-                        <input id="compoundName" type="text" class="validate">
-                        <label for="compoundName">Compound Name</label>
-                    </div>
-                    <div class="input-field col s4">
-                        <input id="chemistryExpression" type="text" class="validate">
-                        <label for="chemistryExpression">Chemistry Expression</label>
-                    </div>
-                    <div class="input-field col s4">
-                        <input id="ph" type="text" class="validate">
-                        <label for="ph">PH</label>
-                    </div>
-                    <div class="input-field col s4">
-                        <input id="color" type="text" class="validate">
-                        <label for="color">Color</label>
-                    </div>
-                    <div class="input-field col s4">
-                        <input id="volume" type="text" class="validate">
-                        <label for="volume">Volume</label>
-                    </div>
-                    <div class="input-field col s4">
-                        <input id="concerntation" type="text" class="validate">
-                        <label for="concerntation">Concerntation</label>
-                    </div>
-                    <div class="input-field col s4">
-                        <input id="temperature" type="text" class="validate">
-                        <label for="temperature">Temperature</label>
-                    </div>
-
-                </form>
-            </div>
-
-
-
-
-
-        </div><!--     container bot   -->
+        </div><!--     main body end here   -->
 
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -328,6 +180,7 @@
 
 <script>
 $(document).ready(function(){
+    M.AutoInit();
     $('.modal').modal();
     $('.dropdown-trigger').dropdown();
     $('.tabs').tabs();
