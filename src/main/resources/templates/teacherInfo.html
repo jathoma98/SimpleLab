@@ -310,8 +310,6 @@
         </thead>
 
         <tbody th:remove = "all-but-first">
-<!--        th:each="i : ${#numbers.sequence(notifications.size() - 1, 0, -1)}-->
-<!--        <tr th:each="course : ${list_of_course}">-->
         <tr th:each="i : ${#numbers.sequence(list_of_course.size() - 1, 0, -1)}">
           <td class="coursecheckcol center myhide mycheckbox" ><label class=""><input type="checkbox"/><span></span></label></td>
           <td class="myIdColumn"><a th:text="${list_of_course[i].course_id}" class="modal-trigger" href="#courseModal">id</a></td>
