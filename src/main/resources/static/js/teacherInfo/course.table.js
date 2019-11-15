@@ -1,34 +1,3 @@
-/*
-* reload list of course
-*/
-// function reloadCourses(){
-//     $.ajax({
-//         url: "/course/rest/loadCourseList",
-//         type: "GET",
-//         success: function(result){
-//             $('#course_list tbody').empty();
-//             let len = result.length;
-//             for(let r = len-1; r >= 0; r--){
-//                 let isHide = course_toggle? "myhide":"myshow"
-//                 $('#course_list tbody').append(
-//                     "<tr class = \".modal-trigger\" href=\"#courseModal\" onclick = courseTableRowEvent()>" +
-//                     "<td class = \"coursecheckcol center mycheckbox " + isHide + "\" ><label><input type=\"checkbox\"/><span></span></label></td>" +
-//                         "<td class = \"myIdColumn\">" +
-//                             result[r].course_id +
-//                         "</td>" +
-//                         "<td>" +
-//                             result[r].name +
-//                         "</td>" +
-//                         "<td>" +
-//                             result[r].createdDate +
-//                         "</td>" +
-//                     "</tr>"
-//                 )
-//             }
-//         }
-//     })
-// }
-
 function reloadCourses(){
     $.ajax({
         url: "/course/rest/loadCourseList",
