@@ -6,11 +6,12 @@
   <!--Import materialize.css-->
   <link type="text/css" rel="stylesheet" th:href="@{../css/materialize.min.css}"  media="screen,projection"/>
   <script src="/libs/jquery-1.9.1.js"></script>
-  <script src="/libs/react.development.js.js"></script>
-  <script src="/libs/react-dom.development.js"></script>
   <!--Let browser know website is optimized for mobile-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <script th:src = "@{/js/teacherInfo.js}"></script>
+  <script th:src = "@{/js/tools.js}"></script>
+  <script th:src = "@{/js/teacherInfo/course.table.js}"></script>
+
 </head>
 
 <body>
@@ -294,7 +295,7 @@
           Save
         </button>
       </div>
-<!--            course list table on teacher info page-->
+      <!--course list table on teacher info page-->
       <table id = "course_list" class="striped centered responsive-table">
 
         <thead>
@@ -305,11 +306,10 @@
           <th>Create Date</th>
         </tr>
         </thead>
-
         <tbody th:remove = "all-but-first">
-        <tr th:each="i : ${#numbers.sequence(list_of_course.size() - 1, 0, -1)}">
+        <tr class="modal-trigger" href="#courseModal" th:each="i : ${#numbers.sequence(list_of_course.size() - 1, 0, -1)}">
           <td class="coursecheckcol center myhide mycheckbox" ><label><input type="checkbox"/><span></span></label></td>
-          <td class="myIdColumn"><a th:text="${list_of_course[i].course_id}" class="modal-trigger" href="#courseModal">id</a></td>
+          <td class="myIdColumn" th:text="${list_of_course[i].course_id}">id</td>
           <td class="myNameColumn" th:text="${list_of_course[i].name}">name</td>
           <td th:text="${list_of_course[i].createdDate}">2018-02-20</td>
         </tr>
@@ -637,5 +637,6 @@
       });
     });
   });
+
 </script>
 </html>

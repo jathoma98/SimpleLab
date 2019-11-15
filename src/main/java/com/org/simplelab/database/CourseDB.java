@@ -47,4 +47,9 @@ public class CourseDB {
         return found;
     }
 
+    public Course findByUserIdAndCourseId(String user_id, String course_id){
+        List<Course> found = courseRepository.findByUIDAndCourseID(user_id, course_id);
+        if (found.size() != 0) return found.get(0);
+        return null;
+    }
 }

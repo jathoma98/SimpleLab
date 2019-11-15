@@ -25,5 +25,8 @@ public interface CourseRepository extends MongoRepository<Course, String>{
     @Query(value = "{ 'course_id': ?0 }")
     public List<Course> findByCourse_id(String course_id);
 
+    @Query(value = "{ 'creator._id': ?0, 'course_id': ?1 }")
+    public List<Course> findByUIDAndCourseID(String user_id, String course_id);
+
 
 }

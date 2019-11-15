@@ -31,7 +31,8 @@ import java.util.Map;
 
     public static final String DELETE_MAPPING = "/deleteCourse";
     public static final String UPDATE_MAPPING = "/updateCourse";
-    public static final String LOAD_INFO_MAPPING = "/loadInfo";
+    public static final String LOAD_LIST_COURSE_MAPPING = "/loadCourseList";
+    public static final String LOAD_COURSE_INFO_MAPPING = "/loadCourseInfo";
 
 
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -111,8 +112,8 @@ import java.util.Map;
         return response.map();
     }
 
-    @GetMapping(LOAD_INFO_MAPPING)
-    public List<Course> getCourses(HttpSession session){
+    @GetMapping(LOAD_LIST_COURSE_MAPPING)
+    public List<Course> getListOfCourse(HttpSession session){
         String userId = "";
         try{
             userId = (String)session.getAttribute("user_id");
@@ -121,6 +122,14 @@ import java.util.Map;
         }
         List<Course> courses = courseDB.getCoursesForTeacher(userId);
         return courses;
+    }
+
+    @PostMapping(LOAD_COURSE_INFO_MAPPING)
+    public Course getCourseInfo( @RequestBody Course course,
+                                        HttpSession session){
+        String uid = (String)session.getAttribute("user_id");
+        Course r = courseDB.findByUserIdAndCourseId(uid, course.getCourse_id());
+        return r;
     }
 
 
