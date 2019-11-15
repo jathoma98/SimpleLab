@@ -144,3 +144,9 @@
 /*.eqcreatenew button{*/
 /*	width: 100%;*/
 /*}*/
+
+.madalheight{
+
+	max-height: 80%!important;
+	width: 68%!important;
+}
