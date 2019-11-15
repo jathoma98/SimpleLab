@@ -1,0 +1,27 @@
+<!--
+    data = {
+        isHide : myshow/myhide,
+        eventFn: "tableRowEvent()"
+        courses: [....]
+    }
+-->
+
+{{#courses}}
+<tr class = "modal-trigger" href="#courseModal" onclick = {{eventFn}}>
+    <td class = "coursecheckcol center mycheckbox {{isHide}}">
+        <label>
+            <input type="checkbox "><span></span>
+        </label>
+    </td>
+    <td class = "myIdColumn">
+        {{course_id}}
+    </td>
+    <td>
+        {{name}}
+    </td>
+    <td>
+        {{createdDate}}
+    </td>
+</tr>
+{{/courses}}
+

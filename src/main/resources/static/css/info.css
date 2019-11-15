@@ -66,11 +66,11 @@
 }
 
 .myhide{
-	display: none!important;
+	display: none;
 }
 
 .myshow{
-	display: block!important;
+	display: block;
 }
 
 
@@ -144,3 +144,9 @@
 /*.eqcreatenew button{*/
 /*	width: 100%;*/
 /*}*/
+
+.madalheight{
+
+	max-height: 80%!important;
+	width: 68%!important;
+}
