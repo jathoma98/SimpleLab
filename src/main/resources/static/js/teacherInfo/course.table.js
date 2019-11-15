@@ -5,15 +5,17 @@ function reloadCourses(){
         success: function(result){
             $('#course_list tbody').empty();
             let data = {
-                isHide: course_toggle ? "myhide":"myshow",
-                eventFn: "courseTableRowEvent()",
+                isEnabled: course_toggle,
                 courses: result
             }
             $.get("/js/teacherInfo/tbody.mustache",
                 function(template){
                     $('#course_list tbody')
                         .html(Mustache.render(template, data));
-                })
+                    if(course_toggle){
+                        setTableBodyRowEvent($("#course_list tbody"), courseTableRowEvent, "#courseModal");
+                    }
+            })
         }
     })
 }
@@ -111,7 +113,6 @@ function addCreate() {
 
 let course_toggle = true;
 function hideAndShowCourse() {
-    console.log("delete pressed")
     $(".coursecheckcol").toggle();
     course_toggle = !course_toggle;
     if(course_toggle ){
@@ -119,6 +120,7 @@ function hideAndShowCourse() {
     }else{
         removeTableBodyRowEvent($("#course_list tbody"))
     }
+
 }
 
 $(document).ready(function () {

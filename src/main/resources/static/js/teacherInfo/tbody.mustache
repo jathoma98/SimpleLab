@@ -7,21 +7,21 @@
 -->
 
 {{#courses}}
-<tr class = "modal-trigger" href="#courseModal" onclick = {{eventFn}}>
-    <td class = "coursecheckcol center mycheckbox {{isHide}}">
+{{#isEnabled}}
+<tr class = "modal-trigger" href="#courseModal">
+    <td class = "coursecheckcol center mycheckbox myhide">
+{{/isEnabled}}
+{{^isEnabled}}
+<tr href="#courseModal">
+    <td class = "coursecheckcol center mycheckbox myshow">
+{{/isEnabled}}
         <label>
             <input type="checkbox"><span></span>
         </label>
     </td>
-    <td class = "myIdColumn">
-        {{course_id}}
-    </td>
-    <td>
-        {{name}}
-    </td>
-    <td>
-        {{createdDate}}
-    </td>
+    <td class = "myIdColumn">{{course_id}}</td>
+    <td>{{name}}</td>
+    <td>{{createdDate}}</td>
 </tr>
 {{/courses}}
 
