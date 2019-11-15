@@ -8,4 +8,16 @@ $(document).ready(function () {
             }
         })
     })
+    $(".visibility").on("click",switchVisibility);
 })
+
+
+function switchVisibility() {
+    var x = document.getElementById("password");
+    if (x.type === "password") {
+        x.type = "text";
+    } else {
+        x.type = "password";
+    }
+    $(".visibility").toggle();
+}

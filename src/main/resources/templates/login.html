@@ -20,14 +20,17 @@
                 <section>
                     <div class="input-field logintext textfieldbox">
                         <i class="material-icons prefix ">account_circle</i>
-                        <input id="userName" placeholder="Enter User Name Here" type="text" class="">
-                        <label class="active" for="userName">User Name</label>
+                        <input id="userName" placeholder="Enter User Name Here" type="text" class=" pwlength">
+                        <label class="active " for="userName">User Name</label>
+                        <i class="material-icons" style="visibility: hidden;">visibility_off</i>
                     </div>
                     <br>
                     <div class="input-field logintext textfieldbox">
                         <i class="material-icons prefix ">lock</i>
-                        <input id="password" placeholder="Enter Password Here" type="text" class="">
+                        <input id="password" placeholder="Enter Password Here" type="password" class="pwlength">
                         <label class="active"  for="password">Password</label>
+                        <a href="#" id="visibility" class="visibility"><i class="material-icons ">visibility</i></a>
+                        <a href="#" id="visibility-off" class="visibility" style="display: none;"><i class="material-icons ">visibility_off</i></a>
                         <a href="../forgotPassword" class="left loginforgot">forgot password</a>
                         <a href="../signup" class="right">signup</a>
                     </div>

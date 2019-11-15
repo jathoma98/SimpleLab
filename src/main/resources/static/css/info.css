@@ -28,6 +28,7 @@
 }
 
 .logo_pic{
+	margin-top: 15%;
 	height: 200px;
 	width: 200px;
 }
@@ -44,6 +45,16 @@
 
 .login_radius{
 	border-radius: 10px;
+}
+.usernameicon{
+	float: left!important;
+}
+
+.usernamefill{
+	width: 15%!important;
+}
+.pwlength{
+	width: 75%!important;
 }
 
 .account_img{
