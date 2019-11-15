@@ -66,11 +66,11 @@
 }
 
 .myhide{
-	display: none!important;
+	display: none;
 }
 
 .myshow{
-	display: block!important;
+	display: block;
 }
 
 

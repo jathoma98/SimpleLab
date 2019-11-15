@@ -142,6 +142,7 @@ function addCreate() {
 
 let course_toggle = true;
 function hideAndShowCourse() {
+    console.log("delete pressed")
     $(".coursecheckcol").toggle();
     course_toggle = !course_toggle;
     if(course_toggle ){
