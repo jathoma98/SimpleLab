@@ -37,10 +37,16 @@ import java.util.Map;
         return user;
     }
 
-//    @PostMapping(RESET_USER_MAPPING)
-//    public User resetUserInfo(@RequestBody UserValidator userValidator
-//                                           ,HttpSession session){
-//
-//    }
-
+    @PostMapping(RESET_USER_MAPPING)
+    public void resetUserInfo(@RequestBody User user
+                                           ,HttpSession session) {
+        String userId = "";
+        try {
+            userId = (String) session.getAttribute("user_id");
+        } catch (Exception e) {
+            //redirect to login
+        }
+        user.set_id(userId);
+        userDB.updateUser(user);
+    }
 }

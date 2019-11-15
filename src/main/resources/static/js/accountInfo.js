@@ -2,26 +2,35 @@ function showUserInfo(){
     $.ajax({
         url: "/user/rest/loadUserInfo",
         type: "GET",
-        success: function(result){
-            $("#first_name").val(result.firstname);
-            $("#last_name").val(result.lastname);
-            $("#institution").val(result.institution);
-            $("#email").val(result.email);
+        success: function(user){
+            $("#first_name").val(user.firstname);
+            $("#last_name").val(user.lastname);
+            $("#institution").val(user.institution);
+            $("#email").val(user.email);
         }
     })
 }
 
 function editUserInfo(){
+    let user ={
+
+        firstname : $("#first_name").val(),
+        lastname : $("#last_name").val(),
+        institution: $("#institution").val(),
+        email: $("#email").val()
+    };
+    let course_json =  JSON.stringify(user);
     $.ajax({
         url: "/user/rest/restUserInfo",
         type: "POST",
-        success:function () {
-
+        data: course_json,
+        success:function (){
+            alert("You have saved your information!")
         }
     })
 }
 
 $(document).ready( function () {
     $(".accountDia").on("click", showUserInfo);
-    $("#changeName").on("click",editUserInfo)
+    $("#saveInfoBtn").on("click",editUserInfo)
 })
