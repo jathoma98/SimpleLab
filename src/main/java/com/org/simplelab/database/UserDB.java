@@ -105,7 +105,7 @@ public class UserDB{
      * @param user - User object representing the User to be updated.
      */
     public void updateUser(User user){
-        deleteUser(user);
+//        deleteUser(user);
         userRepository.save(user);
     }
 
