@@ -24,6 +24,11 @@ public class CourseDB {
         return true;
     }
 
+    public boolean updateCourse(Course c){
+        courseRepository.save(c);
+        return true;
+    }
+
     public boolean deleteCourse(Course c){
         courseRepository.delete(c);
         return true;

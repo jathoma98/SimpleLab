@@ -3,24 +3,23 @@
 }
 
 .my_cran{
-	background: #00acc1;
+	background: #00acc1!important;
 }
 
 .my_cran2{
-	background: #00b8ce;
+	background: #00b8ce!important;
 }
 
-
 .my_yellow{
-	background: #f1cc36;
+	background: #f1cc36!important;
 }
 
 .my_red{
-	background:#dd0052;
+	background:#dd0052!important;
 }
 
 .my_gray{
-	background: #bdbdbd;
+	background: #bdbdbd !important;
 }
 
 .upload_pic{
@@ -29,6 +28,7 @@
 }
 
 .logo_pic{
+	margin-top: 15%;
 	height: 200px;
 	width: 200px;
 }
@@ -46,6 +46,16 @@
 .login_radius{
 	border-radius: 10px;
 }
+.usernameicon{
+	float: left!important;
+}
+
+.usernamefill{
+	width: 15%!important;
+}
+.pwlength{
+	width: 75%!important;
+}
 
 .account_img{
 	height: 50px;
@@ -56,12 +66,14 @@
 }
 
 .myhide{
-	display: none;
+	display: none!important;
 }
 
 .myshow{
-	display: block;
+	display: block!important;
 }
+
+
 .mycheckbox{
 	/*-webkit-column-width: 50px; !* Chrome, Safari, Opera *!*/
 	/*-moz-column-width: 50px; !* Firefox *!*/
@@ -94,3 +106,41 @@
 .logintext{
 	margin-right: 15px;
 }
+
+.myborder{
+	border:1px solid black;
+	margin-right: 5px;
+}
+
+.mycenter{
+	/*left: 0;*/
+	/*right: 0;*/
+	/*top: 0;*/
+	/*bottom: 0;*/
+	margin-top: auto;
+	margin-bottom: auto;
+
+}
+
+.eqmainbody{
+	height: 80%;
+	/*background: pink;*/
+}
+
+.eqcreatenew{
+	width: 10%;
+	/*background: blue;*/
+	height:5%;
+	margin-top: 25%;
+	margin-right: auto;
+	margin-left: auto;
+
+
+}
+.eqmodalheight{
+	height:50%
+}
+
+/*.eqcreatenew button{*/
+/*	width: 100%;*/
+/*}*/

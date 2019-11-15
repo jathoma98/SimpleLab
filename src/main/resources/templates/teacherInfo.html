@@ -11,7 +11,7 @@
   <script th:src = "@{/js/teacherInfo.js}"></script>
   <script th:src = "@{/js/tools.js}"></script>
   <script th:src = "@{/js/teacherInfo/course.table.js}"></script>
-
+  <script th:src = "@{/js/accountInfo.js}"></script>
 </head>
 
 <body>
@@ -24,8 +24,8 @@
   <!-- Dropdown Structure -->
   <ul id='dropdown1' class='dropdown-content'>
     <li><a href="#!">Home</a></li>
-    <li><a class="modal-trigger" href="#modalAccount">Account</a></li>
-    <li><a href="#!">Sign Out</a></li>
+    <li class="accountDia"><a  class=" modal-trigger" href="#modalAccount">Account</a></li>
+    <li><a href="">Sign Out</a></li>
   </ul>
 
 
@@ -33,62 +33,52 @@
   <div id="modalAccount" class="modal">
     <div class="modal-content">
       <ul class="collapsible">
-        <li >
+        <li class="active">
           <div class="collapsible-header" style="background: #00acc1;"><i class="material-icons">info</i>Account Info</div>
-          <div class="row collapsible-body">
-            <form class="col s12">
-              <div class="row">
-                <div class="input-field col s6">
-                  <input id="first_name" type="text" class="validate">
-                  <label for="first_name">First Name</label>
-                </div>
-                <div class="input-field col s6">
-                  <input id="last_name" type="text" class="validate">
-                  <label for="last_name">Last Name</label>
-                </div>
-              </div>
-              <div class="row">
-                <div class="input-field col s6">
-                  <input id="school" type="text" class="validate">
-                  <label for="school">School</label>
-                </div>
-                <div class="input-field col s6">
-                  <input id="email" type="text" class="validate">
-                  <label for="email">Email</label>
-                </div>
-              </div>
-              <div class="row">
-                  <button class="btn waves-effect waves-light right modal-close" type="submit" name="action">Submit
-                    <i class="material-icons right">send</i>
-                  </button>
-              </div>
-            </form>
-          </div>
-        </li>
-        <li>
-          <div class="collapsible-header" style="background: #f1cc36"><i class="material-icons">security</i>Password</div>
-          <div class="collapsible-body">
-            <form class="col s12">
-              <div class="row">
-                <div class="input-field col s10">
-                  <input id="password" type="text" class="validate">
-                  <label for="password">Password</label>
-                </div>
-                <div class="input-field col s2">
-                  <button class="btn waves-effect waves-light modal-close" type="submit" name="action">Submit
-                    <i class="material-icons right">send</i>
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
+            <div class="row collapsible-body">
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input readonly="readonly" id="first_name" placeholder="Chenxing"  type="text" class="validate">
+                            <label for="first_name">First Name</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input readonly="readonly" id="last_name" placeholder="Chenxing"  type="text" class="validate">
+                            <label for="last_name">Last Name</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input readonly="readonly" id="institution" placeholder="Chenxing"  type="text" class="validate">
+                            <label for="institution">institution</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input readonly="readonly" id="email" placeholder="Chenxing"  type="text" class="validate">
+                            <label for="email">Email</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input readonly="readonly" id="password" placeholder="Chenxing"  type="text" class="validate">
+                            <label for="password">Password</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <a id="cancelBtn" class="btn waves-effect waves-light right btn_margin my_red" style="display: none">Cancel
+                            <i class="material-icons right">cancel</i>
+                        </a>
+                        <a id="saveInfoBtn" class="btn waves-effect waves-light right btn_margin my_red" style="display: none">Save
+                            <i class="material-icons right">save</i>
+                        </a>
+                        <a id="editInfoBtn" class="btn waves-effect waves-light right btn_margin my_red">Edit
+                            <i class="material-icons right">edit</i>
+                        </a>
+                    </div>
+
+                </form>
+            </div>
         </li>
       </ul>
-    </div>
-    <div class="modal-footer">
-      <button class="waves-effect waves-light modal-close right btn btn_margin" style="background:#dd0052;" type="submit" name="action">
-        Save
-      </button>
     </div>
   </div>
 
