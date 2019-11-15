@@ -40,11 +40,11 @@ function reloadCourses(){
                 eventFn: "courseTableRowEvent()",
                 courses: result
             }
-            $('#course_list tbody').append(
-                $.mustache(
-                    $('#course_tbody_tpl').html(), data
-                )
-            )
+            $.get("/js/teacherInfo/tbody.mustache",
+                function(template){
+                    $('#course_list tbody')
+                        .html(Mustache.render(template, data));
+                })
         }
     })
 }
@@ -160,4 +160,5 @@ $(document).ready(function () {
     $("#courseBackBtn").on("click", hideAndShowCourse);
     //Set tbody row event
     setTableBodyRowEvent($("#course_list tbody"), courseTableRowEvent);
+    reloadCourses();
 })

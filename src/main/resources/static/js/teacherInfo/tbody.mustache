@@ -8,12 +8,12 @@
 
 {{#courses}}
 <tr class = "modal-trigger" href="#courseModal" onclick = {{eventFn}}>
-    <td class = "coursecheckcol center mycheckbox">
+    <td class = "coursecheckcol center mycheckbox {{isHide}}">
         <label>
-            <input type="checkbox {{isHide}}"><span></span>
+            <input type="checkbox "><span></span>
         </label>
     </td>
-    <td class = myIdColumn>
+    <td class = "myIdColumn">
         {{course_id}}
     </td>
     <td>
