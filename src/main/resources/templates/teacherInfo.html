@@ -5,13 +5,18 @@
   <link rel="stylesheet" th:href = "@{../css/info.css}">
   <!--Import materialize.css-->
   <link type="text/css" rel="stylesheet" th:href="@{../css/materialize.min.css}"  media="screen,projection"/>
+  <!--libs-->
   <script src="/libs/jquery-1.9.1.js"></script>
+  <script src="/libs/mustache.min.js"></script>
   <!--Let browser know website is optimized for mobile-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <script th:src = "@{/js/teacherInfo.js}"></script>
   <script th:src = "@{/js/tools.js}"></script>
   <script th:src = "@{/js/teacherInfo/course.table.js}"></script>
   <script th:src = "@{/js/accountInfo.js}"></script>
+  <!--mustache template-->
+  <script id="course_tbody_tpl" type="x-tmpl-mustache" src = "/js/teacherInfo/tbody.mustache"></script>
+
 </head>
 
 <body>
