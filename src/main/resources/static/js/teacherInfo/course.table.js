@@ -6,7 +6,7 @@ function reloadCourses(){
             $('#course_list tbody').empty();
             let data = {
                 isEnabled: course_toggle,
-                courses: result
+                courses: result.reverse()
             }
             $.get("/js/teacherInfo/tbody.mustache",
                 function(template){
@@ -31,7 +31,6 @@ function saveCourse(){
         course_id: $("#course_code").val(),
         description: $("#course_description").val()
     }
-
     let course_json =  JSON.stringify(course);
     $.ajax({
         url:"/course/rest",
