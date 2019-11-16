@@ -6,8 +6,6 @@ $.get("/info/get_user", function(user) {
 });
 
 
-
-
 $(document).ready( function () {
     $("#courseEditBtn").on("click",courseHideAndShow);
     $("#courseBackBtn").on("click",courseHideAndShow);

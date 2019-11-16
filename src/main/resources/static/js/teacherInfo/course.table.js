@@ -8,14 +8,22 @@ function reloadCourses(){
                 isEnabled: course_toggle,
                 courses: result.reverse()
             }
-            $.get("/js/teacherInfo/tbody.mustache",
-                function(template){
-                    $('#course_list tbody')
-                        .html(Mustache.render(template, data));
-                    if(course_toggle){
-                        setTableBodyRowEvent($("#course_list tbody"), courseTableRowEvent, "#courseModal");
-                    }
-            })
+
+            $('#course_list tbody')
+                .html(Mustache.render($("#course_tbody").html(), data));
+            if(course_toggle){
+                setTableBodyRowEvent($("#course_list tbody"), courseTableRowEvent, "#courseModal");
+            }
+
+
+            // $.get("/js/teacherInfo/tbody.mustache",
+            //     function(template){
+            //         $('#course_list tbody')
+            //             .html(Mustache.render(template, data));
+            //         if(course_toggle){
+            //             setTableBodyRowEvent($("#course_list tbody"), courseTableRowEvent, "#courseModal");
+            //         }
+            // })
         }
     })
 }
@@ -104,8 +112,17 @@ function deleteCourse(){
  * add course button.
  */
 function addCreate() {
-    $("#setCourseText").find('input:text').val('');
-    $("#setCourseText").find('textarea').val('');
+    let data = {
+        courseInfo: {
+            active: "active"
+        },
+        studentList: true,
+        labList: true
+    }
+
+    $('#modal ul').empty();
+    $('#modal ul').html(Mustache.render($("#modalTpl").html(), data));
+
 }
 
 
@@ -119,8 +136,8 @@ function hideAndShowCourse() {
     }else{
         removeTableBodyRowEvent($("#course_list tbody"))
     }
-
 }
+
 
 $(document).ready(function () {
     //Course

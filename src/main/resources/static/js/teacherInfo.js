@@ -1,7 +1,3 @@
-
-
-
-
 function hideAndShowLab(){
     $(".labcheckcol").toggle();
 }

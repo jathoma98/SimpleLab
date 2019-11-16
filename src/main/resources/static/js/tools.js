@@ -23,3 +23,16 @@ function removeTableBodyRowEvent(tbody){
         $(this).removeClass("modal-trigger");
     })
 }
+
+/**
+ * Pre-load template
+ * **/
+function templatePreLoad (){
+    $('script[type="x-tmpl-mustache"]').each(function(idx, templateSource) {
+        $.holdReady(true);
+        $.get(templateSource.src, function(template) {
+            templateSource.text = template;
+            $.holdReady(false);
+        });
+    });
+}

@@ -17,6 +17,5 @@ public interface UserRepository extends MongoRepository<User, String>{
     @Query(value = "{ _metadata: ?0 }", delete = true)
     public List<User> deleteByMetadata(String metadata);
 
-//    @Query(value = "{}")
 
 }
