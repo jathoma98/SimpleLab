@@ -5,6 +5,7 @@ import com.org.simplelab.database.entities.Course;
 import com.org.simplelab.database.entities.Equipment;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.repositories.EquipmentRepository;
+import com.org.simplelab.database.repositories.UserRepository;
 import com.org.simplelab.restcontrollers.CourseRESTController;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;

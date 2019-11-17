@@ -53,6 +53,10 @@ public class UserDB{
         return UserAuthenticationStatus.SUCCESSFUL;
     }
 
+    public List<User> searchByMatchingString(String regex){
+        return userRepository.findInfoFieldsWithRegex(regex);
+    }
+
     /**
      * Finds a User in the DB with the given username
      * @param username - username of the user to be found

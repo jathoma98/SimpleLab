@@ -25,4 +25,14 @@ public class DTO {
         private CourseValidator newCourseInfo;
 
     }
+
+    /**
+     * Contains information needed to search for Users through the
+     * User Search endpoint.
+     */
+    @Getter
+    @Setter
+    public class UserSearchDTO {
+        private String regex;
+    }
 }

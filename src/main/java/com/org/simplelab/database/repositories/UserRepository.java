@@ -22,7 +22,7 @@ public interface UserRepository extends MongoRepository<User, String>{
                             "{ institution: {'$regex': ?0, '$options': 'i'}}" +
                             "]" +
                          "})";
-    @Query(value = REGEX_QUERY)
+    @Query(value = REGEX_QUERY, fields = "{ 'username': 1, 'firstname': 1, 'lastname': 1, 'institution': 1 }")
     public List<User> findInfoFieldsWithRegex(String regex);
 
     public List<User> findByUsername(String username);
