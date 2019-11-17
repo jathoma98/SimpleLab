@@ -4,21 +4,15 @@ import com.org.simplelab.database.DBManager;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.List;
 
 @Getter
 @Setter
 @ToString
-@Document(collection = DBManager.LAB_DOCUMENT_NAME)
-public class Lab extends BaseDocument{
+@Document(collection = DBManager.EQUIPMENT_DOCUMENT_NAME)
+public class Equipment extends BaseDocument {
 
     private String name;
-
-    @DBRef
-    private List<Equipment> equipment;
+    private User creator;
 
 }
