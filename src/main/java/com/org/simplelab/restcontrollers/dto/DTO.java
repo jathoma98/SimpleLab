@@ -19,7 +19,7 @@ public class DTO {
     @Getter
     @Setter
     @ToString
-    public class CourseUpdateDTO {
+    public static class CourseUpdateDTO {
 
         private String course_id_old;
         private CourseValidator newCourseInfo;
@@ -32,7 +32,7 @@ public class DTO {
      */
     @Getter
     @Setter
-    public class UserSearchDTO {
+    public static class UserSearchDTO {
         private String regex;
     }
 }
