@@ -171,148 +171,9 @@
                 </ul>
             </div>
         </nav>
-
-        <!-- Modal Structure -->
-
         <!-------------------------------------------------------------------------------------->
         <!-- Create Course -->
         <!-------------------------------------------------------------------------------------->
-
-        <div id="courseModal" class="modal" style="max-height: 80%; width: 80%">
-            <div class="modal-content">
-                <ul class="collapsible">
-                    <li>
-                        <div class="collapsible-header" style="background: #00acc1;"><i class="material-icons">info</i>Info
-                        </div>
-                        <div id="setCourseText" class="row collapsible-body">
-                            <form class="col s12">
-                                <div class="row">
-                                    <div class="input-field col s6">
-                                        <input id="course_name" type="text" class="validate">
-                                        <label for="course_name">Course Name</label>
-                                    </div>
-                                    <div class="input-field col s6">
-                                        <input id="course_code" type="text" class="validate">
-                                        <label for="course_code">Course Code</label>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="input-field col s12">
-                                        <textarea id="course_description" class="materialize-textarea"></textarea>
-                                        <label for="course_description">Course Description</label>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="collapsible-header" style="background: #f1cc36"><i class="material-icons">perm_identity</i>Students
-                        </div>
-                        <div class="collapsible-body">
-                            <div class="row">
-                                <div class="input-field col s4">
-                                    <table>
-                                        <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="input-field col s8">
-                                    <div class="input-field col s10">
-                                        <input id="searchLab" type="text" class="validate">
-                                        <label for="searchLab">Student Name</label>
-                                    </div>
-                                    <div class="input-field col s2">
-                                        <a><i class="material-icons">search</i></a>
-                                    </div>
-                                    <table>
-                                        <thead>
-                                        <tr>
-                                            <th>Search result</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>Alvin</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Alan</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Jonathan</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="collapsible-header" style="background:#dd0052"><i class="material-icons">laptop</i>Labs
-                        </div>
-                        <div class="collapsible-body">
-                            <div class="row">
-                                <div class="input-field col s4">
-                                    <table>
-                                        <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>Alvin</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Alan</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Jonathan</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="input-field col s8">
-                                    <div class="input-field col s10">
-                                        <input id="searchStudent" type="text" class="validate">
-                                        <label for="searchStudent">Lab Name</label>
-                                    </div>
-                                    <div class="input-field col s2">
-                                        <a href=""><i class="material-icons">search</i></a>
-                                    </div>
-                                    <table>
-                                        <thead>
-                                        <tr>
-                                            <th>Search Result</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>Alvin</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Alan</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Jonathan</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <button id="courseSaveBtn" class="waves-effect waves-light modal-close right btn btn_margin"
-                    style="background:#dd0052;" type="submit" name="action">
-                Save
-            </button>
-        </div>
         <!--course list table on teacher info page-->
         <table id="course_list" class="striped centered responsive-table">
             <thead>
@@ -326,7 +187,7 @@
             <script id="course_tbody" type="mustache">
             {{#courses}}
                 {{#isEnabled}}
-            <tr class = "modal-trigger" href="#courseModal">
+            <tr class = "modal-trigger" href="#modal">
                 <td class = "coursecheckcol mycheckbox myhide center">
             {{/isEnabled}}
                 {{^isEnabled}}
@@ -362,99 +223,12 @@
                 <ul class="right hide-on-med-and-down">
                     <li class="labcheckcol myhide"><a id="labDeleteBtn"><i class="material-icons">delete</i></a></li>
                     <li class="labcheckcol myhide"><a id="labBackBtn"><i class="material-icons">arrow_back</i></a></li>
-                    <li class="labcheckcol myshow"><a class="modal-trigger" href="#labModal"><i class="material-icons">add</i></a>
+                    <li class="labcheckcol myshow"><a class="modal-trigger" href="#modal"><i class="material-icons">add</i></a>
                     </li>
                     <li class="labcheckcol myshow"><a id="labEditBtn"><i class="material-icons">delete</i></a></li>
                 </ul>
             </div>
         </nav>
-
-        <!-- Modal Structure -->
-        <div id="labModal" class="modal" style="max-height: 80%;">
-            <div class="modal-content">
-                <ul class="collapsible">
-                    <li>
-                        <div class="collapsible-header" style="background: #00acc1"><i class="material-icons">info</i>Create
-                            New Lab
-                        </div>
-                        <div class="row collapsible-body">
-                            <form class="col s12">
-                                <div class="row">
-                                    <div class="input-field col s6">
-                                        <input id="lab_name" type="text" class="validate">
-                                        <label for="lab_name">Lab Name</label>
-                                    </div>
-                                    <div class="input-field col s6">
-                                        <input id="lab_code" type="text" class="validate">
-                                        <label for="lab_code">Lab Code</label>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <form class="col s12">
-                                        <div class="row">
-                                            <div class="input-field col s12">
-                                                <textarea id="labtextarea" class="materialize-textarea"></textarea>
-                                                <label for="labtextarea">Lab Decription</label>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <button class="btn waves-effect waves-light right modal-close" type="submit"
-                                                    name="action">Continue
-                                                <i class="material-icons right">send</i>
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-
-                            </form>
-                        </div>
-                    </li>
-
-                    <!--search for lab-->
-                    <li>
-                        <div class="collapsible-header" style="background: #f1cc36"><i class="material-icons">laptop</i>Search
-                            for Labs
-                        </div>
-                        <div class="collapsible-body">
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    <div class="input-field col s10">
-                                        <input id="modalsearchLab" type="text" class="validate">
-                                        <label for="searchLab">Student Name</label>
-                                    </div>
-                                    <div class="input-field col s2">
-                                        <a><i class="material-icons">search</i></a>
-                                    </div>
-                                    <table>
-                                        <thead>
-                                        <tr>
-                                            <th>Search result</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>Lab one</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Lab two</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Lab three</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <button class="waves-effect waves-light modal-close right btn btn_margin" style="background:#dd0052;"
-                    type="submit" name="action">
-                Save
-            </button>
-        </div>
-
 
         <!--lab list table in teacher info page-->
         <table class="striped centered responsive-table highlight">
@@ -582,7 +356,6 @@
                                         </tr>
                                         </tbody>
                                     </table>
-
                                 </div>
                             </div>
                         </div>
@@ -593,7 +366,6 @@
                     type="submit" name="action">
                 Save
             </button>
-
         </div>
 
 

@@ -37,6 +37,7 @@ function cancelEdit(){
     $("#saveInfoBtn").toggle();
     $("#cancelBtn").toggle();
 }
+
 $(document).ready( function () {
 
     //Lab

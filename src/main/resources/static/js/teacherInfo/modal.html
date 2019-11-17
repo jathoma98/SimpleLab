@@ -1,30 +1,44 @@
 <!--
 data = {
-    courseInfo: {active, course_name, course_code, course_description}},
-    studentList: [.....],
-    labList: [....],
+    courseModal:{
+        active: "active",
+        course: {name, course_id, description}},
+        studentList: [....],
+        labList: [...]
+    },
+    LabModal:{
+        active: "active",
+        lab: {name, lab_id, description}},
+        equipmentList:[...]
+    },
+    Equipment:{
+        active: "active",
+    },
 }
 -->
 
 {{#courseInfo}}
-    <li{{#active}} class="{{active}}"{{/active}}>
-        <div class="collapsible-header"  style="background: #00acc1;"><i class="material-icons">info</i>Info</div>
-        <div id = "setCourseText" class="row collapsible-body">
+    <li{{#active}} class="active"{{/active}}>
+        <div class="collapsible-header" style="background: #00acc1;"><i class="material-icons">info</i>Info</div>
+        <div id="setCourseText" class="row collapsible-body"{{#active}} style="display: block;"{{/active}}>
             <form class="col s12">
                 <div class="row">
                     <div class="input-field col s6">
-                        <input id="course_name" type="text" class="validate" value = "{{course_name}}">
-                        <label for="course_name">Course Name</label>
+                        <input id="course_name" type="text" class="validate{{#name}} valid{{/name}}" value="{{name}}">
+                        <label for="course_name"{{#name}} class="active"{{/name}}>Course Name</label>
                     </div>
                     <div class="input-field col s6">
-                        <input id="course_code" type="text" class="validate" value = "{{course_code}}">
-                        <label for="course_code">Course Code</label>
+                        <input id="course_code" type="text" class="validate{{#course_id}} valid{{/course_id}}"
+                               value="{{course_id}}">
+                        <label for="course_code"{{#course_id}} class="active"{{/course_id}}>Course Code</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <textarea id="course_description" class="materialize-textarea">{{course_description}}</textarea>
-                        <label for="course_description">Course Description</label>
+                        <textarea id="course_description"
+                                  class="materialize-textarea validate{{#description}} valid{{/description}}">{{description}}</textarea>
+                        <label for="course_description"{{#description}} class="active"{{/description}}>Course
+                            Description</label>
                     </div>
                 </div>
             </form>
@@ -33,7 +47,8 @@ data = {
 {{/courseInfo}}
 {{#studentList}}
     <li>
-        <div class="collapsible-header" style="background: #f1cc36"><i class="material-icons">perm_identity</i>Students</div>
+        <div class="collapsible-header" style="background: #f1cc36"><i class="material-icons">perm_identity</i>Students
+        </div>
         <div class="collapsible-body">
             <div class="row">
                 <div class="input-field col s4">
@@ -125,6 +140,74 @@ data = {
         </div>
     </li>
 {{/labList}}
+{{#labInfo}}
+    <li>
+        <div class="collapsible-header" style="background: #00acc1"><i class="material-icons">info</i>Create
+            New Lab
+        </div>
+        <div class="row collapsible-body">
+            <form class="col s12">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input id="lab_name" type="text" class="validate" value="fsdfsdf">
+                        <label for="lab_name">Lab Name</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="lab_code" type="text" class="validate">
+                        <label for="lab_code">Lab Code</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <textarea id="labtextarea" class="materialize-textarea">54156415616</textarea>
+                        <label for="labtextarea">Lab Decription</label>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </li>
+{{/labInfo}}
+{{#equipmentList}}
+    <li>
+        <div class="collapsible-header" style="background: #f1cc36"><i class="material-icons">laptop</i>Search
+            for Labs
+        </div>
+        <div class="collapsible-body">
+            <div class="row">
+                <div class="input-field col s12">
+                    <div class="input-field col s10">
+                        <input id="modalsearchLab" type="text" class="validate">
+                        <label for="searchLab">Student Name</label>
+                    </div>
+                    <div class="input-field col s2">
+                        <a><i class="material-icons">search</i></a>
+                    </div>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Search result</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Lab one</td>
+                        </tr>
+                        <tr>
+                            <td>Lab two</td>
+                        </tr>
+                        <tr>
+                            <td>Lab three</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </li>
+{{/equipmentList}}
+
+
+
 <!--    <button id = "courseSaveBtn" class="waves-effect waves-light modal-close right btn btn_margin" style="background:#dd0052;" type="submit" name="action">-->
 <!--        Save-->
 <!--    </button>-->
