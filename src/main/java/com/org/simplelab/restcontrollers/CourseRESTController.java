@@ -7,7 +7,7 @@ import com.org.simplelab.database.entities.Course;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.database.validators.Validator;
-import com.org.simplelab.restcontrollers.dto.CourseUpdateDTO;
+import com.org.simplelab.restcontrollers.dto.DTO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -87,7 +87,7 @@ import java.util.Map;
      *
      */
     @PatchMapping(UPDATE_MAPPING)
-    public Map<String, String> updateCourse(@RequestBody CourseUpdateDTO dto, HttpSession session){
+    public Map<String, String> updateCourse(@RequestBody DTO.CourseUpdateDTO dto, HttpSession session){
         RequestResponse rsp = new RequestResponse();
         List<Course> courses = courseDB.findByCourseId(dto.getCourse_id_old());
         if (courses.size() > 0){

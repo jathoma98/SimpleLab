@@ -58,7 +58,7 @@ public class RESTTests extends SpringTestConfig {
 
         sendCourseToPOSTEndpoint(json);
 
-        this.mockMvc.perform(get("/course/rest/loadInfo")
+        this.mockMvc.perform(get("/course/rest" + CourseRESTController.LOAD_LIST_COURSE_MAPPING)
                              .sessionAttrs(session_atr))
                             .andDo(print())
                             .andExpect(status().isOk());
