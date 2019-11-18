@@ -3,39 +3,30 @@ class Course {
     /**
      * Use to pull course list from server in teacher home page
      **/
-    reload = function () {
+    reload = function (this_course) {
+        let this_course_toggle;
+        let this_tableRowEvent;
+        if (this_course != undefined){
+            this_course_toggle = this_course.course_toggle;
+            this_tableRowEvent = this_course.tableRowEvent;
+        }else{
+            this_course_toggle = this.course_toggle;
+            this_tableRowEvent = this.tableRowEvent;
+        }
         $.ajax({
             url: "/course/rest/loadCourseList",
             type: "GET",
             success: function (result) {
-                $('#course_list tbody').empty();
                 let data = {
-                    isEnabled: this.course_toggle,
+                    isEnabled: this_course_toggle,
                     courses: result.reverse()
                 }
-
-                $('#course_list tbody')
-                    .html(Mustache.render($("#course_tbody").html(), data));
-                if (this.course_toggle) {
-                    setTableBodyRowEvent($("#course_list tbody"), courseTableRowEvent, "#courseModal");
+                rebuildComponent('#course_list tbody', '#course_tbody', data);
+                if (this_course_toggle) {
+                    setTableBodyRowEvent($("#course_list tbody"), this_tableRowEvent, "#courseModal");
                 }
             }
         })
-    };
-
-    /**
-     * Rebuild component base on template.
-     * @Param component component id.
-     * @param template template id
-     * @param data
-     *
-     * @return html_text
-     **/
-    rebuildComponent  = function (component, template, data) {
-        $('#modal ul').empty();
-        let html_text = Mustache.render($("#modalTpl").html(), data)
-        $('#modal ul').html(html_text);
-        return html_text;
     };
 
     /**
@@ -44,12 +35,15 @@ class Course {
      * table.
      */
     save = function () {
+
         let course = {
             name: $("#course_name").val(),
             course_id: $("#course_code").val(),
             description: $("#course_description").val()
         }
         let course_json = JSON.stringify(course);
+        let this_reload = this.reload;
+        let this_course = this;
         $.ajax({
             url: "/course/rest",
             type: 'POST',
@@ -58,7 +52,7 @@ class Course {
             data: course_json,
             success: function (result) {
                 if (result.success === "true") {
-                    this.reloadCourses();
+                    this_reload(this_course);
                 } else {
                     alert(result.error);
                 }
@@ -85,7 +79,7 @@ class Course {
                 let data = {
                     courseInfo: course
                 }
-                this.rebuildComponent(data);
+                rebuildComponent('#modal ul',"#modalTpl", data);
             }
         })
     };
@@ -106,6 +100,8 @@ class Course {
             }
         });
         let course_json = JSON.stringify(course);
+        let this_reload = this.reload;
+        let this_course = this;
         $.ajax({
             url: "/course/rest/deleteCourse",
             type: 'DELETE',
@@ -114,7 +110,7 @@ class Course {
             data: course_json,
             success: function (result) {
                 if (result.success === "true") {
-                    reloadCourses();
+                    this_reload(this_course);
                 } else {
                     alert(result.error);
                 }
@@ -135,15 +131,15 @@ class Course {
             studentList: true,
             labList: true
         }
-        this.rebuildComponent(data);
+        rebuildComponent('#modal ul',"#modalTpl", data);
     };
 
 
     btnSwitch = function () {
         $(".coursecheckcol").toggle();
-        this.course_toggle = !course_toggle;
+        this.course_toggle = !this.course_toggle;
         if (this.course_toggle) {
-            setTableBodyRowEvent($("#course_list tbody"), courseTableRowEvent, "#modal");
+            setTableBodyRowEvent($("#course_list tbody"), this.tableRowEvent, "#modal");
         } else {
             removeTableBodyRowEvent($("#course_list tbody"))
         }
@@ -155,12 +151,11 @@ class Course {
 $(document).ready(function () {
     let course = new Course()
     //Course
-    $("#courseAddBtn").on("click", course.create);
-    $("#courseSaveBtn").on("click", course.save);
-    $("#courseDeleteBtn").on("click", course.delete);
-    $("#courseEditBtn").on("click", course.btnSwitch);
-    $("#courseBackBtn").on("click", course.btnSwitch);
+    $("#courseAddBtn").on("click", ()=>{course.create()});
+    $("#courseSaveBtn").on("click", ()=>{course.save()});
+    $("#courseDeleteBtn").on("click", ()=>{course.delete()});
+    $("#courseEditBtn").on("click", ()=>{course.btnSwitch()});
+    $("#courseBackBtn").on("click", ()=>{course.btnSwitch()});
     //Set tbody row event
-    // setTableBodyRowEvent($("#course_list tbody"), courseTableRowEvent);
-    reloadCourses();
+    course.reload();
 })

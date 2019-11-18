@@ -36,3 +36,19 @@ function templatePreLoad (){
         });
     });
 }
+
+/**
+ * Rebuild component base on template.
+ * @Param component component id.
+ * @param template template id
+ * @param data
+ *
+ * @return html_text
+ **/
+rebuildComponent  = function (component, template, data) {
+    $(component).empty();
+    let html_text = Mustache.render($(template).html(), data)
+    $(component).html(html_text);
+    return html_text;
+};
+
