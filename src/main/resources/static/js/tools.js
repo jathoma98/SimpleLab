@@ -45,10 +45,13 @@ function templatePreLoad (){
  *
  * @return html_text
  **/
-rebuildComponent  = function (component, template, data) {
+rebuildComponent  = function (component, template, data, btnEvents) {
     $(component).empty();
     let html_text = Mustache.render($(template).html(), data)
     $(component).html(html_text);
+    for(let key in btnEvents){
+        $(key).on("click", btnEvents[key]);
+    }
     return html_text;
 };
 

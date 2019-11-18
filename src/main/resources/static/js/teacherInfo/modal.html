@@ -2,50 +2,45 @@
 data = {
     courseModal:{
         active: "active",
-        course: {name, course_id, description}},
-        studentList: [....],
-        labList: [...]
+        course: {name, course_id, description, studentList, labList}},
     },
     LabModal:{
         active: "active",
-        lab: {name, lab_id, description}},
-        equipmentList:[...]
+        lab: {name, lab_id, description, equipmentList}},
     },
     Equipment:{
         active: "active",
     },
 }
 -->
-
-{{#courseInfo}}
+{{#courseModal}}
     <li{{#active}} class="active"{{/active}}>
         <div class="collapsible-header" style="background: #00acc1;"><i class="material-icons">info</i>Info</div>
         <div id="setCourseText" class="row collapsible-body"{{#active}} style="display: block;"{{/active}}>
             <form class="col s12">
                 <div class="row">
                     <div class="input-field col s6">
-                        <input id="course_name" type="text" class="validate{{#name}} valid{{/name}}" value="{{name}}">
-                        <label for="course_name"{{#name}} class="active"{{/name}}>Course Name</label>
+                        <input id="course_name" type="text" class="validate{{#course.name}} valid{{/course.name}}" value="{{course.name}}">
+                        <label for="course_name"{{#course.name}} class="active"{{/course.name}}>Course Name</label>
                     </div>
                     <div class="input-field col s6">
-                        <input id="course_code" type="text" class="validate{{#course_id}} valid{{/course_id}}"
-                               value="{{course_id}}">
-                        <label for="course_code"{{#course_id}} class="active"{{/course_id}}>Course Code</label>
+                        <input id="course_code" type="text" class="validate{{#course.course_id}} valid{{/course.course_id}}"
+                               value="{{course.course_id}}">
+                        <label for="course_code"{{#course.course_id}} class="active"{{/course.course_id}}>Course Code</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
                         <textarea id="course_description"
-                                  class="materialize-textarea validate{{#description}} valid{{/description}}">{{description}}</textarea>
-                        <label for="course_description"{{#description}} class="active"{{/description}}>Course
+                                  class="materialize-textarea validate{{#course.description}} valid{{/course.description}}">{{course.description}}</textarea>
+                        <label for="course_description"{{#course.description}} class="active"{{/course.description}}>Course
                             Description</label>
                     </div>
                 </div>
             </form>
         </div>
     </li>
-{{/courseInfo}}
-{{#studentList}}
+<!--student list-->
     <li>
         <div class="collapsible-header" style="background: #f1cc36"><i class="material-icons">perm_identity</i>Students
         </div>
@@ -64,13 +59,13 @@ data = {
                 </div>
                 <div class="input-field col s8">
                     <div class="input-field col s10">
-                        <input id="searchLab" type="text" class="validate">
-                        <label for="searchLab">Student Name</label>
+                        <input id="searchStudent" type="text" class="validate">
+                        <label for="searchStudent">Student Name</label>
                     </div>
                     <div class="input-field col s2">
-                        <a><i class="material-icons">search</i></a>
+                        <a id = "searchStudentBtn" herf = "#"><i class="material-icons">search</i></a>
                     </div>
-                    <table>
+                    <table id = "student_search_result_table">
                         <thead>
                         <tr>
                             <th>Search result</th>
@@ -83,8 +78,7 @@ data = {
             </div>
         </div>
     </li>
-{{/studentList}}
-{{#labList}}
+<!--Lab list-->
     <li>
         <div class="collapsible-header" style="background:#dd0052"><i class="material-icons">laptop</i>Labs</div>
         <div class="collapsible-body">
@@ -139,7 +133,7 @@ data = {
             </div>
         </div>
     </li>
-{{/labList}}
+{{/courseModal}}
 {{#labInfo}}
     <li>
         <div class="collapsible-header" style="background: #00acc1"><i class="material-icons">info</i>Create
