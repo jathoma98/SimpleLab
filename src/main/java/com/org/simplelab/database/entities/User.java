@@ -1,5 +1,6 @@
 package com.org.simplelab.database.entities;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.org.simplelab.database.DBManager;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import java.util.Arrays;
 @Getter
 @Setter
 @ToString
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Document(collection = DBManager.USER_DOCUMENT_NAME)
 public class User extends BaseDocument implements Serializable {
 

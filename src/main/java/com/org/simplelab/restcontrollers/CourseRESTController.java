@@ -7,7 +7,7 @@ import com.org.simplelab.database.entities.Course;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.database.validators.Validator;
-import com.org.simplelab.restcontrollers.dto.CourseUpdateDTO;
+import com.org.simplelab.restcontrollers.dto.DTO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -84,11 +84,14 @@ import java.util.Map;
      *            }
      * @return success:true on success
      *         success:false on failure with possible errors:
+     *         InvalidFieldException message if user data is formatted improperly
+     *         Duplicate coursecode error message if the new course code is already taken
      *
      */
     @PatchMapping(UPDATE_MAPPING)
-    public Map<String, String> updateCourse(@RequestBody CourseUpdateDTO dto, HttpSession session){
+    public Map<String, String> updateCourse(@RequestBody DTO.CourseUpdateDTO dto, HttpSession session){
         RequestResponse rsp = new RequestResponse();
+        String uid = (String)session.getAttribute("user_id");
         List<Course> courses = courseDB.findByCourseId(dto.getCourse_id_old());
         if (courses.size() > 0){
             CourseValidator cv = dto.getNewCourseInfo();
@@ -100,6 +103,11 @@ import java.util.Map;
             }
             //TODO: refactor with modelmapper?
             Course found = courses.get(0);
+            //ensure the found course belongs to the current user -- exception if not (the new course code is a duplicate)
+            if (!found.getCreator().get_id().equals(uid)){
+                rsp.setError(CourseValidator.DUPLICATE_ID);
+                return rsp.map();
+            }
             found.setCourse_id(cv.getCourse_id());
             found.setName(cv.getName());
             found.setDescription(cv.getDescription());

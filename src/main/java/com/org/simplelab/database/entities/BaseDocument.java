@@ -8,6 +8,11 @@ import org.springframework.data.annotation.Id;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
+/**
+ * These fields will be present in all
+ * objects in the DB.
+ */
 @Getter
 @Setter
 @ToString

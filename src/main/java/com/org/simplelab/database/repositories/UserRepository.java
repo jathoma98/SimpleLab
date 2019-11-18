@@ -10,6 +10,21 @@ import java.util.List;
 @Repository
 public interface UserRepository extends MongoRepository<User, String>{
 
+    /**
+     * Searches for Users which contain the value 'regex' in the following fields:
+     * username, firstname, lastname, institution
+     * @param regex - the string to be found
+     */
+    String REGEX_QUERY = "{ '$or': [ " +
+                            "{ username: {'$regex': ?0, '$options': 'i'}}," +
+                            "{ firstname: {'$regex': ?0, '$options': 'i'}}," +
+                            "{ lastname: {'$regex': ?0, '$options': 'i'}}," +
+                            "{ institution: {'$regex': ?0, '$options': 'i'}}" +
+                            "]" +
+                         "})";
+    @Query(value = REGEX_QUERY, fields = "{ 'username': 1, 'firstname': 1, 'lastname': 1, 'institution': 1 }")
+    public List<User> findInfoFieldsWithRegex(String regex);
+
     public List<User> findByUsername(String username);
 
     public void deleteByUsername(String username);

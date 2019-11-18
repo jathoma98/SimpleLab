@@ -42,7 +42,7 @@
 	margin-bottom: 15px;
 
 }
-
+/*login page css*/
 .login_radius{
 	border-radius: 10px;
 }
@@ -56,6 +56,16 @@
 .pwlength{
 	width: 75%!important;
 }
+
+.googleimg{
+	width:75%!important;
+	margin: 0;
+
+}
+
+
+
+
 
 .account_img{
 	height: 50px;

@@ -2,6 +2,10 @@ package com.org.simplelab;
 
 import com.org.simplelab.database.CourseDB;
 import com.org.simplelab.database.entities.Course;
+import com.org.simplelab.database.entities.Equipment;
+import com.org.simplelab.database.entities.User;
+import com.org.simplelab.database.repositories.EquipmentRepository;
+import com.org.simplelab.database.repositories.UserRepository;
 import com.org.simplelab.restcontrollers.CourseRESTController;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -58,7 +62,7 @@ public class RESTTests extends SpringTestConfig {
 
         sendCourseToPOSTEndpoint(json);
 
-        this.mockMvc.perform(get("/course/rest/loadInfo")
+        this.mockMvc.perform(get("/course/rest" + CourseRESTController.LOAD_LIST_COURSE_MAPPING)
                              .sessionAttrs(session_atr))
                             .andDo(print())
                             .andExpect(status().isOk());
@@ -111,8 +115,6 @@ public class RESTTests extends SpringTestConfig {
             assertEquals(courseDB.findByCourseId((String)json.get("course_id")).size(), 0);
             courseDB.deleteCourseById(user_id, (String)json.get("course_id"));
         }
-
-
 
     }
 
