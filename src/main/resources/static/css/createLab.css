@@ -1,287 +1,36 @@
-
-.Lab-mainbody{
-	position: absolute;
-	left:14.5%;
-	top:8%;
-	width: 63.5%;
-	height: 85%;
-	border:2px solid black;
-    background: white;
+.draggable_item{
+    width: 150px;
+    height: 180px;
 }
 
-.tips{
-    width:500px;
-    height: 60px;
-    background: background: linear-gradient(to bottom right,#465EFB,50%, #C2FFD8);
-    margin-left: 250px;
+.selected{
+    border:1px solid #00acc1;
 }
-.formula-text{
-   /* margin-left: 250px;*/
-    width:500px;
-    height: 30px;
-    background: background: linear-gradient(to bottom right,#465EFB,50%, #C2FFD8);
-    
+.popup_dialog{
+    width: 500px!important;
+    height: 200px!important;
 }
 
-.Lab-mainbody-item1{
-	position: absolute;
-	width: 150px;
-	height: 150px;
-	left:300px;
-	top:300px;
-	transform: rotate(140deg);
+.popup_dialog_header{
+    margin-left: 15px!important;
+    font-size: 30px;
 }
 
-.Lab-mainbody-item2{
-	position: absolute;
-	width: 150px;
-	height: 150px;
-	left:350px;
-	top:450px;
+.number_picker{
+    background: #f0f0f0 !important;
 }
 
-
-
-.itembar{
-    left:79%;
-	top:8%;
-	position:absolute;
-	width:20%;
-	height:85%;
-	border:2px solid black;
-	/*background: dodgerblue;*/
-	float: right;
-}
-
-.itembar_img{
-	margin-left: 10%;
-	width: 300px;
-	height: 300px;
-}
-
-
-
-.item_container{
-	position: relative;
-	float:left;
-	height: 50px;
-	/*background: red;*/
-	width: 100%;
-    margin-left: 15%
+.item_img{
+    width: 140px;
+    height: 130px;
+    margin: 0;
+    padding: 0;
 
 }
-
-.item_container_text{
-	margin:0;
-	padding:0;
-	width: 50%;
-	height: 75px;
-	font-size: 20;
-	float:left;
-}
-
-
-
-
-.dialog{
-    width:250px;
-    height: 100px;
-    position: absolute;
-    border:2px solid black;
-    left:550px;
-    top:350px;
-    background: linear-gradient(to bottom right,#465EFB,50%, #C2FFD8);
-    border-radius: 5px;
-
-}
-
-
-
-
-
-
-.dialog-tf{
-    width:200px; 
-    margin-left: 25px;
-    height: 30px;
-}
-
-.dialog-btn{
-    width:100px; 
-    height: 30px;
-    background: linear-gradient(to bottom right,#465EFB,50%, #C2FFD8);;
-    margin-left: 15px;
-    border-radius: 5px;
-}
-
-.proportion-dialog{
-    width:400px;
-    height: 400px;
-    position: absolute;
-    border:2px solid black;
-    left:550px;
-    top:350px;
-    background: linear-gradient(to bottom right,#465EFB,50%, #C2FFD8);
-    border-radius: 5px;
-
-}
-
-
-
-.proportion-dialog-title{
-    width:400px; 
-    height: 30px;
-    font-size: 20;
-
-
-}
-
-.proportion-dialog-img{
-    width:150px; 
-    height: 150px;
-    margin-left: 125px;
-
-}
-
-
-.dialog-title{
-    width:400px; 
-    height: 30px;
-    font-size: 20px;
-
-
-}
-
-.dialog-tips{
-    width: 400px;
-    height: 30px;
-
-}
-
-.dialog-tip-text{
-    width: 300px;
-    height: 30px;
-    margin-left: 50px;
-    margin-top: 10px;
-}
-
-.formula{
-    width: 300px;
-    height: 30px;
-    margin-left: 50px;
-    margin-top: 10px;
-    /*background: red;*/
-}
-
-.quantityset{
-    width: 300px;
-    height: 30px;
-    margin-left: 50px;
-    margin-top: 10px;
-}
-.quantity{
-    width: 32%;
-    height: 30px;
-
-}
-
-.proportion-dialog-btns{
-    width: 400px;
-    height: 30px;
-}
-
-.proportion-dialog-btn{
-    width:100px; 
-    height: 30px;
-    background: linear-gradient(to bottom right,#465EFB,50%, #C2FFD8);
-    margin-left: 75px;
-    margin-top: 100px;
-    border-radius: 5px;
-}
-
-.data{
+.opration_area{
     height: 80%;
-    width:100%;
-   /* background: green;*/
+    border:1px solid black;
 }
-.btn_set{
-    top:100px;
-    width: 100%;
-    height: 20%;
-    /*background: red;*/
+.pourbtn{
 
 }
-
-.btnstyle{
-    margin-top: 1%;
-    width: 49%;
-    height: 75px;
-    background: linear-gradient(to bottom right,#465EFB,50%, #C2FFD8);;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-.tipsdropdown{
-    float: left;
-    margin-right: 10px;
-    display: inline-block;
-    /*background: linear-gradient(to bottom right,#465EFB,50%, #C2FFD8);*/
-}
-.tipsdropdownimg{
-    height: 60px;
-    /*width: 60px;*/
-}
-
-
-.tipsdropdown-content {
-  display: none;
-  position: absolute;
-  left:0;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-  /*background: linear-gradient(to bottom right,#465EFB,50%, #C2FFD8);*/
-}
-
-.tipsdropdown-content p {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-/* Change color of dropdown links on hover */
-.tipsdropdown-content p:hover {background-color: #ddd;}
-
-/* Show the dropdown menu on hover */
-.tipsdropdown:hover .tipsdropdown-content {display: block;}
-
-/* Change the background color of the dropdown button when the dropdown content is shown */
-.tipsdropdown:hover .dropbtn {background-color: #3e8e41;}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

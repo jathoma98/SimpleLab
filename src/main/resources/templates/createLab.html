@@ -3,9 +3,14 @@
     <!--Import Google Icon Font-->
     <link th:href="@{https://fonts.googleapis.com/icon?family=Material+Icons}" rel="stylesheet">
     <link rel="stylesheet" th:href="@{../css/info.css}">
+    <link rel="stylesheet" th:href="@{../css/createLab.css}">
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" th:href="@{../css/materialize.min.css}"  media="screen,projection"/>
-    <script src="/libs/jquery-1.9.1.js"></script>
+    <script type="text/javascript" th:src="@{/libs/jquery-1.9.1.js}"></script>
+    <script type="text/javascript" th:src="@{/libs/jquery-ui.js}"></script>
+    <script type="text/javascript" th:src="@{/libs/mustache.js}"></script>
+    <script type="text/javascript" th:src="@{/js/lab.js}"></script>
+
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
@@ -105,7 +110,7 @@
 <!--**********************************************************************main body*********************************************************************************************************-->
 <!--**********************************************************************main body*********************************************************************************************************-->
 <div class="row">
-
+<!--    side bar-->
     <div class="col s2">
         <nav>
             <div class="nav-wrapper" style="background: #f1cc36">
@@ -144,10 +149,58 @@
     </div>
 
 
-    <div class="container col s10">
+    <div id="operation_area" class="container col s8 opration_area">
+
+        <div id="item_one" class="ui-widget-content draggable_item center">
+            <img src="../img/beaker.png" class="item_img">
+            <p >draggable block</p>
+        </div>
+
+        <div id="item_two" class="ui-widget-content draggable_item center">
+            <img src="../img/beaker.png" class="item_img">
+            <p >draggable block</p>
+        </div>
+
+
+
+
+        <!--pop up model to enter number of liquid -->
+        <div id="modal1" class="modal popup_dialog">
+            <nav class="my_yellow">
+                <div class="popup_dialog_header">Enter number of liquid</div>
+            </nav>
+            <div class="modal-content">
+                <p class="range-field col s8 ">
+                    <input type="range" id="test5" min="0" max="100" oninput="showVal(this.value)" onchange="showVal(this.value)"/>
+                </p>
+                <div class="col s4">
+                    <input class="number_picker" type="number" name="quantity" min="1" max="5">
+
+                </div>
+                <div class="center col s12">
+                    <a href="#!" class="modal-close btn my_red">Pour</a>
+                </div>
+            </div>
+
+
+
+        </div>
+
 
 
     </div><!--     container bot   -->
+<!--    infomation bar-->
+    <div id="infobar" class="col s2" style="display: none">
+        <nav>
+            <div class="nav-wrapper" style="background: #f1cc36">
+                <a href="#!" class="brand-logo"><i class="material-icons">view_list</i>Item Info</a>
+            </div>
+        </nav>
+        <div class="infobar right">
+            <H6> here will show the info of items</H6>
+        </div>
+    </div>
+
 
 </div>
 
