@@ -53,7 +53,6 @@ import java.util.Map;
             return new ArrayList<>();
         }
         return userDB.searchByMatchingString(regex);
-
     }
 
     @GetMapping(LOAD_USER_MAPPING)

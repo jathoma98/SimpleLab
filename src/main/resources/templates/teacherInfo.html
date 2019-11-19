@@ -17,7 +17,7 @@
     <script type="text/javascript" th:src="@{/js/accountInfo.js}"></script>
 
     <!--Template-->
-    <script id="modalTpl" type="x-tmpl-mustache" th:src="@{/js/teacherInfo/modal.html}" ></script>
+    <script id="modalTpl" type="x-tmpl-mustache" th:src="@{/js/teacherInfo/modal.html}"></script>
 
     <script type="text/javascript"> templatePreLoad()</script>
     <!--Let browser know website is optimized for mobile-->
@@ -43,16 +43,29 @@
 <!-------------------------------------------------------------------------------------->
 <!-- Create Course Modal Structure -->
 <!-------------------------------------------------------------------------------------->
+
+
+
 <div id="modal" class="modal" style="max-height: 80%; width: 80%">
     <div class="modal-content">
         <ul class="collapsible">
             <!--template -->
         </ul>
     </div>
-    <button id = "courseSaveBtn" class="waves-effect waves-light modal-close right btn btn_margin" style="background:#dd0052;" type="submit" name="action">
+    <button id="courseSaveBtn" class="waves-effect waves-light modal-close right btn btn_margin"
+            style="background:#dd0052;" type="submit" name="action">
         Create
     </button>
 </div>
+
+
+<script id="student_search_result_tbody" type="mustache">
+    {{#result}}
+        <tr>
+            <td>{{username}}</td>
+        </tr>
+    {{/result}}
+</script>
 
 
 <!-- Modal Structure -->
@@ -161,10 +174,10 @@
                     </li>
                     <li class="coursecheckcol myhide"><a id="courseBackBtn"><i class="material-icons">arrow_back</i></a>
                     </li>
-                    <li class="coursecheckcol myshow"><a id="courseAddBtn" class = "modal-trigger" href="#modal"><i
+                    <li class="coursecheckcol myshow"><a id="courseAddBtn" class="modal-trigger" href="#modal"><i
                             class="material-icons">add</i></a></li>
-<!--                    <li class="coursecheckcol myshow"><a id="courseAddBtn" class="modal-trigger" href="#courseModal"><i-->
-<!--                            class="material-icons">add</i></a></li>-->
+                    <!--                    <li class="coursecheckcol myshow"><a id="courseAddBtn" class="modal-trigger" href="#courseModal"><i-->
+                    <!--                            class="material-icons">add</i></a></li>-->
                     <li class="coursecheckcol myshow"><a id="courseEditBtn"><i class="material-icons">delete</i></a>
                     </li>
                 </ul>
@@ -222,7 +235,8 @@
                 <ul class="right hide-on-med-and-down">
                     <li class="labcheckcol myhide"><a id="labDeleteBtn"><i class="material-icons">delete</i></a></li>
                     <li class="labcheckcol myhide"><a id="labBackBtn"><i class="material-icons">arrow_back</i></a></li>
-                    <li class="labcheckcol myshow"><a class="modal-trigger" href="#modal"><i class="material-icons">add</i></a>
+                    <li class="labcheckcol myshow"><a class="modal-trigger" href="#modal"><i
+                            class="material-icons">add</i></a>
                     </li>
                     <li class="labcheckcol myshow"><a id="labEditBtn"><i class="material-icons">delete</i></a></li>
                 </ul>
@@ -405,8 +419,6 @@
         </table>
     </div>
 </div>
-
-
 
 
 <!--JavaScript at end of body for optimized loading-->
