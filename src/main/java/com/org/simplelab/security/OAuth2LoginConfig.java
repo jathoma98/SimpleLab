@@ -2,6 +2,7 @@ package com.org.simplelab.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,7 +19,12 @@ import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 import org.springframework.security.oauth2.core.oidc.user.OidcUserAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -33,26 +39,37 @@ import static org.springframework.security.core.authority.AuthorityUtils.createA
 @ComponentScan({"com.org.simplelab.security"})
 public class OAuth2LoginConfig extends WebSecurityConfigurerAdapter {
 
-    /**
-     * This ensures cookies are created for users.
-     *
-     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http
 
                 .authorizeRequests()
+                //Allow any user to access static resources like images, CSS, javascript
                 .antMatchers("/login", "/img/**", "/css/**", "/js/**", "/libs/**")
                 .permitAll()
+
+                //only students can access /student pages
                 .antMatchers("/student/**")
                 .hasAuthority(SecurityUtils.AUTH_STUDENT)
+
+                //only teachers can access /teacher pages
                 .antMatchers("/teacher/**")
                 .hasAuthority(SecurityUtils.AUTH_TEACHER)
+
+                //all other pages require logged in user
                 .anyRequest().authenticated()
+
+                //Sets up OAuth2 login at endpoint /login
                 .and()
                 .oauth2Login()
-                .loginPage("/login");
+                .loginPage("/login")
+
+                //Registers custom exception handler if user tries to access pages they
+                //are not authorized to access.
+                .and()
+                .exceptionHandling()
+                .accessDeniedHandler(accessDeniedHandler());
     }
 
     @Bean
@@ -83,6 +100,30 @@ public class OAuth2LoginConfig extends WebSecurityConfigurerAdapter {
             }
             return auths;
         };
+    }
+
+    /**
+     * Handles redirection of user if they try to access forbidden pages.
+     * ex: student user tries to access teacher pages, they should
+     * be redirected to some error page.
+     */
+
+    //just for registering with Spring
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler(){
+        return new SimpleLabAccessDeniedHandler();
+    }
+
+    /**
+     * handle() method handles user accessing pages they are not authorized to access
+     */
+    public class SimpleLabAccessDeniedHandler implements AccessDeniedHandler{
+
+        @Override
+        public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException, ServletException {
+            System.out.println("PogU!");
+            httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/role1");
+        }
     }
 
 }
