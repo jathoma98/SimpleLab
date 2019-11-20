@@ -2,7 +2,9 @@ package com.org.simplelab.controllers;
 
 import com.org.simplelab.database.UserDB;
 import com.org.simplelab.database.entities.User;
+import com.org.simplelab.security.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -59,12 +61,18 @@ public class LoginController{
         }
     }
 
+
+    @GetMapping("/role")
+    @ResponseBody
+    public Object rle(){
+        return SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+    }
+
     /**
      * Redirect user page base on they role in the current session.
      *
      * @param session -current user session
      * @return ModelAndView redirect path for different role of user
-     */
     @RequestMapping(value = "/role", method = RequestMethod.GET)
     public ModelAndView rolePageRedirect(HttpSession session) {
         String username = (String) session.getAttribute("username");
@@ -76,7 +84,7 @@ public class LoginController{
                 return new ModelAndView("redirect:/student");
         }
         return new ModelAndView("redirect:/");
-    }
+    }  */
 
 
     @GetMapping("/forgotpassword")

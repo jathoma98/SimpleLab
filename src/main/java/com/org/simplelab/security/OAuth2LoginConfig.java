@@ -47,11 +47,8 @@ public class OAuth2LoginConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .oauth2Login(oauth2Login -> oauth2Login.userInfoEndpoint(
-                        userInfoEndpoint -> userInfoEndpoint.userAuthoritiesMapper(
-                                this.userAuthoritiesMapper()
-                        )
-                ).loginPage("/login"));
+                .oauth2Login()
+                .loginPage("/login");
     }
 
     @Bean
@@ -65,7 +62,7 @@ public class OAuth2LoginConfig extends WebSecurityConfigurerAdapter {
                     OidcIdToken idToken = oidcUserAuthority.getIdToken();
                     OidcUserInfo userInfo = oidcUserAuthority.getUserInfo();
                     System.out.println(idToken.toString());
-                    System.out.println(userInfo.toString());
+                    //System.out.println(userInfo.toString());
                 } else if (OAuth2UserAuthority.class.isInstance(authority)) {
                     System.out.println("OAuth2 Token found");
                     OAuth2UserAuthority oauth2UserAuthority = (OAuth2UserAuthority)authority;
@@ -77,6 +74,7 @@ public class OAuth2LoginConfig extends WebSecurityConfigurerAdapter {
             String[] test_auths = {SecurityUtils.ROLE_STUDENT};
             List<GrantedAuthority> l_auths = AuthorityUtils.createAuthorityList(test_auths);
             for (GrantedAuthority g: l_auths){
+                System.out.println("Authority: " + g.getAuthority());
                 auths.add(g);
             }
             return auths;
