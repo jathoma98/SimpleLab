@@ -23,7 +23,7 @@ public class LoginController{
     @Autowired
     UserDB userDB;
 
-    @GetMapping("")
+    @GetMapping("/login")
     public String loginGet(){
         return "login";
     }
