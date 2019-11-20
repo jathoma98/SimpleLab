@@ -4,6 +4,7 @@ import com.org.simplelab.database.UserDB;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.security.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -62,9 +63,17 @@ public class LoginController{
     }
 
 
-    @GetMapping("/role")
+    @GetMapping("/role2")
     @ResponseBody
-    public Object rle(){
+    @PreAuthorize(SecurityUtils.HAS_TEACHER_AUTHORITY)
+    public Object rle2(){
+        return SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+    }
+
+    @GetMapping("/role1")
+    @ResponseBody
+    @PreAuthorize(SecurityUtils.HAS_STUDENT_AUTHORITY)
+    public Object rle1(){
         return SecurityContextHolder.getContext().getAuthentication().getAuthorities();
     }
 

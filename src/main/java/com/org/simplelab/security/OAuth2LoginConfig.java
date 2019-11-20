@@ -2,6 +2,7 @@ package com.org.simplelab.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -28,6 +29,7 @@ import static org.springframework.security.core.authority.AuthorityUtils.createA
 @Configuration
 @EnableWebSecurity
 @Order(10)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @ComponentScan({"com.org.simplelab.security"})
 public class OAuth2LoginConfig extends WebSecurityConfigurerAdapter {
 
@@ -71,7 +73,7 @@ public class OAuth2LoginConfig extends WebSecurityConfigurerAdapter {
                 }
             });
             //TODO: make this update properly
-            String[] test_auths = {SecurityUtils.ROLE_STUDENT};
+            String[] test_auths = {SecurityUtils.AUTH_STUDENT};
             List<GrantedAuthority> l_auths = AuthorityUtils.createAuthorityList(test_auths);
             for (GrantedAuthority g: l_auths){
                 System.out.println("Authority: " + g.getAuthority());
