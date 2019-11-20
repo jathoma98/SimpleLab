@@ -43,10 +43,12 @@ public class OAuth2LoginConfig extends WebSecurityConfigurerAdapter {
         http
 
                 .authorizeRequests()
-                /**.anyRequest().permitAll()
-                .and().httpBasic();**/
                 .antMatchers("/login", "/img/**", "/css/**", "/js/**", "/libs/**")
                 .permitAll()
+                .antMatchers("/student/**")
+                .hasAuthority(SecurityUtils.AUTH_STUDENT)
+                .antMatchers("/teacher/**")
+                .hasAuthority(SecurityUtils.AUTH_TEACHER)
                 .anyRequest().authenticated()
                 .and()
                 .oauth2Login()
