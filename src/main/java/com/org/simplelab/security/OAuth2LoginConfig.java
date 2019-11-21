@@ -73,6 +73,7 @@ public class OAuth2LoginConfig extends WebSecurityConfigurerAdapter {
                 .accessDeniedHandler(accessDeniedHandler());
     }
 
+    //this isnt used yet -- just for google login
     @Bean
     public GrantedAuthoritiesMapper userAuthoritiesMapper(){
         return (authorities) -> {
