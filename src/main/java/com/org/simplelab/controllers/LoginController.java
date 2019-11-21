@@ -3,8 +3,14 @@ package com.org.simplelab.controllers;
 import com.org.simplelab.database.UserDB;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.security.SecurityUtils;
+import com.org.simplelab.security.SimpleLabAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
 
 /**
  * Controllers for login and signup pages
@@ -25,6 +33,9 @@ public class LoginController{
 
     @Autowired
     UserDB userDB;
+
+    @Autowired
+    SimpleLabAuthentication authManager;
 
     @GetMapping("/login")
     public String loginGet(){
@@ -48,8 +59,35 @@ public class LoginController{
                                      @RequestParam("password") String password,
                                      HttpSession session) {
         RequestResponse resp = new RequestResponse();
-        if (userDB.authenticate(username, password) == UserDB.UserAuthenticationStatus.SUCCESSFUL) {
+        resp.setSuccess(false);
+
+        //setup Spring security context
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
+        Authentication auth = null;
+        try{
+            auth = authManager.authenticate(token);
+        } catch (BadCredentialsException e) {
+            return resp.map();
+        }
+        if (auth == null){
+            return resp.map();
+        }
+        SecurityContext sc = SecurityContextHolder.getContext();
+        sc.setAuthentication(auth);
+
+        User user = userDB.findUser(username);
+        session.setAttribute("username", username);
+        session.setAttribute("user_id", user.getId());
+        session.setAttribute("identity", user.getRole());
+        session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, sc);
+
+        /**if (userDB.authenticate(username, password) == UserDB.UserAuthenticationStatus.SUCCESSFUL) {
             User user = userDB.findUser(username);
+
+            //setup Spring security context
+            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
+            AuthenticationManager authenticationManager
+
             session.setAttribute("username", username);
             session.setAttribute("user_id", user.getId());
             session.setAttribute("identity", user.getRole());
@@ -59,7 +97,10 @@ public class LoginController{
         else{
             resp.setSuccess(false);
             return resp.map();
-        }
+        }**/
+
+        resp.setSuccess(true);
+        return resp.map();
     }
 
 
@@ -83,6 +124,7 @@ public class LoginController{
      * @param session -current user session
      * @return ModelAndView redirect path for different role of user
     @RequestMapping(value = "/role", method = RequestMethod.GET)
+     */
     public ModelAndView rolePageRedirect(HttpSession session) {
         String username = (String) session.getAttribute("username");
         String identity = (String) session.getAttribute("identity");
@@ -93,7 +135,7 @@ public class LoginController{
                 return new ModelAndView("redirect:/student");
         }
         return new ModelAndView("redirect:/");
-    }  */
+    }
 
 
     @GetMapping("/forgotpassword")
