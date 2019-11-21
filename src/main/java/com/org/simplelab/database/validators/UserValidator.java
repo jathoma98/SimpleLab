@@ -4,6 +4,8 @@ import com.org.simplelab.database.entities.User;
 import lombok.Setter;
 import lombok.Getter;
 import lombok.ToString;
+import org.modelmapper.ModelMapper;
+import org.springframework.ui.ModelMap;
 
 import java.util.regex.Pattern;
 
@@ -81,16 +83,12 @@ public class UserValidator extends Validator {
     }
 
     public User build(){
-        User user = new User();
-        user.setUsername(userName);
-        user.setPassword(sp_password);
-        user.setFirstname(firstname);
-        user.setLastname(lastname);
-        user.setEmail(email);
-        user.setQuestion(question);
-        user.setAnswer(answer);
+
+        ModelMapper mm = new ModelMapper();
+        User user = mm.map(this, User.class);
         user.setRole(identity);
-        user.setInstitution(institution);
+        user.setPassword(sp_password);
+
         return user;
     };
 

@@ -21,22 +21,15 @@ public class LabDB {
     @Autowired
     private CourseRepository courseRepository;
 
-    public boolean insertLab(Lab lab, Course course){
+    public void deleteLabById(String id){
+        labRepository.deleteById(id);
+    }
 
-        /**
-         * PSEUDOCODE:
-         *
-         * lab := user created lab, this should have already been validated by a LabValidator class
-         * course := course to which the lab belongs, cannot add lab without course
-         *
-         * lab -> labRepository.save(lab)
-         * labs := course.getLabs()
-         * lab -> labs.add(lab)
-         * course -> courseRepository.save(course)
-         *
-         */
+    public boolean insertLab(Lab lab){
 
-        return false;
+        labRepository.save(lab);
+        return true;
+
     }
 
 }

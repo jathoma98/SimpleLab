@@ -5,6 +5,7 @@ import com.org.simplelab.database.entities.Course;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Transient;
 
@@ -18,6 +19,7 @@ public class CourseValidator extends Validator{
     private String name;
     private String course_id;
     private String description;
+    private String _metadata;
 
     public static final String EMPTY_FIELD = "Fields cannot be empty \n";
     public static final String DUPLICATE_ID = "That course ID has been taken. \n";
@@ -40,10 +42,8 @@ public class CourseValidator extends Validator{
 
     @Override
     public Course build() {
-        Course c = new Course();
-        c.setName(name);
-        c.setDescription(description);
-        c.setCourse_id(course_id);
+        ModelMapper mm = new ModelMapper();
+        Course c = mm.map(this, Course.class);
         return c;
     }
 }
