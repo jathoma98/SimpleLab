@@ -5,6 +5,7 @@ import com.org.simplelab.database.validators.CourseValidator;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * Master class that contains DTO (Data Transfer Object) classes
@@ -34,5 +35,14 @@ public class DTO {
     @Setter
     public static class UserSearchDTO {
         private String regex;
+    }
+
+    /**
+     * Contains information for updating a lab.
+     */
+    @Getter
+    @Setter
+    public static class LabUpdateDTO {
+        private String temp;
     }
 }
