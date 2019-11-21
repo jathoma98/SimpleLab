@@ -47,7 +47,7 @@ public class OAuth2LoginConfig extends WebSecurityConfigurerAdapter {
 
                 .authorizeRequests()
                 //Allow any user to access static resources like images, CSS, javascript
-                .antMatchers("/login", "/img/**", "/css/**", "/js/**", "/libs/**")
+                .antMatchers("/login", "/signup/**", "/img/**", "/css/**", "/js/**", "/libs/**")
                 .permitAll()
 
                 //only students can access /student pages
@@ -120,7 +120,6 @@ public class OAuth2LoginConfig extends WebSecurityConfigurerAdapter {
      */
     public class SimpleLabAccessDeniedHandler implements AccessDeniedHandler{
 
-        //TODO: make this redirect work properly
         //TODO: make google accounts sign up properly.
         @Override
         public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException, ServletException {

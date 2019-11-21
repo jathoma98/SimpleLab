@@ -109,20 +109,6 @@ public class LoginController{
     }
 
 
-    @GetMapping("/role2")
-    @ResponseBody
-    @PreAuthorize(SecurityUtils.HAS_TEACHER_AUTHORITY)
-    public Object rle2(){
-        return SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-    }
-
-    @GetMapping("/role1")
-    @ResponseBody
-    @PreAuthorize(SecurityUtils.HAS_STUDENT_AUTHORITY)
-    public Object rle1(){
-        return SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-    }
-
     /**
      * Redirect user page base on they role in the current session.
      *
@@ -132,7 +118,7 @@ public class LoginController{
      */
     @GetMapping("/role")
     public ModelAndView rolePageRedirect(HttpSession session) {
-        String username = (String) session.getAttribute("username");
+        String username = SecurityUtils.getAuthenticatedUsername();
         String identity = (String) session.getAttribute("identity");
         if (username != null && identity != null) {
             if (identity.equals("teacher") ) {

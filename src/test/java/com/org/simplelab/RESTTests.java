@@ -8,10 +8,12 @@ import com.org.simplelab.database.repositories.EquipmentRepository;
 import com.org.simplelab.database.repositories.UserRepository;
 import com.org.simplelab.restcontrollers.CourseRESTController;
 import org.json.JSONObject;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.HashMap;
@@ -39,6 +41,7 @@ public class RESTTests extends SpringTestConfig {
     @Autowired
     CourseDB courseDB;
 
+
     private void sendCourseToPOSTEndpoint(JSONObject json) throws Exception{
         this.mockMvc.perform(post("/course/rest")
                 .sessionAttrs(session_atr)
@@ -51,7 +54,11 @@ public class RESTTests extends SpringTestConfig {
 
 
     @Test
+    @WithMockUser(username = username, password = username)
     void testCreateGetCourseTeacher() throws Exception{
+
+        TestUtils.login(mockMvc);
+
         session_atr.put("user_id", user_id);
         session_atr.put("username", username);
         Map<String, String> rawJson = new HashMap<>();
@@ -63,6 +70,7 @@ public class RESTTests extends SpringTestConfig {
         sendCourseToPOSTEndpoint(json);
 
         this.mockMvc.perform(get("/course/rest" + CourseRESTController.LOAD_LIST_COURSE_MAPPING)
+                             .principal(TestUtils.getUnitTestPrincipal())
                              .sessionAttrs(session_atr))
                             .andDo(print())
                             .andExpect(status().isOk());
@@ -76,6 +84,7 @@ public class RESTTests extends SpringTestConfig {
     }
 
     @Test
+    @WithMockUser(username = username, password = username)
     void deleteMappingTest() throws Exception {
         session_atr.put("user_id", user_id);
         session_atr.put("username", username);

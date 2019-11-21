@@ -31,14 +31,6 @@ public class LoginAndSignupTests extends SpringTestConfig{
     @Autowired
     private MockMvc mockMvc;
 
-    @Test
-    public void helloWorldRest() throws Exception{
-        this.mockMvc.perform(get("/index/rest_test"))
-                //.andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().json("{\"response\": \"Hello World!\"}"));
-
-    }
 
     @Test
     public void testLogin() throws Exception{
@@ -75,6 +67,8 @@ public class LoginAndSignupTests extends SpringTestConfig{
                 .andExpect(status().isOk())
                 .andExpect(content().json("{\"success\": \"false\"}"));
 
+        User del = userDB.findUser(user.getUsername());
+        userDB.deleteUser(del);
 
     }
 

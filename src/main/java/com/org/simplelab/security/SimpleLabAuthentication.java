@@ -31,7 +31,6 @@ public class SimpleLabAuthentication implements AuthenticationProvider {
         String password = authentication.getCredentials().toString();
         if (userDB.authenticate(username, password) == UserDB.UserAuthenticationStatus.SUCCESSFUL){
             User user = userDB.findUser(username);
-            System.out.println("Got to userDB auth!");
             String[] auths_raw = {SecurityUtils.getRoleFromDB(user.getRole())};
             List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(auths_raw);
             Authentication full_authentication = new UsernamePasswordAuthenticationToken(username, password, authorities);
