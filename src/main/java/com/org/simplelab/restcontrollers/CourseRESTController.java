@@ -20,6 +20,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
+//TODO: secure rest endpoints with authentication
 @RestController
 @RequestMapping("/course/rest")
     public class CourseRESTController {

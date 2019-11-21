@@ -1,5 +1,8 @@
 package com.org.simplelab.security;
 
+/**
+ * Utility methods and static fields for Spring Security.
+ */
 public class SecurityUtils {
 
 

@@ -1,5 +1,6 @@
 package com.org.simplelab.security;
 
+import com.org.simplelab.controllers.LoginController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.access.AccessDeniedException;
@@ -119,10 +120,11 @@ public class OAuth2LoginConfig extends WebSecurityConfigurerAdapter {
      */
     public class SimpleLabAccessDeniedHandler implements AccessDeniedHandler{
 
+        //TODO: make this redirect work properly
+        //TODO: make google accounts sign up properly.
         @Override
         public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException, ServletException {
-            System.out.println("PogU!");
-            httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/role1");
+            httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + LoginController.FORBIDDEN_MAPPING);
         }
     }
 

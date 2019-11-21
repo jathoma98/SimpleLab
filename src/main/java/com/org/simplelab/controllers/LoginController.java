@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +28,8 @@ import static org.springframework.security.web.context.HttpSessionSecurityContex
  * Controllers for login and signup pages
  */
 
+//TODO: make sure user info is taken from security context, not session.
+
 @Controller
 @RequestMapping(path="/")
 public class LoginController{
@@ -36,6 +39,8 @@ public class LoginController{
 
     @Autowired
     SimpleLabAuthentication authManager;
+
+    public static final String FORBIDDEN_MAPPING =  "/forbidden";
 
     @GetMapping("/login")
     public String loginGet(){
@@ -125,6 +130,7 @@ public class LoginController{
      * @return ModelAndView redirect path for different role of user
     @RequestMapping(value = "/role", method = RequestMethod.GET)
      */
+    @GetMapping("/role")
     public ModelAndView rolePageRedirect(HttpSession session) {
         String username = (String) session.getAttribute("username");
         String identity = (String) session.getAttribute("identity");
@@ -135,6 +141,11 @@ public class LoginController{
                 return new ModelAndView("redirect:/student");
         }
         return new ModelAndView("redirect:/");
+    }
+
+    @GetMapping(FORBIDDEN_MAPPING)
+    public String forbidden(HttpSession session){
+        return "forbidden";
     }
 
 
