@@ -76,7 +76,6 @@ import java.util.Map;
         } catch (Exception e) {
             //redirect to login
         }
-        user.set_id(userId);
         userDB.updateUser(user);
     }
 }
