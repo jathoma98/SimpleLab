@@ -9,7 +9,7 @@ public class RequestResponse {
     public RequestResponse(){
         responseMap = new HashMap<String, String>();
         responseMap.put("success", "false");
-        responseMap.put("error", "");
+        //responseMap.put("error", "");
 
     }
     /**
@@ -61,6 +61,10 @@ public class RequestResponse {
      */
     public void setRedirect(String url){
         responseMap.put("redirect", url);
+    }
+
+    public void set(String key, String value){
+        responseMap.put(key, value);
     }
 
     /**
