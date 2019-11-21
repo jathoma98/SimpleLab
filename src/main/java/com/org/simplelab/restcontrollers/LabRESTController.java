@@ -4,12 +4,14 @@ import com.org.simplelab.controllers.RequestResponse;
 import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.repositories.LabRepository;
 import com.org.simplelab.restcontrollers.dto.DTO;
+import jdk.nashorn.internal.objects.annotations.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/lab/rest")
@@ -24,11 +26,13 @@ public class LabRESTController {
     /**
      * Returns a full lab object corresponding to a given lab ID.
      * @param lab_id - id of the lab to be found in the URL
-     * @return Lab with Lab.get_id() == lab_id
+     * @return Lab with Lab.get_id() == lab_id, null otherwise
      */
     @GetMapping(LAB_ID_MAPPING)
     public Lab labGet(@PathVariable("lab_id") String lab_id){
-        System.out.println(lab_id);
+        Optional<Lab> found = labRepository.findById(lab_id);
+        if (found.isPresent())
+            return found.get();
         return null;
     }
 
@@ -70,7 +74,5 @@ public class LabRESTController {
     public List<Lab> labGetForUser(HttpSession session){
         return labRepository.findAll();
     }
-
-
 
 }

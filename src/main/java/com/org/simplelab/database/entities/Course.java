@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,5 +29,9 @@ public class Course extends BaseDocument {
     //annotation causes MongoDB to store IDs of labs here.
     @DBRef
     private List<Lab> labs;
+
+    public Course(){
+        labs = new ArrayList<>();
+    }
 
 }

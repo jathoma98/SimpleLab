@@ -11,4 +11,5 @@ public interface LabRepository extends MongoRepository<Lab, String> {
 
     public List<Lab> findByName(String name);
 
+
 }

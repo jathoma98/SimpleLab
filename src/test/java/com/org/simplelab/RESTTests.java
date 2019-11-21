@@ -3,8 +3,10 @@ package com.org.simplelab;
 import com.org.simplelab.database.CourseDB;
 import com.org.simplelab.database.entities.Course;
 import com.org.simplelab.database.entities.Equipment;
+import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.repositories.EquipmentRepository;
+import com.org.simplelab.database.repositories.LabRepository;
 import com.org.simplelab.database.repositories.UserRepository;
 import com.org.simplelab.restcontrollers.CourseRESTController;
 import org.json.JSONObject;
@@ -124,6 +126,19 @@ public class RESTTests extends SpringTestConfig {
             assertEquals(courseDB.findByCourseId((String)json.get("course_id")).size(), 0);
             courseDB.deleteCourseById(user_id, (String)json.get("course_id"));
         }
+
+    }
+
+    @Autowired
+    LabRepository labRepository;
+
+    @Autowired
+    EquipmentRepository equipmentRepository;
+
+    @WithMockUser(username = username, password = username)
+    @Test
+    void labtest(){
+
 
     }
 
