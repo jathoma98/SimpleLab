@@ -8,12 +8,8 @@ import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.database.validators.Validator;
 import com.org.simplelab.restcontrollers.dto.DTO;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -105,7 +101,7 @@ import java.util.Map;
             //TODO: refactor with modelmapper?
             Course found = courses.get(0);
             //ensure the found course belongs to the current user -- exception if not (the new course code is a duplicate)
-            if (found.getCreator().get_id() != uid){
+            if (found.getCreator().getId() != uid){
                 rsp.setError(CourseValidator.DUPLICATE_ID);
                 return rsp.map();
             }

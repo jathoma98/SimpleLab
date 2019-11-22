@@ -16,10 +16,7 @@ public interface CourseRepository extends CrudRepository<Course, Long> {
 
     public List<Course> findByName(String name);
 
-    @Query(value = "SELECT createdDate, course_id, name\n" +
-                    "FROM course\n" +
-                    "WHERE creator_id = ?1", nativeQuery = true)
-    public List<Course> findForTeacher(long id);
+    public List<Course> findByCreator_id(long id);
 
     public List<Course> deleteBy_metadata(String metadata);
 

@@ -12,7 +12,7 @@ public interface LabRepository extends MongoRepository<Lab, String> {
 
     public List<Lab> findByName(String name);
 
-    @Query(value = "{ '_id': ?0 }", delete = true)
+    @Query(value = "{ 'id': ?0 }", delete = true)
     public void deleteById(String lab_id);
 
 

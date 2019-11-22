@@ -70,7 +70,7 @@ public class LabRESTController {
     /**
      * Returns a full lab object corresponding to a given lab ID.
      * @param lab_id - id of the lab to be found in the URL
-     * @return Lab with Lab.get_id() == lab_id, null otherwise
+     * @return Lab with Lab.getId() == lab_id, null otherwise
      */
     @GetMapping(LAB_ID_MAPPING)
     public Lab labGet(@PathVariable("lab_id") String lab_id){

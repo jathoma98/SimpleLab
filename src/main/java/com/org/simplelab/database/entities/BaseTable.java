@@ -17,8 +17,9 @@ public class BaseTable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", unique = true, nullable = false)
-    private long _id;
+    private long id;
 
+    @Column(name = "created_date")
     private String createdDate;
 
     public String _metadata;

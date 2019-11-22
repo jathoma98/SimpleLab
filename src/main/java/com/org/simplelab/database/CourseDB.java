@@ -50,7 +50,7 @@ public class CourseDB {
     }
 
     public List<Course> getCoursesForTeacher(long id){
-        List<Course> found = courseRepository.findForTeacher(id);
+        List<Course> found = courseRepository.findByCreator_id(id);
         return found;
     }
 

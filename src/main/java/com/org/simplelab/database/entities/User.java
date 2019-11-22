@@ -39,8 +39,4 @@ public class User extends BaseTable{
         this.answer = DBManager.getHash(answer);
     }
 
-    public long getId(){
-        return get_id();
-    }
-
 }
