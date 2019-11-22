@@ -5,6 +5,7 @@ import com.org.simplelab.database.entities.*;
 
 import com.org.simplelab.database.repositories.UserRepository;
 import org.junit.jupiter.api.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -146,9 +147,13 @@ class DBTests extends SpringTestConfig {
 	}
 
 
+	@Autowired
+	UserRepository ur;
 
 	@Test
 	void MySQLtest(){
+
+		ur.deleteBy_metadata("TEST");
 
 	}
 
