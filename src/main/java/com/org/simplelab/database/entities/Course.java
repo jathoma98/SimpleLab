@@ -3,10 +3,9 @@ package com.org.simplelab.database.entities;
 import com.org.simplelab.database.DBUtils;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -21,13 +20,13 @@ public class Course extends BaseTable {
     @JoinColumn(name = "creator_id")
     private User creator;
 
-    @DBRef
-    private List<labs> labs;
+    @OneToMany
+    private List<Lab> labs;
+    @OneToMany
     private List<User> users;
 
     public Course(){
         labs = new ArrayList<>();
         users = new ArrayList<>();
     }
-
 }

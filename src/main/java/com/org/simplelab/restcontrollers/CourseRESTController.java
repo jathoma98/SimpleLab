@@ -179,7 +179,7 @@ import java.util.Map;
         RequestResponse r = new RequestResponse();
         r.setSuccess(false);
 
-        String user_id = (String)session.getAttribute("user_id");
+        Long user_id = (Long)session.getAttribute("user_id");
         if ( user_id == null){
             r.setError("Not Login");
             return r.map();
@@ -223,11 +223,11 @@ import java.util.Map;
     public List<User> removeStudentList (@RequestBody Course course,
                                       HttpSession session){
         List<Course> c = courseDB.findByCourseId(course.getCourse_id());
-        String user_id = (String)session.getAttribute("user_id");
+        Long user_id = (Long)session.getAttribute("user_id");
         if ( user_id == null){
             return null;
         }
-        Course target_course = courseDB.findByUserIdAndCourseId((String)session.getAttribute("user_id"), course.getCourse_id());
+        Course target_course = courseDB.findByUserIdAndCourseId((Long)session.getAttribute("user_id"), course.getCourse_id());
         int len = course.getUsers().size();
         for(int i = 0; i < len; i++){
             User u = course.getUsers().get(i);
@@ -241,5 +241,4 @@ import java.util.Map;
         }
         return c.get(0).getUsers();
     }
-
 }

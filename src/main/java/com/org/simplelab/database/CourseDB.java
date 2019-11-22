@@ -18,7 +18,7 @@ public class CourseDB {
 
     public boolean insertCourse(Course c){
         List<Course> found = findByCourseId(c.getCourse_id());
-        if (found.size() > 0)
+        if (found != null && found.size() > 0)
             return false;
         courseRepository.save(c);
         return true;
