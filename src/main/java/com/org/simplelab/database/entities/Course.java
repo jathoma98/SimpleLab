@@ -1,20 +1,16 @@
 package com.org.simplelab.database.entities;
 
-import com.org.simplelab.database.DBManager;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import com.org.simplelab.database.DBUtils;
+import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-@Getter
-@Setter
-@ToString
+@Data
 @Entity
-@Table(name = DBManager.COURSE_DOCUMENT_NAME)
+@Table(name = DBUtils.COURSE_TABLE_NAME)
 public class Course extends BaseTable {
 
     private String course_id;

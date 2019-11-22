@@ -1,16 +1,12 @@
 package com.org.simplelab.database.entities;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@Getter
-@Setter
-@ToString
+@Data
 @MappedSuperclass
 public class BaseTable {
 

@@ -42,7 +42,7 @@ public class UserDB{
      *           FAILED otherwise
      */
     public UserAuthenticationStatus authenticate(String username, String password){
-        byte[] given_hashed = DBManager.getHash(password);
+        byte[] given_hashed = DBUtils.getHash(password);
         User found = findUser(username);
         if (found == null)
             return UserAuthenticationStatus.FAILED;

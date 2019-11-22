@@ -2,20 +2,16 @@ package com.org.simplelab.database.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.org.simplelab.database.DBManager;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import com.org.simplelab.database.DBUtils;
+import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-@Getter
-@Setter
-@ToString
+@Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
-@Table(name = DBManager.USER_DOCUMENT_NAME)
+@Table(name = DBUtils.USER_TABLE_NAME)
 public class User extends BaseTable{
 
     private String username;
@@ -33,11 +29,11 @@ public class User extends BaseTable{
      * @param password - the password to be hashed and stored.
      */
     public void setPassword(String password){
-        this.setPass_hash(DBManager.getHash(password));
+        this.setPass_hash(DBUtils.getHash(password));
     }
 
     public void setAnswer(String answer) {
-        this.answer = DBManager.getHash(answer);
+        this.answer = DBUtils.getHash(answer);
     }
 
 }
