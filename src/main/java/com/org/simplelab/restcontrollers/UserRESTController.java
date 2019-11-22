@@ -52,14 +52,16 @@ import java.util.Map;
         if (regex == null || regex.equals("")){
             return new ArrayList<>();
         }
-        return userDB.searchByMatchingString(regex);
+        //TODO: reimplement this
+       // return userDB.searchByMatchingString(regex);
+        return null;
     }
 
     @GetMapping(LOAD_USER_MAPPING)
     public User getUserInfo(HttpSession session){
-        String userId = "";
+        long userId = -1;
         try{
-            userId = (String)session.getAttribute("user_id");
+            userId = (long)session.getAttribute("user_id");
         } catch (Exception e){
             //redirect to login
         }
@@ -70,9 +72,9 @@ import java.util.Map;
     @PostMapping(RESET_USER_MAPPING)
     public void resetUserInfo(@RequestBody User user
                                            ,HttpSession session) {
-        String userId = "";
+        long userId = -1;
         try {
-            userId = (String) session.getAttribute("user_id");
+            userId = (long) session.getAttribute("user_id");
         } catch (Exception e) {
             //redirect to login
         }

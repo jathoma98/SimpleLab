@@ -154,12 +154,6 @@ class DBTests extends SpringTestConfig {
 	}
 
 
-	@Autowired
-	TestRepository tr;
-
-	@Autowired
-	CourseRepository ur;
-
 
 	@Test
 	void MySQLtest(){

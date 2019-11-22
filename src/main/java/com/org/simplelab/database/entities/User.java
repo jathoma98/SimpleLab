@@ -1,22 +1,21 @@
 package com.org.simplelab.database.entities;
 
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.org.simplelab.database.DBManager;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.io.Serializable;
-import java.util.Arrays;
+import javax.persistence.*;
 
 @Getter
 @Setter
 @ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Document(collection = DBManager.USER_DOCUMENT_NAME)
-public class User extends BaseDocument implements Serializable {
+@Entity
+@Table(name = DBManager.USER_DOCUMENT_NAME)
+public class User extends BaseTable{
 
     private String username;
     private byte[] pass_hash;
@@ -27,7 +26,6 @@ public class User extends BaseDocument implements Serializable {
     private byte[] answer;
     private String role;
     private String email;
-
 
     /**
      * Use this method to set passwords.
@@ -41,9 +39,8 @@ public class User extends BaseDocument implements Serializable {
         this.answer = DBManager.getHash(answer);
     }
 
-    public String getId(){
+    public long getId(){
         return get_id();
     }
 
 }
-

@@ -19,7 +19,7 @@ public class CourseSQL extends BaseTable {
     private String description;
 
     @OneToOne(cascade = CascadeType.ALL)
-    private UserSQL creator;
+    private User creator;
 
 
 }

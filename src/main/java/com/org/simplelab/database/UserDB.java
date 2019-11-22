@@ -2,7 +2,6 @@ package com.org.simplelab.database;
 
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.repositories.UserRepository;
-import org.omg.PortableInterceptor.SUCCESSFUL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,10 +52,6 @@ public class UserDB{
         return UserAuthenticationStatus.SUCCESSFUL;
     }
 
-    public List<User> searchByMatchingString(String regex){
-        return userRepository.findInfoFieldsWithRegex(regex);
-    }
-
     /**
      * Finds a User in the DB with the given username
      * @param username - username of the user to be found
@@ -69,7 +64,7 @@ public class UserDB{
         return found.get(0);
     }
 
-    public User findUserById(String id){
+    public User findUserById(long id){
         Optional<User> found = userRepository.findById(id);
         return found.isPresent() ? found.get(): null;
     }
@@ -100,6 +95,10 @@ public class UserDB{
         deleteUser(user.getUsername());
     }
 
+    public void deleteByMetadata(String metadata){
+        userRepository.deleteBy_metadata(metadata);
+    }
+
     public void deleteUser(String username){
         userRepository.deleteByUsername(username);
     }
@@ -111,14 +110,6 @@ public class UserDB{
     public void updateUser(User user){
 //        deleteUser(user);
         userRepository.save(user);
-    }
-
-    /**
-     * Deletes all users which contain the given metadata
-     * @param metadata - metadata to be matched
-     */
-    public void deleteByMetadata(String metadata){
-        userRepository.deleteByMetadata(metadata);
     }
 
     public UserRepository DEBUG_getInterface(){

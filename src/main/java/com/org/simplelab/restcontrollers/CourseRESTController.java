@@ -40,9 +40,9 @@ import java.util.Map;
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> addCourse(@RequestBody CourseValidator courseValidator,
                                          HttpSession session){
-        String userId = "";
+        long userId = -1;
         try{
-            userId = (String)session.getAttribute("user_id");
+            userId = (long)session.getAttribute("user_id");
         } catch (Exception e){
             //redirect to login
         }
@@ -92,7 +92,7 @@ import java.util.Map;
     @PatchMapping(UPDATE_MAPPING)
     public Map<String, String> updateCourse(@RequestBody DTO.CourseUpdateDTO dto, HttpSession session){
         RequestResponse rsp = new RequestResponse();
-        String uid = (String)session.getAttribute("user_id");
+        long uid = (long)session.getAttribute("user_id");
         List<Course> courses = courseDB.findByCourseId(dto.getCourse_id_old());
         if (courses.size() > 0){
             CourseValidator cv = dto.getNewCourseInfo();
@@ -105,7 +105,7 @@ import java.util.Map;
             //TODO: refactor with modelmapper?
             Course found = courses.get(0);
             //ensure the found course belongs to the current user -- exception if not (the new course code is a duplicate)
-            if (!found.getCreator().get_id().equals(uid)){
+            if (found.getCreator().get_id() != uid){
                 rsp.setError(CourseValidator.DUPLICATE_ID);
                 return rsp.map();
             }
