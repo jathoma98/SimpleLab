@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,13 +23,8 @@ public interface CourseRepository extends CrudRepository<Course, Long> {
 
     public List<Course> deleteBy_metadata(String metadata);
 
-    @Modifying
-    @Query(value = "DELETE FROM course\n" +
-            "WHERE (\n" +
-            "creator_id = ?1\n" +
-            "AND\n" +
-            "course_id = ?2\n" +
-            ")", nativeQuery = true)
+    @Transactional
+    @Query(value = "DELETE FROM course WHERE (creator_id = ?1 AND course_id = ?2)", nativeQuery = true)
     public List<Course> deleteBycreator_idAndcourse_id(long user_id, String course_id);
 
     @Query(value = "SELECT *\n" +

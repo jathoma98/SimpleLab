@@ -42,9 +42,13 @@ public class CourseValidator extends Validator{
 
     @Override
     public Course build() {
-        ModelMapper mm = new ModelMapper();
-        System.out.println(this.toString());
-        Course c = mm.map(this, Course.class);
+        //TODO: properly refactor with modelmapper
+
+        Course c = new Course();
+        c.setName(name);
+        c.setCourse_id(course_id);
+        c.setDescription(description);
+        c.set_metadata(_metadata);
         return c;
     }
 }
