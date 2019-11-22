@@ -173,14 +173,16 @@ import java.util.Map;
      *
      *  Return Map
      */
+    /**
     @PostMapping(ADD_STUDENT_MAPPING)
     public Map addStudentToCourse (@RequestBody Course course,
                                     HttpSession session){
         RequestResponse r = new RequestResponse();
         r.setSuccess(false);
 
-        String user_id = (String)session.getAttribute("user_id");
-        if ( user_id == null){
+        long user_id = -1;
+        user_id = (long)session.getAttribute("user_id");
+        if ( user_id == -1){
             r.setError("Not Login");
             return r.map();
         }
@@ -240,6 +242,6 @@ import java.util.Map;
             }
         }
         return c.get(0).getUsers();
-    }
+    }**/
 
 }

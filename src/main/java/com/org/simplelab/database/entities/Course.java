@@ -18,6 +18,7 @@ public class Course extends BaseTable {
     @JoinColumn(name = "creator_id")
     private User creator;
 
+    /**
     @DBRef
     private List<labs> labs;
     private List<User> users;
@@ -25,7 +26,7 @@ public class Course extends BaseTable {
     public Course(){
         labs = new ArrayList<>();
         users = new ArrayList<>();
-    }
+    }**/
 
 
 }

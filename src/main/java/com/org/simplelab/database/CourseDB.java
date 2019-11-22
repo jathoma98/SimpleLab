@@ -36,7 +36,7 @@ public class CourseDB {
 
     public List<Course> findByCourseId(String course_id){
         List<Course> found = courseRepository.findByCourse_id(course_id);
-        return found.size() == 0? null: found;
+        return found;
 //        return courseRepository.findByCourse_id(course_id);
     }
 
