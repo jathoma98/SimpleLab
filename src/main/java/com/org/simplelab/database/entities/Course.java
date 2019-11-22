@@ -26,7 +26,6 @@ public class Course extends BaseDocument {
     private String description;
     private User creator;
 
-    //annotation causes MongoDB to store IDs of labs here.
     @DBRef
     private List<Lab> labs;
 

@@ -17,11 +17,6 @@ import javax.persistence.*;
 @Table(name = DBManager.USER_DOCUMENT_NAME)
 public class UserSQL extends BaseTable{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", unique = true, nullable = false)
-    private long _id;
-
     private String username;
     private byte[] pass_hash;
     private String firstname;
