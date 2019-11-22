@@ -1,3 +1,4 @@
+
 /**
  * @Param tbody Table Body
  * @Param eventFn event function
@@ -5,7 +6,7 @@
  * Set event function for each row of Table body.
  */
 function setTableBodyRowEvent(tbody, eventFn){
-    tbody.find("tr").each(function(){
+    $(tbody).find("tr").each(function(){
         $(this).on("click", eventFn);
         $(this).addClass("modal-trigger");
     })
@@ -54,4 +55,3 @@ rebuildComponent  = function (component, template, data, btnEvents) {
     }
     return html_text;
 };
-
