@@ -1,6 +1,9 @@
 package com.org.simplelab;
 
 import com.org.simplelab.database.UserDB;
+import com.org.simplelab.database.repositories.CourseRepository;
+import com.org.simplelab.database.repositories.EquipmentRepository;
+import com.org.simplelab.database.repositories.LabRepository;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
@@ -27,6 +30,15 @@ public abstract class SpringTestConfig {
     @Autowired
     UserDB userDB;
 
+    @Autowired
+    CourseRepository cr;
+
+    @Autowired
+    EquipmentRepository er;
+
+    @Autowired
+    LabRepository lr;
+
     /**
      * Notes on metadata:
      * This metadata field is used to identify entities created during a specific test instance
@@ -45,7 +57,10 @@ public abstract class SpringTestConfig {
 
     @Test
     void zzzzz_cleanup(){
-       // userDB.deleteByMetadata(metadata);
+       userDB.deleteByMetadata(metadata);
+       cr.deleteBy_metadata(metadata);
+       er.deleteBy_metadata(metadata);
+       lr.deleteBy_metadata(metadata);
     }
 
 

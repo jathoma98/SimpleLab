@@ -67,6 +67,7 @@ public class RESTTests extends SpringTestConfig {
         rawJson.put("name", metadata);
         rawJson.put("description", metadata);
         rawJson.put("course_id", "UNIT_TEST" + metadata);
+        rawJson.put("_metadata", metadata);
         JSONObject json = new JSONObject(rawJson);
 
         sendCourseToPOSTEndpoint(json);
@@ -97,6 +98,7 @@ public class RESTTests extends SpringTestConfig {
             rawJson.put("name", metadata + i);
             rawJson.put("description", metadata);
             rawJson.put("course_id", "UNIT_TEST" + metadata + i);
+            rawJson.put("_metadata", metadata);
             JSONObject json = new JSONObject(rawJson);
             objs[i] = json;
         }
