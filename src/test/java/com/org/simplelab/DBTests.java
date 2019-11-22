@@ -2,10 +2,12 @@ package com.org.simplelab;
 
 import com.org.simplelab.database.UserDB;
 import com.org.simplelab.database.entities.Course;
+import com.org.simplelab.database.entities.TestEntity;
 import com.org.simplelab.database.entities.User;
 
 import com.org.simplelab.database.repositories.CourseRepository;
 import com.org.simplelab.database.repositories.LabRepository;
+import com.org.simplelab.database.repositories.TestRepository;
 import com.org.simplelab.database.repositories.UserRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -149,15 +151,15 @@ class DBTests extends SpringTestConfig {
 		userDB.findUser(breaker1);
 	}
 
-	/**
-	 * Begin MongoDB Course tests
-	 */
 
 	@Autowired
-	CourseRepository courseRepository;
+	TestRepository tr;
 
-	@Autowired
-	LabRepository labRepository;
+	@Test
+	void MySQLtest(){
+
+
+	}
 
 
 	@Test
