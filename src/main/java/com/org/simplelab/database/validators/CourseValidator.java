@@ -1,15 +1,9 @@
 package com.org.simplelab.database.validators;
 
-import com.org.simplelab.database.CourseDB;
 import com.org.simplelab.database.entities.Course;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.Transient;
-
-import java.util.List;
 
 @Getter
 @Setter

@@ -1,7 +1,5 @@
 package com.org.simplelab.database;
 
-import com.org.simplelab.SimpleLabApplication;
-
 import java.security.MessageDigest;
 
 /**

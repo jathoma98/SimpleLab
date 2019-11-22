@@ -8,15 +8,11 @@ import com.org.simplelab.database.repositories.LabRepository;
 import com.org.simplelab.database.validators.LabValidator;
 import com.org.simplelab.database.validators.Validator;
 import com.org.simplelab.restcontrollers.dto.DTO;
-import jdk.nashorn.internal.objects.annotations.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.security.Security;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 

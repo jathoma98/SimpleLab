@@ -1,9 +1,9 @@
 package com.org.simplelab.database.repositories;
 
+import com.org.simplelab.database.entities.User;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import com.org.simplelab.database.entities.User;
 
 import java.util.List;
 
