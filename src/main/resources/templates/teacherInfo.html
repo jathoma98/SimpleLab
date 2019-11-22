@@ -14,11 +14,11 @@
     <script type="text/javascript" th:src="@{/js/teacherInfo.js}"></script>
     <script type="text/javascript" th:src="@{/js/tools.js}"></script>
     <script type="text/javascript" th:src="@{/js/teacherInfo/course.table.js}"></script>
-    <script type="text/javascript" th:src="@{/js/accountInfo.js}"></script>
+    <script type="text/javascript" th:src="@{/js/accountInfo/accountInfo.js}"></script>
 
     <!--Template-->
     <script id="modalTpl" type="x-tmpl-mustache" th:src="@{/js/teacherInfo/modal.html}"></script>
-
+    <script id="modalAccTpl" type="x-tmpl-mustache" th:src="@{/js/accountInfo/modalAccount.html}"></script>
     <script type="text/javascript"> templatePreLoad()</script>
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -72,59 +72,7 @@
 <div id="modalAccount" class="modal">
     <div class="modal-content">
         <ul class="collapsible">
-            <li class="active">
-                <div class="collapsible-header" style="background: #00acc1;"><i class="material-icons">info</i>Account
-                    Info
-                </div>
-                <div class="row collapsible-body">
-                    <form class="col s12">
-                        <div class="row">
-                            <div class="input-field col s6">
-                                <input readonly="readonly" id="first_name" placeholder="Chenxing" type="text"
-                                       class="validate">
-                                <label for="first_name">First Name</label>
-                            </div>
-                            <div class="input-field col s6">
-                                <input readonly="readonly" id="last_name" placeholder="Chenxing" type="text"
-                                       class="validate">
-                                <label for="last_name">Last Name</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s6">
-                                <input readonly="readonly" id="institution" placeholder="Chenxing" type="text"
-                                       class="validate">
-                                <label for="institution">institution</label>
-                            </div>
-                            <div class="input-field col s6">
-                                <input readonly="readonly" id="email" placeholder="Chenxing" type="text"
-                                       class="validate">
-                                <label for="email">Email</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input readonly="readonly" id="password" placeholder="Chenxing" type="text"
-                                       class="validate">
-                                <label for="password">Password</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <a id="cancelBtn" class="btn waves-effect waves-light right btn_margin my_red"
-                               style="display: none">Cancel
-                                <i class="material-icons right">cancel</i>
-                            </a>
-                            <a id="saveInfoBtn" class="btn waves-effect waves-light right btn_margin my_red"
-                               style="display: none">Save
-                                <i class="material-icons right">save</i>
-                            </a>
-                            <a id="editInfoBtn" class="btn waves-effect waves-light right btn_margin my_red">Edit
-                                <i class="material-icons right">edit</i>
-                            </a>
-                        </div>
-                    </form>
-                </div>
-            </li>
+            <!--template -->
         </ul>
     </div>
 </div>

@@ -1,0 +1,56 @@
+{{#accModal}}
+<li {{#active}} class="active"{{/active}}>
+    <div class="collapsible-header" {{#active}} style="background: #00acc1;"{{/active}}>
+        <i class="material-icons">info</i>Account Info
+    </div>
+    <div class="row collapsible-body" {{#active}} style="display: block;"{{/active}}>
+        <form class="col s12">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input readonly="readonly" id="first_name" type="text"
+                           class="validate{{#user.firstname}} valid{{/user.firstname}}" value="{{user.firstname}}">
+                    <label for="first_name"{{#user.firstname}} class="active"{{/user.firstname}}>First Name</label>
+                </div>
+                <div class="input-field col s6">
+                    <input readonly="readonly" id="last_name"  type="text"
+                           class="validate{{#user.lastname}} valid{{/user.lastname}}" value="{{user.lastname}}">
+                    <label for="last_name"{{#user.lastname}} class="active"{{/user.lastname}}>Last Name</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <input readonly="readonly" id="institution"  type="text"
+                           class="validate{{#user.institution}} valid{{/user.institution}}" value="{{user.institution}}">
+                    <label for="institution"{{#user.institution}} class="active"{{/user.institution}}>institution</label>
+                </div>
+                <div class="input-field col s6">
+                    <input readonly="readonly" id="email"  type="text"
+                           class="validate{{#user.email}} valid{{/user.email}}" value="{{user.email}}">
+                    <label for="email"{{#user.email}} class="active"{{/user.email}}>email</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input readonly="readonly" id="password"  type="text"
+                           class="validate">
+                    <label for="password">Password</label>
+                </div>
+            </div>
+            <div class="row" {{#active}} class="active"{{/active}}>
+                <a id="cancelBtn" class="btn waves-effect waves-light right btn_margin my_red"
+                   style="display: none">Cancel
+                    <i class="material-icons right">cancel</i>
+                </a>
+                <a id="saveInfoBtn" class="btn waves-effect waves-light right btn_margin my_red"
+                   style="display: none">Save
+                    <i class="material-icons right">save</i>
+                </a>
+                <a id="editInfoBtn" class="btn waves-effect waves-light right btn_margin my_red">Edit
+                    <i class="material-icons right">edit</i>
+                </a>
+            </div>
+        </form>
+    </div>
+</li>
+{{/accModal}}
+
