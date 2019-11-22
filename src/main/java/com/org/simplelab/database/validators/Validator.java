@@ -17,8 +17,6 @@ public abstract class Validator {
         }
     }
 
-    //probably wont be used
-    protected boolean validated = false;
 
     /**
      * Method which checks each field that the user sends, to ensure they are properly formatted.
