@@ -40,6 +40,17 @@
 </ul>
 
 
+<!-- Modal Structure -->
+<div id="modalAccount" class="modal">
+    <div class="modal-content">
+        <ul class="collapsible">
+            <!--template -->
+        </ul>
+    </div>
+</div>
+
+
+
 <!-------------------------------------------------------------------------------------->
 <!-- Create Course Modal Structure -->
 <!-------------------------------------------------------------------------------------->
@@ -59,23 +70,14 @@
 </div>
 
 
-<script id="student_search_result_tbody" type="mustache">
+<script id="student_search_tbody" type="mustache">
     {{#result}}
-        <tr>
+        <tr href="#modal">
             <td>{{username}}</td>
         </tr>
     {{/result}}
 </script>
 
-
-<!-- Modal Structure -->
-<div id="modalAccount" class="modal">
-    <div class="modal-content">
-        <ul class="collapsible">
-            <!--template -->
-        </ul>
-    </div>
-</div>
 
 
 <!--                second nav bar on the top-->
@@ -261,7 +263,7 @@
                                 <div class="row">
                                     <div class="input-field col s12">
                                         <input id="Equipment_name" type="text" class="validate">
-                                        <label for="lab_name">Equipment Name</label>
+                                        <label for="Equipment_name">Equipment Name</label>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -270,7 +272,7 @@
                                             <div class="input-field col s12">
                                                 <textarea id="equipmenttextarea"
                                                           class="materialize-textarea"></textarea>
-                                                <label for="labtextarea">Equipment Decription</label>
+                                                <label for="equipmenttextarea">Equipment Decription</label>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -294,7 +296,7 @@
                                 <div class="input-field col s12">
                                     <div class="input-field col s10">
                                         <input id="modalsearchequipment" type="text" class="validate">
-                                        <label for="searchLab">Equipment Name</label>
+                                        <label for="modalsearchequipment">Equipment Name</label>
                                     </div>
                                     <div class="input-field col s2">
                                         <a><i class="material-icons">search</i></a>
@@ -370,7 +372,7 @@
 
 
 <!--JavaScript at end of body for optimized loading-->
-<script type="text/javascript" src="libs/materialize.min.js"></script>
+<script type="text/javascript" src="libs/materialize.js"></script>
 </body>
 <script>
     M.AutoInit();

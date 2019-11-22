@@ -30,8 +30,12 @@ public class Course extends BaseDocument {
     @DBRef
     private List<Lab> labs;
 
+    @DBRef
+    private List<User> users;
+
     public Course(){
         labs = new ArrayList<>();
+        users = new ArrayList<>();
     }
 
 }
