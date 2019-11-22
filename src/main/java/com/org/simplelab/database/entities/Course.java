@@ -3,10 +3,7 @@ package com.org.simplelab.database.entities;
 import com.org.simplelab.database.DBUtils;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -20,6 +17,7 @@ public class Course extends BaseTable {
     @OneToOne
     @JoinColumn(name = "creator_id")
     private User creator;
+
 
 
 }
