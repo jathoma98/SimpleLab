@@ -154,8 +154,6 @@ class DBTests extends SpringTestConfig {
 	void MySQLtest(){
 
 
-		ur.deleteBy_metadata("test");
-
 	}
 
 

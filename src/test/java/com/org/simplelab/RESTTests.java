@@ -1,10 +1,12 @@
 package com.org.simplelab;
 
+import com.mongodb.util.JSON;
 import com.org.simplelab.database.CourseDB;
 import com.org.simplelab.database.entities.Course;
 import com.org.simplelab.database.entities.Equipment;
 import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;
+import com.org.simplelab.database.repositories.CourseRepository;
 import com.org.simplelab.database.repositories.EquipmentRepository;
 import com.org.simplelab.database.repositories.LabRepository;
 import com.org.simplelab.database.repositories.UserRepository;
@@ -24,6 +26,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -44,8 +47,8 @@ public class RESTTests extends SpringTestConfig {
     CourseDB courseDB;
 
 
-    private void sendCourseToPOSTEndpoint(JSONObject json) throws Exception{
-        this.mockMvc.perform(post("/course/rest")
+    private void sendCourseToPOSTEndpoint(JSONObject json, String path) throws Exception{
+        this.mockMvc.perform(post("/course/rest" + path)
                 .sessionAttrs(session_atr)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json.toString()))
@@ -70,7 +73,7 @@ public class RESTTests extends SpringTestConfig {
         rawJson.put("_metadata", metadata);
         JSONObject json = new JSONObject(rawJson);
 
-        sendCourseToPOSTEndpoint(json);
+        sendCourseToPOSTEndpoint(json, "");
 
         this.mockMvc.perform(get("/course/rest" + CourseRESTController.LOAD_LIST_COURSE_MAPPING)
                              .principal(TestUtils.getUnitTestPrincipal())
@@ -104,7 +107,7 @@ public class RESTTests extends SpringTestConfig {
         }
 
         for (JSONObject json: objs){
-            sendCourseToPOSTEndpoint(json);
+            sendCourseToPOSTEndpoint(json, "");
         }
 
         StringBuilder sb = new StringBuilder();
@@ -131,15 +134,43 @@ public class RESTTests extends SpringTestConfig {
 
     }
 
-    @Autowired
-    LabRepository labRepository;
 
     @Autowired
-    EquipmentRepository equipmentRepository;
+    CourseRepository cr;
 
-    @WithMockUser(username = username, password = username)
     @Test
-    void labtest(){
+    @WithMockUser(username = username, password = username)
+    void addStudentToCourseTest() throws Exception{
+        session_atr.put("user_id", user_id);
+        session_atr.put("username", username);
+
+        Map<String, String> rawJson = new HashMap<>();
+        rawJson.put("name", metadata);
+        rawJson.put("description", metadata);
+        rawJson.put("course_id", "UNIT_TEST" + metadata);
+        rawJson.put("_metadata", metadata);
+        JSONObject json = new JSONObject(rawJson);
+
+        //add course first
+        sendCourseToPOSTEndpoint(json, "");
+
+        sendCourseToPOSTEndpoint(json, CourseRESTController.ADD_STUDENT_MAPPING);
+
+        boolean found = false;
+        Course foundCourse = courseDB.findCourse(metadata).get(0);
+        System.out.println(foundCourse.toString());
+        for (User u: foundCourse.getUsers()){
+            if (u.getId() == user_id){
+                found = true;
+                break;
+            }
+        }
+        assertTrue(found);
+
+        cr.deleteBy_metadata(metadata);
+
+
+
 
 
     }

@@ -173,7 +173,7 @@ import java.util.Map;
      *
      *  Return Map
      */
-    /**
+
     @PostMapping(ADD_STUDENT_MAPPING)
     public Map addStudentToCourse (@RequestBody Course course,
                                     HttpSession session){
@@ -192,6 +192,10 @@ import java.util.Map;
             r.setError("Course Not Found");
             return r.map();
         }
+        System.out.println("Found target course: " + target_course.toString());
+        User u = userDB.findUserById(user_id);
+        System.out.println("Found current user: " + u.toString());
+        /**
 
         course.getUsers().forEach((user)->{
             User u = userDB.findUser(user.getUsername());
@@ -202,17 +206,15 @@ import java.util.Map;
                 }
             }
             target_course.getUsers().add(u);
-        });
+        });*/
 
+        target_course.getUsers().add(u);
 
-        if (target_course.getUsers().size() <= 0){
-            r.setError("Users Not Found");
-            return r.map();
-        }
         courseDB.updateCourse(target_course);
         r.setSuccess(true);
         return r.map();
     }
+    /**
 
     @PostMapping(GET_STUDENTS_MAPPING)
     public List<User> getStudentList (@RequestBody Course course,

@@ -4,6 +4,8 @@ import com.org.simplelab.database.DBUtils;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity(name = DBUtils.COURSE_TABLE_NAME)
@@ -18,6 +20,15 @@ public class Course extends BaseTable {
     @JoinColumn(name = "creator_id")
     private User creator;
 
+    @OneToMany
+    private List<User> users;
+
+    public Course() {
+        //labs = new ArrayList<>();
+        users = new ArrayList<>();
+    }
+}
+
     /**
     @DBRef
     private List<labs> labs;
@@ -26,7 +37,8 @@ public class Course extends BaseTable {
     public Course(){
         labs = new ArrayList<>();
         users = new ArrayList<>();
-    }**/
+    }
 
 
 }
+**/

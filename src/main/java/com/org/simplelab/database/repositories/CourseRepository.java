@@ -21,7 +21,11 @@ public interface CourseRepository extends BaseRepository<Course> {
     public List<Course> findByCreator_id(long id);
 
     @Modifying
-    @Query(value = "DELETE FROM #{#entityName} WHERE (creator_id = :user_id AND course_id = :course_id)", nativeQuery = true)
+    @Query(value =
+            "DELETE FROM #{#entityName}" +
+            " WHERE (creator_id = :user_id" +
+            " AND " +
+            "course_id = :course_id)", nativeQuery = true)
     public void deleteBycreator_idAndcourse_id(@Param("user_id") long user_id,
                                                @Param("course_id") String course_id);
 
