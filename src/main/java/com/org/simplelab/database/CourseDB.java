@@ -45,7 +45,6 @@ public class CourseDB {
 
     @Transactional
     public void deleteCourseById(long user_id, String course_id){
-        System.out.println("Deleting with id: " +user_id+ " and course_id: " + course_id);
         courseRepository.deleteBycreator_idAndcourse_id(user_id, course_id);
     }
 
