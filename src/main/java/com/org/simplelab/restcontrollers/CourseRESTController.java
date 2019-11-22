@@ -8,12 +8,8 @@ import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.database.validators.Validator;
 import com.org.simplelab.restcontrollers.dto.DTO;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -43,9 +39,9 @@ import java.util.Map;
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> addCourse(@RequestBody CourseValidator courseValidator,
                                          HttpSession session){
-        String userId = "";
+        long userId = -1;
         try{
-            userId = (String)session.getAttribute("user_id");
+            userId = (long)session.getAttribute("user_id");
         } catch (Exception e){
             //redirect to login
         }
@@ -95,7 +91,7 @@ import java.util.Map;
     @PatchMapping(UPDATE_MAPPING)
     public Map<String, String> updateCourse(@RequestBody DTO.CourseUpdateDTO dto, HttpSession session){
         RequestResponse rsp = new RequestResponse();
-        String uid = (String)session.getAttribute("user_id");
+        long uid = (long)session.getAttribute("user_id");
         List<Course> courses = courseDB.findByCourseId(dto.getCourse_id_old());
         if (courses.size() > 0){
             CourseValidator cv = dto.getNewCourseInfo();
@@ -108,7 +104,7 @@ import java.util.Map;
             //TODO: refactor with modelmapper?
             Course found = courses.get(0);
             //ensure the found course belongs to the current user -- exception if not (the new course code is a duplicate)
-            if (!found.getCreator().get_id().equals(uid)){
+            if (found.getCreator().getId() != uid){
                 rsp.setError(CourseValidator.DUPLICATE_ID);
                 return rsp.map();
             }
@@ -133,9 +129,9 @@ import java.util.Map;
     public Map<String, String> deleteCourse(@RequestBody CourseValidator[] toDelete,
                                             HttpSession session){
         RequestResponse response = new RequestResponse();
-        String userId = "";
+        long userId = -1;
         try{
-            userId = (String)session.getAttribute("user_id");
+            userId = (long)session.getAttribute("user_id");
         } catch (Exception e){
             response.setError(e.toString());
             return response.map();
@@ -151,9 +147,9 @@ import java.util.Map;
 
     @GetMapping(LOAD_LIST_COURSE_MAPPING)
     public List<Course> getListOfCourse(HttpSession session){
-        String userId = "";
+        long userId = -1;
         try{
-            userId = (String)session.getAttribute("user_id");
+            userId = (long)session.getAttribute("user_id");
         } catch (Exception e){
             //redirect to login
         }
@@ -164,7 +160,7 @@ import java.util.Map;
     @PostMapping(LOAD_COURSE_INFO_MAPPING)
     public Course getCourseInfo( @RequestBody Course course,
                                         HttpSession session){
-        String uid = (String)session.getAttribute("user_id");
+        long uid = (long)session.getAttribute("user_id");
         Course r = courseDB.findByUserIdAndCourseId(uid, course.getCourse_id());
         return r;
     }

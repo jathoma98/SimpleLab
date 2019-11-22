@@ -1,36 +1,28 @@
 package com.org.simplelab.database.entities;
-import com.org.simplelab.database.DBManager;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.domain.Persistable;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.org.simplelab.database.DBUtils;
+import lombok.Data;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-@Getter
-@Setter
-@ToString
-@Document(collection = DBManager.COURSE_DOCUMENT_NAME)
-public class Course extends BaseDocument {
+@Data
+@Entity
+@Table(name = DBUtils.COURSE_TABLE_NAME)
+public class Course extends BaseTable {
 
     private String course_id;
     private String name;
     private String description;
+
+    @OneToOne
+    @JoinColumn(name = "creator_id")
     private User creator;
 
-    //annotation causes MongoDB to store IDs of labs here.
     @DBRef
-    private List<Lab> labs;
-
-    @DBRef
+    private List<labs> labs;
     private List<User> users;
 
     public Course(){

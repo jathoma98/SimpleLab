@@ -19,7 +19,7 @@ public class TeacherController {
 
     @RequestMapping("")
     public String root(HttpSession session, Model model) {
-        List<Course> list_course = cdb.getCoursesForTeacher((String)session.getAttribute("user_id"));
+        List<Course> list_course = cdb.getCoursesForTeacher((long)session.getAttribute("user_id"));
         String home_navig = ((String)session.getAttribute("username")) + "'s Home";
         model.addAttribute("home_navig", home_navig);
         model.addAttribute("list_of_course", list_course);

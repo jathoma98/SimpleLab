@@ -1,23 +1,14 @@
 package com.org.simplelab.restcontrollers;
 
-import com.org.simplelab.controllers.RequestResponse;
-import com.org.simplelab.database.CourseDB;
 import com.org.simplelab.database.UserDB;
-import com.org.simplelab.database.entities.Course;
 import com.org.simplelab.database.entities.User;
-import com.org.simplelab.database.validators.CourseValidator;
-import com.org.simplelab.database.validators.UserValidator;
-import com.org.simplelab.database.validators.Validator;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/user/rest")
@@ -52,14 +43,16 @@ import java.util.Map;
         if (regex == null || regex.equals("")){
             return new ArrayList<>();
         }
-        return userDB.searchByMatchingString(regex);
+        //TODO: reimplement this
+       // return userDB.searchByMatchingString(regex);
+        return null;
     }
 
     @GetMapping(LOAD_USER_MAPPING)
     public User getUserInfo(HttpSession session){
-        String userId = "";
+        long userId = -1;
         try{
-            userId = (String)session.getAttribute("user_id");
+            userId = (long)session.getAttribute("user_id");
         } catch (Exception e){
             //redirect to login
         }
@@ -70,12 +63,13 @@ import java.util.Map;
     @PostMapping(RESET_USER_MAPPING)
     public void resetUserInfo(@RequestBody User user
                                            ,HttpSession session) {
-        String userId = "";
+        long userId = -1;
         try {
-            userId = (String) session.getAttribute("user_id");
+            userId = (long) session.getAttribute("user_id");
         } catch (Exception e) {
             //redirect to login
         }
+        user.setId(userId);
         userDB.updateUser(user);
     }
 }
