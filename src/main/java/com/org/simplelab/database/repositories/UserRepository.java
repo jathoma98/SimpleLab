@@ -13,7 +13,7 @@ import java.util.List;
 
 @Transactional
 @Repository
-public interface UserRepository extends CrudRepository<User, Long> {
+public interface UserRepository extends BaseRepository<User> {
 
 
     public List<User> findByUsername(String username);
@@ -21,8 +21,6 @@ public interface UserRepository extends CrudRepository<User, Long> {
     @Modifying
     public void deleteByUsername(String username);
 
-    @Modifying
-    public void deleteBy_metadata(String metadata);
 
 
 }

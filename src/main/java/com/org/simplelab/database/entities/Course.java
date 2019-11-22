@@ -6,7 +6,7 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Data
-@Entity
+@Entity(name = DBUtils.COURSE_TABLE_NAME)
 @Table(name = DBUtils.COURSE_TABLE_NAME)
 public class Course extends BaseTable {
 

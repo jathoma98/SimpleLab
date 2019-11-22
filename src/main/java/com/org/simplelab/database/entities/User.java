@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Entity
+@Entity(name = DBUtils.USER_TABLE_NAME)
 @Table(name = DBUtils.USER_TABLE_NAME)
 public class User extends BaseTable{
 

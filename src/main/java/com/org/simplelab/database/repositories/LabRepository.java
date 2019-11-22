@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface LabRepository extends CrudRepository<Lab, Long> {
+public interface LabRepository extends BaseRepository<Lab> {
 
     List<Lab> findByName(String name);
 

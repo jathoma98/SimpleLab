@@ -13,27 +13,25 @@ import java.util.List;
 
 @Repository
 @Transactional
-public interface CourseRepository extends CrudRepository<Course, Long> {
+public interface CourseRepository extends BaseRepository<Course> {
 
 
     public List<Course> findByName(String name);
 
     public List<Course> findByCreator_id(long id);
 
-    public List<Course> deleteBy_metadata(String metadata);
-
     @Modifying
-    @Query(value = "DELETE FROM course WHERE (creator_id = :user_id AND course_id = :course_id)", nativeQuery = true)
+    @Query(value = "DELETE FROM #{#entityName} WHERE (creator_id = :user_id AND course_id = :course_id)", nativeQuery = true)
     public void deleteBycreator_idAndcourse_id(@Param("user_id") long user_id,
                                                @Param("course_id") String course_id);
 
     @Query(value = "SELECT *\n" +
-                    "FROM course\n" +
+                    "FROM #{#entityName}\n" +
                     "WHERE course_id = :course_id", nativeQuery = true)
     public List<Course> findByCourse_id(@Param("course_id") String course_id);
 
     @Query(value = "SELECT *\n" +
-                    "FROM course\n" +
+                    "FROM #{#entityName}\n" +
                     "WHERE (creator_id = :user_id\n" +
                     "AND\n" +
                     "course_id = :course_id)", nativeQuery = true)
