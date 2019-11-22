@@ -21,12 +21,11 @@ public class LabDB {
     @Autowired
     private CourseRepository courseRepository;
 
-    public void deleteLabById(String id){
+    public void deleteLabById(long id){
         labRepository.deleteById(id);
     }
 
     public boolean insertLab(Lab lab){
-
         labRepository.save(lab);
         return true;
 

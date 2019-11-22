@@ -58,6 +58,7 @@ public class LabRESTController {
             return rsp.map();
         }
         Lab lab = validator.build();
+        System.out.println(lab.toString());
         if (labDB.insertLab(lab)){
             rsp.setSuccess(true);
             return rsp.map();
@@ -73,7 +74,7 @@ public class LabRESTController {
      * @return Lab with Lab.getId() == lab_id, null otherwise
      */
     @GetMapping(LAB_ID_MAPPING)
-    public Lab labGet(@PathVariable("lab_id") String lab_id){
+    public Lab labGet(@PathVariable("lab_id") long lab_id){
         Optional<Lab> found = labRepository.findById(lab_id);
         if (found.isPresent())
             return found.get();
@@ -86,7 +87,7 @@ public class LabRESTController {
      * @return success:true
      */
     @DeleteMapping(LAB_ID_MAPPING)
-    public Map<String, String> labDelete(@PathVariable("lab_id") String lab_id){
+    public Map<String, String> labDelete(@PathVariable("lab_id") long lab_id){
         RequestResponse rsp = new RequestResponse();
 
         labDB.deleteLabById(lab_id);
@@ -103,7 +104,7 @@ public class LabRESTController {
      *         success:false otherwise
      */
     @PatchMapping(LAB_ID_MAPPING)
-    public Map<String, String> labUpdate(@PathVariable("lab_id") String lab_id,
+    public Map<String, String> labUpdate(@PathVariable("lab_id") long lab_id,
                                          @RequestBody DTO.LabUpdateDTO labUpdateDTO){
         RequestResponse rsp = new RequestResponse();
         System.out.println(lab_id);
@@ -117,7 +118,7 @@ public class LabRESTController {
      * Right now just returns all labs.
      */
     @GetMapping("")
-    public List<Lab> labGetForUser(HttpSession session){
+    public Iterable<Lab> labGetForUser(HttpSession session){
         return labRepository.findAll();
     }
 

@@ -3,16 +3,8 @@ package com.org.simplelab;
 import com.org.simplelab.database.UserDB;
 import com.org.simplelab.database.entities.*;
 
-import com.org.simplelab.database.repositories.CourseRepository;
-import com.org.simplelab.database.repositories.LabRepository;
-import com.org.simplelab.database.repositories.TestRepository;
 import com.org.simplelab.database.repositories.UserRepository;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.params.provider.EnumSource;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 

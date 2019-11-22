@@ -7,22 +7,27 @@ import lombok.ToString;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
 @ToString
-@Document(collection = DBManager.LAB_DOCUMENT_NAME)
-public class Lab extends BaseDocument{
+@Entity
+@Table(name = DBManager.LAB_DOCUMENT_NAME)
+public class Lab extends BaseTable{
 
     private String name;
 
+    /**
     @DBRef
     private List<Equipment> equipment;
 
     public Lab() {
         equipment = new ArrayList<>();
     }
+    **/
 
 }
