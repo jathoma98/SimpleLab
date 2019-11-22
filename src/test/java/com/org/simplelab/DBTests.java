@@ -5,12 +5,16 @@ import com.org.simplelab.database.entities.Course;
 import com.org.simplelab.database.entities.TestEntity;
 import com.org.simplelab.database.entities.User;
 
+import com.org.simplelab.database.entities.UserSQL;
 import com.org.simplelab.database.repositories.CourseRepository;
 import com.org.simplelab.database.repositories.LabRepository;
 import com.org.simplelab.database.repositories.TestRepository;
 import com.org.simplelab.database.repositories.UserRepository;
 import org.junit.jupiter.api.*;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -155,8 +159,21 @@ class DBTests extends SpringTestConfig {
 	@Autowired
 	TestRepository tr;
 
+	@Autowired
+	UserRepository ur;
+
+
 	@Test
 	void MySQLtest(){
+
+		List<User> users = ur.findAll();
+		users.forEach((user) -> {
+			user.set_id(null);
+			ModelMapper mm = new ModelMapper();
+			UserSQL sqluser = mm.map(user, UserSQL.class);
+			tr.save(sqluser);
+
+		});
 
 
 	}

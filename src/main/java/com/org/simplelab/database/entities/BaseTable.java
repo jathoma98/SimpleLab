@@ -3,33 +3,31 @@ package com.org.simplelab.database.entities;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.data.annotation.Id;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
-/**
- * These fields will be present in all
- * objects in the DB.
- */
 @Getter
 @Setter
 @ToString
-public class BaseDocument {
+@MappedSuperclass
+public class BaseTable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String _id;
+    @Column(name = "id", unique = true, nullable = false)
+    private long _id;
+
     private String createdDate;
+
     public String _metadata;
 
-    public BaseDocument(){
+    public BaseTable(){
         Date date = new Date();
         SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy HH:mm");
         this.createdDate = df.format(date);
     }
+
 
 }
