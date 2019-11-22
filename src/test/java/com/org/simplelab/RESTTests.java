@@ -33,8 +33,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class RESTTests extends SpringTestConfig {
 
 
-    private static final String user_id = "5dc3806aabb7582d6f626791";
-    private static final String username = "UNIT_TEST";
+    private static final long user_id = "5dc3806aabb7582d6f626791";
+    private static final String username = "12345";
     private static Map<String, Object> session_atr = new HashMap<>();
 
     @Autowired
