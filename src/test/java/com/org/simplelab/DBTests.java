@@ -166,14 +166,6 @@ class DBTests extends SpringTestConfig {
 	@Test
 	void MySQLtest(){
 
-		List<User> users = ur.findAll();
-		users.forEach((user) -> {
-			user.set_id(null);
-			ModelMapper mm = new ModelMapper();
-			UserSQL sqluser = mm.map(user, UserSQL.class);
-			tr.save(sqluser);
-
-		});
 
 
 	}
