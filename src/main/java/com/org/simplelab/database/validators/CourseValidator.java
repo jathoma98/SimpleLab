@@ -43,6 +43,7 @@ public class CourseValidator extends Validator{
     @Override
     public Course build() {
         ModelMapper mm = new ModelMapper();
+        System.out.println(this.toString());
         Course c = mm.map(this, Course.class);
         return c;
     }

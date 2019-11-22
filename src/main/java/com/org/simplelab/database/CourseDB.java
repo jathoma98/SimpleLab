@@ -43,17 +43,17 @@ public class CourseDB {
         return found.size() == 0? null: found;
     }
 
-    public void deleteCourseById(String user_id, String course_id){
-        courseRepository.deleteByUIDAndCourseID(user_id, course_id);
+    public void deleteCourseById(long user_id, String course_id){
+        courseRepository.deleteBycreator_idAndcourse_id(user_id, course_id);
     }
 
-    public List<Course> getCoursesForTeacher(String id){
+    public List<Course> getCoursesForTeacher(long id){
         List<Course> found = courseRepository.findForTeacher(id);
         return found;
     }
 
-    public Course findByUserIdAndCourseId(String user_id, String course_id){
-        List<Course> found = courseRepository.findByUIDAndCourseID(user_id, course_id);
+    public Course findByUserIdAndCourseId(long user_id, String course_id){
+        List<Course> found = courseRepository.findBycreator_idAndcourse_id(user_id, course_id);
         if (found.size() != 0) return found.get(0);
         return null;
     }

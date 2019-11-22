@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class RESTTests extends SpringTestConfig {
 
 
-    private static final long user_id = "5dc3806aabb7582d6f626791";
+    private static final String user_id = "90";
     private static final String username = "12345";
     private static Map<String, Object> session_atr = new HashMap<>();
 
@@ -124,7 +124,7 @@ public class RESTTests extends SpringTestConfig {
 
         for (JSONObject json: objs){
             assertEquals(courseDB.findByCourseId((String)json.get("course_id")).size(), 0);
-            courseDB.deleteCourseById(user_id, (String)json.get("course_id"));
+            courseDB.deleteCourseById(Long.parseLong(user_id), (String)json.get("course_id"));
         }
 
     }

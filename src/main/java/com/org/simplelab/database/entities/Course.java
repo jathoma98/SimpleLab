@@ -18,7 +18,8 @@ public class Course extends BaseTable {
     private String name;
     private String description;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
+    @JoinColumn(name = "creator_id")
     private User creator;
 
 

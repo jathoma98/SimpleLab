@@ -130,9 +130,9 @@ import java.util.Map;
     public Map<String, String> deleteCourse(@RequestBody CourseValidator[] toDelete,
                                             HttpSession session){
         RequestResponse response = new RequestResponse();
-        String userId = "";
+        long userId = -1;
         try{
-            userId = (String)session.getAttribute("user_id");
+            userId = (long)session.getAttribute("user_id");
         } catch (Exception e){
             //redirect to login
         }
@@ -146,9 +146,9 @@ import java.util.Map;
 
     @GetMapping(LOAD_LIST_COURSE_MAPPING)
     public List<Course> getListOfCourse(HttpSession session){
-        String userId = "";
+        long userId = -1;
         try{
-            userId = (String)session.getAttribute("user_id");
+            userId = (long)session.getAttribute("user_id");
         } catch (Exception e){
             //redirect to login
         }
@@ -159,7 +159,7 @@ import java.util.Map;
     @PostMapping(LOAD_COURSE_INFO_MAPPING)
     public Course getCourseInfo( @RequestBody Course course,
                                         HttpSession session){
-        String uid = (String)session.getAttribute("user_id");
+        long uid = (long)session.getAttribute("user_id");
         Course r = courseDB.findByUserIdAndCourseId(uid, course.getCourse_id());
         return r;
     }
