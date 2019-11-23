@@ -7,6 +7,7 @@ import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.repositories.CourseRepository;
 import com.org.simplelab.restcontrollers.CourseRESTController;
+import com.org.simplelab.restcontrollers.LabRESTController;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -198,7 +199,7 @@ public class RESTTests extends SpringTestConfig {
 
     @Test
     @WithMockUser(username = username, password = username)
-    void addGetDeleteLabTests() throws Exception {
+    void addGetUpdateLabTests() throws Exception {
         session_atr.put("user_id", user_id);
         session_atr.put("username", username);
 
@@ -229,6 +230,23 @@ public class RESTTests extends SpringTestConfig {
 
         //check that posting to update mapping updates info.
         String updatedName = metadata + "updated";
+        rawJson = new HashMap<>();
+        rawJson.put("name", updatedName);
+        json = new JSONObject(rawJson);
+
+        sendLabToPOSTEndpoint(json, "/" + lab_id);
+        Lab updated = labDB.getLabById(lab_id);
+        assertEquals(updated.getName(), updatedName);
+        assertEquals(updated.get_metadata(), metadata);
+
+        //check invalid lab id
+        mockMvc.perform(post("/lab/rest/-1")
+                .sessionAttrs(session_atr)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json.toString()))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json("{'success': 'false'}"));
 
     }
 }

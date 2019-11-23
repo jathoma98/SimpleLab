@@ -33,6 +33,10 @@ public class LabDB {
         return true;
     }
 
+    public boolean updateLab(Lab lab){
+        return insertLab(lab);
+    }
+
     public List<Lab> getLabsByCreatorId(long id){
         return labRepository.findByCreator_id(id);
     }
