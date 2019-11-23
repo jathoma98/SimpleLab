@@ -4,7 +4,10 @@ import com.org.simplelab.database.DBUtils;
 import lombok.Data;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -13,13 +16,10 @@ public class Lab extends BaseTable{
 
     private String name;
 
-    /**
-    @DBRef
-    private List<Equipment> equipment;
+    @OneToMany
+    private List<Equipment> equipments;
 
-    public Lab() {
-        equipment = new ArrayList<>();
+    public Lab(){
+        this.equipments = new ArrayList<>();
     }
-    **/
-
 }

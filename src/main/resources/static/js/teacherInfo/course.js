@@ -1,17 +1,6 @@
-ElEM_ID = {
-    SEARCH_STUDENT_BTN : "#searchStudentBtn",
-    COURSE_TABLE_TBODY: "#course_list tbody",
-    STUDENT_SEARCH_TBODY: "#student_search_result_table tbody",
-    STUDENT_LIST_TBODY: "#student_list_table tbody"
-}
-
-TEMPLATE_ID = {
-    STUDENTS_TBODY: "#student_search_tbody"
-}
-
 let COURSES_TABLE = {
     init(){
-        this.course_toggle = true;
+        this.toggle = true;
         this.btnEvents = new Array();
 
         this.addStudentBtnEvent = function(){
@@ -127,11 +116,11 @@ let COURSES_TABLE = {
                 type: "GET",
                 success: function (result) {
                     let data = {
-                        isEnabled: COURSES_TABLE.course_toggle,
+                        isEnabled: COURSES_TABLE.toggle,
                         courses: result.reverse()
                     }
                     rebuildComponent(ElEM_ID.COURSE_TABLE_TBODY, '#course_tbody', data);
-                    if (COURSES_TABLE.course_toggle) {
+                    if (COURSES_TABLE.toggle) {
                         setTableBodyRowEvent(ElEM_ID.COURSE_TABLE_TBODY, COURSES_TABLE.tableRowEvent);
                     }
                 }
@@ -166,6 +155,7 @@ let COURSES_TABLE = {
                 }
             })
         };
+        this.btnEvents[ElEM_ID.COURSE_SAVE_BTN] = COURSES_TABLE.save;
 
         /**
          * Delete course.
@@ -185,8 +175,7 @@ let COURSES_TABLE = {
             let course_json = JSON.stringify(course);
             $.ajax({
                 url: "/course/rest/deleteCourse",
-                type: 'POST',
-                // type: 'DELETE',
+                type: 'DELETE',
                 dataTye: 'json',
                 contentType: 'application/json; charset=utf-8',
                 data: course_json,
@@ -212,14 +201,14 @@ let COURSES_TABLE = {
                     course: true,
                 }
             }
-            rebuildComponent('#modal ul',"#modalTpl", data,  COURSES_TABLE.btnEvents);
+            rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL, data,  COURSES_TABLE.btnEvents);
         };
 
 
         this.btnSwitch = function () {
             $(".coursecheckcol").toggle();
-            COURSES_TABLE.course_toggle = !COURSES_TABLE.course_toggle;
-            if (COURSES_TABLE.course_toggle) {
+            COURSES_TABLE.toggle = !COURSES_TABLE.toggle;
+            if (COURSES_TABLE.toggle) {
                 setTableBodyRowEvent(ElEM_ID.COURSE_TABLE_TBODY, COURSES_TABLE.tableRowEvent);
             } else {
                 removeTableBodyRowEvent($("#course_list tbody"))
@@ -229,14 +218,3 @@ let COURSES_TABLE = {
 }
 
 
-$(document).ready(function () {
-    COURSES_TABLE.init();
-    //Course
-    $("#courseAddBtn").on("click", ()=>{COURSES_TABLE.create()});
-    $("#courseSaveBtn").on("click", ()=>{COURSES_TABLE.save()});
-    $("#courseDeleteBtn").on("click", ()=>{COURSES_TABLE.delete()});
-    $("#courseEditBtn").on("click", ()=>{COURSES_TABLE.btnSwitch()});
-    $("#courseBackBtn").on("click", ()=>{COURSES_TABLE.btnSwitch()});
-    //Set tbody row event
-    COURSES_TABLE.reload();
-})

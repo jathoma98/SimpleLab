@@ -16,17 +16,21 @@ data = {
 {{#courseModal}}
     <li{{#active}} class="active"{{/active}}>
         <div class="collapsible-header" style="background: #00acc1;"><i class="material-icons">info</i>Info</div>
-        <div id="setCourseText" class="row collapsible-body"{{#active}} style="display: block;"{{/active}}>
+<!--        <div id="setCourseText" class="row collapsible-body"{{#active}} style="display: block;"{{/active}}>-->
+        <div class="row collapsible-body"{{#active}} style="display: block;"{{/active}}>
             <form class="col s12">
                 <div class="row">
                     <div class="input-field col s6">
-                        <input id="course_name" type="text" class="validate{{#course.name}} valid{{/course.name}}" value="{{course.name}}">
+                        <input id="course_name" type="text" class="validate{{#course.name}} valid{{/course.name}}"
+                               value="{{course.name}}">
                         <label for="course_name"{{#course.name}} class="active"{{/course.name}}>Course Name</label>
                     </div>
                     <div class="input-field col s6">
-                        <input id="course_code" type="text" class="validate{{#course.course_id}} valid{{/course.course_id}}"
+                        <input id="course_code" type="text"
+                               class="validate{{#course.course_id}} valid{{/course.course_id}}"
                                value="{{course.course_id}}">
-                        <label for="course_code"{{#course.course_id}} class="active"{{/course.course_id}}>Course Code</label>
+                        <label for="course_code"{{#course.course_id}} class="active"{{/course.course_id}}>Course
+                            Code</label>
                     </div>
                 </div>
                 <div class="row">
@@ -38,16 +42,22 @@ data = {
                     </div>
                 </div>
             </form>
+            <div class="row">
+                <button id="courseSaveBtn" class="waves-effect waves-light modal-close right btn btn_margin"
+                        style="background:#dd0052;" type="submit" name="action">
+                    Create
+                </button>
+            </div>
         </div>
     </li>
-<!--student list-->
+    <!--student list-->
     <li>
         <div class="collapsible-header" style="background: #f1cc36"><i class="material-icons">perm_identity</i>Students
         </div>
         <div class="collapsible-body">
             <div class="row">
                 <div class="input-field col s4">
-                    <table id = "student_list_table">
+                    <table id="student_list_table">
                         <thead>
                         <tr>
                             <th>Name</th>
@@ -63,9 +73,9 @@ data = {
                         <label for="searchStudent">Student Name</label>
                     </div>
                     <div class="input-field col s2">
-                        <a id = "searchStudentBtn" herf = "#"><i class="material-icons">search</i></a>
+                        <a id="searchStudentBtn" herf="#"><i class="material-icons">search</i></a>
                     </div>
-                    <table id = "student_search_result_table">
+                    <table id="student_search_result_table">
                         <thead>
                         <tr>
                             <th>Search result</th>
@@ -78,7 +88,7 @@ data = {
             </div>
         </div>
     </li>
-<!--Lab list-->
+    <!--Lab list-->
     <li>
         <div class="collapsible-header" style="background:#dd0052"><i class="material-icons">laptop</i>Labs</div>
         <div class="collapsible-body">
@@ -134,34 +144,35 @@ data = {
         </div>
     </li>
 {{/courseModal}}
-{{#labInfo}}
-    <li>
-        <div class="collapsible-header" style="background: #00acc1"><i class="material-icons">info</i>Create
-            New Lab
+{{#labModal}}
+    <li{{#active}} class="active"{{/active}}>
+        <div class="collapsible-header" style="background: #00acc1">
+            <i class="material-icons">info</i>Create New Lab
         </div>
-        <div class="row collapsible-body">
+        <div class="row collapsible-body"{{#active}} style="display: block;"{{/active}}>
             <form class="col s12">
                 <div class="row">
                     <div class="input-field col s6">
-                        <input id="lab_name" type="text" class="validate" value="fsdfsdf">
-                        <label for="lab_name">Lab Name</label>
-                    </div>
-                    <div class="input-field col s6">
-                        <input id="lab_code" type="text" class="validate">
-                        <label for="lab_code">Lab Code</label>
+                        <input id="lab_name" type="text" class="validate"  type="text" class="validate{{#lab.name}} valid{{/lab.name}}"
+                            value="{{lab.name}}">
+                        <label for="lab_name"{{#lab.name}} class="active"{{/lab.name}}>Lab Name</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <textarea id="labtextarea" class="materialize-textarea">54156415616</textarea>
-                        <label for="labtextarea">Lab Decription</label>
+                        <textarea id="lab_description" class="materialize-textarea {{#lab.description}} valid{{/lab.description}}" >{{lab.description}}</textarea>
+                        <label for="lab_description" {{#lab.description}} class="active"{{/lab.description}}>Lab Decription</label>
                     </div>
                 </div>
             </form>
+            <div class="row">
+                <button id="labSaveBtn" class="waves-effect waves-light modal-close right btn btn_margin"
+                        style="background:#dd0052;" type="submit" name="action">
+                    Create
+                </button>
+            </div>
         </div>
     </li>
-{{/labInfo}}
-{{#equipmentList}}
     <li>
         <div class="collapsible-header" style="background: #f1cc36"><i class="material-icons">laptop</i>Search
             for Labs
@@ -198,10 +209,9 @@ data = {
             </div>
         </div>
     </li>
-{{/equipmentList}}
+{{/labModal}}
 
 
-
-<!--    <button id = "courseSaveBtn" class="waves-effect waves-light modal-close right btn btn_margin" style="background:#dd0052;" type="submit" name="action">-->
-<!--        Save-->
-<!--    </button>-->
+        <!--    <button id = "courseSaveBtn" class="waves-effect waves-light modal-close right btn btn_margin" style="background:#dd0052;" type="submit" name="action">-->
+        <!--        Save-->
+        <!--    </button>-->

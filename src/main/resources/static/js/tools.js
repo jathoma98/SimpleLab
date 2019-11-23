@@ -19,7 +19,7 @@ function setTableBodyRowEvent(tbody, eventFn){
  * remove event function for each row of Table body.
  */
 function removeTableBodyRowEvent(tbody){
-    tbody.find("tr").each(function(){
+    $(tbody).find("tr").each(function(){
         $(this).off("click");
         $(this).removeClass("modal-trigger");
     })
