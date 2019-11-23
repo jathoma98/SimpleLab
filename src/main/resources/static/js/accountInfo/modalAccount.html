@@ -31,10 +31,14 @@
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input readonly="readonly" id="password"  type="text"
-                           class="validate">
-                    <label for="password">Password</label>
+                    <li>Rest The Password</li>
+                    <li for = "question">Security Question: {{user.question}}</li>
+                    <input id="question"  type="text">
                 </div>
+                <a id="resetBtn" class="btn waves-effect waves-light right btn_margin my_red"
+                   style="display: none">Save
+                    <i class="material-icons right">save</i>
+                </a>
             </div>
             <div class="row" {{#active}} class="active"{{/active}}>
                 <a id="cancelBtn" class="btn waves-effect waves-light right btn_margin my_red"
