@@ -1,6 +1,8 @@
 package com.org.simplelab;
 
 import com.org.simplelab.database.UserDB;
+import com.org.simplelab.database.entities.Course;
+import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.repositories.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -142,6 +144,10 @@ class DBTests extends SpringTestConfig {
 		String breaker2 = "qqqqqqqq";
 		userDB.findUser(breaker2);
 		userDB.findUser(breaker1);
+	}
+
+	@Test
+	void sql(){
 	}
 
 

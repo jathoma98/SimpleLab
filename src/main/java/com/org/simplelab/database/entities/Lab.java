@@ -7,7 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity(name = DBUtils.LAB_TABLE_NAME)
@@ -17,9 +19,9 @@ public class Lab extends BaseTable{
     private String name;
 
     @OneToMany
-    private List<Equipment> equipments;
+    private Set<Equipment> equipments;
 
     public Lab(){
-        this.equipments = new ArrayList<>();
+        this.equipments = new LinkedHashSet<>();
     }
 }

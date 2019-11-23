@@ -2,6 +2,7 @@ package com.org.simplelab.database;
 
 
 import com.org.simplelab.database.entities.Course;
+import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.repositories.CourseRepository;
 import com.org.simplelab.database.repositories.UserRepository;
@@ -95,6 +96,18 @@ public class CourseDB {
         return toList;
     }
 
+    public List<Lab> getListOfLabs(String course_id) throws CourseTransactionException{
+        List<Course> found = findByCourseId(course_id);
+        if (found.size() == 0)
+            throw new CourseTransactionException(CourseTransactionException.NO_COURSE_FOUND);
+        Course c = found.get(0);
+        Set<Lab> labs = c.getLabs();
+
+        ArrayList<Lab> toList = new ArrayList<>();
+        toList.addAll(labs);
+        return toList;
+    }
+
     public boolean updateCourse(Course c){
         courseRepository.save(c);
         return true;
@@ -134,17 +147,4 @@ public class CourseDB {
     @Autowired
     UserRepository userRepository;
 
-    public void _TEST(){
-        String metadata = "TEST";
-        User u = userRepository.findByUsername("UNIT_TEST").get(0);
-        Course c = new Course();
-        c.set_metadata(metadata);
-        c.setName("UNIT TEST course");
-        c.getStudents().add(u);
-        courseRepository.save(c);
-        c = courseRepository.findByName("UNIT TEST course").get(0);
-        System.out.println(c.toString());
-
-        courseRepository.deleteBy_metadata(metadata);
-    }
 }
