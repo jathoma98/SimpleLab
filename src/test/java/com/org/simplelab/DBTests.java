@@ -150,19 +150,16 @@ class DBTests extends SpringTestConfig {
 
 
 	@Autowired
-	UserRepository ur;
+	CourseDB courseDB;
+
+	@Autowired
+	UserDB userDB;
 
 	@Autowired
 	CourseRepository cr;
 
-	@Autowired
-	CourseDB courseDB;
-
 	@Test
-	void MySQLtest(){
-
-		courseDB._TEST();
-
+	void MySQLtest() throws CourseDB.CourseTransactionException{
 
 
 

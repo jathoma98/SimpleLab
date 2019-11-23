@@ -187,30 +187,14 @@ import java.util.Map;
             return r.map();
         }
 
-        Course target_course = courseDB.findByUserIdAndCourseId(user_id, course.getCourse_id());
-        if (target_course == null) {
-            r.setError("Course Not Found");
+        User u = userDB.findUserById(user_id);
+        try{
+            courseDB.addStudentToCourse(course.getCourse_id(), u);
+        } catch (CourseDB.CourseTransactionException e){
+            r.setError(e.getMessage());
             return r.map();
         }
-        System.out.println("Found target course: " + target_course.toString());
-        User u = userDB.findUserById(user_id);
-        System.out.println("Found current user: " + u.toString());
-        /**
 
-        course.getStudents().forEach((user)->{
-            User u = userDB.findUser(user.getUsername());
-            if (u == null) return;
-            for(int i = 0; i < target_course.getStudents().size(); i++){
-                if(target_course.getStudents().get(i).getUsername().equals(u.getUsername())){
-                    return;
-                }
-            }
-            target_course.getStudents().add(u);
-        });*/
-
-        target_course.getStudents().add(u);
-
-        courseDB.updateCourse(target_course);
         r.setSuccess(true);
         return r.map();
     }

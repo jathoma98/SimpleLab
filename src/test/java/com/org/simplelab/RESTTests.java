@@ -6,6 +6,7 @@ import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.repositories.CourseRepository;
 import com.org.simplelab.restcontrollers.CourseRESTController;
 import org.json.JSONObject;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -16,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -45,9 +47,14 @@ public class RESTTests extends SpringTestConfig {
                 .sessionAttrs(session_atr)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json.toString()))
-                .andDo(print())
+                //.andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json("{'success': 'true'}"));
+    }
+
+    @AfterEach
+    void clear(){
+        cr.deleteBy_metadata(metadata);
     }
 
 
@@ -131,17 +138,17 @@ public class RESTTests extends SpringTestConfig {
     @Autowired
     CourseRepository cr;
 
-    /**
     @Test
     @WithMockUser(username = username, password = username)
     void addStudentToCourseTest() throws Exception{
+        String cid = "UNIT_TEST" + metadata;
         session_atr.put("user_id", user_id);
         session_atr.put("username", username);
 
         Map<String, String> rawJson = new HashMap<>();
         rawJson.put("name", metadata);
         rawJson.put("description", metadata);
-        rawJson.put("course_id", "UNIT_TEST" + metadata);
+        rawJson.put("course_id", cid);
         rawJson.put("_metadata", metadata);
         JSONObject json = new JSONObject(rawJson);
 
@@ -151,23 +158,11 @@ public class RESTTests extends SpringTestConfig {
         sendCourseToPOSTEndpoint(json, CourseRESTController.ADD_STUDENT_MAPPING);
 
         boolean found = false;
-        Course foundCourse = courseDB.findCourseByName(metadata).get(0);
-        System.out.println(foundCourse.toString());
-        for (User u: foundCourse.getStudents()){
-            if (u.getId() == user_id){
-                found = true;
-                break;
-            }
-        }
-        assertTrue(found);
+        List<User> students = courseDB.getStudentsOfCourse(cid);
+        System.out.println("Students list: " + students.toString());
+        assertTrue(!students.isEmpty());
 
-        cr.deleteBy_metadata(metadata);
-
-
-
-
-
-    }**/
+    }
 
 
 }

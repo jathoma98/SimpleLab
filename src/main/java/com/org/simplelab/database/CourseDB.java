@@ -9,11 +9,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 @Transactional
 @Component
 public class CourseDB {
+
+    public static class CourseTransactionException extends Exception{
+        public static final String NO_COURSE_FOUND = "The requested course could not be found.";
+        CourseTransactionException(String message){
+            super(message);
+        }
+    }
+
 
     @Autowired
     CourseRepository courseRepository;
@@ -24,6 +35,33 @@ public class CourseDB {
             return false;
         courseRepository.save(c);
         return true;
+    }
+
+    /**
+     * Adds a student to a Course.
+     * @param course_id - course_id of the course to be modified
+     * @param u - User object representing the student to be added.
+     */
+    public void addStudentToCourse(String course_id , User u) throws CourseTransactionException{
+        List<Course> found = findByCourseId(course_id);
+        if (found.size() == 0)
+            throw new CourseTransactionException(CourseTransactionException.NO_COURSE_FOUND);
+        Course c = found.get(0);
+
+        System.out.println("Found target course: " + c.toString());
+        c.getStudents().add(u);
+        System.out.println("Modified course: " + c.toString());
+        courseRepository.save(c);
+    }
+
+    public List<User> getStudentsOfCourse(String course_id) throws CourseTransactionException{
+        List<Course> found = findByCourseId(course_id);
+        if (found.size() == 0)
+            throw new CourseTransactionException(CourseTransactionException.NO_COURSE_FOUND);
+        Course c = found.get(0);
+        ArrayList<User> students = new ArrayList<>();
+        students.addAll(c.getStudents());
+        return students;
     }
 
     public boolean updateCourse(Course c){
@@ -39,7 +77,6 @@ public class CourseDB {
     public List<Course> findByCourseId(String course_id){
         List<Course> found = courseRepository.findByCourse_id(course_id);
         return found;
-//        return courseRepository.findByCourse_id(course_id);
     }
 
     public List<Course> findCourseByName(String name){

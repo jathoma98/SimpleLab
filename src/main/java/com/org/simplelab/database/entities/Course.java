@@ -5,7 +5,9 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity(name = DBUtils.COURSE_TABLE_NAME)
@@ -23,11 +25,10 @@ public class Course extends BaseTable {
 
     @OneToMany(cascade = {CascadeType.PERSIST},
                 fetch = FetchType.LAZY)
-    private List<User> students;
+    private Set<User> students;
 
     public Course() {
-        //labs = new ArrayList<>();
-        students = new ArrayList<>();
+        students = new HashSet<>();
     }
 }
 
