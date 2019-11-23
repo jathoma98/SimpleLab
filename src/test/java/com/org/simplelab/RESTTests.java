@@ -52,10 +52,6 @@ public class RESTTests extends SpringTestConfig {
                 .andExpect(content().json("{'success': 'true'}"));
     }
 
-    @AfterEach
-    void clear(){
-        cr.deleteBy_metadata(metadata);
-    }
 
 
     @Test

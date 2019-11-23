@@ -5,10 +5,7 @@ import com.org.simplelab.database.repositories.CourseRepository;
 import com.org.simplelab.database.repositories.EquipmentRepository;
 import com.org.simplelab.database.repositories.LabRepository;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -46,6 +43,14 @@ public abstract class SpringTestConfig {
      */
     static String metadata;
 
+    @AfterEach
+    void clear(){
+        userDB.deleteByMetadata(metadata);
+        cr.deleteBy_metadata(metadata);
+        er.deleteBy_metadata(metadata);
+        lr.deleteBy_metadata(metadata);
+    }
+
     @BeforeAll
     static void generateMetadata(){
         int length = 25;
@@ -55,13 +60,6 @@ public abstract class SpringTestConfig {
     }
 
 
-    @Test
-    void zzzzz_cleanup(){
-       userDB.deleteByMetadata(metadata);
-       cr.deleteBy_metadata(metadata);
-       er.deleteBy_metadata(metadata);
-       lr.deleteBy_metadata(metadata);
-    }
 
 
 
