@@ -9,7 +9,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Data
-@Entity
+@Entity(name = DBUtils.EQUIPMENT_TABLE_NAME)
 @Table(name = DBUtils.EQUIPMENT_TABLE_NAME)
 public class Equipment extends BaseTable {
 

@@ -18,7 +18,7 @@ public class UserDB{
     UserRepository userRepository;
 
     /**
-     * Cannot be used as a username for registered users.
+     * Cannot be used as a username for registered students.
      */
     private static String[] reserved = {
             "Anonymous"

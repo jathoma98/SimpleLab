@@ -185,8 +185,8 @@ let COURSES_TABLE = {
             let course_json = JSON.stringify(course);
             $.ajax({
                 url: "/course/rest/deleteCourse",
-                type: 'POST',
-                // type: 'DELETE',
+                //type: 'POST',
+                 type: 'DELETE',
                 dataTye: 'json',
                 contentType: 'application/json; charset=utf-8',
                 data: course_json,
