@@ -24,9 +24,11 @@ public interface UserRepository extends BaseRepository<User> {
 //    @Query(nativeQuery = true, value = "SELECT id, username, created_date, email, firstname, lastname, role  " +
 //            "FROM simplelab.user " +
 //            "WHERE username OR institution OR email OR firstname OR lastname LIKE '%:keyword%'")
-    @Query(nativeQuery = true, value =
-            "SELECT * FROM #{#entityName}" +
-            " WHERE username LIKE %:keyword% OR institution LIKE %:keyword%")
-    public List<User> searchUserWithKeyword(@Param("keyword") String keyword);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM simplelab.user " +
+            "WHERE  username " +
+            "LIKE '%:key%' OR institution LIKE '%:key%'")
+    public List<User> searchUserWithKeyword(@Param("key") String keyword);
+
 
 }
