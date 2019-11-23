@@ -1,11 +1,10 @@
 package com.org.simplelab.database.validators;
 
 import com.org.simplelab.database.entities.User;
-import lombok.Setter;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import org.modelmapper.ModelMapper;
-import org.springframework.ui.ModelMap;
 
 import java.util.regex.Pattern;
 

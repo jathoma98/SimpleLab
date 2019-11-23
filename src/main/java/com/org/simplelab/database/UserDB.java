@@ -2,12 +2,10 @@ package com.org.simplelab.database;
 
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.repositories.UserRepository;
-import org.omg.PortableInterceptor.SUCCESSFUL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -44,17 +42,13 @@ public class UserDB{
      *           FAILED otherwise
      */
     public UserAuthenticationStatus authenticate(String username, String password){
-        byte[] given_hashed = DBManager.getHash(password);
+        byte[] given_hashed = DBUtils.getHash(password);
         User found = findUser(username);
         if (found == null)
             return UserAuthenticationStatus.FAILED;
         if (!Arrays.equals(found.getPass_hash(), given_hashed))
             return UserAuthenticationStatus.FAILED;
         return UserAuthenticationStatus.SUCCESSFUL;
-    }
-
-    public List<User> searchByMatchingString(String regex){
-        return userRepository.findInfoFieldsWithRegex(regex);
     }
 
     /**
@@ -69,7 +63,7 @@ public class UserDB{
         return found.get(0);
     }
 
-    public User findUserById(String id){
+    public User findUserById(long id){
         Optional<User> found = userRepository.findById(id);
         return found.isPresent() ? found.get(): null;
     }
@@ -100,6 +94,10 @@ public class UserDB{
         deleteUser(user.getUsername());
     }
 
+    public void deleteByMetadata(String metadata){
+        userRepository.deleteBy_metadata(metadata);
+    }
+
     public void deleteUser(String username){
         userRepository.deleteByUsername(username);
     }
@@ -111,14 +109,6 @@ public class UserDB{
     public void updateUser(User user){
 //        deleteUser(user);
         userRepository.save(user);
-    }
-
-    /**
-     * Deletes all users which contain the given metadata
-     * @param metadata - metadata to be matched
-     */
-    public void deleteByMetadata(String metadata){
-        userRepository.deleteByMetadata(metadata);
     }
 
     public UserRepository DEBUG_getInterface(){

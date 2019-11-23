@@ -1,7 +1,47 @@
+ElEM_ID = {
+    SEARCH_STUDENT_BTN : "#searchStudentBtn",
+    COURSE_TABLE_TBODY: "#course_list tbody",
+    STUDENT_SEARCH_TBODY: "#student_search_result_table tbody",
+    STUDENT_LIST_TBODY: "#student_list_table tbody"
+}
+
+TEMPLATE_ID = {
+    STUDENTS_TBODY: "#student_search_tbody"
+}
+
 let COURSES_TABLE = {
     init(){
         this.course_toggle = true;
         this.btnEvents = new Array();
+
+        this.addStudentBtnEvent = function(){
+            let user = {
+                username: $(this).find("td").text()
+            }
+            let course = {
+                course_id: $("#course_code").val(),
+            }
+            course.users = new Array();
+            course.users.push(user);
+
+            let course_json = JSON.stringify(course);
+
+            $.ajax({
+                url: "/course/rest/addStudent",
+                type: 'POST',
+                dataTye: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: course_json,
+                success: function (result) {
+                    if (result.success === "true") {
+                        COURSES_TABLE.reLoadStudentsList(course_json)
+                    } else {
+                        console.log(result.error);
+                    }
+                }
+            })
+        };
+
         this.searchStudent = function (){
             let toSearch = {
                 regex : $("#searchStudent").val()
@@ -18,15 +58,15 @@ let COURSES_TABLE = {
                         result : result
                     }
                     rebuildComponent(
-                        "#student_search_result_table tbody",
-                        "#student_search_result_tbody",
-                        data)
+                        ElEM_ID.STUDENT_SEARCH_TBODY,
+                        TEMPLATE_ID.STUDENTS_TBODY,
+                        data);
+                    setTableBodyRowEvent(ElEM_ID.STUDENT_SEARCH_TBODY, COURSES_TABLE.addStudentBtnEvent)
                     console.log(result)
                 }
             })
         }
-        this.btnEvents["#searchStudentBtn"] = this.searchStudent;
-
+        this.btnEvents[ElEM_ID.SEARCH_STUDENT_BTN] = this.searchStudent;
 
 
         /**
@@ -51,6 +91,28 @@ let COURSES_TABLE = {
                         }
                     }
                     rebuildComponent('#modal ul',"#modalTpl", data,  COURSES_TABLE.btnEvents);
+                    //load
+                    COURSES_TABLE.reLoadStudentsList(course_json)
+                }
+            })
+        };
+
+
+        this.reLoadStudentsList = function (course_json){
+            $.ajax({
+                url: "/course/rest/getStudents",
+                type: 'POST',
+                dataTye: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: course_json,
+                success: function (result) {
+                    let data = {
+                        result: result
+                    }
+                    rebuildComponent(
+                        ElEM_ID.STUDENT_LIST_TBODY,
+                        TEMPLATE_ID.STUDENTS_TBODY,
+                        data)
                 }
             })
         };
@@ -68,13 +130,14 @@ let COURSES_TABLE = {
                         isEnabled: COURSES_TABLE.course_toggle,
                         courses: result.reverse()
                     }
-                    rebuildComponent('#course_list tbody', '#course_tbody', data);
+                    rebuildComponent(ElEM_ID.COURSE_TABLE_TBODY, '#course_tbody', data);
                     if (COURSES_TABLE.course_toggle) {
-                        setTableBodyRowEvent($("#course_list tbody"), COURSES_TABLE.tableRowEvent());
+                        setTableBodyRowEvent(ElEM_ID.COURSE_TABLE_TBODY, COURSES_TABLE.tableRowEvent);
                     }
                 }
             })
         };
+
 
         /**
          * Get course data from input and text area, then
@@ -122,7 +185,8 @@ let COURSES_TABLE = {
             let course_json = JSON.stringify(course);
             $.ajax({
                 url: "/course/rest/deleteCourse",
-                type: 'DELETE',
+                type: 'POST',
+                // type: 'DELETE',
                 dataTye: 'json',
                 contentType: 'application/json; charset=utf-8',
                 data: course_json,
@@ -148,7 +212,7 @@ let COURSES_TABLE = {
                     course: true,
                 }
             }
-            rebuildComponent('#modal ul',"#modalTpl", data,  this.btnEvents);
+            rebuildComponent('#modal ul',"#modalTpl", data,  COURSES_TABLE.btnEvents);
         };
 
 
@@ -156,7 +220,7 @@ let COURSES_TABLE = {
             $(".coursecheckcol").toggle();
             COURSES_TABLE.course_toggle = !COURSES_TABLE.course_toggle;
             if (COURSES_TABLE.course_toggle) {
-                setTableBodyRowEvent($("#course_list tbody"), COURSES_TABLE.tableRowEvent);
+                setTableBodyRowEvent(ElEM_ID.COURSE_TABLE_TBODY, COURSES_TABLE.tableRowEvent);
             } else {
                 removeTableBodyRowEvent($("#course_list tbody"))
             }

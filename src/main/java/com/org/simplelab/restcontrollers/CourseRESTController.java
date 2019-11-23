@@ -8,12 +8,8 @@ import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.database.validators.Validator;
 import com.org.simplelab.restcontrollers.dto.DTO;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -35,14 +31,17 @@ import java.util.Map;
     public static final String UPDATE_MAPPING = "/updateCourse";
     public static final String LOAD_LIST_COURSE_MAPPING = "/loadCourseList";
     public static final String LOAD_COURSE_INFO_MAPPING = "/loadCourseInfo";
+    public static final String ADD_STUDENT_MAPPING = "/addStudent";
+    public static final String GET_STUDENTS_MAPPING = "/getStudents";
+    public static final String REMOVE_STUDENTS_MAPPING = "/removeStudents";
 
 
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> addCourse(@RequestBody CourseValidator courseValidator,
                                          HttpSession session){
-        String userId = "";
+        long userId = -1;
         try{
-            userId = (String)session.getAttribute("user_id");
+            userId = (long)session.getAttribute("user_id");
         } catch (Exception e){
             //redirect to login
         }
@@ -92,7 +91,7 @@ import java.util.Map;
     @PatchMapping(UPDATE_MAPPING)
     public Map<String, String> updateCourse(@RequestBody DTO.CourseUpdateDTO dto, HttpSession session){
         RequestResponse rsp = new RequestResponse();
-        String uid = (String)session.getAttribute("user_id");
+        long uid = (long)session.getAttribute("user_id");
         List<Course> courses = courseDB.findByCourseId(dto.getCourse_id_old());
         if (courses.size() > 0){
             CourseValidator cv = dto.getNewCourseInfo();
@@ -105,7 +104,7 @@ import java.util.Map;
             //TODO: refactor with modelmapper?
             Course found = courses.get(0);
             //ensure the found course belongs to the current user -- exception if not (the new course code is a duplicate)
-            if (!found.getCreator().get_id().equals(uid)){
+            if (found.getCreator().getId() != uid){
                 rsp.setError(CourseValidator.DUPLICATE_ID);
                 return rsp.map();
             }
@@ -130,10 +129,12 @@ import java.util.Map;
     public Map<String, String> deleteCourse(@RequestBody CourseValidator[] toDelete,
                                             HttpSession session){
         RequestResponse response = new RequestResponse();
-        String userId = "";
+        long userId = -1;
         try{
-            userId = (String)session.getAttribute("user_id");
+            userId = (long)session.getAttribute("user_id");
         } catch (Exception e){
+            response.setError(e.toString());
+            return response.map();
             //redirect to login
         }
         for (CourseValidator c: toDelete){
@@ -146,9 +147,9 @@ import java.util.Map;
 
     @GetMapping(LOAD_LIST_COURSE_MAPPING)
     public List<Course> getListOfCourse(HttpSession session){
-        String userId = "";
+        long userId = -1;
         try{
-            userId = (String)session.getAttribute("user_id");
+            userId = (long)session.getAttribute("user_id");
         } catch (Exception e){
             //redirect to login
         }
@@ -159,13 +160,85 @@ import java.util.Map;
     @PostMapping(LOAD_COURSE_INFO_MAPPING)
     public Course getCourseInfo( @RequestBody Course course,
                                         HttpSession session){
-        String uid = (String)session.getAttribute("user_id");
+        long uid = (long)session.getAttribute("user_id");
         Course r = courseDB.findByUserIdAndCourseId(uid, course.getCourse_id());
         return r;
     }
 
+    /*
+     *  Add a user to to current user's course
+     *  @Param course - use to get course id
+     *  @Param user - use to get username
+     *  @Param session - use to check is post request user login
+     *
+     *  Return Map
+     */
+    @PostMapping(ADD_STUDENT_MAPPING)
+    public Map addStudentToCourse (@RequestBody Course course,
+                                    HttpSession session){
+        RequestResponse r = new RequestResponse();
+        r.setSuccess(false);
+
+        Long user_id = (Long)session.getAttribute("user_id");
+        if ( user_id == null){
+            r.setError("Not Login");
+            return r.map();
+        }
+
+        Course target_course = courseDB.findByUserIdAndCourseId(user_id, course.getCourse_id());
+        if (target_course == null) {
+            r.setError("Course Not Found");
+            return r.map();
+        }
+
+        course.getUsers().forEach((user)->{
+            User u = userDB.findUser(user.getUsername());
+            if (u == null) return;
+            for(int i = 0; i < target_course.getUsers().size(); i++){
+                if(target_course.getUsers().get(i).getUsername().equals(u.getUsername())){
+                    return;
+                }
+            }
+            target_course.getUsers().add(u);
+        });
 
 
+        if (target_course.getUsers().size() <= 0){
+            r.setError("Users Not Found");
+            return r.map();
+        }
+        courseDB.updateCourse(target_course);
+        r.setSuccess(true);
+        return r.map();
+    }
 
+    @PostMapping(GET_STUDENTS_MAPPING)
+    public List<User> getStudentList (@RequestBody Course course,
+                                   HttpSession session){
+        List<Course> c = courseDB.findByCourseId(course.getCourse_id());
+        return c.get(0).getUsers();
+    }
 
+    @PostMapping(REMOVE_STUDENTS_MAPPING)
+    public List<User> removeStudentList (@RequestBody Course course,
+                                      HttpSession session){
+        List<Course> c = courseDB.findByCourseId(course.getCourse_id());
+        Long user_id = (Long)session.getAttribute("user_id");
+        if ( user_id == null){
+            return null;
+        }
+        Course target_course = courseDB.findByUserIdAndCourseId((Long)session.getAttribute("user_id"), course.getCourse_id());
+        int len = course.getUsers().size();
+        for(int i = 0; i < len; i++){
+            User u = course.getUsers().get(i);
+            for(int j = 0; j <  target_course.getUsers().size(); j++){
+                User tu = target_course.getUsers().get(j);
+                if (tu.getUsername().equals(u.getUsername())){
+                    target_course.getUsers().remove(tu);
+                    break;
+                }
+            }
+        }
+        return c.get(0).getUsers();
+    }
 }

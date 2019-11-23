@@ -45,7 +45,7 @@ public abstract class SpringTestConfig {
 
     @Test
     void zzzzz_cleanup(){
-        userDB.deleteByMetadata(metadata);
+       // userDB.deleteByMetadata(metadata);
     }
 
 

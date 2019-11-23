@@ -1,19 +1,17 @@
 package com.org.simplelab.database;
 
-import com.org.simplelab.SimpleLabApplication;
-
 import java.security.MessageDigest;
 
 /**
  * Management class for MongoDB entities
  * @author Jacob Thomas
  */
-public class DBManager {
+public class DBUtils {
 
-    public static final String USER_DOCUMENT_NAME = "user";
-    public static final String COURSE_DOCUMENT_NAME = "course";
-    public static final String LAB_DOCUMENT_NAME = "lab";
-    public static final String EQUIPMENT_DOCUMENT_NAME = "equipment";
+    public static final String USER_TABLE_NAME = "user";
+    public static final String COURSE_TABLE_NAME = "course";
+    public static final String LAB_TABLE_NAME = "lab";
+    public static final String EQUIPMENT_TABLE_NAME = "equipment";
 
     public static final String SALT = "a very salty salt";
 

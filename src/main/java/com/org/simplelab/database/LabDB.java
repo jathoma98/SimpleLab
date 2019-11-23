@@ -1,6 +1,5 @@
 package com.org.simplelab.database;
 
-import com.org.simplelab.database.entities.Course;
 import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.repositories.CourseRepository;
 import com.org.simplelab.database.repositories.LabRepository;
@@ -21,12 +20,11 @@ public class LabDB {
     @Autowired
     private CourseRepository courseRepository;
 
-    public void deleteLabById(String id){
+    public void deleteLabById(long id){
         labRepository.deleteById(id);
     }
 
     public boolean insertLab(Lab lab){
-
         labRepository.save(lab);
         return true;
 

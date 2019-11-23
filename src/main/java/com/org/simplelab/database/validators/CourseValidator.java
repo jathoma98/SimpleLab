@@ -1,15 +1,9 @@
 package com.org.simplelab.database.validators;
 
-import com.org.simplelab.database.CourseDB;
 import com.org.simplelab.database.entities.Course;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.Transient;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -42,8 +36,13 @@ public class CourseValidator extends Validator{
 
     @Override
     public Course build() {
-        ModelMapper mm = new ModelMapper();
-        Course c = mm.map(this, Course.class);
+        //TODO: properly refactor with modelmapper
+
+        Course c = new Course();
+        c.setName(name);
+        c.setCourse_id(course_id);
+        c.setDescription(description);
+        c.set_metadata(_metadata);
         return c;
     }
 }

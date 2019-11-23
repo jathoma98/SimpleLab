@@ -1,11 +1,8 @@
 package com.org.simplelab.restcontrollers.dto;
 
-import com.org.simplelab.database.entities.Course;
 import com.org.simplelab.database.validators.CourseValidator;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
-import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * Master class that contains DTO (Data Transfer Object) classes
@@ -19,7 +16,6 @@ public class DTO {
      */
     @Getter
     @Setter
-    @ToString
     public static class CourseUpdateDTO {
 
         private String course_id_old;
