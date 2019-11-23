@@ -10,11 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collection;
 
 @NoRepositoryBean
-@Transactional
 public interface BaseRepository<T extends BaseTable> extends CrudRepository<T, Long> {
 
 
     @Modifying
+    @Transactional
     void deleteBy_metadata(String metadata);
 
 

@@ -16,27 +16,29 @@ public class Course extends BaseTable {
     private String name;
     private String description;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST},
+                fetch = FetchType.EAGER)
     @JoinColumn(name = "creator_id")
     private User creator;
 
-    @OneToMany
-    private List<User> users;
+    @OneToMany(cascade = {CascadeType.PERSIST},
+                fetch = FetchType.LAZY)
+    private List<User> students;
 
     public Course() {
         //labs = new ArrayList<>();
-        users = new ArrayList<>();
+        students = new ArrayList<>();
     }
 }
 
     /**
     @DBRef
     private List<labs> labs;
-    private List<User> users;
+    private List<User> students;
 
     public Course(){
         labs = new ArrayList<>();
-        users = new ArrayList<>();
+        students = new ArrayList<>();
     }
 
 

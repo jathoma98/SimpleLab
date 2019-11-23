@@ -197,18 +197,18 @@ import java.util.Map;
         System.out.println("Found current user: " + u.toString());
         /**
 
-        course.getUsers().forEach((user)->{
+        course.getStudents().forEach((user)->{
             User u = userDB.findUser(user.getUsername());
             if (u == null) return;
-            for(int i = 0; i < target_course.getUsers().size(); i++){
-                if(target_course.getUsers().get(i).getUsername().equals(u.getUsername())){
+            for(int i = 0; i < target_course.getStudents().size(); i++){
+                if(target_course.getStudents().get(i).getUsername().equals(u.getUsername())){
                     return;
                 }
             }
-            target_course.getUsers().add(u);
+            target_course.getStudents().add(u);
         });*/
 
-        target_course.getUsers().add(u);
+        target_course.getStudents().add(u);
 
         courseDB.updateCourse(target_course);
         r.setSuccess(true);
@@ -220,7 +220,7 @@ import java.util.Map;
     public List<User> getStudentList (@RequestBody Course course,
                                    HttpSession session){
         List<Course> c = courseDB.findByCourseId(course.getCourse_id());
-        return c.get(0).getUsers();
+        return c.get(0).getStudents();
     }
 
     @PostMapping(REMOVE_STUDENTS_MAPPING)
@@ -232,18 +232,18 @@ import java.util.Map;
             return null;
         }
         Course target_course = courseDB.findByUserIdAndCourseId((String)session.getAttribute("user_id"), course.getCourse_id());
-        int len = course.getUsers().size();
+        int len = course.getStudents().size();
         for(int i = 0; i < len; i++){
-            User u = course.getUsers().get(i);
-            for(int j = 0; j <  target_course.getUsers().size(); j++){
-                User tu = target_course.getUsers().get(j);
+            User u = course.getStudents().get(i);
+            for(int j = 0; j <  target_course.getStudents().size(); j++){
+                User tu = target_course.getStudents().get(j);
                 if (tu.getUsername().equals(u.getUsername())){
-                    target_course.getUsers().remove(tu);
+                    target_course.getStudents().remove(tu);
                     break;
                 }
             }
         }
-        return c.get(0).getUsers();
+        return c.get(0).getStudents();
     }**/
 
 }

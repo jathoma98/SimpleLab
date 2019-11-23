@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Transactional
+
 @Repository
 public interface UserRepository extends BaseRepository<User> {
 
@@ -19,6 +19,7 @@ public interface UserRepository extends BaseRepository<User> {
     public List<User> findByUsername(String username);
 
     @Modifying
+    @Transactional
     public void deleteByUsername(String username);
 
 

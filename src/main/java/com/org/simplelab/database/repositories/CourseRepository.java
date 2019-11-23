@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
-@Transactional
 public interface CourseRepository extends BaseRepository<Course> {
 
 
@@ -21,6 +20,7 @@ public interface CourseRepository extends BaseRepository<Course> {
     public List<Course> findByCreator_id(long id);
 
     @Modifying
+    @Transactional
     @Query(value =
             "DELETE FROM #{#entityName}" +
             " WHERE (creator_id = :user_id" +
