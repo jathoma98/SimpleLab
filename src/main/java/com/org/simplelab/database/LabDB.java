@@ -7,6 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 /**
  * Wrapper class for handling retrieval and saving of labs
  */
@@ -27,7 +31,15 @@ public class LabDB {
     public boolean insertLab(Lab lab){
         labRepository.save(lab);
         return true;
+    }
 
+    public List<Lab> getLabsByCreatorId(long id){
+        return labRepository.findByCreator_id(id);
+    }
+
+    public Lab getLabById(long id){
+        Optional<Lab> found = labRepository.findById(id);
+        return found.isPresent()? found.get() : null;
     }
 
 }

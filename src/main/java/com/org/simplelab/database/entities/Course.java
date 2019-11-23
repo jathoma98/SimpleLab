@@ -4,6 +4,7 @@ import com.org.simplelab.database.DBUtils;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -30,7 +31,7 @@ public class Course extends BaseTable {
     private Set<Lab> labs;
 
     public Course() {
-        students = new LinkedHashSet<>();
-        labs = new LinkedHashSet<>();
+        students = new HashSet<>();
+        labs = new HashSet<>();
     }
 }
