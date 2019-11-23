@@ -5,9 +5,15 @@
 
 .selected{
     border:1px solid #00acc1;
+    z-index: 50;
 }
+
+.zdeep{
+    z-index: 100;
+}
+
 .popup_dialog{
-    width: 500px!important;
+    width: 400px!important;
     height: 200px!important;
 }
 
@@ -20,6 +26,14 @@
     background: #f0f0f0 !important;
 }
 
+.zeromargin{
+    margin: 0!important;
+}
+
+.zeropadding{
+    padding: 0!important;
+}
+
 .item_img{
     width: 140px;
     height: 130px;
@@ -29,8 +43,63 @@
 }
 .opration_area{
     height: 80%;
-    border:1px solid black;
+    width: 100%;
+    /*border:1px solid black;*/
 }
-.pourbtn{
 
+.infobar{
+    z-index: 1000;
+    display: none;
+    position:absolute;
+    top:16%;
+    right: 5px;
+    width: 15%;
+    height:50%;
+    border:1px solid #00acc1;
+}
+
+.sidebar{
+    left: -14%;
+    z-index: 1000;
+    float: right;
+    position: fixed;
+    width: 15%;
+    max-height:100%;
+    transition: 0.3s;
+    margin: 0;
+    padding: 0;
+    border-radius: 5px;
+    background: white;
+}
+
+.sidebar:hover{
+    left:0px;
+    transition: 0.3s;
+    border-radius: 5px;
+}
+.sidebar_info{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    float: left;
+
+}
+
+.sidebar_add{
+    margin-right: 15px;
+}
+
+/*.sidebar_trigger{*/
+/*    width:10%;*/
+/*    height:100%!important;*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*    float: left;*/
+/*    border-radius: 5px;*/
+/*    background: red;*/
+/*}*/
+
+.delete_empty{
+    margin: 0;
+    padding: 0;
 }
