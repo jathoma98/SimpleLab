@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -198,14 +199,21 @@ import java.util.Map;
         r.setSuccess(true);
         return r.map();
     }
-    /**
+
 
     @PostMapping(GET_STUDENTS_MAPPING)
     public List<User> getStudentList (@RequestBody Course course,
-                                   HttpSession session){
-        List<Course> c = courseDB.findByCourseId(course.getCourse_id());
-        return c.get(0).getStudents();
+                                   HttpSession session) {
+        String course_id = course.getCourse_id();
+        List<User> students;
+        try {
+            students = courseDB.getStudentsOfCourse(course_id);
+        } catch (CourseDB.CourseTransactionException e) {
+            return new ArrayList<>();
+        }
+        return students;
     }
+    /**
 
     @PostMapping(REMOVE_STUDENTS_MAPPING)
     public List<User> removeStudentList (@RequestBody Course course,

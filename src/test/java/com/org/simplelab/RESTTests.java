@@ -156,7 +156,18 @@ public class RESTTests extends SpringTestConfig {
         boolean found = false;
         List<User> students = courseDB.getStudentsOfCourse(cid);
         System.out.println("Students list: " + students.toString());
+
         assertTrue(!students.isEmpty());
+
+        //check if getStudent endpoint works
+        System.out.println("Gettings students from added course...");
+
+        this.mockMvc.perform(post("/course/rest" + CourseRESTController.GET_STUDENTS_MAPPING)
+                .sessionAttrs(session_atr)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json.toString()))
+                .andDo(print())
+                .andExpect(status().isOk());
 
     }
 
