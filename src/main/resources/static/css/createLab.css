@@ -1,3 +1,16 @@
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.body{
+    background-color: #eee;
+    background-image: linear-gradient(45deg, #e2e2e2 25%, transparent 25%, transparent 75%, #e2e2e2 75%, #e2e2e2),
+    linear-gradient(45deg, #e2e2e2 25%, transparent 25%, transparent 75%, #e2e2e2 75%, #e2e2e2);
+    background-size: 60px 60px;
+    background-position: 0 0, 30px 30px;
+}
 .draggable_item{
     width: 150px;
     height: 180px;
@@ -44,7 +57,10 @@
 .opration_area{
     height: 80%;
     width: 100%;
+    margin: 0;
+    padding: 0;
     /*border:1px solid black;*/
+
 }
 
 .infobar{
@@ -55,7 +71,8 @@
     right: 5px;
     width: 15%;
     height:50%;
-    border:1px solid #00acc1;
+    border:1px solid black;
+    border-radius: 5px;
 }
 
 .sidebar{
@@ -69,7 +86,7 @@
     margin: 0;
     padding: 0;
     border-radius: 5px;
-    background: white;
+    /*background: white;*/
 }
 
 .sidebar:hover{
@@ -87,6 +104,10 @@
 
 .sidebar_add{
     margin-right: 15px;
+}
+
+.sidebarul{
+    background: white;
 }
 
 /*.sidebar_trigger{*/

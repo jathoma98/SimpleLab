@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 
-<body>
+<body class="body">
 <nav>
     <div class="nav-wrapper row" style="background: #00acc1;">
         <a href="#" class="brand-logo offset-s1" style="padding-top: 10px; padding-left: 10px;">Simple Lab</a>
@@ -114,13 +114,13 @@
         <!--    side bar-->
         <div id="sidebar" class="sidebar">
             <div class="sidebar_info delete_empty">
-                <nav>
+                <nav class="delete_empty">
                     <div class="nav-wrapper" style="background: #f1cc36">
                         <a href="#!" class="brand-logo"><i class="material-icons">view_list</i>item sets</a>
                         <a href="" class="right sidebar_add"><i class=" circle material-icons ">add</i></a>
                     </div>
                 </nav>
-                <ul class="collapsible row delete_empty" >
+                <ul class="collapsible row delete_empty sidebarul" >
                     <li>
                         <div class="collapsible-header my_red">
                             Chemistry 123
@@ -180,14 +180,19 @@
                     <a href="#!" class="brand-logo"><i class="material-icons">view_list</i>Item Info</a>
                 </div>
             </nav>
-            <div class="left">
-                <p> compound name: H2SO4</p>
-                <p> temperature: 25</p>
-                <p> PH: 7</p>
-                <p> volumn: 150ml/200ml</p>
-                <p> color : Blue</p>
-
-            </div>
+            <ul class="collection">
+                <li class="collection-item row">
+                    <div class="col s6">
+                        Name:
+                    </div>
+                    <div class="col s6">
+                        H2SO4
+                    </div>
+                </li>
+                <li class="collection-item">PH: 7</li>
+                <li class="collection-item">volumn: 150ml/200ml</li>
+                <li class="collection-item">color : Blue</li>
+            </ul>
         </div>
 
 
