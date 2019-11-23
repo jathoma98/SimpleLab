@@ -1,6 +1,5 @@
 package com.org.simplelab;
 
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.security.Principal;

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -84,14 +83,13 @@ public class CourseDB {
             throw new CourseTransactionException(CourseTransactionException.NO_COURSE_FOUND);
         Course c = found.get(0);
         Set<User> students = c.getStudents();
-        for (User current: students){
-            if (current.getId() == student.getId()){
-                students.remove(current);
-                break;
-            }
+
+        //remove() returns true when the element exists
+        if (students.remove(student)){
+            c.setStudents(students);
+            updateCourse(c);
         }
-        c.setStudents(students);
-        updateCourse(c);
+
         ArrayList<User> toList = new ArrayList<>();
         toList.addAll(students);
         return toList;

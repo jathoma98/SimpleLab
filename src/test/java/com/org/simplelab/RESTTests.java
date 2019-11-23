@@ -6,7 +6,6 @@ import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.repositories.CourseRepository;
 import com.org.simplelab.restcontrollers.CourseRESTController;
 import org.json.JSONObject;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -17,10 +16,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;

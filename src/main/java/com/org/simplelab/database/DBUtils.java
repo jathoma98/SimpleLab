@@ -1,5 +1,7 @@
 package com.org.simplelab.database;
 
+import org.modelmapper.ModelMapper;
+
 import java.security.MessageDigest;
 
 /**
@@ -17,6 +19,8 @@ public class DBUtils {
 
     public static final String METADATA_DELETE_QUERY = "DELETE FROM #{#entityName} WHERE _metadata = :metadata";
 
+    public static final ModelMapper MAPPER = new ModelMapper();
+
     /**
      * Hashes the given string.
      */
@@ -32,5 +36,6 @@ public class DBUtils {
             return null;
         }
     }
+
 
 }

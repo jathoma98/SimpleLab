@@ -1,13 +1,9 @@
 package com.org.simplelab;
 
-import com.org.simplelab.database.CourseDB;
 import com.org.simplelab.database.UserDB;
-import com.org.simplelab.database.entities.*;
-
-import com.org.simplelab.database.repositories.CourseRepository;
+import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.repositories.UserRepository;
-import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -149,21 +145,7 @@ class DBTests extends SpringTestConfig {
 	}
 
 
-	@Autowired
-	CourseDB courseDB;
 
-	@Autowired
-	UserDB userDB;
-
-	@Autowired
-	CourseRepository cr;
-
-	@Test
-	void MySQLtest() throws CourseDB.CourseTransactionException{
-
-
-
-	}
 
 
 	@Test
