@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@Entity
+@Entity(name = DBUtils.LAB_TABLE_NAME)
 @Table(name = DBUtils.LAB_TABLE_NAME)
 public class Lab extends BaseTable{
 

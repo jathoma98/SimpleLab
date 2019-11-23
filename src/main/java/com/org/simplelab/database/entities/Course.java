@@ -5,10 +5,12 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
-@Entity
+@Entity(name = DBUtils.COURSE_TABLE_NAME)
 @Table(name = DBUtils.COURSE_TABLE_NAME)
 public class Course extends BaseTable {
 
@@ -16,17 +18,30 @@ public class Course extends BaseTable {
     private String name;
     private String description;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST},
+                fetch = FetchType.EAGER)
     @JoinColumn(name = "creator_id")
     private User creator;
 
-    @OneToMany
-    private List<Lab> labs;
-    @OneToMany
-    private List<User> users;
+    @OneToMany(cascade = {CascadeType.PERSIST},
+                fetch = FetchType.LAZY)
+    private Set<User> students;
+
+    public Course() {
+        students = new HashSet<>();
+    }
+}
+
+    /**
+    @DBRef
+    private List<labs> labs;
+    private List<User> students;
 
     public Course(){
         labs = new ArrayList<>();
-        users = new ArrayList<>();
+        students = new ArrayList<>();
     }
+
+
 }
+**/

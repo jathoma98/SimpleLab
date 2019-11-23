@@ -2,10 +2,12 @@ var globalselect=undefined;
 
 $(document).ready(function(){
     $(".draggable_item").draggable({
-        containment: "parent"
+        containment: "parent",
+        start: startDrag,
+        stop: stopDrag
     });
     $( ".draggable_item" ).droppable({
-        drop: Drop
+        drop: dropitem
     });
 
     $("#item_one").click(function (event) {
@@ -23,14 +25,39 @@ $(document).ready(function(){
         event.stopPropagation();
     })
 
+    // $('#sidebar_trigger').hover(function(){
+    //         $("#sidebar").show("slide", { direction: "left" }, 500);
+    // })
+    //
+    $(function(){
+        $('#sidebar_trigger').hover(function(){
+            $("#sidebar").show("slide", { direction: "left" }, 500);
+        },function(){
+            $("#sidebar").hide("slide", { direction: "left" }, 500);
+        }).trigger('mouseleave');
+    });
+
+
 });
+
+function startDrag(event,ui){
+    var itemid = $(this).attr("id");
+    var item=document.getElementById(itemid);
+    item.classList.add("zdeep");
+}
+
+function stopDrag(event,ui){
+    var itemid = $(this).attr("id");
+    var item=document.getElementById(itemid);
+    item.classList.remove("zdeep");
+}
 
 // $(document).click(function(event) {
 //     var id = event.target.id);
 //     console.log(id);
 // });
 
-function Drop(event, ui) {
+function dropitem(event, ui) {
     $( this )
         .addClass( "ui-state-highlight" )
         .find( "p" )
@@ -51,14 +78,15 @@ function selectItem(id){
             var unselect = document.getElementById(globalselect);
             unselect.classList.remove("selected")
         }
-        $("#infobar").hide();
+        $("#infobar").hide("slide", { direction: "right" }, 500);
         globalselect=undefined;
     }else if(globalselect===undefined){
         globalselect=id;
         var element = document.getElementById(id);
         element.classList.add("selected");
-        $("#infobar").show();
         loadInfo(id);
+        $("#infobar").show("slide", { direction: "right" }, 500);
+
     }else if(globalselect==id){
 
     }else{
@@ -67,7 +95,9 @@ function selectItem(id){
         var element = document.getElementById(id);
         element.classList.add("selected");
         globalselect=id;
+        $("#infobar").hide("slide", { direction: "right" }, 500);
         loadInfo(id);
+        $("#infobar").show("slide", { direction: "right" }, 500);
     }
 }
 

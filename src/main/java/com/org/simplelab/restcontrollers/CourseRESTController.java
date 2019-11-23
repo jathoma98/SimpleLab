@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -173,72 +174,63 @@ import java.util.Map;
      *
      *  Return Map
      */
+
     @PostMapping(ADD_STUDENT_MAPPING)
     public Map addStudentToCourse (@RequestBody Course course,
                                     HttpSession session){
         RequestResponse r = new RequestResponse();
         r.setSuccess(false);
 
-        Long user_id = (Long)session.getAttribute("user_id");
-        if ( user_id == null){
+        long user_id = -1;
+        user_id = (long)session.getAttribute("user_id");
+        if ( user_id == -1){
             r.setError("Not Login");
             return r.map();
         }
 
-        Course target_course = courseDB.findByUserIdAndCourseId(user_id, course.getCourse_id());
-        if (target_course == null) {
-            r.setError("Course Not Found");
+        User u = userDB.findUserById(user_id);
+        try{
+            courseDB.addStudentToCourse(course.getCourse_id(), u);
+        } catch (CourseDB.CourseTransactionException e){
+            r.setError(e.getMessage());
             return r.map();
         }
 
-        course.getUsers().forEach((user)->{
-            User u = userDB.findUser(user.getUsername());
-            if (u == null) return;
-            for(int i = 0; i < target_course.getUsers().size(); i++){
-                if(target_course.getUsers().get(i).getUsername().equals(u.getUsername())){
-                    return;
-                }
-            }
-            target_course.getUsers().add(u);
-        });
-
-
-        if (target_course.getUsers().size() <= 0){
-            r.setError("Users Not Found");
-            return r.map();
-        }
-        courseDB.updateCourse(target_course);
         r.setSuccess(true);
         return r.map();
     }
 
+
     @PostMapping(GET_STUDENTS_MAPPING)
     public List<User> getStudentList (@RequestBody Course course,
-                                   HttpSession session){
-        List<Course> c = courseDB.findByCourseId(course.getCourse_id());
-        return c.get(0).getUsers();
+                                   HttpSession session) {
+        String course_id = course.getCourse_id();
+        List<User> students;
+        try {
+            students = courseDB.getStudentsOfCourse(course_id);
+        } catch (CourseDB.CourseTransactionException e) {
+            return new ArrayList<>();
+        }
+        return students;
     }
+
 
     @PostMapping(REMOVE_STUDENTS_MAPPING)
     public List<User> removeStudentList (@RequestBody Course course,
                                       HttpSession session){
-        List<Course> c = courseDB.findByCourseId(course.getCourse_id());
-        Long user_id = (Long)session.getAttribute("user_id");
-        if ( user_id == null){
-            return null;
+        long user_id = -1;
+        user_id = (long)session.getAttribute("user_id");
+        if ( user_id == -1){
+            return new ArrayList<>();
         }
-        Course target_course = courseDB.findByUserIdAndCourseId((Long)session.getAttribute("user_id"), course.getCourse_id());
-        int len = course.getUsers().size();
-        for(int i = 0; i < len; i++){
-            User u = course.getUsers().get(i);
-            for(int j = 0; j <  target_course.getUsers().size(); j++){
-                User tu = target_course.getUsers().get(j);
-                if (tu.getUsername().equals(u.getUsername())){
-                    target_course.getUsers().remove(tu);
-                    break;
-                }
-            }
+        User u = userDB.findUserById(user_id);
+        List<User> modified;
+        try {
+            modified = courseDB.removeStudentFromCourse(u, course.getCourse_id());
+        } catch (CourseDB.CourseTransactionException e){
+            modified = new ArrayList<>();
         }
-        return c.get(0).getUsers();
+        return modified;
     }
+
 }

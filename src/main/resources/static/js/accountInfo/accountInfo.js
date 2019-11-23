@@ -67,6 +67,7 @@ let ACC_INFO ={
                     $.ajax({
                         url: "/user/rest/restUserInfo",
                         type: "POST",
+                        contentType: 'application/json; charset=utf-8',
                         data: course_json,
                         success:function (){
                             alert("You have saved your information!")

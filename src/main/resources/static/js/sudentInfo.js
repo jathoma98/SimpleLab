@@ -1,9 +1,9 @@
 
-$.get("/info/get_user", function(user) {
-    console.log(user.firstname)
-    $(document).ready(function () {
-    });
-});
+// $.get("/info/get_user", function(user) {
+//     console.log(user.firstname)
+//     $(document).ready(function () {
+//     });
+// });
 
 
 $(document).ready( function () {
@@ -12,8 +12,8 @@ $(document).ready( function () {
     $("#labEditBtn").on("click",labHideAndShow);
     $("#labBackBtn").on("click",labHideAndShow);
     $("#editInfoBtn").on("click",editInfo);
-    $("#saveInfoBtn").on("click",saveInfo);
-    $("#cancelBtn").on("click",cancelEdit);
+    // $("#saveInfoBtn").on("click",saveInfo);
+    // $("#cancelBtn").on("click",cancelEdit);
 
 })
 
@@ -37,24 +37,24 @@ function editInfo(){
     $("#saveInfoBtn").toggle();
     $("#cancelBtn").toggle();
 }
-
-function saveInfo(){
-    $("#first_name").prop("readonly", true);
-    $("#last_name").prop("readonly", true);
-    $("#email").prop("readonly", true);
-    $("#institution").prop("readonly", true);
-    $("#password").prop("readonly", true);
-    $("#editInfoBtn").toggle();
-    $("#saveInfoBtn").toggle();
-    $("#cancelBtn").toggle();
-}
-function cancelEdit(){
-    $("#first_name").prop("readonly", true);
-    $("#last_name").prop("readonly", true);
-    $("#email").prop("readonly", true);
-    $("#institution").prop("readonly", true);
-    $("#password").prop("readonly", true);
-    $("#editInfoBtn").toggle();
-    $("#saveInfoBtn").toggle();
-    $("#cancelBtn").toggle();
-}
+//
+// function saveInfo(){
+//     $("#first_name").prop("readonly", true);
+//     $("#last_name").prop("readonly", true);
+//     $("#email").prop("readonly", true);
+//     $("#institution").prop("readonly", true);
+//     $("#password").prop("readonly", true);
+//     $("#editInfoBtn").toggle();
+//     $("#saveInfoBtn").toggle();
+//     $("#cancelBtn").toggle();
+// }
+// function cancelEdit(){
+//     $("#first_name").prop("readonly", true);
+//     $("#last_name").prop("readonly", true);
+//     $("#email").prop("readonly", true);
+//     $("#institution").prop("readonly", true);
+//     $("#password").prop("readonly", true);
+//     $("#editInfoBtn").toggle();
+//     $("#saveInfoBtn").toggle();
+//     $("#cancelBtn").toggle();
+// }

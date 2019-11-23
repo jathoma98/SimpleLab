@@ -2,15 +2,11 @@ package com.org.simplelab;
 
 import com.org.simplelab.database.CourseDB;
 import com.org.simplelab.database.entities.Course;
-import com.org.simplelab.database.entities.Equipment;
-import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;
-import com.org.simplelab.database.repositories.EquipmentRepository;
-import com.org.simplelab.database.repositories.LabRepository;
-import com.org.simplelab.database.repositories.UserRepository;
+import com.org.simplelab.database.repositories.CourseRepository;
 import com.org.simplelab.restcontrollers.CourseRESTController;
 import org.json.JSONObject;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -21,9 +17,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -44,8 +42,8 @@ public class RESTTests extends SpringTestConfig {
     CourseDB courseDB;
 
 
-    private void sendCourseToPOSTEndpoint(JSONObject json) throws Exception{
-        this.mockMvc.perform(post("/course/rest")
+    private void sendCourseToPOSTEndpoint(JSONObject json, String path) throws Exception{
+        this.mockMvc.perform(post("/course/rest" + path)
                 .sessionAttrs(session_atr)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json.toString()))
@@ -53,6 +51,7 @@ public class RESTTests extends SpringTestConfig {
                 .andExpect(status().isOk())
                 .andExpect(content().json("{'success': 'true'}"));
     }
+
 
 
     @Test
@@ -67,9 +66,10 @@ public class RESTTests extends SpringTestConfig {
         rawJson.put("name", metadata);
         rawJson.put("description", metadata);
         rawJson.put("course_id", "UNIT_TEST" + metadata);
+        rawJson.put("_metadata", metadata);
         JSONObject json = new JSONObject(rawJson);
 
-        sendCourseToPOSTEndpoint(json);
+        sendCourseToPOSTEndpoint(json, "");
 
         this.mockMvc.perform(get("/course/rest" + CourseRESTController.LOAD_LIST_COURSE_MAPPING)
                              .principal(TestUtils.getUnitTestPrincipal())
@@ -79,7 +79,7 @@ public class RESTTests extends SpringTestConfig {
 
 
         //delete the course afterwards
-        List<Course> found = courseDB.findCourse(metadata);
+        List<Course> found = courseDB.findCourseByName(metadata);
         courseDB.deleteCourse(found.get(0));
 
 
@@ -97,12 +97,13 @@ public class RESTTests extends SpringTestConfig {
             rawJson.put("name", metadata + i);
             rawJson.put("description", metadata);
             rawJson.put("course_id", "UNIT_TEST" + metadata + i);
+            rawJson.put("_metadata", metadata);
             JSONObject json = new JSONObject(rawJson);
             objs[i] = json;
         }
 
         for (JSONObject json: objs){
-            sendCourseToPOSTEndpoint(json);
+            sendCourseToPOSTEndpoint(json, "");
         }
 
         StringBuilder sb = new StringBuilder();
@@ -129,15 +130,55 @@ public class RESTTests extends SpringTestConfig {
 
     }
 
-    @Autowired
-    LabRepository labRepository;
 
     @Autowired
-    EquipmentRepository equipmentRepository;
+    CourseRepository cr;
 
-    @WithMockUser(username = username, password = username)
     @Test
-    void labtest(){
+    @WithMockUser(username = username, password = username)
+    void addGetDeleteStudentFromCourseTests() throws Exception{
+        String cid = "UNIT_TEST" + metadata;
+        session_atr.put("user_id", user_id);
+        session_atr.put("username", username);
+
+        Map<String, String> rawJson = new HashMap<>();
+        rawJson.put("name", metadata);
+        rawJson.put("description", metadata);
+        rawJson.put("course_id", cid);
+        rawJson.put("_metadata", metadata);
+        JSONObject json = new JSONObject(rawJson);
+
+        //add course first
+        sendCourseToPOSTEndpoint(json, "");
+
+        sendCourseToPOSTEndpoint(json, CourseRESTController.ADD_STUDENT_MAPPING);
+
+        boolean found = false;
+        List<User> students = courseDB.getStudentsOfCourse(cid);
+        System.out.println("Students list: " + students.toString());
+
+        assertTrue(!students.isEmpty());
+
+        //check if getStudent endpoint works
+        System.out.println("Gettings students from added course...");
+
+        this.mockMvc.perform(post("/course/rest" + CourseRESTController.GET_STUDENTS_MAPPING)
+                .sessionAttrs(session_atr)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json.toString()))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        System.out.println("Deleting student from course");
+
+        //delete the student
+        this.mockMvc.perform(post("/course/rest" + CourseRESTController.REMOVE_STUDENTS_MAPPING)
+                .sessionAttrs(session_atr)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json.toString()))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json("[]"));
 
 
     }

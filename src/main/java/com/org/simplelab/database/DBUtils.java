@@ -15,6 +15,8 @@ public class DBUtils {
 
     public static final String SALT = "a very salty salt";
 
+    public static final String METADATA_DELETE_QUERY = "DELETE FROM #{#entityName} WHERE _metadata = :metadata";
+
     /**
      * Hashes the given string.
      */
