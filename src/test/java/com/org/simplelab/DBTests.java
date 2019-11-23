@@ -1,11 +1,15 @@
 package com.org.simplelab;
 
+import com.org.simplelab.database.LabDB;
 import com.org.simplelab.database.UserDB;
 import com.org.simplelab.database.entities.Course;
 import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.repositories.UserRepository;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -146,8 +150,12 @@ class DBTests extends SpringTestConfig {
 		userDB.findUser(breaker1);
 	}
 
+	@Autowired
+	LabDB labDB;
+
 	@Test
 	void sql(){
+
 	}
 
 

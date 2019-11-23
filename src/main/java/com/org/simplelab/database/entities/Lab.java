@@ -3,13 +3,8 @@ package com.org.simplelab.database.entities;
 import com.org.simplelab.database.DBUtils;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import javax.persistence.*;
+import java.util.*;
 
 @Data
 @Entity(name = DBUtils.LAB_TABLE_NAME)
@@ -18,10 +13,15 @@ public class Lab extends BaseTable{
 
     private String name;
 
-    @OneToMany
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "creator_id")
+    private User creator;
+
+    @OneToMany(cascade = {CascadeType.PERSIST},
+               fetch = FetchType.LAZY)
     private Set<Equipment> equipments;
 
     public Lab(){
-        this.equipments = new LinkedHashSet<>();
+        this.equipments = new HashSet<>();
     }
 }

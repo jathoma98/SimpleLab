@@ -23,19 +23,24 @@ public abstract class BaseTable implements Persistable<Long> {
     @Column(name = "created_date")
     private String createdDate;
 
+    private long timestamp;
+
     public String _metadata;
 
     public BaseTable(){
-        Date date = new Date();
-        SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy HH:mm");
-        this.createdDate = df.format(date);
+        if (isNew()) {
+            Date date = new Date();
+            SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy HH:mm");
+            this.createdDate = df.format(date);
+            long now = java.time.Instant.now().toEpochMilli();
+            this.timestamp = now;
+        }
     }
 
     /**
      * Below are used internally by JPA to check
      * whether an entity is new or already exists
      * in the DB.
-     * These fields and methods should not be used in code.
      */
 
     @Override

@@ -1,7 +1,9 @@
 package com.org.simplelab;
 
 import com.org.simplelab.database.CourseDB;
+import com.org.simplelab.database.LabDB;
 import com.org.simplelab.database.entities.Course;
+import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.repositories.CourseRepository;
 import com.org.simplelab.restcontrollers.CourseRESTController;
@@ -13,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
+import javax.persistence.Temporal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,10 +47,20 @@ public class RESTTests extends SpringTestConfig {
                 .sessionAttrs(session_atr)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json.toString()))
-                .andDo(print())
+                //.andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json("{'success': 'true'}"));
     }
+
+    private void sendLabToPOSTEndpoint(JSONObject json, String path) throws Exception{
+        this.mockMvc.perform(post("/lab/rest" + path)
+                    .sessionAttrs(session_atr)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(json.toString()))
+                    .andDo(print())
+                    .andExpect(status().isOk());
+    }
+
 
 
 
@@ -180,5 +193,42 @@ public class RESTTests extends SpringTestConfig {
 
     }
 
+    @Autowired
+    LabDB labDB;
 
+    @Test
+    @WithMockUser(username = username, password = username)
+    void addGetDeleteLabTests() throws Exception {
+        session_atr.put("user_id", user_id);
+        session_atr.put("username", username);
+
+        //check that posting to endpoint adds lab to DB
+        Map<String, String> rawJson = new HashMap<>();
+        rawJson.put("name", metadata);
+        rawJson.put("_metadata", metadata);
+
+        JSONObject json = new JSONObject(rawJson);
+        sendLabToPOSTEndpoint(json, "");
+
+        List<Lab> found = labDB.getLabsByCreatorId(user_id);
+        assertEquals(1, found.size());
+        assertEquals(found.get(0).getName(), metadata);
+
+        //check invalid lab name
+        rawJson.put("name", "");
+        json = new JSONObject(rawJson);
+        mockMvc.perform(post("/lab/rest")
+                        .sessionAttrs(session_atr)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json.toString()))
+                        .andDo(print())
+                        .andExpect(status().isOk())
+                        .andExpect(content().json("{'success': 'false'}"));
+
+        long lab_id = found.get(0).getId();
+
+        //check that posting to update mapping updates info.
+        String updatedName = metadata + "updated";
+
+    }
 }

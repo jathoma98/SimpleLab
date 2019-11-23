@@ -3,7 +3,9 @@ package com.org.simplelab.restcontrollers;
 import com.org.simplelab.controllers.RequestResponse;
 import com.org.simplelab.database.CourseDB;
 import com.org.simplelab.database.LabDB;
+import com.org.simplelab.database.UserDB;
 import com.org.simplelab.database.entities.Lab;
+import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.repositories.LabRepository;
 import com.org.simplelab.database.validators.LabValidator;
 import com.org.simplelab.database.validators.Validator;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 import java.util.Optional;
@@ -31,6 +34,9 @@ public class LabRESTController {
     LabDB labDB;
 
     @Autowired
+    UserDB userDB;
+
+    @Autowired
     CourseDB courseDB;
 
     /**
@@ -43,7 +49,7 @@ public class LabRESTController {
      *         success:false with error if fields are invalid according to LabValidator.
      */
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, String> saveLab(@RequestBody LabValidator validator){
+    public Map<String, String> saveLab(@RequestBody LabValidator validator, HttpSession session){
         RequestResponse rsp = new RequestResponse();
         try{
             validator.validate();
@@ -53,8 +59,11 @@ public class LabRESTController {
             rsp.set("value", validator.getName());
             return rsp.map();
         }
+        long user_id = (long)session.getAttribute("user_id");
+        User u = userDB.findUserById(user_id);
         Lab lab = validator.build();
-        System.out.println(lab.toString());
+        lab.setCreator(u);
+        System.out.println("Adding lab with name: " + lab.getName());
         if (labDB.insertLab(lab)){
             rsp.setSuccess(true);
             return rsp.map();
@@ -99,7 +108,7 @@ public class LabRESTController {
      * @return success:true if lab found and updated
      *         success:false otherwise
      */
-    @PatchMapping(LAB_ID_MAPPING)
+    @PostMapping(LAB_ID_MAPPING)
     public Map<String, String> labUpdate(@PathVariable("lab_id") long lab_id,
                                          @RequestBody DTO.LabUpdateDTO labUpdateDTO){
         RequestResponse rsp = new RequestResponse();

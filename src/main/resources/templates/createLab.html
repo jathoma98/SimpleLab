@@ -14,8 +14,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 
-<body class="body">
-<nav>
+<body class="body delete_empty">
+<nav class="delete_empty">
     <div class="nav-wrapper row" style="background: #00acc1;">
         <a href="#" class="brand-logo offset-s1" style="padding-top: 10px; padding-left: 10px;">Simple Lab</a>
         <a class='dropdown-trigger right' href='#' data-target='dropdown1'><img class="account_img" src="../img/name.png"></a>
@@ -93,7 +93,7 @@
     </div>
 </div>
 
-<nav>
+<nav class="delete_empty">
     <div class="nav-wrapper row" style="background: #00acc1">
         <div class="col s12 valign-wrapper" style="background: #00b8ce; height: 30px; margin-top: 20px;">
             <a href="" class="breadcrumb">Home</a>
@@ -102,27 +102,26 @@
         </div>
     </div>
 </nav>
-<br>
 
 
 <!--**********************************************************************main body*********************************************************************************************************-->
 <!--**********************************************************************main body*********************************************************************************************************-->
 <!--**********************************************************************main body*********************************************************************************************************-->
 <!--    this operation area at the middle-->
-    <div id="operation_area" class="opration_area ">
+    <div id="operation_area" class="opration_area delete_empty ">
 
         <!--    side bar-->
-        <div id="sidebar" class="sidebar">
-            <div class="sidebar_info delete_empty">
+        <div id="sidebar" class="sidebar sidebarhover row">
+            <div id="sidebarone" class="sidebar_info delete_empty">
                 <nav class="delete_empty">
-                    <div class="nav-wrapper" style="background: #f1cc36">
+                    <div class="nav-wrapper my_gray">
                         <a href="#!" class="brand-logo"><i class="material-icons">view_list</i>item sets</a>
                         <a href="" class="right sidebar_add"><i class=" circle material-icons ">add</i></a>
                     </div>
                 </nav>
-                <ul class="collapsible row delete_empty sidebarul" >
+                <ul class="collapsible row delete_empty my_white" >
                     <li>
-                        <div class="collapsible-header my_red">
+                        <div class="collapsible-header ">
                             Chemistry 123
                         </div>
                         <div class="collapsible-body">
@@ -130,7 +129,7 @@
                         </div>
                     </li>
                     <li>
-                        <div class="collapsible-header my_cran">
+                        <div class="collapsible-header ">
                             Chemistry 111
                         </div>
                         <div class="collapsible-body">
@@ -138,7 +137,7 @@
                         </div>
                     </li>
                     <li>
-                        <div class="collapsible-header my_gray ">
+                        <div class="collapsible-header  ">
                             Chemistry 122
                         </div>
                         <div class="collapsible-body">
@@ -147,15 +146,21 @@
                     </li>
                 </ul>
             </div>
-<!--            <div class="sidebar_trigger ">-->
-<!--                <p></p>-->
-<!--&lt;!&ndash;                <i class="material-icons" style="background: blue">view_list</i>&ndash;&gt;-->
-<!--            </div>-->
+            <div id="sidebartwo" class="sidebar_info delete_empty">
+                sidebar two info
+            </div>
+            <div id="sidebarthree" class="sidebar_info delete_empty">
+                sidebar three info
+            </div>
 
+            <div class="sidebar_trigger">
+                <ul class="collection tabs ">
+                    <li class="tab tab_content collection-item my_yellow"><a class="active delete_empty center" href="#sidebarone"><p class="vtext center">Item</p></a></li>
+                    <li class="tab tab_content collection-item my_red"><a class="delete_empty" href="#sidebartwo"><p class="vtext">Item</p></a></li>
+                    <li class="tab tab_content collection-item my_gray"><a class="delete_empty" href="#sidebarthree"><p class="vtext">Item</p></a></li>
+                </ul>
+            </div>
         </div>
-
-
-
 
 
 
@@ -174,7 +179,7 @@
 
 
 <!--        item information bar-->
-        <div id="infobar" class="infobar">
+        <div id="infobar" class="infobar my_white">
             <nav>
                 <div class="nav-wrapper" style="background: #f1cc36">
                     <a href="#!" class="brand-logo"><i class="material-icons">view_list</i>Item Info</a>
@@ -189,9 +194,30 @@
                         H2SO4
                     </div>
                 </li>
-                <li class="collection-item">PH: 7</li>
-                <li class="collection-item">volumn: 150ml/200ml</li>
-                <li class="collection-item">color : Blue</li>
+                <li class="collection-item row">
+                    <div class="col s6">
+                        Name:
+                    </div>
+                    <div class="col s6">
+                        H2SO4
+                    </div>
+                </li>
+                <li class="collection-item row">
+                    <div class="col s6">
+                        Name:
+                    </div>
+                    <div class="col s6">
+                        H2SO4
+                    </div>
+                </li>
+                <li class="collection-item row">
+                    <div class="col s6">
+                        Name:
+                    </div>
+                    <div class="col s6">
+                        H2SO4
+                    </div>
+                </li>
             </ul>
         </div>
 
@@ -258,17 +284,14 @@
 
 <script>
     $(document).ready(function(){
+        M.AutoInit();
         $('.modal').modal();
         $('.dropdown-trigger').dropdown();
         $('.tabs').tabs();
+
     });
 </script>
 <script type="text/javascript">
-
-    document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('.fixed-action-btn');
-        var instances = M.FloatingActionButton.init(elems, {direction: 'right'});
-    });
 
     document.addEventListener('DOMContentLoaded', function() {
         var elems = document.querySelectorAll('.collapsible');

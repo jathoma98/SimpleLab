@@ -13,7 +13,7 @@
 }
 .draggable_item{
     width: 150px;
-    height: 180px;
+    max-height: 180px;
 }
 
 .selected{
@@ -76,26 +76,24 @@
 }
 
 .sidebar{
-    left: -14%;
+    left: -18%;
     z-index: 1000;
-    float: right;
+    float: left;
     position: fixed;
-    width: 15%;
+    width: 20%;
     max-height:100%;
     transition: 0.3s;
-    margin: 0;
-    padding: 0;
     border-radius: 5px;
     /*background: white;*/
 }
 
-.sidebar:hover{
+.sidebarhover:hover{
     left:0px;
     transition: 0.3s;
     border-radius: 5px;
 }
 .sidebar_info{
-    width: 100%;
+    width: 90%;
     margin: 0;
     padding: 0;
     float: left;
@@ -106,21 +104,54 @@
     margin-right: 15px;
 }
 
-.sidebarul{
+
+
+.my_white{
     background: white;
 }
 
-/*.sidebar_trigger{*/
-/*    width:10%;*/
-/*    height:100%!important;*/
-/*    margin: 0;*/
-/*    padding: 0;*/
-/*    float: left;*/
-/*    border-radius: 5px;*/
-/*    background: red;*/
-/*}*/
-
-.delete_empty{
+.sidebar_trigger{
+    max-height: 100%;
+    height: 100%!important;
+    width:10%;
     margin: 0;
     padding: 0;
+    float: left;
+    border-radius: 5px;
+    background: red!important;
+    text-align: center;
+}
+
+.delete_empty{
+    margin: 0!important;
+    padding: 0!important;
+}
+
+.tabs{
+    height: auto!important;
+    white-space: normal;
+}
+.tab{
+    display: block!important;
+    height: 20%!important;
+    width: 100%;
+    border-bottom: 1px solid #f0f0f0;
+    margin: 0!important;
+}
+
+.tab_content{
+    height: 200px!important;
+    width: 100%;
+}
+
+.indicator{
+    display: none;
+}
+.vtext{
+    margin-top: 78px;
+    font-size: 20px;
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
 }
