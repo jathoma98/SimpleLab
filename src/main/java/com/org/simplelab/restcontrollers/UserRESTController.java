@@ -44,8 +44,8 @@ import java.util.List;
             return new ArrayList<>();
         }
         //TODO: reimplement this
-       // return userDB.searchByMatchingString(regex);
-        return null;
+        return userDB.searchUserWithKeyword(regex);
+//        return null;
     }
 
     @GetMapping(LOAD_USER_MAPPING)

@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity(name = DBUtils.USER_TABLE_NAME)
 @Table(name = DBUtils.USER_TABLE_NAME)
-public class User extends BaseTable{
+public class User extends com.org.simplelab.database.entities.BaseTable {
 
     private String username;
     private byte[] pass_hash;

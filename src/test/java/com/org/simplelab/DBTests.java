@@ -152,14 +152,4 @@ class DBTests extends SpringTestConfig {
 
 
 
-
-
-	@Test
-	void zzzzz_cleanup(){
-
-		userDB.deleteByMetadata(metadata);
-
-	}
-
-
 }

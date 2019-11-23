@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+
 @Data
 @Entity(name = DBUtils.EQUIPMENT_TABLE_NAME)
 @Table(name = DBUtils.EQUIPMENT_TABLE_NAME)
