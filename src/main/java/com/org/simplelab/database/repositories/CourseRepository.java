@@ -1,6 +1,7 @@
 package com.org.simplelab.database.repositories;
 
 import com.org.simplelab.database.entities.Course;
+import com.org.simplelab.database.entities.User;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -40,5 +41,9 @@ public interface CourseRepository extends BaseRepository<Course> {
     public List<Course> findBycreator_idAndcourse_id(@Param("user_id") long user_id,
                                                      @Param("course_id") String course_id);
 
-
+    @Query(value =
+            "SELECT * FROM simplelab.course_students WHERE course_id = :cid AND student_id = :uid",
+            nativeQuery = true)
+    public List<User> findUserInCourse(@Param("uid") long uid,
+                                        @Param("cid") long cid);
 }

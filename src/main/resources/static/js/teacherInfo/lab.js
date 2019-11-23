@@ -34,10 +34,10 @@ let LABS_TABLE = {
                 success: function (result) {
                     let data = {
                         isEnabled: LABS_TABLE.toggle,
-                        courses: result.reverse()
+                        labs: result.reverse()
                     }
                     rebuildComponent(ElEM_ID.LAB_TABLE_TBODY, TEMPLATE_ID.LAB_TBODY, data);
-                    if (COURSES_TABLE.toggle) {
+                    if (LABS_TABLE.toggle) {
                         setTableBodyRowEvent(ElEM_ID.LAB_TABLE_TBODY, LABS_TABLE.tableRowEvent);
                     }
                 }
@@ -68,9 +68,11 @@ let LABS_TABLE = {
                     } else {
                         alert(result.error);
                     }
+                    //TODO: reload lab table
                 }
             })
         };
+        this.btnEvents[ElEM_ID.LAB_SAVE_BTN] = LABS_TABLE.save;
 
         /**
          * Delete course.

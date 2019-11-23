@@ -14,13 +14,14 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 //TODO: secure rest endpoints with authentication
 @RestController
 @RequestMapping("/course/rest")
-    public class CourseRESTController {
+public class CourseRESTController {
 
     @Autowired
     CourseDB courseDB;
@@ -39,17 +40,17 @@ import java.util.Map;
 
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> addCourse(@RequestBody CourseValidator courseValidator,
-                                         HttpSession session){
+                                         HttpSession session) {
         long userId = -1;
-        try{
-            userId = (long)session.getAttribute("user_id");
-        } catch (Exception e){
+        try {
+            userId = (long) session.getAttribute("user_id");
+        } catch (Exception e) {
             //redirect to login
         }
         RequestResponse response = new RequestResponse();
-        try{
+        try {
             courseValidator.validate();
-        }catch(Validator.InvalidFieldException e){
+        } catch (Validator.InvalidFieldException e) {
             response.setSuccess(false);
             response.setError(e.getMessage());
             return response.map();
@@ -68,44 +69,44 @@ import java.util.Map;
     }
 
     /**
-     *  Endpoint for updating an existing course.
+     * Endpoint for updating an existing course.
+     *
      * @param dto - Should be formatted as:
      *            {
-     *              course_id_old: The old Course ID before update, to find in DB.
+     *            course_id_old: The old Course ID before update, to find in DB.
      *            ` newCourseInfo: A Course object which has the new course info
      *            }
      *            example:
      *            {
-     *              course_id_old: "CSE308",
-     *              newCourseInfo: {
-     *                  name: "Software Dev",
-     *                  course_id: "CSE316",
-     *                  description: "Revamped Software class for Spring 2020"
-     *              }
+     *            course_id_old: "CSE308",
+     *            newCourseInfo: {
+     *            name: "Software Dev",
+     *            course_id: "CSE316",
+     *            description: "Revamped Software class for Spring 2020"
+     *            }
      *            }
      * @return success:true on success
-     *         success:false on failure with possible errors:
-     *         InvalidFieldException message if user data is formatted improperly
-     *         Duplicate coursecode error message if the new course code is already taken
-     *
+     * success:false on failure with possible errors:
+     * InvalidFieldException message if user data is formatted improperly
+     * Duplicate coursecode error message if the new course code is already taken
      */
     @PatchMapping(UPDATE_MAPPING)
-    public Map<String, String> updateCourse(@RequestBody DTO.CourseUpdateDTO dto, HttpSession session){
+    public Map<String, String> updateCourse(@RequestBody DTO.CourseUpdateDTO dto, HttpSession session) {
         RequestResponse rsp = new RequestResponse();
-        long uid = (long)session.getAttribute("user_id");
+        long uid = (long) session.getAttribute("user_id");
         List<Course> courses = courseDB.findByCourseId(dto.getCourse_id_old());
-        if (courses.size() > 0){
+        if (courses.size() > 0) {
             CourseValidator cv = dto.getNewCourseInfo();
-            try{
+            try {
                 cv.validate();
-            } catch (Validator.InvalidFieldException e){
+            } catch (Validator.InvalidFieldException e) {
                 rsp.setError(e.getMessage());
                 return rsp.map();
             }
             //TODO: refactor with modelmapper?
             Course found = courses.get(0);
             //ensure the found course belongs to the current user -- exception if not (the new course code is a duplicate)
-            if (found.getCreator().getId() != uid){
+            if (found.getCreator().getId() != uid) {
                 rsp.setError(CourseValidator.DUPLICATE_ID);
                 return rsp.map();
             }
@@ -128,17 +129,17 @@ import java.util.Map;
      */
     @DeleteMapping(DELETE_MAPPING)
     public Map<String, String> deleteCourse(@RequestBody CourseValidator[] toDelete,
-                                            HttpSession session){
+                                            HttpSession session) {
         RequestResponse response = new RequestResponse();
         long userId = -1;
-        try{
-            userId = (long)session.getAttribute("user_id");
-        } catch (Exception e){
+        try {
+            userId = (long) session.getAttribute("user_id");
+        } catch (Exception e) {
             response.setError(e.toString());
             return response.map();
             //redirect to login
         }
-        for (CourseValidator c: toDelete){
+        for (CourseValidator c : toDelete) {
             String course_id = c.getCourse_id();
             courseDB.deleteCourseById(userId, course_id);
         }
@@ -147,11 +148,11 @@ import java.util.Map;
     }
 
     @GetMapping(LOAD_LIST_COURSE_MAPPING)
-    public List<Course> getListOfCourse(HttpSession session){
+    public List<Course> getListOfCourse(HttpSession session) {
         long userId = -1;
-        try{
-            userId = (long)session.getAttribute("user_id");
-        } catch (Exception e){
+        try {
+            userId = (long) session.getAttribute("user_id");
+        } catch (Exception e) {
             //redirect to login
         }
         List<Course> courses = courseDB.getCoursesForTeacher(userId);
@@ -159,51 +160,56 @@ import java.util.Map;
     }
 
     @PostMapping(LOAD_COURSE_INFO_MAPPING)
-    public Course getCourseInfo( @RequestBody Course course,
-                                        HttpSession session){
-        long uid = (long)session.getAttribute("user_id");
+    public Course getCourseInfo(@RequestBody Course course,
+                                HttpSession session) {
+        long uid = (long) session.getAttribute("user_id");
         Course r = courseDB.findByUserIdAndCourseId(uid, course.getCourse_id());
         return r;
     }
 
     /*
      *  Add a user to to current user's course
-     *  @Param course - use to get course id
-     *  @Param user - use to get username
+     *  @Param course - use to get course id and student list for add.
      *  @Param session - use to check is post request user login
      *
      *  Return Map
      */
 
     @PostMapping(ADD_STUDENT_MAPPING)
-    public Map addStudentToCourse (@RequestBody Course course,
-                                    HttpSession session){
+    public Map addStudentToCourse(@RequestBody DTO.CourseWithUsersDTO course,
+                                  HttpSession session) {
         RequestResponse r = new RequestResponse();
         r.setSuccess(false);
 
-        long user_id = -1;
-        user_id = (long)session.getAttribute("user_id");
-        if ( user_id == -1){
+        long own_id = -1;
+        own_id = (long) session.getAttribute("user_id");
+        if (own_id == -1) {
             r.setError("Not Login");
             return r.map();
         }
+        String own_username = (String) session.getAttribute("username");
 
-        User u = userDB.findUserById(user_id);
-        try{
-            courseDB.addStudentToCourse(course.getCourse_id(), u);
-        } catch (CourseDB.CourseTransactionException e){
-            r.setError(e.getMessage());
-            return r.map();
+        String errorMsg = "";
+        String course_id = course.getCourse_id();
+        List<String> usernameList = course.getUsernameList();
+        for(int i = 0; i < usernameList.size(); i++ ){
+            if(own_username.equals(usernameList.get(i))) continue;
+            User u = userDB.findUser(usernameList.get(i));
+            try {
+                courseDB.addStudentToCourse(course_id, u);
+            } catch (CourseDB.CourseTransactionException e) {
+                errorMsg += e.getMessage() + "\n";
+            }
         }
-
+        r.setError(errorMsg);
         r.setSuccess(true);
         return r.map();
     }
 
 
     @PostMapping(GET_STUDENTS_MAPPING)
-    public List<User> getStudentList (@RequestBody Course course,
-                                   HttpSession session) {
+    public List<User> getStudentList(@RequestBody DTO.CourseWithUsersDTO course,
+                                     HttpSession session) {
         String course_id = course.getCourse_id();
         List<User> students;
         try {
@@ -216,21 +222,31 @@ import java.util.Map;
 
 
     @PostMapping(REMOVE_STUDENTS_MAPPING)
-    public List<User> removeStudentList (@RequestBody Course course,
-                                      HttpSession session){
-        long user_id = -1;
-        user_id = (long)session.getAttribute("user_id");
-        if ( user_id == -1){
-            return new ArrayList<>();
+    public Map removeStudentList(@RequestBody DTO.CourseWithUsersDTO course,
+                                        HttpSession session) {
+        RequestResponse r = new RequestResponse();
+        r.setSuccess(false);
+
+        long own_id = -1;
+        own_id = (long) session.getAttribute("user_id");
+        if (own_id == -1) {
+            r.setError("Not Login");
+            return r.map();
         }
-        User u = userDB.findUserById(user_id);
-        List<User> modified;
-        try {
-            modified = courseDB.removeStudentFromCourse(u, course.getCourse_id());
-        } catch (CourseDB.CourseTransactionException e){
-            modified = new ArrayList<>();
+
+        String errorMsg = "";
+        List<String> usernameList = course.getUsernameList();
+        for(int i = 0; i < usernameList.size(); i++ ){
+            User u = userDB.findUser(usernameList.get(i));
+            try {
+                courseDB.removeStudentFromCourse(u, course.getCourse_id());
+            } catch (CourseDB.CourseTransactionException e) {
+                errorMsg += e.getMessage() + "\n";
+            }
         }
-        return modified;
+        r.setError(errorMsg);
+        r.setSuccess(true);
+        return r.map();
     }
 
 }
