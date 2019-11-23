@@ -213,29 +213,24 @@ import java.util.Map;
         }
         return students;
     }
-    /**
+
 
     @PostMapping(REMOVE_STUDENTS_MAPPING)
     public List<User> removeStudentList (@RequestBody Course course,
                                       HttpSession session){
-        List<Course> c = courseDB.findByCourseId(course.getCourse_id());
-        String user_id = (String)session.getAttribute("user_id");
-        if ( user_id == null){
-            return null;
+        long user_id = -1;
+        user_id = (long)session.getAttribute("user_id");
+        if ( user_id == -1){
+            return new ArrayList<>();
         }
-        Course target_course = courseDB.findByUserIdAndCourseId((String)session.getAttribute("user_id"), course.getCourse_id());
-        int len = course.getStudents().size();
-        for(int i = 0; i < len; i++){
-            User u = course.getStudents().get(i);
-            for(int j = 0; j <  target_course.getStudents().size(); j++){
-                User tu = target_course.getStudents().get(j);
-                if (tu.getUsername().equals(u.getUsername())){
-                    target_course.getStudents().remove(tu);
-                    break;
-                }
-            }
+        User u = userDB.findUserById(user_id);
+        List<User> modified;
+        try {
+            modified = courseDB.removeStudentFromCourse(u, course.getCourse_id());
+        } catch (CourseDB.CourseTransactionException e){
+            modified = new ArrayList<>();
         }
-        return c.get(0).getStudents();
-    }**/
+        return modified;
+    }
 
 }

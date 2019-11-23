@@ -24,7 +24,8 @@ public class Course extends BaseTable {
     private User creator;
 
     @OneToMany(cascade = {CascadeType.PERSIST},
-                fetch = FetchType.LAZY)
+                fetch = FetchType.LAZY,
+                orphanRemoval = true)
     private Set<User> students;
 
     public Course() {

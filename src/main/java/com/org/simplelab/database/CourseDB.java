@@ -41,6 +41,7 @@ public class CourseDB {
      * Adds a student to a Course.
      * @param course_id - course_id of the course to be modified
      * @param u - User object representing the student to be added.
+     * @throws CourseTransactionException - when Course with given course_id does not exist
      */
     public void addStudentToCourse(String course_id , User u) throws CourseTransactionException{
         List<Course> found = findByCourseId(course_id);
@@ -51,9 +52,15 @@ public class CourseDB {
         System.out.println("Found target course: " + c.toString());
         c.getStudents().add(u);
         System.out.println("Modified course: " + c.toString());
-        courseRepository.save(c);
+        updateCourse(c);
     }
 
+    /**
+     * Returns list of students in a course.
+     * @param course_id - course_id of the course to be found
+     * @return - List of Users corresponding to the course -- empty list if no users exist
+     * @throws CourseTransactionException - when Course with given course_id does not exist
+     */
     public List<User> getStudentsOfCourse(String course_id) throws CourseTransactionException{
         List<Course> found = findByCourseId(course_id);
         if (found.size() == 0)
@@ -62,6 +69,32 @@ public class CourseDB {
         ArrayList<User> students = new ArrayList<>();
         students.addAll(c.getStudents());
         return students;
+    }
+
+    /**
+     * Removes a student from a course
+     * @param student - User object representing student to be removed.
+     * @param course_id - Id of the course to remove student from.
+     * @return List of students with the given student removed.
+     * @throws CourseTransactionException - if the provided course does not exist.
+     */
+    public List<User> removeStudentFromCourse(User student, String course_id) throws CourseTransactionException{
+        List<Course> found = findByCourseId(course_id);
+        if (found.size() == 0)
+            throw new CourseTransactionException(CourseTransactionException.NO_COURSE_FOUND);
+        Course c = found.get(0);
+        Set<User> students = c.getStudents();
+        for (User current: students){
+            if (current.getId() == student.getId()){
+                students.remove(current);
+                break;
+            }
+        }
+        c.setStudents(students);
+        updateCourse(c);
+        ArrayList<User> toList = new ArrayList<>();
+        toList.addAll(students);
+        return toList;
     }
 
     public boolean updateCourse(Course c){

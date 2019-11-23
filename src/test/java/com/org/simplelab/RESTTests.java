@@ -136,7 +136,7 @@ public class RESTTests extends SpringTestConfig {
 
     @Test
     @WithMockUser(username = username, password = username)
-    void addStudentToCourseTest() throws Exception{
+    void addGetDeleteStudentFromCourseTests() throws Exception{
         String cid = "UNIT_TEST" + metadata;
         session_atr.put("user_id", user_id);
         session_atr.put("username", username);
@@ -168,6 +168,18 @@ public class RESTTests extends SpringTestConfig {
                 .content(json.toString()))
                 .andDo(print())
                 .andExpect(status().isOk());
+
+        System.out.println("Deleting student from course");
+
+        //delete the student
+        this.mockMvc.perform(post("/course/rest" + CourseRESTController.REMOVE_STUDENTS_MAPPING)
+                .sessionAttrs(session_atr)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json.toString()))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json("[]"));
+
 
     }
 
