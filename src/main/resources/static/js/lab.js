@@ -10,19 +10,31 @@ $(document).ready(function(){
         drop: dropitem
     });
 
+    $("#operation_area").click(function (event) {
+        selectItem(this.id);
+        event.stopPropagation();
+    })
+
+    $("#infobar").click(function (event) {
+        selectItem(this.id);
+        event.stopPropagation();
+    })
+
     $("#item_one").click(function (event) {
         selectItem(this.id);
         event.stopPropagation();
-
     })
+
     $("#item_two").click(function (event) {
         selectItem(this.id);
         event.stopPropagation();
 
     })
-    $("#operation_area").click(function (event) {
-        selectItem(this.id);
-        event.stopPropagation();
+
+
+
+    $("#sidebar_lock").click(function (event) {
+        $("#sidebar").toggleClass("sidebarhover");
     })
 
     // $('#sidebar_trigger').hover(function(){
@@ -31,9 +43,9 @@ $(document).ready(function(){
     //
     $(function(){
         $('#sidebar_trigger').hover(function(){
-            $("#sidebar").show("slide", { direction: "left" }, 500);
+            $("#sidebar").show("slide", { direction: "left" }, 400);
         },function(){
-            $("#sidebar").hide("slide", { direction: "left" }, 500);
+            $("#sidebar").hide("slide", { direction: "left" }, 400);
         }).trigger('mouseleave');
     });
 
@@ -58,10 +70,6 @@ function stopDrag(event,ui){
 // });
 
 function dropitem(event, ui) {
-    $( this )
-        .addClass( "ui-state-highlight" )
-        .find( "p" )
-        .html( "Dropped!" );
     $("#modal1").modal("open");
 
     // this could be used to get two interactive items
@@ -78,14 +86,16 @@ function selectItem(id){
             var unselect = document.getElementById(globalselect);
             unselect.classList.remove("selected")
         }
-        $("#infobar").hide("slide", { direction: "right" }, 500);
+        $("#infobar").hide("slide", { direction: "right" }, 400);
         globalselect=undefined;
+    }else if(id=="infobar"){
+
     }else if(globalselect===undefined){
         globalselect=id;
         var element = document.getElementById(id);
         element.classList.add("selected");
         loadInfo(id);
-        $("#infobar").show("slide", { direction: "right" }, 500);
+        $("#infobar").show("slide", { direction: "right" }, 400);
 
     }else if(globalselect==id){
 
@@ -95,9 +105,9 @@ function selectItem(id){
         var element = document.getElementById(id);
         element.classList.add("selected");
         globalselect=id;
-        $("#infobar").hide("slide", { direction: "right" }, 500);
+        $("#infobar").hide("slide", { direction: "right" }, 400);
         loadInfo(id);
-        $("#infobar").show("slide", { direction: "right" }, 500);
+        $("#infobar").show("slide", { direction: "right" }, 400);
     }
 }
 
