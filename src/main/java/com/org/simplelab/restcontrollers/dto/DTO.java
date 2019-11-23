@@ -4,6 +4,8 @@ import com.org.simplelab.database.validators.CourseValidator;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 /**
  * Master class that contains DTO (Data Transfer Object) classes
  * which handle processing data send through REST endpoints.
@@ -40,5 +42,15 @@ public class DTO {
     @Setter
     public static class LabUpdateDTO {
         private String temp;
+    }
+
+    /**
+     * Contains information for updating a lab.
+     */
+    @Getter
+    @Setter
+    public static class CourseWithUsersDTO {
+        private String course_id;
+        private List<String> usernameList;
     }
 }

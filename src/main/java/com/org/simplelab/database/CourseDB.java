@@ -144,6 +144,13 @@ public class CourseDB {
         return null;
     }
 
+    public boolean isUserInCourse(Long uid, long cid){
+        List<User> user = courseRepository.findUserInCourse(uid, cid);
+        if(user != null && user.size() == 0)
+            return true;
+        return false;
+    }
+
     @Autowired
     UserRepository userRepository;
 

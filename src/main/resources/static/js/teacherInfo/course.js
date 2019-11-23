@@ -3,15 +3,37 @@ let COURSES_TABLE = {
         this.toggle = true;
         this.btnEvents = new Array();
 
-        this.addStudentBtnEvent = function(){
-            let user = {
-                username: $(this).find("td").text()
-            }
+        this.removeStendtBtnEvent = function(){
             let course = {
                 course_id: $("#course_code").val(),
+                usernameList : new Array()
             }
-            course.users = new Array();
-            course.users.push(user);
+            course.usernameList.push($(this).find("td").text());
+
+            let course_json = JSON.stringify(course);
+            $.ajax({
+                url: "/course/rest/removeStudents",
+                type: 'POST',
+                dataTye: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: course_json,
+                success: function (result) {
+                    if (result.success === "true") {
+                        COURSES_TABLE.reLoadStudentsList(course_json)
+                    } else {
+                        console.log(result.error);
+                    }
+                }
+            })
+        }
+
+        this.addStudentBtnEvent = function(){
+            let course = {
+                course_id: $("#course_code").val(),
+                usernameList : new Array()
+            }
+            course.usernameList.push($(this).find("td").text());
+
 
             let course_json = JSON.stringify(course);
 
@@ -102,6 +124,7 @@ let COURSES_TABLE = {
                         ElEM_ID.STUDENT_LIST_TBODY,
                         TEMPLATE_ID.STUDENTS_TBODY,
                         data)
+                    setTableBodyRowEvent(ElEM_ID.STUDENT_LIST_TBODY, COURSES_TABLE.removeStendtBtnEvent);
                 }
             })
         };
