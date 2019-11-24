@@ -108,18 +108,92 @@
 <!--**********************************************************************main body*********************************************************************************************************-->
 <!--**********************************************************************main body*********************************************************************************************************-->
 <!--    this operation area at the middle-->
-    <div id="operation_area" class="opration_area delete_empty ">
-
+    <div id="operation_area" class="operation_area delete_empty ">
         <!--    side bar-->
         <div id="sidebar" class="sidebar sidebarhover row">
             <div id="sidebarone" class="sidebar_info delete_empty">
                 <nav class="delete_empty">
                     <div class="nav-wrapper my_gray">
-                        <a href="#!" class="brand-logo"><i class="material-icons">view_list</i>item sets</a>
-                        <a href="" class="right sidebar_add"><i class=" circle material-icons ">add</i></a>
+                        <a href="#" class="brand-logo"><i class="material-icons">view_list</i>item sets</a>
+                        <a id="sidebar_add" class="right sidebar_add modal-trigger" href="#equipmentModal"><i class="material-icons">add</i></a>
+                    </div>
+
+                    <!--        equipment modal-->
+                    <div id="equipmentModal" class="modal bigmodal">
+                        <div class="modal-content delete_empty">
+                            <div class="row delete_empty">
+                                <div class="col s4 center delete_empty">
+                                    <input href="#" type="file" ><img class="eq_upload delete_empty" src="../img/upload.png"></input>
+                                </div>
+                                <div class="col s8 delete_empty">
+                                <label>Item Type:   </label>
+                                <label>
+                                    <input class="with-gap" name="group1" type="radio" checked/>
+                                    <span>Measuring Type</span>
+                                </label>
+                                <label>
+                                    <input class="with-gap" name="group1" type="radio"/>
+                                    <span>heating Type</span>
+                                </label>
+                                <label>
+                                    <input class="with-gap" name="group1" type="radio"/>
+                                    <span>reacting Type</span>
+                                </label>
+                                <label>
+                                    <input class="with-gap" name="group1" type="radio"/>
+                                    <span>Burning Type</span>
+                                </label>
+                                
+                                </div>
+                                <div class="col s8 delete_empty">
+                                    <label>Security: </label>
+                                    <label>
+                                        <input class="with-gap" name="group2" type="radio" checked/>
+                                        <span>Public</span>
+                                    </label>
+                                    <label>
+                                        <input class="with-gap" name="group2" type="radio"/>
+                                        <span>Private</span>
+                                    </label>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <form class="col s10 offset-s1">
+                                        <div class="col s12">
+                                            <div class="input-field col s5">
+                                                <input id="item_name" type="text" class="validate">
+                                                <label for="item_name">Item Name</label>
+                                            </div>
+                                            <div class="input-field col s5 offset-s2">
+                                                <input  id="max_volume" type="text" class="validate">
+                                                <label for="max_volume">Max Volume</label>
+                                            </div>
+                                        </div>
+                                        <div class="divider"></div>
+                                        <div class="col s12">
+                                            <div class="input-field col s5">
+                                                <input id="max_temperature" type="text" class="validate">
+                                                <label for="max_temperature">Max Temperature</label>
+                                            </div>
+                                            <div class="input-field col s5 offset-s2">
+                                                <input id="accuracy" type="text" class="validate">
+                                                <label for="accuracy">Accuracy</label>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="waves-effect waves-light modal-close btn" style="background:#dd0052" type="submit" name="action">
+                                Save
+                            </button>
+                        </div>
                     </div>
                 </nav>
-                <ul class="collapsible row delete_empty my_white" >
+
+                <ul class="collapsible row my_white" >
                     <li>
                         <div class="collapsible-header ">
                             Chemistry 123
@@ -146,18 +220,18 @@
                     </li>
                 </ul>
             </div>
-            <div id="sidebartwo" class="sidebar_info delete_empty">
+            <div id="sidebartwo" class="sidebar_info">
                 sidebar two info
             </div>
-            <div id="sidebarthree" class="sidebar_info delete_empty">
+            <div id="sidebarthree" class="sidebar_info ">
                 sidebar three info
             </div>
 
-            <div class="sidebar_trigger">
-                <ul class="collection tabs ">
-                    <li class="tab tab_content collection-item my_yellow"><a class="active delete_empty center" href="#sidebarone"><p class="vtext center">Item</p></a></li>
-                    <li class="tab tab_content collection-item my_red"><a class="delete_empty" href="#sidebartwo"><p class="vtext">Item</p></a></li>
-                    <li class="tab tab_content collection-item my_gray"><a class="delete_empty" href="#sidebarthree"><p class="vtext">Item</p></a></li>
+            <div class="sidebar_trigger delete_empty">
+                <ul class=" tabs delete_empty">
+                    <li class="tab tab_content my_yellow delete_empty"><a class="active delete_empty" href="#sidebarone"><p class="vtext">Item</p></a></li>
+                    <li class="tab tab_content my_red delete_empty"><a class="delete_empty" href="#sidebartwo"><p class="vtext">Item</p></a></li>
+                    <li class="tab tab_content my_gray delete_empty"><a class="delete_empty" href="#sidebarthree"><p class="vtext">Item</p></a></li>
                 </ul>
             </div>
         </div>
@@ -220,6 +294,9 @@
                 </li>
             </ul>
         </div>
+
+
+
 
 
 
@@ -302,7 +379,8 @@
     document.addEventListener('DOMContentLoaded', function() {
         var elems = document.querySelectorAll('.dropdown-trigger');
         var instances = M.Dropdown.init(elems, {
-            hover: true
+            hover: true,
+            alignment:left
         });
     });
 
