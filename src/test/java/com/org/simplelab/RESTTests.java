@@ -182,7 +182,7 @@ public class RESTTests extends SpringTestConfig {
         System.out.println("Deleting student from course");
 
         //delete the student
-        this.mockMvc.perform(post("/course/rest" + CourseRESTController.REMOVE_STUDENTS_MAPPING)
+        this.mockMvc.perform(post("/course/rest" + CourseRESTController.DELETE_STUDENTS_MAPPING)
                 .sessionAttrs(session_atr)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json.toString()))

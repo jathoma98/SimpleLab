@@ -35,7 +35,7 @@ public class CourseRESTController {
     public static final String LOAD_COURSE_INFO_MAPPING = "/loadCourseInfo";
     public static final String ADD_STUDENT_MAPPING = "/addStudent";
     public static final String GET_STUDENTS_MAPPING = "/getStudents";
-    public static final String REMOVE_STUDENTS_MAPPING = "/removeStudents";
+    public static final String DELETE_STUDENTS_MAPPING = "/deleteStudents";
 
 
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -176,7 +176,7 @@ public class CourseRESTController {
      */
 
     @PostMapping(ADD_STUDENT_MAPPING)
-    public Map addStudentToCourse(@RequestBody DTO.CourseWithUsersDTO course,
+    public Map addStudentToCourse(@RequestBody DTO.CourseUpdateStudentListDTO  course,
                                   HttpSession session) {
         RequestResponse r = new RequestResponse();
         r.setSuccess(false);
@@ -208,7 +208,7 @@ public class CourseRESTController {
 
 
     @PostMapping(GET_STUDENTS_MAPPING)
-    public List<User> getStudentList(@RequestBody DTO.CourseWithUsersDTO course,
+    public List<User> getStudentList(@RequestBody DTO.CourseUpdateStudentListDTO course,
                                      HttpSession session) {
         String course_id = course.getCourse_id();
         List<User> students;
@@ -221,8 +221,8 @@ public class CourseRESTController {
     }
 
 
-    @PostMapping(REMOVE_STUDENTS_MAPPING)
-    public Map removeStudentList(@RequestBody DTO.CourseWithUsersDTO course,
+    @DeleteMapping(DELETE_STUDENTS_MAPPING)
+    public Map deleteStudentList(@RequestBody DTO.CourseUpdateStudentListDTO course,
                                         HttpSession session) {
         RequestResponse r = new RequestResponse();
         r.setSuccess(false);
