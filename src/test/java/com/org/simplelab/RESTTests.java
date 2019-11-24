@@ -144,9 +144,6 @@ public class RESTTests extends SpringTestConfig {
     }
 
 
-    @Autowired
-    CourseRepository cr;
-
     //TODO: remake this
     //@Test
     @WithMockUser(username = username, password = username)
