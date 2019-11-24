@@ -7,6 +7,7 @@ import com.org.simplelab.database.UserDB;
 import com.org.simplelab.database.entities.Course;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.validators.CourseValidator;
+import com.org.simplelab.database.validators.InvalidFieldException;
 import com.org.simplelab.database.validators.Validator;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,7 @@ public class CourseRESTController extends BaseController {
         RequestResponse response = new RequestResponse();
         try {
             courseValidator.validate();
-        } catch (Validator.InvalidFieldException e) {
+        } catch (InvalidFieldException e) {
             response.setSuccess(false);
             response.setError(e.getMessage());
             return response.map();
@@ -96,7 +97,7 @@ public class CourseRESTController extends BaseController {
             CourseValidator cv = dto.getNewCourseInfo();
             try {
                 cv.validate();
-            } catch (Validator.InvalidFieldException e) {
+            } catch (InvalidFieldException e) {
                 rsp.setError(e.getMessage());
                 return rsp.map();
             }

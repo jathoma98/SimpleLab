@@ -9,7 +9,7 @@ import org.modelmapper.ModelMapper;
 @Getter
 @Setter
 @ToString
-public class LabValidator extends Validator {
+public class LabValidator extends Validator<Lab> {
 
     private String name;
     private String _metadata;

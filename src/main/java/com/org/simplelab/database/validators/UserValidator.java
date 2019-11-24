@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 @Getter
 @Setter
 @ToString
-public class UserValidator extends Validator {
+public class UserValidator extends Validator<User> {
 
     public static final int MIN_FIELD_LENGTH = 4;
     public static final int MAX_FIELD_LENGTH = 32;

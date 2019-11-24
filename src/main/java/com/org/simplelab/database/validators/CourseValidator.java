@@ -9,7 +9,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class CourseValidator extends Validator{
+public class CourseValidator extends Validator<Course>{
 
     private String name;
     private String course_id;

@@ -7,6 +7,7 @@ import com.org.simplelab.database.UserDB;
 import com.org.simplelab.database.entities.Equipment;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.validators.EquipmentValidator;
+import com.org.simplelab.database.validators.InvalidFieldException;
 import com.org.simplelab.database.validators.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +33,7 @@ public class EquipmentRESTController extends BaseController {
         long user_id = (long)session.getAttribute("user_id");
         try{
             validator.validate();
-        } catch (Validator.InvalidFieldException e){
+        } catch (InvalidFieldException e){
             rsp.setError(e.getMessage());
             return rsp.map();
         }

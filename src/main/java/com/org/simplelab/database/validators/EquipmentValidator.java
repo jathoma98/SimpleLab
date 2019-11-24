@@ -3,7 +3,7 @@ package com.org.simplelab.database.validators;
 import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.Equipment;
 
-public class EquipmentValidator extends Validator {
+public class EquipmentValidator extends Validator<Equipment> {
 
     private String name;
 

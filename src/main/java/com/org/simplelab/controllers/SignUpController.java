@@ -2,6 +2,7 @@ package com.org.simplelab.controllers;
 
 import com.org.simplelab.database.UserDB;
 import com.org.simplelab.database.entities.User;
+import com.org.simplelab.database.validators.InvalidFieldException;
 import com.org.simplelab.database.validators.UserValidator;
 import com.org.simplelab.database.validators.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class SignUpController extends BaseController {
         RequestResponse response = new RequestResponse();
         try{
             userV.validate();
-        }catch(Validator.InvalidFieldException e){
+        }catch(InvalidFieldException e){
             response.setSuccess(false);
             response.setError(e.getMessage());
             return response.map();

@@ -8,6 +8,7 @@ import com.org.simplelab.database.UserDB;
 import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.repositories.LabRepository;
+import com.org.simplelab.database.validators.InvalidFieldException;
 import com.org.simplelab.database.validators.LabValidator;
 import com.org.simplelab.database.validators.Validator;
 import com.org.simplelab.restcontrollers.dto.DTO;
@@ -49,7 +50,7 @@ public class LabRESTController extends BaseController {
         RequestResponse rsp = new RequestResponse();
         try{
             validator.validate();
-        } catch (Validator.InvalidFieldException e){
+        } catch (InvalidFieldException e){
             rsp.setSuccess(false);
             rsp.setError(e.getMessage());
             rsp.set("value", validator.getName());
@@ -117,7 +118,7 @@ public class LabRESTController extends BaseController {
         }
         try{
             labUpdateDTO.validate();
-        } catch (Validator.InvalidFieldException e){
+        } catch (InvalidFieldException e){
             rsp.setError(e.getMessage());
             return rsp.map();
         }
