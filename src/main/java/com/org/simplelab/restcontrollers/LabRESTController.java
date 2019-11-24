@@ -56,7 +56,7 @@ public class LabRESTController extends BaseController {
             rsp.set("value", validator.getName());
             return rsp.map();
         }
-        long user_id = (long)session.getAttribute("user_id");
+        long user_id = getUserIdFromSession(session);
         User u = userDB.findUserById(user_id);
         Lab lab = validator.build();
         lab.setCreator(u);

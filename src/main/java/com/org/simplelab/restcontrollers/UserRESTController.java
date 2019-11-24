@@ -52,7 +52,7 @@ public class UserRESTController extends BaseController {
     public User getUserInfo(HttpSession session){
         long userId = -1;
         try{
-            userId = (long)session.getAttribute("user_id");
+            userId = getUserIdFromSession(session);
         } catch (Exception e){
             //redirect to login
         }
@@ -63,12 +63,7 @@ public class UserRESTController extends BaseController {
     @PostMapping(RESET_USER_MAPPING)
     public void resetUserInfo(@RequestBody User user
                                            ,HttpSession session) {
-        long userId = -1;
-        try {
-            userId = (long) session.getAttribute("user_id");
-        } catch (Exception e) {
-            //redirect to login
-        }
+        long userId = getUserIdFromSession(session);
         user.setId(userId);
         userDB.updateUser(user);
     }

@@ -30,7 +30,7 @@ public class EquipmentRESTController extends BaseController {
     @PostMapping
     public Map addEquipment(@RequestBody EquipmentValidator validator, HttpSession session){
         RequestResponse rsp = new RequestResponse();
-        long user_id = (long)session.getAttribute("user_id");
+        long user_id = getUserIdFromSession(session);
         try{
             validator.validate();
         } catch (InvalidFieldException e){

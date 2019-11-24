@@ -18,7 +18,8 @@ public class TeacherController extends BaseController {
 
     @RequestMapping("")
     public String root(HttpSession session, Model model) {
-        List<Course> list_course = courseDB.getCoursesForTeacher((long)session.getAttribute("user_id"));
+        long user_id = getUserIdFromSession(session);
+        List<Course> list_course = courseDB.getCoursesForTeacher(user_id);
         String home_navig = ((String)session.getAttribute("username")) + "'s Home";
         model.addAttribute("home_navig", home_navig);
         model.addAttribute("list_of_course", list_course);

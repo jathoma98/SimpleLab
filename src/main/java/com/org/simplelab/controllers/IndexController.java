@@ -13,7 +13,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping(path="")
-public class IndexController extends BaseController{
+public class IndexController extends BaseController {
 
     @GetMapping
     public String toHome(){
