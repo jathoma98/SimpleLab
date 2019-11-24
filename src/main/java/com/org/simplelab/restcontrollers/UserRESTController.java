@@ -43,19 +43,12 @@ public class UserRESTController extends BaseController {
         if (regex == null || regex.equals("")){
             return new ArrayList<>();
         }
-        //TODO: reimplement this
         return userDB.searchUserWithKeyword(regex);
-//        return null;
     }
 
     @GetMapping(LOAD_USER_MAPPING)
     public User getUserInfo(HttpSession session){
-        long userId = -1;
-        try{
-            userId = getUserIdFromSession(session);
-        } catch (Exception e){
-            //redirect to login
-        }
+        long userId = getUserIdFromSession(session);
         User user = userDB.findUserById(userId);
         return user;
     }

@@ -29,7 +29,7 @@ public abstract class BaseController {
     @Autowired
     protected EquipmentDB equipmentDB;
 
-    public long getUserIdFromSession(HttpSession session){
+    protected long getUserIdFromSession(HttpSession session){
         long userId = -1;
         try {
             userId = (long) session.getAttribute(USER_ID_KEY);

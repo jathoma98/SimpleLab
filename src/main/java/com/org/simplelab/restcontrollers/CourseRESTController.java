@@ -96,7 +96,6 @@ public class CourseRESTController extends BaseController {
                 rsp.setError(e.getMessage());
                 return rsp.map();
             }
-            //TODO: refactor with modelmapper?
             Course found = courses.get(0);
             //ensure the found course belongs to the current user -- exception if not (the new course code is a duplicate)
             if (found.getCreator().getId() != uid) {

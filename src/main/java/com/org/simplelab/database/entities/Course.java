@@ -1,6 +1,7 @@
 package com.org.simplelab.database.entities;
 
 import com.org.simplelab.database.DBUtils;
+import com.org.simplelab.database.entities.interfaces.UserCreated;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -11,7 +12,7 @@ import java.util.Set;
 @Data
 @Entity(name = DBUtils.COURSE_TABLE_NAME)
 @Table(name = DBUtils.COURSE_TABLE_NAME)
-public class Course extends BaseTable {
+public class Course extends BaseTable implements UserCreated{
 
     private String course_id;
     private String name;
