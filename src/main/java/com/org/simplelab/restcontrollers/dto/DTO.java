@@ -45,12 +45,14 @@ public class DTO {
     }
 
     /**
-     * Contains information for updating a lab.
+     * Contains information for updating student list in a course.
      */
     @Getter
     @Setter
-    public static class CourseWithUsersDTO {
+    public static class CourseUpdateStudentListDTO {
+        //course need to be update
         private String course_id;
+        //list of username need to add or delete
         private List<String> usernameList;
     }
 }
