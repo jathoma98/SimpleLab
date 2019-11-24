@@ -49,6 +49,10 @@ $(document).ready(function(){
         $("#equipmentModal").modal("open");
     })
 
+    $("#addcompound").click(function (event) {
+        $("#compoundmodal").modal("open");
+    })
+
     $(function(){
         $('#sidebar_trigger').hover(function(){
             $("#sidebar").show("slide", { direction: "left" }, 400);
