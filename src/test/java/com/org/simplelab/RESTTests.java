@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
 import javax.persistence.Temporal;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -200,7 +202,7 @@ public class RESTTests extends SpringTestConfig {
 
     @Test
     @WithMockUser(username = username, password = username)
-    void addGetUpdateLabTests() throws Exception {
+    void addGetUpdateDeleteLabTests() throws Exception {
         session_atr.put("user_id", user_id);
         session_atr.put("username", username);
 
@@ -262,6 +264,18 @@ public class RESTTests extends SpringTestConfig {
                         //.andDo(print())
                         .andExpect(status().isOk())
                         .andExpect(content().json(json.toString()));
+
+        /**
+         * @Test: Delete the lab we just created with DELETE to /lab/rest/{id}
+         */
+
+        mockMvc.perform(delete(LabRESTController.BASE_MAPPING + "/" + lab_id)
+                        .sessionAttrs(session_atr))
+                        .andExpect(status().isOk());
+
+        Lab found_lab = labDB.getLabById(lab_id);
+        assertNull(found_lab);
+
 
     }
 

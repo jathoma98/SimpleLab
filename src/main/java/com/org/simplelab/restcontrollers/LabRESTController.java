@@ -30,7 +30,6 @@ public class LabRESTController {
     //lab_id = id of the lab to interact with in the DB
     public static final String BASE_MAPPING = "/lab/rest";
     public static final String LAB_ID_MAPPING = "/{lab_id}";
-    public static final String COURSE_ID_MAPPING = "/{course_id}";
 
     @Autowired
     LabRepository labRepository;
@@ -40,9 +39,6 @@ public class LabRESTController {
 
     @Autowired
     UserDB userDB;
-
-    @Autowired
-    CourseDB courseDB;
 
     /**
      * Attempts to insert a lab into the Lab DB.
