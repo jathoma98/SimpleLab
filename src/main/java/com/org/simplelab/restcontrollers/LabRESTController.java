@@ -1,5 +1,6 @@
 package com.org.simplelab.restcontrollers;
 
+import com.org.simplelab.controllers.BaseController;
 import com.org.simplelab.controllers.RequestResponse;
 import com.org.simplelab.database.CourseDB;
 import com.org.simplelab.database.LabDB;
@@ -25,7 +26,7 @@ import static com.org.simplelab.restcontrollers.LabRESTController.BASE_MAPPING;
 
 @RestController
 @RequestMapping(BASE_MAPPING)
-public class LabRESTController {
+public class LabRESTController extends BaseController {
 
     //lab_id = id of the lab to interact with in the DB
     public static final String BASE_MAPPING = "/lab/rest";
@@ -33,12 +34,6 @@ public class LabRESTController {
 
     @Autowired
     LabRepository labRepository;
-
-    @Autowired
-    LabDB labDB;
-
-    @Autowired
-    UserDB userDB;
 
     /**
      * Attempts to insert a lab into the Lab DB.

@@ -15,12 +15,9 @@ import java.util.Map;
 
 @Controller
 @RequestMapping(SignUpController.BASE_MAPPING)
-public class SignUpController {
+public class SignUpController extends BaseController {
 
     public static final String BASE_MAPPING = "/signup";
-
-    @Autowired
-    UserDB userDB;
 
     @GetMapping("")
     public String infoPage(){

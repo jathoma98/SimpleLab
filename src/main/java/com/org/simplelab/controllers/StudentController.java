@@ -11,7 +11,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping(StudentController.BASE_MAPPING)
-public class StudentController {
+public class StudentController extends BaseController{
 
     public static final String BASE_MAPPING = "/student";
 

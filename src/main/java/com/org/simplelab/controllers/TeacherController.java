@@ -2,7 +2,6 @@ package com.org.simplelab.controllers;
 
 import com.org.simplelab.database.CourseDB;
 import com.org.simplelab.database.entities.Course;
-import org.bouncycastle.jcajce.provider.symmetric.TEA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,16 +12,13 @@ import java.util.List;
 
 @Controller
 @RequestMapping(TeacherController.BASE_MAPPING)
-public class TeacherController {
+public class TeacherController extends BaseController {
 
     public static final String BASE_MAPPING = "/teacher";
 
-    @Autowired
-    CourseDB cdb;
-
     @RequestMapping("")
     public String root(HttpSession session, Model model) {
-        List<Course> list_course = cdb.getCoursesForTeacher((long)session.getAttribute("user_id"));
+        List<Course> list_course = courseDB.getCoursesForTeacher((long)session.getAttribute("user_id"));
         String home_navig = ((String)session.getAttribute("username")) + "'s Home";
         model.addAttribute("home_navig", home_navig);
         model.addAttribute("list_of_course", list_course);

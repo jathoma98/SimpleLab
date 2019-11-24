@@ -1,5 +1,6 @@
 package com.org.simplelab.restcontrollers;
 
+import com.org.simplelab.controllers.BaseController;
 import com.org.simplelab.controllers.RequestResponse;
 import com.org.simplelab.database.CourseDB;
 import com.org.simplelab.database.UserDB;
@@ -21,13 +22,7 @@ import java.util.Map;
 //TODO: secure rest endpoints with authentication
 @RestController
 @RequestMapping(CourseRESTController.BASE_MAPPING)
-public class CourseRESTController {
-
-    @Autowired
-    CourseDB courseDB;
-
-    @Autowired
-    UserDB userDB;
+public class CourseRESTController extends BaseController {
 
     public static final String BASE_MAPPING = "/course/rest";
 

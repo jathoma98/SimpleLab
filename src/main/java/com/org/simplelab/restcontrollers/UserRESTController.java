@@ -1,5 +1,6 @@
 package com.org.simplelab.restcontrollers;
 
+import com.org.simplelab.controllers.BaseController;
 import com.org.simplelab.database.UserDB;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.restcontrollers.dto.DTO;
@@ -12,10 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(UserRESTController.BASE_MAPPING)
-    public class UserRESTController {
-
-    @Autowired
-    UserDB userDB;
+public class UserRESTController extends BaseController {
 
     public static final String BASE_MAPPING = "/user/rest";
 

@@ -1,6 +1,7 @@
 package com.org.simplelab.restcontrollers;
 
 
+import com.org.simplelab.controllers.BaseController;
 import com.org.simplelab.controllers.RequestResponse;
 import com.org.simplelab.database.UserDB;
 import com.org.simplelab.database.entities.Equipment;
@@ -19,15 +20,11 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(EquipmentRESTController.BASE_MAPPING)
-public class EquipmentRESTController {
+public class EquipmentRESTController extends BaseController {
 
     public static final String BASE_MAPPING = "/equipment/rest";
 
     public static final String EQUIPMENT_ID_MAPPING = "/{equipment_id}";
-
-    @Autowired
-    UserDB userDB;
-
 
     @PostMapping
     public Map addEquipment(@RequestBody EquipmentValidator validator, HttpSession session){
