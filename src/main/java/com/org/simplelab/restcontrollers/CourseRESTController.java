@@ -20,7 +20,7 @@ import java.util.Map;
 
 //TODO: secure rest endpoints with authentication
 @RestController
-@RequestMapping("/course/rest")
+@RequestMapping(CourseRESTController.BASE_MAPPING)
 public class CourseRESTController {
 
     @Autowired
@@ -28,6 +28,8 @@ public class CourseRESTController {
 
     @Autowired
     UserDB userDB;
+
+    public static final String BASE_MAPPING = "/course/rest";
 
     public static final String DELETE_MAPPING = "/deleteCourse";
     public static final String UPDATE_MAPPING = "/updateCourse";

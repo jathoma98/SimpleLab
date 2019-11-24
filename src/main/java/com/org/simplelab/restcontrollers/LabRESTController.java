@@ -21,11 +21,14 @@ import javax.servlet.http.HttpSession;
 import java.util.Map;
 import java.util.Optional;
 
+import static com.org.simplelab.restcontrollers.LabRESTController.BASE_MAPPING;
+
 @RestController
-@RequestMapping("/lab/rest")
+@RequestMapping(BASE_MAPPING)
 public class LabRESTController {
 
     //lab_id = id of the lab to interact with in the DB
+    public static final String BASE_MAPPING = "/lab/rest";
     public static final String LAB_ID_MAPPING = "/{lab_id}";
     public static final String COURSE_ID_MAPPING = "/{course_id}";
 
