@@ -178,6 +178,15 @@
     padding: 15px;
 
 }
+.eq_maigin{
+    margin-left: 10px!important;
+}
+.eq_modal{
+    max-height: 45%!important;
+    width: 70%!important;
+
+
+}
 
 .sortable-highlight{
     height: 2.5em; line-height: 2.5em;
