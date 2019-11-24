@@ -113,7 +113,7 @@
         <div id="sidebar" class="sidebar sidebarhover row">
             <div id="sidebarone" class="sidebar_info delete_empty">
                 <nav class="delete_empty">
-                    <div class="nav-wrapper my_gray">
+                    <div class="nav-wrapper my_yellow">
                         <a href="#" class="brand-logo"><i class="material-icons">view_list</i>item sets</a>
                         <a id="sidebar_add" class="right sidebar_add modal-trigger" href="#equipmentModal"><i class="material-icons">add</i></a>
                     </div>
@@ -143,7 +143,7 @@
                                     <input class="with-gap" name="group1" type="radio"/>
                                     <span>Burning Type</span>
                                 </label>
-                                
+
                                 </div>
                                 <div class="col s8 delete_empty">
                                     <label>Security: </label>
@@ -193,6 +193,7 @@
                     </div>
                 </nav>
 
+<!--                sidebar item set-->
                 <ul class="collapsible row my_white" >
                     <li>
                         <div class="collapsible-header ">
@@ -220,18 +221,36 @@
                     </li>
                 </ul>
             </div>
+<!--            side bar step set-->
             <div id="sidebartwo" class="sidebar_info">
-                sidebar two info
+                <nav class="delete_empty">
+                    <div class="nav-wrapper my_red">
+                        <a href="#" class="brand-logo"><i class="material-icons">view_list</i>item sets</a>
+                        <a id="sidebar_stepadd" class="right sidebar_add modal-trigger" href="#equipmentModal"><i class="material-icons">add</i></a>
+                    </div>
+                </nav>
+                <ul id="selectable" class="sortable selectable collection row my_white" >
+                    <li id="step1" class="collection-item ui-widget-content sidebar_selectable_item">
+                        Step One
+                    </li>
+                    <li id="step2" class="collection-item ui-widget-content sidebar_selectable_item">
+                        Step Two
+                    </li>
+                    <li id="step3" class="collection-item ui-widget-content sidebar_selectable_item">
+                        Step Three
+                    </li>
+                </ul>
             </div>
+<!--            side bar current item set-->
             <div id="sidebarthree" class="sidebar_info ">
                 sidebar three info
             </div>
 
             <div class="sidebar_trigger delete_empty">
                 <ul class=" tabs delete_empty">
-                    <li class="tab tab_content my_yellow delete_empty"><a class="active delete_empty" href="#sidebarone"><p class="vtext">Item</p></a></li>
-                    <li class="tab tab_content my_red delete_empty"><a class="delete_empty" href="#sidebartwo"><p class="vtext">Item</p></a></li>
-                    <li class="tab tab_content my_gray delete_empty"><a class="delete_empty" href="#sidebarthree"><p class="vtext">Item</p></a></li>
+                    <li class="tab tab_content my_yellow delete_empty"><a class="active delete_empty" href="#sidebarone"><p class="vtext1">Item</p></a></li>
+                    <li class="tab tab_content my_red delete_empty"><a class="delete_empty" href="#sidebartwo"><p class="vtext1">Steps</p></a></li>
+                    <li class="tab tab_content my_gray delete_empty"><a class="delete_empty" href="#sidebarthree"><p class="vtext2">Current Item</p></a></li>
                 </ul>
             </div>
         </div>
@@ -362,6 +381,10 @@
 <script>
     $(document).ready(function(){
         M.AutoInit();
+        $( ".sortable" ).sortable({
+            placeholder: "sortable-highlight"
+        });
+        $( "#selectable" ).selectable();
         $('.modal').modal();
         $('.dropdown-trigger').dropdown();
         $('.tabs').tabs();
@@ -379,8 +402,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         var elems = document.querySelectorAll('.dropdown-trigger');
         var instances = M.Dropdown.init(elems, {
-            hover: true,
-            alignment:left
+            hover: true
         });
     });
 
