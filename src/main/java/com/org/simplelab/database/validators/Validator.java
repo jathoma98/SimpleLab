@@ -7,6 +7,8 @@ package com.org.simplelab.database.validators;
  */
 public abstract class Validator {
 
+    public static final String EMPTY_FIELD = "Fields cannot be empty. \n";
+
     /**
      * Exception to be thrown, which should contain the error message
      * corresponding to how field data is incorrect.

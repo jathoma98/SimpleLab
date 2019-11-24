@@ -2,6 +2,7 @@ package com.org.simplelab.controllers;
 
 import com.org.simplelab.database.CourseDB;
 import com.org.simplelab.database.entities.Course;
+import org.bouncycastle.jcajce.provider.symmetric.TEA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,8 +12,10 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
-@RequestMapping(path="/teacher")
+@RequestMapping(TeacherController.BASE_MAPPING)
 public class TeacherController {
+
+    public static final String BASE_MAPPING = "/teacher";
 
     @Autowired
     CourseDB cdb;

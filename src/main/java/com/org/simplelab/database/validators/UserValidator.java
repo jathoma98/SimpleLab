@@ -28,7 +28,6 @@ public class UserValidator extends Validator {
     public static final String USERNAME_LENGTH_ERROR = "The username must be between " + MIN_FIELD_LENGTH + "-" + MAX_FIELD_LENGTH + " characters in length. \n";
     public static final String PASSWORD_MATCH_ERROR = "The passwords do not match. \n";
     public static final String PASSWORD_LENGTH_ERROR ="The password must be between " + MIN_FIELD_LENGTH + "-" + MAX_FIELD_LENGTH + " characters in length. \n";
-    public static final String EMPTY_FIELD = "Fields cannot be empty. \n";
     public static final String INVALID_EMAIL = "The email is invalid. \n";
 
 

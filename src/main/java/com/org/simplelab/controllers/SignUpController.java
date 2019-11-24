@@ -14,8 +14,10 @@ import java.util.Map;
 //import com.sun.org.apache.regexp.internal.RE;
 
 @Controller
-@RequestMapping(path="/signup")
+@RequestMapping(SignUpController.BASE_MAPPING)
 public class SignUpController {
+
+    public static final String BASE_MAPPING = "/signup";
 
     @Autowired
     UserDB userDB;

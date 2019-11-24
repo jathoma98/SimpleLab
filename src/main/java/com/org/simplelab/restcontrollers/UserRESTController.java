@@ -11,11 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user/rest")
+@RequestMapping(UserRESTController.BASE_MAPPING)
     public class UserRESTController {
 
     @Autowired
     UserDB userDB;
+
+    public static final String BASE_MAPPING = "/user/rest";
 
     public static final String LOAD_USER_MAPPING = "/loadUserInfo";
     public static final String RESET_USER_MAPPING = "/restUserInfo";
