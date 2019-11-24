@@ -20,6 +20,22 @@ $(document).ready(function(){
         event.stopPropagation();
     })
 
+
+
+    $("#sidebar_add").click(function (event) {
+        $("#equipmentModal").modal("open");
+    })
+
+    $(function(){
+        $('#sidebar_trigger').hover(function(){
+            $("#sidebar").show("slide", { direction: "left" }, 400);
+        },function(){
+            $("#sidebar").hide("slide", { direction: "left" }, 400);
+        }).trigger('mouseleave');
+    });
+
+    //every item that added to the operation table should have the function below
+    //every item should be selectable
     $("#item_one").click(function (event) {
         selectItem(this.id);
         event.stopPropagation();
@@ -30,24 +46,6 @@ $(document).ready(function(){
         event.stopPropagation();
 
     })
-
-
-
-    $("#sidebar_lock").click(function (event) {
-        $("#sidebar").toggleClass("sidebarhover");
-    })
-
-    // $('#sidebar_trigger').hover(function(){
-    //         $("#sidebar").show("slide", { direction: "left" }, 500);
-    // })
-    //
-    $(function(){
-        $('#sidebar_trigger').hover(function(){
-            $("#sidebar").show("slide", { direction: "left" }, 400);
-        },function(){
-            $("#sidebar").hide("slide", { direction: "left" }, 400);
-        }).trigger('mouseleave');
-    });
 
 
 });

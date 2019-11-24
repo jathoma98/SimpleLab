@@ -10,6 +10,8 @@ import com.org.simplelab.database.repositories.LabRepository;
 import com.org.simplelab.database.validators.LabValidator;
 import com.org.simplelab.database.validators.Validator;
 import com.org.simplelab.restcontrollers.dto.DTO;
+import org.modelmapper.Conditions;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -108,12 +110,29 @@ public class LabRESTController {
      * @return success:true if lab found and updated
      *         success:false otherwise
      */
+    //TODO: add security?
     @PostMapping(LAB_ID_MAPPING)
     public Map<String, String> labUpdate(@PathVariable("lab_id") long lab_id,
-                                         @RequestBody DTO.LabUpdateDTO labUpdateDTO){
+                                         @RequestBody LabValidator labUpdateDTO){
         RequestResponse rsp = new RequestResponse();
         System.out.println(lab_id);
+        Lab found = labDB.getLabById(lab_id);
+        if (found == null){
+            rsp.setError("Lab not found.");
+            return rsp.map();
+        }
+        try{
+            labUpdateDTO.validate();
+        } catch (Validator.InvalidFieldException e){
+            rsp.setError(e.getMessage());
+            return rsp.map();
+        }
+        //map non-null fields
+        ModelMapper mm = new ModelMapper();
+        mm.getConfiguration().setPropertyCondition(Conditions.isNotNull());
+        mm.map(labUpdateDTO, found);
 
+        labDB.updateLab(found);
 
         rsp.setSuccess(true);
         return rsp.map();
