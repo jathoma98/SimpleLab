@@ -248,5 +248,4 @@ public class CourseRESTController {
         r.setSuccess(true);
         return r.map();
     }
-
 }

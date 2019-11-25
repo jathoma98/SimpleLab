@@ -46,9 +46,10 @@ function templatePreLoad (){
  *
  * @return html_text
  **/
-rebuildComponent  = function (component, template, data, btnEvents) {
+rebuildComponent  = function (component, template_id, data, btnEvents) {
     $(component).empty();
-    let html_text = Mustache.render($(template).html(), data)
+    let template = $(template_id).html();
+    let html_text = Mustache.render(template, data);
     $(component).html(html_text);
     for(let key in btnEvents){
         $(key).on("click", btnEvents[key]);

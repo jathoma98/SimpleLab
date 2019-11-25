@@ -46,4 +46,9 @@ public class LabDB {
         return found.isPresent()? found.get() : null;
     }
 
+    public List<Lab> getLabForTeacher(long id){
+        List<Lab> found = labRepository.findByCreator_id(id);
+        return found;
+    }
+
 }

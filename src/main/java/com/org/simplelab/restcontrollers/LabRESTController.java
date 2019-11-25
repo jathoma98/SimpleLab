@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -28,6 +29,8 @@ public class LabRESTController {
     //lab_id = id of the lab to interact with in the DB
     public static final String LAB_ID_MAPPING = "/{lab_id}";
     public static final String COURSE_ID_MAPPING = "/{course_id}";
+    public static final String LOAD_LIST_LAB_MAPPING = "/loadLabList";
+
 
     @Autowired
     LabRepository labRepository;
@@ -136,6 +139,19 @@ public class LabRESTController {
 
         rsp.setSuccess(true);
         return rsp.map();
+    }
+
+
+    @GetMapping(LOAD_LIST_LAB_MAPPING)
+    public List<Lab> getListOfCourse(HttpSession session) {
+        long userId = -1;
+        try {
+            userId = (long) session.getAttribute("user_id");
+        } catch (Exception e) {
+            //redirect to login
+        }
+        List<Lab> labs = labDB.getLabForTeacher(userId);
+        return labs;
     }
 
     /**

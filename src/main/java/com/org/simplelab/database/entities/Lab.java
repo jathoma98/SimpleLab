@@ -12,6 +12,7 @@ import java.util.*;
 public class Lab extends BaseTable{
 
     private String name;
+    private String description;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "creator_id")
