@@ -16,6 +16,11 @@ function retObjHandle(retObj, callback){
             alert(retObj.msg);
             break;
         default:
+            if(retObj.success == true){
+                if(callback != undefined){
+                    callback();
+                }
+            }
     }
 }
 

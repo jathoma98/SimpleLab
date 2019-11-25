@@ -3,6 +3,8 @@ package com.org.simplelab.restcontrollers;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.validators.UserValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
+import com.org.simplelab.restcontrollers.rro.RRO;
+import com.org.simplelab.restcontrollers.rro.RRO_ACTION_TYPE;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -37,13 +39,19 @@ public class UserRESTController extends BaseRESTController<User> {
      * all other attributes null
      */
     @PostMapping(SEARCH_USER_MAPPING)
-    public List<User> searchUsers(@RequestBody DTO.UserSearchDTO toSearch){
+    public RRO<List<User>> searchUsers(@RequestBody DTO.UserSearchDTO toSearch){
+        RRO<List<User>> rro = new RRO();
         String regex = toSearch.getRegex();
         //dont allow empty searches
         if (regex == null || regex.equals("")){
-            return new ArrayList<>();
+            rro.setSuccess(false);
+            rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+            return rro;
         }
-        return userDB.searchUserWithKeyword(regex);
+        rro.setSuccess(true);
+        rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
+        rro.setData(userDB.searchUserWithKeyword(regex));
+        return rro;
     }
 
     @GetMapping(LOAD_USER_MAPPING)
@@ -62,7 +70,7 @@ public class UserRESTController extends BaseRESTController<User> {
         userDB.update(user);
     }
 
-    public Map registerUser(UserValidator validator, HttpSession session){
+    public RRO<String> registerUser(UserValidator validator, HttpSession session){
         return super.addEntity(validator, userDB);
     }
 
