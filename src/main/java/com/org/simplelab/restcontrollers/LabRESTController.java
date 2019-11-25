@@ -1,9 +1,7 @@
 package com.org.simplelab.restcontrollers;
 
-import com.org.simplelab.controllers.BaseController;
 import com.org.simplelab.controllers.RequestResponse;
 import com.org.simplelab.database.entities.Lab;
-import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.repositories.LabRepository;
 import com.org.simplelab.database.validators.InvalidFieldException;
 import com.org.simplelab.database.validators.LabValidator;
@@ -64,12 +62,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
      */
     @DeleteMapping(LAB_ID_MAPPING)
     public Map<String, String> labDelete(@PathVariable("lab_id") long lab_id){
-        RequestResponse rsp = new RequestResponse();
-
-        labDB.deleteLabById(lab_id);
-
-        rsp.setSuccess(true);
-        return rsp.map();
+        return super.deleteEntity(lab_id, labDB);
     }
 
     /**

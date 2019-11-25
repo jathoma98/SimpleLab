@@ -17,14 +17,10 @@ import java.util.Optional;
 @Component
 public class LabDB extends DBService<Lab> {
 
-    @Autowired
-    private LabRepository labRepository;
-
-    @Autowired
-    private CourseRepository courseRepository;
-
-    public void deleteLabById(long id){
+    @Override
+    public boolean deleteById(long id){
         labRepository.deleteById(id);
+        return true;
     }
 
     @Override

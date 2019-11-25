@@ -12,4 +12,9 @@ public class EquipmentDB extends DBService<Equipment> {
     public boolean insert(Equipment toInsert) {
         return false;
     }
+
+    @Override
+    public boolean deleteById(long id) {
+        return false;
+    }
 }

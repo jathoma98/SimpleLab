@@ -40,4 +40,15 @@ public class BaseRESTController<T extends BaseTable> extends BaseController {
         }
     }
 
+    protected Map deleteEntity(long idToDelete, DBService<T> db){
+        RequestResponse response = new RequestResponse();
+        if (db.deleteById(idToDelete)){
+            response.setSuccess(true);
+            return response.map();
+        } else {
+            response.setSuccess(false);
+            return response.map();
+        }
+    }
+
 }

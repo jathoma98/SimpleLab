@@ -97,6 +97,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
      * Takes a JSON object with required parameter "course_id", which is the course id of the course to delete
      * Deletes the course with this id.
      */
+    //TODO: this can probably be refactored better.
     @DeleteMapping(DELETE_MAPPING)
     public Map<String, String> deleteCourse(@RequestBody CourseValidator[] toDelete,
                                             HttpSession session) {

@@ -33,6 +33,12 @@ public class CourseDB extends DBService<Course> {
         return true;
     }
 
+    @Override
+    public boolean deleteById(long id){
+        courseRepository.deleteById(id);
+        return true;
+    }
+
     /**
      * Adds a student to a Course.
      * @param course_id - course_id of the course to be modified
