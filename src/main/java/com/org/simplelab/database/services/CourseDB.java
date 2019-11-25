@@ -162,7 +162,7 @@ public class CourseDB extends DBService<Course> {
     @Transactional
     public void deleteCourseById(long user_id, String course_id){
        List<Course> found = findByCourseId(course_id);
-       if (found != null)
+       if (found != null && found.size() > 0)
            deleteById(found.get(0).getId());
     }
 

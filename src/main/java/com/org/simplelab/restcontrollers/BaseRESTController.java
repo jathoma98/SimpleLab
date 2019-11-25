@@ -23,7 +23,7 @@ import java.util.Map;
  * @Author Jacob Thomas
  */
 @Component
-public abstract class BaseRESTController<T extends BaseTable> extends BaseController {
+abstract class BaseRESTController<T extends BaseTable> extends BaseController {
 
     @Autowired
     HttpSession session;
