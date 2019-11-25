@@ -22,7 +22,6 @@ public class BaseRESTController<T extends BaseTable> extends BaseController {
 
     protected Map addEntity(Validator<T> validator, HttpSession session, DBService<T> db){
         RequestResponse response = new RequestResponse();
-        long user_id = getUserIdFromSession(session);
         try{
             validator.validate();
         } catch (InvalidFieldException e){
@@ -34,6 +33,7 @@ public class BaseRESTController<T extends BaseTable> extends BaseController {
 
         //set the creator if its a UserCreated entity
         if (UserCreated.class.isInstance(created)){
+            long user_id = getUserIdFromSession(session);
             UserCreated created_assign = (UserCreated)created;
             User u = userDB.findById(user_id);
             created_assign.setCreator(u);

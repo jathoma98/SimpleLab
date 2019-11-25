@@ -2,16 +2,18 @@ package com.org.simplelab.restcontrollers;
 
 import com.org.simplelab.controllers.BaseController;
 import com.org.simplelab.database.entities.User;
+import com.org.simplelab.database.validators.UserValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(UserRESTController.BASE_MAPPING)
-public class UserRESTController extends BaseController {
+public class UserRESTController extends BaseRESTController<User> {
 
     public static final String BASE_MAPPING = "/user/rest";
 
@@ -57,5 +59,9 @@ public class UserRESTController extends BaseController {
         long userId = getUserIdFromSession(session);
         user.setId(userId);
         userDB.update(user);
+    }
+
+    public Map registerUser(UserValidator validator, HttpSession session){
+        return super.addEntity(validator, session, userDB);
     }
 }
