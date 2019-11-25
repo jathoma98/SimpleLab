@@ -138,7 +138,6 @@ public class LoginController{
 
     @PostMapping(FORGOT_USER_MAPPING)
     public User fpGetUser (@RequestParam("userName") String username){
-
         User user = null;
         try{
             user = userDB.findUser(username);
