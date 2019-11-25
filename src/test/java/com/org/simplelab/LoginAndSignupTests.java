@@ -34,7 +34,7 @@ public class LoginAndSignupTests extends SpringTestConfig{
         user.setUsername(new StringBuilder().append("log").append(metadata).toString());
         user.setPassword(password);
 
-        userDB.insertUser(user);
+        userDB.insert(user);
 
 
         //test right username+pass

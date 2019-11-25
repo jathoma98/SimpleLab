@@ -75,12 +75,4 @@ public class LabRESTController extends BaseRESTController<Lab> {
         return super.updateEntity(lab_id, labUpdateDTO, labDB);
     }
 
-    /**
-     * Right now just returns all labs.
-     */
-    @GetMapping("")
-    public Iterable<Lab> labGetForUser(HttpSession session){
-        return labRepository.findAll();
-    }
-
 }

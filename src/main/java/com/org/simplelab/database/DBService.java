@@ -11,6 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class DBService<T extends BaseTable> {
 
+    public static class EntityInsertionException extends Exception{
+        EntityInsertionException(String msg){
+            super(msg);
+        }
+    }
+
     @Autowired
     CourseRepository courseRepository;
 
@@ -23,10 +29,10 @@ public abstract class DBService<T extends BaseTable> {
     @Autowired
     EquipmentRepository equipmentRepository;
 
-    public abstract boolean insert(T toInsert);
+    public abstract boolean insert(T toInsert) throws EntityInsertionException;
 
     public abstract boolean deleteById(long id);
-    
+
     public abstract boolean update(T toUpdate);
 
     public abstract T findById(long id);

@@ -1,10 +1,8 @@
 package com.org.simplelab.restcontrollers;
 
 import com.org.simplelab.controllers.BaseController;
-import com.org.simplelab.database.UserDB;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.restcontrollers.dto.DTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -49,7 +47,7 @@ public class UserRESTController extends BaseController {
     @GetMapping(LOAD_USER_MAPPING)
     public User getUserInfo(HttpSession session){
         long userId = getUserIdFromSession(session);
-        User user = userDB.findUserById(userId);
+        User user = userDB.findById(userId);
         return user;
     }
 
@@ -58,6 +56,6 @@ public class UserRESTController extends BaseController {
                                            ,HttpSession session) {
         long userId = getUserIdFromSession(session);
         user.setId(userId);
-        userDB.updateUser(user);
+        userDB.update(user);
     }
 }

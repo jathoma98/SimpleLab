@@ -9,10 +9,8 @@ import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.entities.interfaces.UserCreated;
 import com.org.simplelab.database.validators.InvalidFieldException;
 import com.org.simplelab.database.validators.Validator;
-import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 
-import javax.jws.WebParam;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
@@ -37,16 +35,18 @@ public class BaseRESTController<T extends BaseTable> extends BaseController {
         //set the creator if its a UserCreated entity
         if (UserCreated.class.isInstance(created)){
             UserCreated created_assign = (UserCreated)created;
-            User u = userDB.findUserById(user_id);
+            User u = userDB.findById(user_id);
             created_assign.setCreator(u);
         }
-        if (db.insert(created)){
-            response.setSuccess(true);
-            return response.map();
-        } else {
+        try{
+            db.insert(created);
+        } catch (DBService.EntityInsertionException e){
             response.setSuccess(false);
+            response.setError(e.getMessage());
             return response.map();
         }
+        response.setSuccess(true);
+        return response.map();
     }
 
     protected T getEntityById(long id, DBService<T> db){

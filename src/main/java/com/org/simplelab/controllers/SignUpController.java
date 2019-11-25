@@ -4,8 +4,6 @@ import com.org.simplelab.database.UserDB;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.validators.InvalidFieldException;
 import com.org.simplelab.database.validators.UserValidator;
-import com.org.simplelab.database.validators.Validator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -48,10 +46,10 @@ public class SignUpController extends BaseController {
             return response.map();
         }
         User user = userV.build();
-
-
-        if (userDB.insertUser(user) == UserDB.UserInsertionStatus.FAILED){
-            response.setError("username taken");
+        try {
+            userDB.insert(user);
+        } catch (UserDB.UserInsertionException e){
+            response.setError(e.getMessage());
             response.setSuccess(false);
             return response.map();
         }
