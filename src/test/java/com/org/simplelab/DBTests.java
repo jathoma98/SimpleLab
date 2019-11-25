@@ -146,13 +146,6 @@ class DBTests extends SpringTestConfig {
 		userDB.findUser(breaker1);
 	}
 
-	@Autowired
-	LabDB labDB;
-
-	@Test
-	void sql(){
-
-	}
 
 
 

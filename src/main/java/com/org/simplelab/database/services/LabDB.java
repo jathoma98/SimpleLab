@@ -43,6 +43,7 @@ public class LabDB extends DBService<Lab> {
         return labRepository.findByCreator_id(id);
     }
 
+
     public EquipmentSetManager getEquipmentOfLabById(long id){
         Lab found = findById(id);
         if (found == null)

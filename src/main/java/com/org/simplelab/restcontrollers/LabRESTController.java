@@ -1,13 +1,17 @@
 package com.org.simplelab.restcontrollers;
 
+import com.org.simplelab.controllers.RequestResponse;
+import com.org.simplelab.database.entities.Equipment;
 import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.repositories.LabRepository;
+import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.validators.LabValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Map;
 
 import static com.org.simplelab.restcontrollers.LabRESTController.BASE_MAPPING;
@@ -23,6 +27,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
     //lab_id = id of the lab to interact with in the DB
     public static final String BASE_MAPPING = "/lab/rest";
     public static final String LAB_ID_MAPPING = "/{lab_id}";
+    public static final String LAB_ID_EQUIPMENT_MAPPING = LAB_ID_MAPPING + "/equipment";
 
     /**
      * @param validator - JSON object with format:
@@ -53,6 +58,18 @@ public class LabRESTController extends BaseRESTController<Lab> {
     public Map<String, String> labUpdate(@PathVariable("lab_id") long lab_id,
                                          @RequestBody LabValidator labUpdateDTO){
         return super.updateEntity(lab_id, labUpdateDTO, labDB);
+    }
+
+    @PostMapping(LAB_ID_EQUIPMENT_MAPPING)
+    public Map addEquipmentToLab(@PathVariable("lab_id") long lab_id,
+                                 @RequestBody List<Equipment> equipmentToAdd){
+        RequestResponse response = new RequestResponse();
+        DBService.EntitySetManager<Equipment, Lab> found = labDB.getEquipmentOfLabById(lab_id);
+        if (found == null){
+            response.setError("Lab not found.");
+            return response.map();
+        }
+        return super.addEntitiesToEntityList(found, equipmentToAdd, labDB);
     }
 
 }
