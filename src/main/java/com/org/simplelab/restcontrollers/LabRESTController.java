@@ -6,6 +6,8 @@ import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.repositories.LabRepository;
 import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.validators.LabValidator;
+import com.org.simplelab.restcontrollers.rro.RRO;
+import com.org.simplelab.restcontrollers.rro.RRO_ACTION_TYPE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,7 +46,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
      *                  }
      */
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, String> saveLab(@RequestBody LabValidator validator){
+    public RRO<String> saveLab(@RequestBody LabValidator validator){
         return super.addEntity(validator, labDB);
     }
 
@@ -54,7 +56,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
     }
 
     @DeleteMapping(LAB_ID_MAPPING)
-    public Map<String, String> labDelete(@PathVariable("lab_id") long lab_id){
+    public RRO<String> labDelete(@PathVariable("lab_id") long lab_id){
         return super.deleteEntity(lab_id, labDB);
     }
 
@@ -63,8 +65,8 @@ public class LabRESTController extends BaseRESTController<Lab> {
      */
     //TODO: add security?
     @PostMapping(LAB_ID_MAPPING)
-    public Map<String, String> labUpdate(@PathVariable("lab_id") long lab_id,
-                                         @RequestBody LabValidator labUpdateDTO){
+    public RRO<String> labUpdate(@PathVariable("lab_id") long lab_id,
+                                 @RequestBody LabValidator labUpdateDTO){
         return super.updateEntity(lab_id, labUpdateDTO, labDB);
     }
 
@@ -87,13 +89,15 @@ public class LabRESTController extends BaseRESTController<Lab> {
 
     @Transactional
     @PostMapping(LAB_ID_EQUIPMENT_MAPPING)
-    public Map addEquipmentToLab(@PathVariable("lab_id") long lab_id,
+    public RRO<String> addEquipmentToLab(@PathVariable("lab_id") long lab_id,
                                  @RequestBody List<Equipment> equipmentToAdd){
-        RequestResponse response = new RequestResponse();
+        RRO<String> rro = new RRO();
         DBService.EntitySetManager<Equipment, Lab> found = labDB.getEquipmentOfLabById(lab_id);
         if (found == null){
-            response.setError("Lab not found.");
-            return response.map();
+            rro.setMsg("Lab not found.");
+            rro.setSuccess(false);
+            rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
+            return rro;
         }
         return super.addEntitiesToEntityList(found, equipmentToAdd, labDB);
     }
