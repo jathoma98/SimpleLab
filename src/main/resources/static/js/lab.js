@@ -2,6 +2,29 @@ var globalselect=undefined;
 var sidebar_step_select=undefined;
 
 $(document).ready(function(){
+
+    $(".sidebaritem").click(function (event) {
+        var c = $('<div id="item_three" class="ui-widget-content draggable_item center">' +
+            '<img src="../img/beaker.png" class="item_img">' +
+            '<p >draggable block</p>' +
+            '</div>');
+        c.click(function (event) {
+            selectItem(this.id);
+            event.stopPropagation();
+        })
+        console.log(c.id);
+        c.draggable({
+            containment: "parent",
+            start: startDrag,
+            stop: stopDrag
+        });
+        c.droppable({
+            drop: dropitem
+        });
+        $("#operation_area").append(c);
+    })
+
+
     $(".draggable_item").draggable({
         containment: "parent",
         start: startDrag,
@@ -10,6 +33,7 @@ $(document).ready(function(){
     $( ".draggable_item" ).droppable({
         drop: dropitem
     });
+
 
     $("#operation_area").click(function (event) {
         selectItem(this.id);
@@ -39,15 +63,14 @@ $(document).ready(function(){
             $("#"+this.id).addClass("ui-selected");
             sidebar_step_select=this.id;
         }
-
     })
-
-
-
 
     $("#sidebar_add").click(function (event) {
         $("#equipmentModal").modal("open");
     })
+
+
+
 
     $("#addcompound").click(function (event) {
         $("#compoundmodal").modal("open");
@@ -74,9 +97,7 @@ $(document).ready(function(){
     $("#item_two").click(function (event) {
         selectItem(this.id);
         event.stopPropagation();
-
     })
-
 
 });
 
@@ -92,10 +113,6 @@ function stopDrag(event,ui){
     item.classList.remove("zdeep");
 }
 
-// $(document).click(function(event) {
-//     var id = event.target.id);
-//     console.log(id);
-// });
 
 function dropitem(event, ui) {
     $("#modal1").modal("open");
@@ -107,8 +124,9 @@ function dropitem(event, ui) {
 }
 
 
-
+//select item in the operation area
 function selectItem(id){
+    console.log(id);
     if(id=="operation_area"){
         if(!(globalselect==undefined)){
             var unselect = document.getElementById(globalselect);
