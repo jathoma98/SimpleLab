@@ -1,11 +1,13 @@
 package com.org.simplelab.restcontrollers;
 
+import com.org.simplelab.controllers.BaseController;
 import com.org.simplelab.controllers.RequestResponse;
 import com.org.simplelab.database.CourseDB;
 import com.org.simplelab.database.UserDB;
 import com.org.simplelab.database.entities.Course;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.validators.CourseValidator;
+import com.org.simplelab.database.validators.InvalidFieldException;
 import com.org.simplelab.database.validators.Validator;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +22,10 @@ import java.util.Map;
 
 //TODO: secure rest endpoints with authentication
 @RestController
-@RequestMapping("/course/rest")
-public class CourseRESTController {
+@RequestMapping(CourseRESTController.BASE_MAPPING)
+public class CourseRESTController extends BaseController {
 
-    @Autowired
-    CourseDB courseDB;
-
-    @Autowired
-    UserDB userDB;
+    public static final String BASE_MAPPING = "/course/rest";
 
     public static final String DELETE_MAPPING = "/deleteCourse";
     public static final String UPDATE_MAPPING = "/updateCourse";
@@ -41,16 +39,11 @@ public class CourseRESTController {
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> addCourse(@RequestBody CourseValidator courseValidator,
                                          HttpSession session) {
-        long userId = -1;
-        try {
-            userId = (long) session.getAttribute("user_id");
-        } catch (Exception e) {
-            //redirect to login
-        }
+        long userId = getUserIdFromSession(session);
         RequestResponse response = new RequestResponse();
         try {
             courseValidator.validate();
-        } catch (Validator.InvalidFieldException e) {
+        } catch (InvalidFieldException e) {
             response.setSuccess(false);
             response.setError(e.getMessage());
             return response.map();
@@ -93,13 +86,13 @@ public class CourseRESTController {
     @PatchMapping(UPDATE_MAPPING)
     public Map<String, String> updateCourse(@RequestBody DTO.CourseUpdateDTO dto, HttpSession session) {
         RequestResponse rsp = new RequestResponse();
-        long uid = (long) session.getAttribute("user_id");
+        long uid = getUserIdFromSession(session);
         List<Course> courses = courseDB.findByCourseId(dto.getCourse_id_old());
         if (courses.size() > 0) {
             CourseValidator cv = dto.getNewCourseInfo();
             try {
                 cv.validate();
-            } catch (Validator.InvalidFieldException e) {
+            } catch (InvalidFieldException e) {
                 rsp.setError(e.getMessage());
                 return rsp.map();
             }
@@ -131,14 +124,7 @@ public class CourseRESTController {
     public Map<String, String> deleteCourse(@RequestBody CourseValidator[] toDelete,
                                             HttpSession session) {
         RequestResponse response = new RequestResponse();
-        long userId = -1;
-        try {
-            userId = (long) session.getAttribute("user_id");
-        } catch (Exception e) {
-            response.setError(e.toString());
-            return response.map();
-            //redirect to login
-        }
+        long userId =  getUserIdFromSession(session);
         for (CourseValidator c : toDelete) {
             String course_id = c.getCourse_id();
             courseDB.deleteCourseById(userId, course_id);
@@ -149,12 +135,7 @@ public class CourseRESTController {
 
     @GetMapping(LOAD_LIST_COURSE_MAPPING)
     public List<Course> getListOfCourse(HttpSession session) {
-        long userId = -1;
-        try {
-            userId = (long) session.getAttribute("user_id");
-        } catch (Exception e) {
-            //redirect to login
-        }
+        long userId = getUserIdFromSession(session);
         List<Course> courses = courseDB.getCoursesForTeacher(userId);
         return courses;
     }
@@ -162,7 +143,7 @@ public class CourseRESTController {
     @PostMapping(LOAD_COURSE_INFO_MAPPING)
     public Course getCourseInfo(@RequestBody Course course,
                                 HttpSession session) {
-        long uid = (long) session.getAttribute("user_id");
+        long uid = getUserIdFromSession(session);
         Course r = courseDB.findByUserIdAndCourseId(uid, course.getCourse_id());
         return r;
     }
@@ -182,11 +163,7 @@ public class CourseRESTController {
         r.setSuccess(false);
 
         long own_id = -1;
-        own_id = (long) session.getAttribute("user_id");
-        if (own_id == -1) {
-            r.setError("Not Login");
-            return r.map();
-        }
+        own_id = getUserIdFromSession(session);
         String own_username = (String) session.getAttribute("username");
 
         String errorMsg = "";
@@ -228,12 +205,7 @@ public class CourseRESTController {
         r.setSuccess(false);
 
         long own_id = -1;
-        own_id = (long) session.getAttribute("user_id");
-        if (own_id == -1) {
-            r.setError("Not Login");
-            return r.map();
-        }
-
+        own_id = getUserIdFromSession(session);
         String errorMsg = "";
         List<String> usernameList = course.getUsernameList();
         for(int i = 0; i < usernameList.size(); i++ ){

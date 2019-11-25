@@ -1,5 +1,6 @@
 package com.org.simplelab.restcontrollers;
 
+import com.org.simplelab.controllers.BaseController;
 import com.org.simplelab.database.UserDB;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.restcontrollers.dto.DTO;
@@ -11,11 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user/rest")
-    public class UserRESTController {
+@RequestMapping(UserRESTController.BASE_MAPPING)
+public class UserRESTController extends BaseController {
 
-    @Autowired
-    UserDB userDB;
+    public static final String BASE_MAPPING = "/user/rest";
 
     public static final String LOAD_USER_MAPPING = "/loadUserInfo";
     public static final String RESET_USER_MAPPING = "/restUserInfo";
@@ -52,7 +52,7 @@ import java.util.List;
     public User getUserInfo(HttpSession session){
         long userId = -1;
         try{
-            userId = (long)session.getAttribute("user_id");
+            userId = getUserIdFromSession(session);
         } catch (Exception e){
             //redirect to login
         }
@@ -63,12 +63,7 @@ import java.util.List;
     @PostMapping(RESET_USER_MAPPING)
     public void resetUserInfo(@RequestBody User user
                                            ,HttpSession session) {
-        long userId = -1;
-        try {
-            userId = (long) session.getAttribute("user_id");
-        } catch (Exception e) {
-            //redirect to login
-        }
+        long userId = getUserIdFromSession(session);
         user.setId(userId);
         userDB.updateUser(user);
     }

@@ -1,5 +1,6 @@
 package com.org.simplelab.restcontrollers;
 
+import com.org.simplelab.controllers.BaseController;
 import com.org.simplelab.controllers.RequestResponse;
 import com.org.simplelab.database.CourseDB;
 import com.org.simplelab.database.LabDB;
@@ -7,6 +8,7 @@ import com.org.simplelab.database.UserDB;
 import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.repositories.LabRepository;
+import com.org.simplelab.database.validators.InvalidFieldException;
 import com.org.simplelab.database.validators.LabValidator;
 import com.org.simplelab.database.validators.Validator;
 import com.org.simplelab.restcontrollers.dto.DTO;
@@ -22,11 +24,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static com.org.simplelab.restcontrollers.LabRESTController.BASE_MAPPING;
+
 @RestController
-@RequestMapping("/lab/rest")
-public class LabRESTController {
+@RequestMapping(BASE_MAPPING)
+public class LabRESTController extends BaseController {
 
     //lab_id = id of the lab to interact with in the DB
+    public static final String BASE_MAPPING = "/lab/rest";
     public static final String LAB_ID_MAPPING = "/{lab_id}";
     public static final String COURSE_ID_MAPPING = "/{course_id}";
     public static final String LOAD_LIST_LAB_MAPPING = "/loadLabList";
@@ -34,15 +39,6 @@ public class LabRESTController {
 
     @Autowired
     LabRepository labRepository;
-
-    @Autowired
-    LabDB labDB;
-
-    @Autowired
-    UserDB userDB;
-
-    @Autowired
-    CourseDB courseDB;
 
     /**
      * Attempts to insert a lab into the Lab DB.
@@ -58,13 +54,13 @@ public class LabRESTController {
         RequestResponse rsp = new RequestResponse();
         try{
             validator.validate();
-        } catch (Validator.InvalidFieldException e){
+        } catch (InvalidFieldException e){
             rsp.setSuccess(false);
             rsp.setError(e.getMessage());
             rsp.set("value", validator.getName());
             return rsp.map();
         }
-        long user_id = (long)session.getAttribute("user_id");
+        long user_id = getUserIdFromSession(session);
         User u = userDB.findUserById(user_id);
         Lab lab = validator.build();
         lab.setCreator(u);
@@ -126,7 +122,7 @@ public class LabRESTController {
         }
         try{
             labUpdateDTO.validate();
-        } catch (Validator.InvalidFieldException e){
+        } catch (InvalidFieldException e){
             rsp.setError(e.getMessage());
             return rsp.map();
         }

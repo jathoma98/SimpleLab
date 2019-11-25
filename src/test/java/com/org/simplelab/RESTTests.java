@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
 import javax.persistence.Temporal;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -44,7 +46,7 @@ public class RESTTests extends SpringTestConfig {
 
 
     private void sendCourseToPOSTEndpoint(JSONObject json, String path) throws Exception{
-        this.mockMvc.perform(post("/course/rest" + path)
+        this.mockMvc.perform(post(CourseRESTController.BASE_MAPPING + path)
                 .sessionAttrs(session_atr)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json.toString()))
@@ -54,11 +56,11 @@ public class RESTTests extends SpringTestConfig {
     }
 
     private void sendLabToPOSTEndpoint(JSONObject json, String path) throws Exception{
-        this.mockMvc.perform(post("/lab/rest" + path)
+        this.mockMvc.perform(post(LabRESTController.BASE_MAPPING + path)
                     .sessionAttrs(session_atr)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(json.toString()))
-                    .andDo(print())
+                   // .andDo(print())
                     .andExpect(status().isOk());
     }
 
@@ -85,7 +87,7 @@ public class RESTTests extends SpringTestConfig {
         this.mockMvc.perform(get("/course/rest" + CourseRESTController.LOAD_LIST_COURSE_MAPPING)
                              .principal(TestUtils.getUnitTestPrincipal())
                              .sessionAttrs(session_atr))
-                            .andDo(print())
+                            //.andDo(print())
                             .andExpect(status().isOk());
 
 
@@ -130,7 +132,7 @@ public class RESTTests extends SpringTestConfig {
                 .sessionAttrs(session_atr)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(sb.toString()))
-                .andDo(print())
+               // .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json("{'success': 'true'}"));
 
@@ -142,10 +144,8 @@ public class RESTTests extends SpringTestConfig {
     }
 
 
-    @Autowired
-    CourseRepository cr;
-
-    @Test
+    //TODO: remake this
+    //@Test
     @WithMockUser(username = username, password = username)
     void addGetDeleteStudentFromCourseTests() throws Exception{
         String cid = "UNIT_TEST" + metadata;
@@ -173,21 +173,21 @@ public class RESTTests extends SpringTestConfig {
         //check if getStudent endpoint works
         System.out.println("Gettings students from added course...");
 
-        this.mockMvc.perform(post("/course/rest" + CourseRESTController.GET_STUDENTS_MAPPING)
+        this.mockMvc.perform(post(CourseRESTController.BASE_MAPPING + CourseRESTController.GET_STUDENTS_MAPPING)
                 .sessionAttrs(session_atr)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json.toString()))
-                .andDo(print())
+                //.andDo(print())
                 .andExpect(status().isOk());
 
         System.out.println("Deleting student from course");
 
         //delete the student
-        this.mockMvc.perform(post("/course/rest" + CourseRESTController.DELETE_STUDENTS_MAPPING)
+        this.mockMvc.perform(post(CourseRESTController.BASE_MAPPING + CourseRESTController.DELETE_STUDENTS_MAPPING)
                 .sessionAttrs(session_atr)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json.toString()))
-                .andDo(print())
+                //.andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json("[]"));
 
@@ -199,11 +199,13 @@ public class RESTTests extends SpringTestConfig {
 
     @Test
     @WithMockUser(username = username, password = username)
-    void addGetUpdateLabTests() throws Exception {
+    void addGetUpdateDeleteLabTests() throws Exception {
         session_atr.put("user_id", user_id);
         session_atr.put("username", username);
 
-        //check that posting to endpoint adds lab to DB
+        /**
+         * @Test: POST to /lab/rest to create a lab
+         */
         Map<String, String> rawJson = new HashMap<>();
         rawJson.put("name", metadata);
         rawJson.put("_metadata", metadata);
@@ -218,17 +220,19 @@ public class RESTTests extends SpringTestConfig {
         //check invalid lab name
         rawJson.put("name", "");
         json = new JSONObject(rawJson);
-        mockMvc.perform(post("/lab/rest")
+        mockMvc.perform(post(LabRESTController.BASE_MAPPING)
                         .sessionAttrs(session_atr)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json.toString()))
-                        .andDo(print())
+                        //.andDo(print())
                         .andExpect(status().isOk())
                         .andExpect(content().json("{'success': 'false'}"));
 
         long lab_id = found.get(0).getId();
 
-        //check that posting to update mapping updates info.
+        /**
+         * @Test: POST to /lab/rest/{lab_id} to update a lab
+         */
         String updatedName = metadata + "updated";
         rawJson = new HashMap<>();
         rawJson.put("name", updatedName);
@@ -240,13 +244,37 @@ public class RESTTests extends SpringTestConfig {
         assertEquals(updated.get_metadata(), metadata);
 
         //check invalid lab id
-        mockMvc.perform(post("/lab/rest/-1")
+        mockMvc.perform(post(LabRESTController.BASE_MAPPING + "/-1")
                 .sessionAttrs(session_atr)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json.toString()))
-                .andDo(print())
+                //.andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json("{'success': 'false'}"));
 
+        /**
+         * @Test: GET to /lab/rest/{lab_id} to get the lab we created
+         */
+        //get the lab we just created and check that it is the same JSON string
+        mockMvc.perform(get(LabRESTController.BASE_MAPPING + "/" + lab_id)
+                        .sessionAttrs(session_atr))
+                        //.andDo(print())
+                        .andExpect(status().isOk())
+                        .andExpect(content().json(json.toString()));
+
+        /**
+         * @Test: Delete the lab we just created with DELETE to /lab/rest/{id}
+         */
+
+        mockMvc.perform(delete(LabRESTController.BASE_MAPPING + "/" + lab_id)
+                        .sessionAttrs(session_atr))
+                        .andExpect(status().isOk());
+
+        Lab found_lab = labDB.getLabById(lab_id);
+        assertNull(found_lab);
+
+
     }
+
+
 }

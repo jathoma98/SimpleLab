@@ -2,6 +2,7 @@ package com.org.simplelab.controllers;
 
 import com.org.simplelab.database.UserDB;
 import com.org.simplelab.database.entities.User;
+import com.org.simplelab.database.validators.InvalidFieldException;
 import com.org.simplelab.database.validators.UserValidator;
 import com.org.simplelab.database.validators.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +15,10 @@ import java.util.Map;
 //import com.sun.org.apache.regexp.internal.RE;
 
 @Controller
-@RequestMapping(path="/signup")
-public class SignUpController {
+@RequestMapping(SignUpController.BASE_MAPPING)
+public class SignUpController extends BaseController {
 
-    @Autowired
-    UserDB userDB;
+    public static final String BASE_MAPPING = "/signup";
 
     @GetMapping("")
     public String infoPage(){
@@ -42,7 +42,7 @@ public class SignUpController {
         RequestResponse response = new RequestResponse();
         try{
             userV.validate();
-        }catch(Validator.InvalidFieldException e){
+        }catch(InvalidFieldException e){
             response.setSuccess(false);
             response.setError(e.getMessage());
             return response.map();
