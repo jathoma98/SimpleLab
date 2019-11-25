@@ -37,6 +37,12 @@ public abstract class BaseTable implements Persistable<Long> {
         }
     }
 
+    //immutable fields, cannot be set outside of constructor.
+    public void setCreatedDate(String createdDate) {}
+
+    public void setTimestamp(long timestamp) {}
+
+
     /**
      * Below are used internally by JPA to check
      * whether an entity is new or already exists

@@ -1,5 +1,6 @@
 package com.org.simplelab;
 
+import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.Course;
 import com.org.simplelab.database.entities.Equipment;
 import com.org.simplelab.database.entities.Lab;
@@ -13,6 +14,7 @@ import com.org.simplelab.restcontrollers.CourseRESTController;
 import com.org.simplelab.restcontrollers.LabRESTController;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import org.junit.jupiter.api.Test;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.annotation.Transactional;
@@ -330,6 +332,50 @@ class DBTests extends SpringTestConfig {
 		found = lr.findByName(returnLab.getName());
 		assertEquals(0, found.size());
 
+	}
+
+	@Test
+	void mmtest(){
+		ModelMapper mm = DBUtils.getMapper();
+		User user = new User();
+		user.setUsername(metadata);
+		user.setFirstname(metadata);
+		long originalTimestamp = user.getTimestamp();
+		user.setCreatedDate("ORIGINAL");
+
+		User dto = new User();
+		dto.setTimestamp(11111);
+		dto.setCreatedDate("REPLACE");
+		dto.setLastname("NEW");
+
+		mm.map(dto, user);
+		assertEquals(originalTimestamp, user.getTimestamp());
+		assertEquals(metadata, user.getUsername());
+		assertEquals(metadata, user.getFirstname());
+		assertEquals("NEW", user.getLastname());
+
+	}
+
+	@Test
+	void foreign_key_test(){
+		List<User> students = new ArrayList<>();
+		for (int i = 0; i < 3; i++){
+			User u = new User();
+			u.setUsername(metadata + "STUDENT " + i);
+			students.add(u);
+		}
+		Course c = new Course();
+		c.setName(metadata);
+		c.setDescription(metadata);
+		c.setCourse_id(metadata);
+		c.set_metadata(metadata);
+		c.setStudents(new HashSet<User>(students));
+		courseDB.insert(c);
+
+		DBService.EntitySetManager<User, Course> found = courseDB.getStudentsOfCourseByCourseId(metadata);
+		assertEquals(3, found.getEntitySet().size());
+
+		courseDB.deleteById(found.getFullEntity().getId());
 	}
 
 
