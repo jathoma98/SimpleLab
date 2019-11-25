@@ -5,7 +5,6 @@ import com.org.simplelab.database.LabDB;
 import com.org.simplelab.database.entities.Course;
 import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;
-import com.org.simplelab.database.repositories.CourseRepository;
 import com.org.simplelab.restcontrollers.CourseRESTController;
 import com.org.simplelab.restcontrollers.LabRESTController;
 import org.json.JSONObject;
@@ -14,10 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
-import javax.persistence.Temporal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -239,7 +236,7 @@ public class RESTTests extends SpringTestConfig {
         json = new JSONObject(rawJson);
 
         sendLabToPOSTEndpoint(json, "/" + lab_id);
-        Lab updated = labDB.getLabById(lab_id);
+        Lab updated = labDB.findById(lab_id);
         assertEquals(updated.getName(), updatedName);
         assertEquals(updated.get_metadata(), metadata);
 
@@ -270,7 +267,7 @@ public class RESTTests extends SpringTestConfig {
                         .sessionAttrs(session_atr))
                         .andExpect(status().isOk());
 
-        Lab found_lab = labDB.getLabById(lab_id);
+        Lab found_lab = labDB.findById(lab_id);
         assertNull(found_lab);
 
 

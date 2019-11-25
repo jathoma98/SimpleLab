@@ -49,10 +49,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
      */
     @GetMapping(LAB_ID_MAPPING)
     public Lab labGet(@PathVariable("lab_id") long lab_id){
-        Optional<Lab> found = labRepository.findById(lab_id);
-        if (found.isPresent())
-            return found.get();
-        return null;
+        return super.getEntityById(lab_id, labDB);
     }
 
     /**
@@ -78,7 +75,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
                                          @RequestBody LabValidator labUpdateDTO){
         RequestResponse rsp = new RequestResponse();
         System.out.println(lab_id);
-        Lab found = labDB.getLabById(lab_id);
+        Lab found = labDB.findById(lab_id);
         if (found == null){
             rsp.setError("Lab not found.");
             return rsp.map();

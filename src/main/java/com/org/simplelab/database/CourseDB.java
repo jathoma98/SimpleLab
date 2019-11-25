@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Transactional
@@ -37,6 +38,12 @@ public class CourseDB extends DBService<Course> {
     public boolean deleteById(long id){
         courseRepository.deleteById(id);
         return true;
+    }
+
+    @Override
+    public Course findById(long id) {
+        Optional<Course> found = courseRepository.findById(id);
+        return found.isPresent() ? found.get() : null;
     }
 
     /**

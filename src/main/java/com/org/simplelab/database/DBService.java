@@ -27,4 +27,6 @@ public abstract class DBService<T extends BaseTable> {
 
     public abstract boolean deleteById(long id);
 
+    public abstract T findById(long id);
+
 }

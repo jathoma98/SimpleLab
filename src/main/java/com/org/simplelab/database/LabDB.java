@@ -37,7 +37,8 @@ public class LabDB extends DBService<Lab> {
         return labRepository.findByCreator_id(id);
     }
 
-    public Lab getLabById(long id){
+    @Override
+    public Lab findById(long id){
         Optional<Lab> found = labRepository.findById(id);
         return found.isPresent()? found.get() : null;
     }

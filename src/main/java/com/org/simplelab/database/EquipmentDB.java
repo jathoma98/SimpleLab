@@ -17,4 +17,9 @@ public class EquipmentDB extends DBService<Equipment> {
     public boolean deleteById(long id) {
         return false;
     }
+
+    @Override
+    public Equipment findById(long id) {
+        return null;
+    }
 }

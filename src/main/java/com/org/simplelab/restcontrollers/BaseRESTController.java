@@ -51,4 +51,8 @@ public class BaseRESTController<T extends BaseTable> extends BaseController {
         }
     }
 
+    protected T getEntityById(long id, DBService<T> db){
+        return db.findById(id);
+    }
+
 }
