@@ -9,6 +9,7 @@ import com.org.simplelab.database.entities.interfaces.UserCreated;
 import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.validators.InvalidFieldException;
 import com.org.simplelab.database.validators.Validator;
+import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
 import com.org.simplelab.restcontrollers.rro.RRO_ACTION_TYPE;
 import com.org.simplelab.restcontrollers.rro.RRO_MSG;
@@ -73,7 +74,7 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
         return db.findById(id);
     }
 
-    protected RRO<String> updateEntity(long idToUpdate, Object DTO, DBService<T> db){
+    protected RRO<String> updateEntity(long idToUpdate, DTO dto, DBService<T> db){
         RRO<String> rro = new RRO();
         ModelMapper mm = DBUtils.getMapper();
         T found = db.findById(idToUpdate);
@@ -84,8 +85,8 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
             return rro;
         }
         //if its a validator, validate before copying.
-        if (Validator.class.isInstance(DTO)){
-            Validator<T> DTOValidator = (Validator<T>)DTO;
+        if (Validator.class.isInstance(dto)){
+            Validator<T> DTOValidator = (Validator<T>)dto;
             try{
                 DTOValidator.validate();
             } catch (InvalidFieldException e){
@@ -96,7 +97,7 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
             }
         }
         T toUpdate = db.findById(idToUpdate);
-        mm.map(DTO, toUpdate);
+        mm.map(dto, toUpdate);
         if (db.update(toUpdate)){
             rro.setSuccess(true);
             rro.setAction(RRO_ACTION_TYPE.NOTHING.name());

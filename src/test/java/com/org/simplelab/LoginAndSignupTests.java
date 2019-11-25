@@ -92,7 +92,7 @@ public class LoginAndSignupTests extends SpringTestConfig{
                             .content(json.toString()))
                 //.andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().json("{'success': 'true'}"));
+                .andExpect(content().json("{'success': true}"));
 
         userDB.deleteUser(username);
 

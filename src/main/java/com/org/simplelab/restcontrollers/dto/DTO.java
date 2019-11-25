@@ -7,10 +7,10 @@ import lombok.Setter;
 import java.util.List;
 
 /**
- * Master class that contains DTO (Data Transfer Object) classes
- * which handle processing data send through REST endpoints.
+ * Describes objects responsible for transfer from the view layer
+ * to backend APIs
  */
-public class DTO {
+public abstract class DTO {
 
     /**
      * Contains fields needed to update a Course through
@@ -18,7 +18,7 @@ public class DTO {
      */
     @Getter
     @Setter
-    public static class CourseUpdateDTO {
+    public static class CourseUpdateDTO extends DTO {
 
         private String course_id_old;
         private CourseValidator newCourseInfo;
@@ -32,7 +32,7 @@ public class DTO {
      */
     @Getter
     @Setter
-    public static class UserSearchDTO {
+    public static class UserSearchDTO extends DTO {
         private String regex;
     }
 
@@ -41,7 +41,7 @@ public class DTO {
      */
     @Getter
     @Setter
-    public static class LabUpdateDTO {
+    public static class LabUpdateDTO extends DTO {
         private String temp;
     }
 
@@ -50,7 +50,7 @@ public class DTO {
      */
     @Getter
     @Setter
-    public static class CourseUpdateStudentListDTO {
+    public static class CourseUpdateStudentListDTO extends DTO {
         //course need to be update
         private String course_id;
         //list of username need to add or delete
@@ -62,7 +62,7 @@ public class DTO {
      */
     @Getter
     @Setter
-    public static class CourseAddLabsDTO {
+    public static class CourseAddLabsDTO extends DTO {
         //ids of labs to add
         private long[] lab_ids;
         //course_id of course to add labs to
