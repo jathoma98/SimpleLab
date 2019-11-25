@@ -188,5 +188,4 @@ public class CourseRESTController extends BaseRESTController<Course> {
         DBService.EntitySetManager<User, Course> toUpdate = courseDB.getStudentsOfCourseByCourseId(course.getCourse_id());
         return super.removeEntitiesFromEntityList(toUpdate, toDelete, courseDB);
     }
-
 }

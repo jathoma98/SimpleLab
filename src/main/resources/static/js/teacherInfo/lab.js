@@ -9,7 +9,7 @@ let LABS_TABLE = {
         this.tableRowEvent = function () {
             let lab_id = $(this).find(".myIdColumn").text();
             $.ajax({
-                url: "/lab/rest/lab_id",
+                url: "/lab/rest/" + lab_id,
                 type: 'GET',
                 success: function (lab) {
                     let data = {
@@ -18,7 +18,7 @@ let LABS_TABLE = {
                             lab: lab,
                         }
                     }
-                    rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.LAB_TBODY, data);
+                    rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL, data);
                 }
             })
         };
@@ -29,7 +29,7 @@ let LABS_TABLE = {
          **/
         this.reload = function () {
             $.ajax({
-                url: "/lab/rest/",
+                url: "/lab/rest/loadLabList",
                 type: "GET",
                 success: function (result) {
                     let data = {

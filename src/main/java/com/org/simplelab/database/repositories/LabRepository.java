@@ -29,4 +29,6 @@ public interface LabRepository extends BaseRepository<Lab> {
     public List<Course> findBycreator_idAndLab_id(@Param("user_id") long user_id,
                                                      @Param("lab_id") long lab_id);
 
+
+
 }

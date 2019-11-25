@@ -14,6 +14,7 @@ import java.util.Set;
 public class Lab extends BaseTable implements UserCreated{
 
     private String name;
+    private String description;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "creator_id")

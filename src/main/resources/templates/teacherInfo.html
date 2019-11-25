@@ -199,16 +199,15 @@
                 <th>Last Date</th>
             </tr>
             </thead>
-            <tbody>
             <script id="lab_tbody" type="mustache">
             {{#labs}}
                 {{#isEnabled}}
             <tr class = "modal-trigger" href="#modal">
-                <td class = "coursecheckcol mycheckbox myhide center">
+                <td class = "labcheckcol mycheckbox myhide center">
             {{/isEnabled}}
                 {{^isEnabled}}
-            <tr href="#courseModal">
-                <td class = "coursecheckcol mycheckbox myshow center">
+            <tr href="#modal">
+                <td class = "labcheckcol mycheckbox myshow center">
             {{/isEnabled}}
                     <label>
                         <input type="checkbox"><span></span>
@@ -220,6 +219,8 @@
             </tr>
             {{/labs}}
             </script>
+            <tbody>
+
             </tbody>
         </table>
     </div>

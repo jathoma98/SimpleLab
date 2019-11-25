@@ -26,7 +26,14 @@ public class LabRESTController extends BaseRESTController<Lab> {
     //lab_id = id of the lab to interact with in the DB
     public static final String BASE_MAPPING = "/lab/rest";
     public static final String LAB_ID_MAPPING = "/{lab_id}";
+    public static final String COURSE_ID_MAPPING = "/{course_id}";
+    public static final String LOAD_LIST_LAB_MAPPING = "/loadLabList";
+
+
+    @Autowired
+    LabRepository labRepository;
     public static final String LAB_ID_EQUIPMENT_MAPPING = LAB_ID_MAPPING + "/equipment";
+
 
     /**
      * @param validator - JSON object with format:
@@ -58,6 +65,27 @@ public class LabRESTController extends BaseRESTController<Lab> {
                                          @RequestBody LabValidator labUpdateDTO){
         return super.updateEntity(lab_id, labUpdateDTO, labDB);
     }
+
+
+
+    @GetMapping(LOAD_LIST_LAB_MAPPING)
+    public List<Lab> getListOfCourse(HttpSession session) {
+        long userId = -1;
+        try {
+            userId = (long) session.getAttribute("user_id");
+        } catch (Exception e) {
+            //redirect to login
+        }
+        List<Lab> labs = labDB.getLabForTeacher(userId);
+        return labs;
+    }
+
+    /**
+     * Right now just returns all labs.
+     */
+    @GetMapping("")
+    public Iterable<Lab> labGetForUser(HttpSession session){
+        return labRepository.findAll();
 
     @Transactional
     @PostMapping(LAB_ID_EQUIPMENT_MAPPING)
