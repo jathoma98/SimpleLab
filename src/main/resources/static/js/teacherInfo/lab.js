@@ -68,16 +68,41 @@ let LABS_TABLE = {
                     } else {
                         alert(result.error);
                     }
-                    //TODO: reload lab table
                 }
             })
         };
         this.btnEvents[ElEM_ID.LAB_SAVE_BTN] = LABS_TABLE.save;
 
         /**
-         * Delete course.
+         * Delete LAB.
          **/
         this.delete = function () {
+            removeTableBodyRowEvent($(ElEM_ID.LAB_TABLE_TBODY));
+            let lab = [];
+            $(ElEM_ID.LAB_TABLE_TBODY).each(function (i, row) {
+                if ($(row).find('input[type="checkbox"]').is(':checked')) {
+                    course.push({
+                        name: null,
+                        course_id: ($(row).find(".myIdColumn").text()),
+                        description: null
+                    });
+                }
+            });
+            let lab_json = JSON.stringify(course);
+            $.ajax({
+                url: "/lab/rest/deleteCourse",
+                type: 'DELETE',
+                dataTye: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: lab_json,
+                success: function (result) {
+                    if (result.success === "true") {
+                        LABS_TABLE.reload();
+                    } else {
+                        alert(result.error);
+                    }
+                }
+            })
         };
 
 

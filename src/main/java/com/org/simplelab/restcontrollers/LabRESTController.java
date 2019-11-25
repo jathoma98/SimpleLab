@@ -3,8 +3,10 @@ package com.org.simplelab.restcontrollers;
 import com.org.simplelab.controllers.RequestResponse;
 import com.org.simplelab.database.entities.Equipment;
 import com.org.simplelab.database.entities.Lab;
+import com.org.simplelab.database.repositories.LabRepository;
 import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.validators.LabValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -76,7 +78,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
         } catch (Exception e) {
             //redirect to login
         }
-        List<Lab> labs = labDB.getLabForTeacher(userId);
+        List<Lab> labs = labDB.getLabsByCreatorId(userId);
         return labs;
     }
 
@@ -84,8 +86,9 @@ public class LabRESTController extends BaseRESTController<Lab> {
      * Right now just returns all labs.
      */
     @GetMapping("")
-    public Iterable<Lab> labGetForUser(HttpSession session){
+    public Iterable<Lab> labGetForUser(HttpSession session) {
         return labRepository.findAll();
+    }
 
     @Transactional
     @PostMapping(LAB_ID_EQUIPMENT_MAPPING)
