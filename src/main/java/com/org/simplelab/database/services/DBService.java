@@ -43,10 +43,12 @@ public abstract class DBService<T extends BaseTable> {
      * a StudentSetManager, which has custom insert and delete methods depending on the behavior
      * defined for insertion and deletion into that collection.
      * @param <T> - The entity type of the list.
+     * @param <U> - the entity type which contains the list
+     * example: For Course with list of Users, T = User, U = Course
      */
     @Getter
     @Setter
-    public static abstract class EntitySetManager<T extends BaseTable>{
+    public static abstract class EntitySetManager<T extends BaseTable, U extends BaseTable>{
         /**
          * Exception to be thrown in case of illegal modification of the entity set.
          */
@@ -57,9 +59,10 @@ public abstract class DBService<T extends BaseTable> {
         }
 
         private Set<T> entitySet;
-        private T fullEntity;
-        public EntitySetManager(Set<T> set){
+        private U fullEntity;
+        public EntitySetManager(Set<T> set, U fullEntity){
             this.entitySet = set;
+            this.fullEntity = fullEntity;
         }
 
         public void insert(T toInsert) throws EntitySetModificationException{

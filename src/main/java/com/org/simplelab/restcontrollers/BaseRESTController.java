@@ -9,6 +9,7 @@ import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.entities.interfaces.UserCreated;
 import com.org.simplelab.database.validators.InvalidFieldException;
 import com.org.simplelab.database.validators.Validator;
+import org.codehaus.jackson.map.Serializers;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -109,10 +110,11 @@ public abstract class BaseRESTController<T extends BaseTable> extends BaseContro
         }
     }
 
-    protected Map addEntitiesToEntityList(DBService.EntitySetManager<T> set, List<T> toAdd, DBService<T> db) {
+    protected <U extends BaseTable,T extends BaseTable> Map
+    addEntitiesToEntityList(DBService.EntitySetManager<U,T> set, List<U> toAdd, DBService<T> db) {
         RequestResponse response = new RequestResponse();
         response.setSuccess(true);
-        for (T entity: toAdd){
+        for (U entity: toAdd){
             try{
                 set.insert(entity);
             } catch (DBService.EntitySetManager.EntitySetModificationException e){

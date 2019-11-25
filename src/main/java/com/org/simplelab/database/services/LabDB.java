@@ -16,9 +16,9 @@ import java.util.Set;
 @Component
 public class LabDB extends DBService<Lab> {
 
-    private class EquipmentSetManager extends EntitySetManager<Equipment>{
-        public EquipmentSetManager(Set<Equipment> set){
-            super(set);
+    private class EquipmentSetManager extends EntitySetManager<Equipment, Lab>{
+        public EquipmentSetManager(Set<Equipment> set, Lab lab){
+            super(set, lab);
         }
     }
 
@@ -47,7 +47,7 @@ public class LabDB extends DBService<Lab> {
         Lab found = findById(id);
         if (found == null)
             return null;
-        return new EquipmentSetManager(found.getEquipments());
+        return new EquipmentSetManager(found.getEquipments(), found);
     }
 
     @Override
