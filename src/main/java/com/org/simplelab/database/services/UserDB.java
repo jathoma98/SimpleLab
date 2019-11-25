@@ -1,5 +1,6 @@
-package com.org.simplelab.database;
+package com.org.simplelab.database.services;
 
+import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.repositories.UserRepository;
 import org.springframework.stereotype.Component;

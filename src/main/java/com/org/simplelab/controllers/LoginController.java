@@ -1,6 +1,6 @@
 package com.org.simplelab.controllers;
 
-import com.org.simplelab.database.UserDB;
+import com.org.simplelab.database.services.UserDB;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.security.SecurityUtils;
 import com.org.simplelab.security.SimpleLabAuthentication;

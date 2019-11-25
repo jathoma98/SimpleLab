@@ -1,7 +1,7 @@
 package com.org.simplelab.restcontrollers;
 
 import com.org.simplelab.controllers.RequestResponse;
-import com.org.simplelab.database.CourseDB;
+import com.org.simplelab.database.services.CourseDB;
 import com.org.simplelab.database.entities.Course;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.validators.CourseValidator;

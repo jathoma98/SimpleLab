@@ -1,4 +1,4 @@
-package com.org.simplelab.database;
+package com.org.simplelab.database.services;
 
 import com.org.simplelab.database.entities.BaseTable;
 import com.org.simplelab.database.repositories.CourseRepository;

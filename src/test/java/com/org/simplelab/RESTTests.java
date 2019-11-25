@@ -1,7 +1,7 @@
 package com.org.simplelab;
 
-import com.org.simplelab.database.CourseDB;
-import com.org.simplelab.database.LabDB;
+import com.org.simplelab.database.services.CourseDB;
+import com.org.simplelab.database.services.LabDB;
 import com.org.simplelab.database.entities.Course;
 import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;

@@ -10,6 +10,10 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(EquipmentRESTController.BASE_MAPPING)
+/**
+ * Refer to BaseRESTController.java for documentation of basic methods.
+ * @Author Jacob Thomas
+ */
 public class EquipmentRESTController extends BaseRESTController<Equipment> {
 
     public static final String BASE_MAPPING = "/equipment/rest";

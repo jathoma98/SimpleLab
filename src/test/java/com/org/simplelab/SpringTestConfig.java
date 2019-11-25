@@ -1,6 +1,6 @@
 package com.org.simplelab;
 
-import com.org.simplelab.database.UserDB;
+import com.org.simplelab.database.services.UserDB;
 import com.org.simplelab.database.repositories.CourseRepository;
 import com.org.simplelab.database.repositories.EquipmentRepository;
 import com.org.simplelab.database.repositories.LabRepository;

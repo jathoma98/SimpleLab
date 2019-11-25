@@ -2,7 +2,7 @@ package com.org.simplelab.restcontrollers;
 
 import com.org.simplelab.controllers.BaseController;
 import com.org.simplelab.controllers.RequestResponse;
-import com.org.simplelab.database.DBService;
+import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.BaseTable;
 import com.org.simplelab.database.entities.User;
@@ -19,6 +19,7 @@ import java.util.Map;
 /**
  * Contains generic implementations of common REST endpoints.
  * @param <T> - The Entity which each endpoint modifies.
+ * @Author Jacob Thomas
  */
 @Component
 public class BaseRESTController<T extends BaseTable> extends BaseController {

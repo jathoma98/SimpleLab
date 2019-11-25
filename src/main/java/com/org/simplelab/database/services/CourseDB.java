@@ -1,4 +1,4 @@
-package com.org.simplelab.database;
+package com.org.simplelab.database.services;
 
 
 import com.org.simplelab.database.entities.Course;
@@ -17,7 +17,7 @@ import java.util.Set;
 @Transactional
 @Component
 public class CourseDB extends DBService<Course> {
-    public static class CourseTransactionException extends Exception{
+    public static class CourseTransactionException extends DBService.EntityInsertionException{
         public static final String NO_COURSE_FOUND = "The requested course could not be found.";
         CourseTransactionException(String message){
             super(message);

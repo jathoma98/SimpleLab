@@ -1,7 +1,7 @@
 package com.org.simplelab;
 
-import com.org.simplelab.database.LabDB;
-import com.org.simplelab.database.UserDB;
+import com.org.simplelab.database.services.LabDB;
+import com.org.simplelab.database.services.UserDB;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.repositories.UserRepository;
 import org.junit.jupiter.api.Test;
