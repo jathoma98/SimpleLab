@@ -15,7 +15,22 @@ import java.util.Set;
 
 public abstract class DBService<T extends BaseTable> {
 
+    @Autowired
+    CourseRepository courseRepository;
+    @Autowired
+    LabRepository labRepository;
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    EquipmentRepository equipmentRepository;
+
+    /**
+     * Exception to be thrown when insertion into a DB violates some constraint.
+     * The message should include the contraint being violated.
+     */
     public static class EntityInsertionException extends Exception{
+        protected static String GENERIC_MODIFICATION_ERROR = "An error occurred while modifying this collection";
+        EntityInsertionException(){super(GENERIC_MODIFICATION_ERROR);}
         EntityInsertionException(String msg){
             super(msg);
         }
@@ -23,7 +38,8 @@ public abstract class DBService<T extends BaseTable> {
 
     /**
      * Manager class for handling insertion and deletion of inner lists in entities
-     * ex: If you want to add a User to a Course, you would call getStudents, which would return
+     *
+     * ex: If you want to add a User to a Course, you would call courseDB.getStudents, which would return
      * a StudentSetManager, which has custom insert and delete methods depending on the behavior
      * defined for insertion and deletion into that collection.
      * @param <T> - The entity type of the list.
@@ -41,6 +57,7 @@ public abstract class DBService<T extends BaseTable> {
         }
 
         private Set<T> entitySet;
+        private T fullEntity;
         public EntitySetManager(Set<T> set){
             this.entitySet = set;
         }
@@ -56,18 +73,6 @@ public abstract class DBService<T extends BaseTable> {
             return Arrays.asList(array);
         }
     }
-
-    @Autowired
-    CourseRepository courseRepository;
-
-    @Autowired
-    LabRepository labRepository;
-
-    @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    EquipmentRepository equipmentRepository;
 
     public abstract boolean insert(T toInsert) throws EntityInsertionException;
 

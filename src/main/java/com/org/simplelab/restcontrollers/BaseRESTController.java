@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -108,6 +109,20 @@ public abstract class BaseRESTController<T extends BaseTable> extends BaseContro
         }
     }
 
-    protected  Map addEntityToEntityList() { return null; }
+    protected Map addEntitiesToEntityList(DBService.EntitySetManager<T> set, List<T> toAdd, DBService<T> db) {
+        RequestResponse response = new RequestResponse();
+        response.setSuccess(true);
+        for (T entity: toAdd){
+            try{
+                set.insert(entity);
+            } catch (DBService.EntitySetManager.EntitySetModificationException e){
+                response.setError(e.getMessage());
+                response.setSuccess(false);
+            }
+        }
+        T toSave = set.getFullEntity();
+        db.update(toSave);
+        return response.map();
+    }
 
 }
