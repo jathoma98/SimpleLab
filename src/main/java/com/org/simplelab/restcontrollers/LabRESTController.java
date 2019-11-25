@@ -72,12 +72,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
 
     @GetMapping(LOAD_LIST_LAB_MAPPING)
     public List<Lab> getListOfCourse(HttpSession session) {
-        long userId = -1;
-        try {
-            userId = (long) session.getAttribute("user_id");
-        } catch (Exception e) {
-            //redirect to login
-        }
+        long userId = getUserIdFromSession(session);
         List<Lab> labs = labDB.getLabsByCreatorId(userId);
         return labs;
     }
