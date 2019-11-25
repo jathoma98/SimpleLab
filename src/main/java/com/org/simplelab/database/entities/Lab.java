@@ -20,7 +20,7 @@ public class Lab extends BaseTable implements UserCreated{
     @JoinColumn(name = "creator_id")
     private User creator;
 
-    @OneToMany(cascade = {CascadeType.PERSIST},
+    @ManyToMany(cascade = {CascadeType.PERSIST},
                fetch = FetchType.LAZY)
     private Set<Equipment> equipments;
 

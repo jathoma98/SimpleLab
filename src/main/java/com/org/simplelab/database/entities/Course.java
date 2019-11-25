@@ -26,7 +26,7 @@ public class Course extends BaseTable implements UserCreated{
             fetch = FetchType.LAZY)
     private Set<User> students;
 
-    @OneToMany(cascade = {CascadeType.PERSIST},
+    @ManyToMany(cascade = {CascadeType.PERSIST},
             fetch = FetchType.LAZY)
     private Set<Lab> labs;
 
