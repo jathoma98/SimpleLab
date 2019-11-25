@@ -19,6 +19,11 @@ public class EquipmentDB extends DBService<Equipment> {
     }
 
     @Override
+    public boolean update(Equipment toUpdate) {
+        return false;
+    }
+
+    @Override
     public Equipment findById(long id) {
         return null;
     }

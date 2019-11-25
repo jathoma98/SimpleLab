@@ -26,6 +26,8 @@ public abstract class DBService<T extends BaseTable> {
     public abstract boolean insert(T toInsert);
 
     public abstract boolean deleteById(long id);
+    
+    public abstract boolean update(T toUpdate);
 
     public abstract T findById(long id);
 

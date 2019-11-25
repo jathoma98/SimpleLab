@@ -20,7 +20,7 @@ public class EquipmentValidator extends Validator<Equipment> {
 
     @Override
     public Equipment build() {
-        Equipment e = DBUtils.MAPPER.map(this, Equipment.class);
+        Equipment e = DBUtils.getMapper().map(this, Equipment.class);
         return e;
     }
 }

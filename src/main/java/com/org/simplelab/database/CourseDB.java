@@ -4,7 +4,6 @@ package com.org.simplelab.database;
 import com.org.simplelab.database.entities.Course;
 import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;
-import com.org.simplelab.database.repositories.CourseRepository;
 import com.org.simplelab.database.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -61,7 +60,7 @@ public class CourseDB extends DBService<Course> {
         System.out.println("Found target course: " + c.toString());
         c.getStudents().add(u);
         System.out.println("Modified course: " + c.toString());
-        updateCourse(c);
+        update(c);
     }
 
     /**
@@ -97,7 +96,7 @@ public class CourseDB extends DBService<Course> {
         //remove() returns true when the element exists
         if (students.remove(student)){
             c.setStudents(students);
-            updateCourse(c);
+            update(c);
         }
 
         ArrayList<User> toList = new ArrayList<>();
@@ -117,7 +116,8 @@ public class CourseDB extends DBService<Course> {
         return toList;
     }
 
-    public boolean updateCourse(Course c){
+    @Override
+    public boolean update(Course c){
         courseRepository.save(c);
         return true;
     }

@@ -29,7 +29,8 @@ public class LabDB extends DBService<Lab> {
         return true;
     }
 
-    public boolean updateLab(Lab lab){
+    @Override
+    public boolean update(Lab lab){
         return insert(lab);
     }
 

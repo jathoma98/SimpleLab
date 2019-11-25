@@ -1,10 +1,8 @@
 package com.org.simplelab.restcontrollers;
 
-import com.org.simplelab.controllers.BaseController;
 import com.org.simplelab.controllers.RequestResponse;
 import com.org.simplelab.database.CourseDB;
 import com.org.simplelab.database.entities.Course;
-import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.database.validators.InvalidFieldException;
@@ -83,7 +81,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
             found.setCourse_id(cv.getCourse_id());
             found.setName(cv.getName());
             found.setDescription(cv.getDescription());
-            courseDB.updateCourse(found);
+            courseDB.update(found);
         } else {
             rsp.setError("No course with this ID was found. ");
             return rsp.map();
