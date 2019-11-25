@@ -56,12 +56,7 @@ public class UserRESTController extends BaseRESTController<User> {
     @PostMapping(RESET_USER_MAPPING)
     public void resetUserInfo(@RequestBody User user
                                            ,HttpSession session) {
-        long userId = -1;
-        try {
-            userId = (long) session.getAttribute("user_id");
-        } catch (Exception e) {
 
-        }
         long userId = getUserIdFromSession(session);
         user.setId(userId);
         userDB.update(user);
