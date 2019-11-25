@@ -16,8 +16,7 @@ import java.util.Set;
 
 @Transactional
 @Component
-public class CourseDB {
-
+public class CourseDB extends DBService<Course> {
     public static class CourseTransactionException extends Exception{
         public static final String NO_COURSE_FOUND = "The requested course could not be found.";
         CourseTransactionException(String message){
@@ -25,11 +24,8 @@ public class CourseDB {
         }
     }
 
-
-    @Autowired
-    CourseRepository courseRepository;
-
-    public boolean insertCourse(Course c){
+    @Override
+    public boolean insert(Course c){
         List<Course> found = findByCourseId(c.getCourse_id());
         if (found != null && found.size() > 0)
             return false;

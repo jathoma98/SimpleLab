@@ -21,7 +21,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(EquipmentRESTController.BASE_MAPPING)
-public class EquipmentRESTController extends BaseController {
+public class EquipmentRESTController extends BaseRESTController<Equipment> {
 
     public static final String BASE_MAPPING = "/equipment/rest";
 
@@ -29,20 +29,7 @@ public class EquipmentRESTController extends BaseController {
 
     @PostMapping
     public Map addEquipment(@RequestBody EquipmentValidator validator, HttpSession session){
-        RequestResponse rsp = new RequestResponse();
-        long user_id = getUserIdFromSession(session);
-        try{
-            validator.validate();
-        } catch (InvalidFieldException e){
-            rsp.setError(e.getMessage());
-            return rsp.map();
-        }
-        Equipment e = validator.build();
-        User creator = userDB.findUserById(user_id);
-        e.setCreator(creator);
-
-        return rsp.map();
-
+        return super.addEntity(validator, session, equipmentDB);
     }
 
 }

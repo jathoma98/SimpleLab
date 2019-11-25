@@ -3,27 +3,24 @@ package com.org.simplelab.restcontrollers;
 import com.org.simplelab.controllers.BaseController;
 import com.org.simplelab.controllers.RequestResponse;
 import com.org.simplelab.database.CourseDB;
-import com.org.simplelab.database.UserDB;
 import com.org.simplelab.database.entities.Course;
+import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.database.validators.InvalidFieldException;
-import com.org.simplelab.database.validators.Validator;
 import com.org.simplelab.restcontrollers.dto.DTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 //TODO: secure rest endpoints with authentication
 @RestController
 @RequestMapping(CourseRESTController.BASE_MAPPING)
-public class CourseRESTController extends BaseController {
+public class CourseRESTController extends BaseRESTController<Course> {
 
     public static final String BASE_MAPPING = "/course/rest";
 
@@ -39,26 +36,7 @@ public class CourseRESTController extends BaseController {
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> addCourse(@RequestBody CourseValidator courseValidator,
                                          HttpSession session) {
-        long userId = getUserIdFromSession(session);
-        RequestResponse response = new RequestResponse();
-        try {
-            courseValidator.validate();
-        } catch (InvalidFieldException e) {
-            response.setSuccess(false);
-            response.setError(e.getMessage());
-            return response.map();
-        }
-        User user = userDB.findUserById(userId);
-        Course c = courseValidator.build();
-        c.setCreator(user);
-        if (courseDB.insertCourse(c)) {
-            response.setSuccess(true);
-            return response.map();
-        } else { //return error on duplicate ID
-            response.setSuccess(false);
-            response.setError(CourseValidator.DUPLICATE_ID);
-            return response.map();
-        }
+        return super.addEntity(courseValidator, session, courseDB);
     }
 
     /**
