@@ -5,7 +5,6 @@ import com.org.simplelab.database.CourseDB;
 import com.org.simplelab.database.entities.Course;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.validators.CourseValidator;
-import com.org.simplelab.database.validators.InvalidFieldException;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +33,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> addCourse(@RequestBody CourseValidator courseValidator,
                                          HttpSession session) {
-        return super.addEntity(courseValidator, session, courseDB);
+        return super.addEntity(courseValidator, courseDB);
     }
 
     /**

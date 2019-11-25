@@ -1,6 +1,5 @@
 package com.org.simplelab.restcontrollers;
 
-import com.org.simplelab.controllers.BaseController;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.validators.UserValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
@@ -62,6 +61,6 @@ public class UserRESTController extends BaseRESTController<User> {
     }
 
     public Map registerUser(UserValidator validator, HttpSession session){
-        return super.addEntity(validator, session, userDB);
+        return super.addEntity(validator, userDB);
     }
 }

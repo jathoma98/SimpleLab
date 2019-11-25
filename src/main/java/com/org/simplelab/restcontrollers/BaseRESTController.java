@@ -10,6 +10,8 @@ import com.org.simplelab.database.entities.interfaces.UserCreated;
 import com.org.simplelab.database.validators.InvalidFieldException;
 import com.org.simplelab.database.validators.Validator;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpSession;
 import java.util.Map;
@@ -18,9 +20,13 @@ import java.util.Map;
  * Contains generic implementations of common REST endpoints.
  * @param <T> - The Entity which each endpoint modifies.
  */
+@Component
 public class BaseRESTController<T extends BaseTable> extends BaseController {
 
-    protected Map addEntity(Validator<T> validator, HttpSession session, DBService<T> db){
+    @Autowired
+    HttpSession session;
+
+    protected Map addEntity(Validator<T> validator, DBService<T> db){
         RequestResponse response = new RequestResponse();
         try{
             validator.validate();

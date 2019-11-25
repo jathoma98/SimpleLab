@@ -1,12 +1,8 @@
 package com.org.simplelab.restcontrollers;
 
-import com.org.simplelab.controllers.RequestResponse;
-import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.repositories.LabRepository;
-import com.org.simplelab.database.validators.InvalidFieldException;
 import com.org.simplelab.database.validators.LabValidator;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +34,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
      */
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> saveLab(@RequestBody LabValidator validator, HttpSession session){
-        return super.addEntity(validator, session, labDB);
+        return super.addEntity(validator, labDB);
     }
 
     /**
