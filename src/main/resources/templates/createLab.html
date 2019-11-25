@@ -107,6 +107,17 @@
 <!--**********************************************************************main body*********************************************************************************************************-->
 <!--**********************************************************************main body*********************************************************************************************************-->
 <!--**********************************************************************main body*********************************************************************************************************-->
+<!--sidebar {sidebar item set}-->
+<!--        {sidebar step set}-->
+<!--        {sidebar current itemset}-->
+
+<!--operation area-->
+
+<!--infobar-->
+
+
+
+
 <!--    this operation area at the middle-->
     <div id="operation_area" class="operation_area delete_empty ">
         <!--    side bar-->
@@ -227,12 +238,12 @@
 
 <!--                sidebar item set-->
                 <ul class="collapsible row my_white" >
-                    <li>
+                    <li class="active">
                         <div class="collapsible-header ">
-                            Chemistry 123
+                            often use
                         </div>
                         <div class="collapsible-body">
-                            <div class="row">
+                            <div id="beaker1" class="row sidebaritem">
                                 <div class="col s6">
                                     <img src="../img/beaker.png" class="item_img">
                                 </div>
@@ -245,7 +256,7 @@
                     </li>
                     <li>
                         <div class="collapsible-header ">
-                            Chemistry 111
+                            beaker
                         </div>
                         <div class="collapsible-body">
                             <span>put items here</span>
@@ -253,7 +264,7 @@
                     </li>
                     <li>
                         <div class="collapsible-header  ">
-                            Chemistry 122
+                            pip
                         </div>
                         <div class="collapsible-body">
                             <span>put items here</span>
@@ -269,21 +280,23 @@
                         <a id="sidebar_stepadd" class="right sidebar_add modal-trigger" href="#equipmentModal"><i class="material-icons">add</i></a>
                     </div>
                 </nav>
-                <ul id="selectable" class="sortable selectable collection row my_white" >
-                    <li id="step1" class="collection-item ui-widget-content sidebar_selectable_item">
-                        Step One
-                    </li>
-                    <li id="step2" class="collection-item ui-widget-content sidebar_selectable_item">
-                        Step Two
-                    </li>
-                    <li id="step3" class="collection-item ui-widget-content sidebar_selectable_item">
-                        Step Three
-                    </li>
+                <ul id="selectable" class="sortable selectable collection row my_white sidebar_step_collection" >
+                    
                 </ul>
+                <div class="center">
+                    <button id="addstep" class="btn center waves-effect waves-light modal-trigger my_red">
+                        Add Step
+                    </button>
+                </div>
+
             </div>
 <!--            side bar current item set-->
             <div id="sidebarthree" class="sidebar_info ">
-                sidebar three info
+                <nav class="delete_empty">
+                    <div class="nav-wrapper my_gray">
+                        <a href="#" class="brand-logo"><i class="material-icons">view_list</i>Current Items</a>
+                    </div>
+                </nav>
             </div>
 
             <div class="sidebar_trigger delete_empty">
@@ -296,16 +309,12 @@
         </div>
 
 
+<!--sample for the item created in the operation area-->
+<!--        <div id="item_one" class="ui-widget-content draggable_item center">-->
+<!--            <img src="../img/beaker.png" class="item_img">-->
+<!--            <p >draggable block</p>-->
+<!--        </div>-->
 
-        <div id="item_one" class="ui-widget-content draggable_item center">
-            <img src="../img/beaker.png" class="item_img">
-            <p >draggable block</p>
-        </div>
-
-        <div id="item_two" class="ui-widget-content draggable_item center">
-            <img src="../img/beaker.png" class="item_img">
-            <p >draggable block</p>
-        </div>
 
 
 
@@ -423,13 +432,14 @@
             <nav class="my_yellow">
                 <div class="popup_dialog_header">Enter number of liquid</div>
             </nav>
-            <div class="modal-content">
+            <div class="modal-content row">
                 <p class="range-field col s8 zeromargin ">
                     <input type="range" id="test5" min="0" max="200" value="100" oninput="showVal(this.value)" onchange="showVal(this.value)"/>
                 </p>
                 <div class="col s4 zeromargin">
                     <input class="number_picker" type="number" name="quantity" min="1" max="100" value="100">
                 </div>
+
                 <div class="center col s12">
                     <a href="#!" class="modal-close btn my_red">Pour</a>
                 </div>

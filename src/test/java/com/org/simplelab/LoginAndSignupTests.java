@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Refer to https://spring.io/guides/gs/testing-web/ for info on how to write requests for testing.
  */
 @AutoConfigureMockMvc
+@Transactional
 public class LoginAndSignupTests extends SpringTestConfig{
 
     @Autowired
@@ -34,7 +36,7 @@ public class LoginAndSignupTests extends SpringTestConfig{
         user.setUsername(new StringBuilder().append("log").append(metadata).toString());
         user.setPassword(password);
 
-        userDB.insertUser(user);
+        userDB.insert(user);
 
 
         //test right username+pass

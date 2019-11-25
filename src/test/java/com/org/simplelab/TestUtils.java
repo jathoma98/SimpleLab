@@ -1,5 +1,6 @@
 package com.org.simplelab;
 
+import com.org.simplelab.database.entities.User;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.security.Principal;
@@ -27,6 +28,13 @@ public class TestUtils {
                 return "UNIT_TEST";
             }
         };
+    }
+
+    public static User createJunkUser(){
+        User u = new User();
+        u.setFirstname("UNIT_TEST");
+        u.setLastname("UNIT_TEST");
+        return u;
     }
 
 }

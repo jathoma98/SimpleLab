@@ -1,15 +1,17 @@
 package com.org.simplelab.database.entities;
 
 import com.org.simplelab.database.DBUtils;
+import com.org.simplelab.database.entities.interfaces.UserCreated;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity(name = DBUtils.LAB_TABLE_NAME)
 @Table(name = DBUtils.LAB_TABLE_NAME)
-public class Lab extends BaseTable{
+public class Lab extends BaseTable implements UserCreated{
 
     private String name;
     private String description;

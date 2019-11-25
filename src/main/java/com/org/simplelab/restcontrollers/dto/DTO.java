@@ -1,7 +1,6 @@
 package com.org.simplelab.restcontrollers.dto;
 
 import com.org.simplelab.database.validators.CourseValidator;
-import com.org.simplelab.database.validators.LabValidator;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,6 +24,7 @@ public class DTO {
         private CourseValidator newCourseInfo;
 
     }
+
 
     /**
      * Contains information needed to search for Users through the
@@ -55,5 +55,17 @@ public class DTO {
         private String course_id;
         //list of username need to add or delete
         private List<String> usernameList;
+    }
+
+    /**
+     * Contains info to add a lab to a course.
+     */
+    @Getter
+    @Setter
+    public static class CourseAddLabsDTO {
+        //ids of labs to add
+        private long[] lab_ids;
+        //course_id of course to add labs to
+        private String course_id;
     }
 }

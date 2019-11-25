@@ -1,40 +1,68 @@
-package com.org.simplelab.database;
+package com.org.simplelab.database.services;
 
 
 import com.org.simplelab.database.entities.Course;
 import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;
-import com.org.simplelab.database.repositories.CourseRepository;
-import com.org.simplelab.database.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Transactional
 @Component
-public class CourseDB {
+public class CourseDB extends DBService<Course> {
 
-    public static class CourseTransactionException extends Exception{
+    public static class CourseTransactionException extends DBService.EntityInsertionException{
         public static final String NO_COURSE_FOUND = "The requested course could not be found.";
         CourseTransactionException(String message){
             super(message);
         }
     }
 
+    private class StudentSetManager extends EntitySetManager<User, Course>{
+        public StudentSetManager(Set<User> set, Course c) { super(set, c);}
+    }
 
-    @Autowired
-    CourseRepository courseRepository;
 
-    public boolean insertCourse(Course c){
+
+    @Override
+    public boolean insert(Course c){
         List<Course> found = findByCourseId(c.getCourse_id());
         if (found != null && found.size() > 0)
             return false;
         courseRepository.save(c);
         return true;
+    }
+
+    @Override
+    public boolean deleteById(long id){
+        courseRepository.deleteById(id);
+        return true;
+    }
+
+    @Override
+    public Course findById(long id) {
+        Optional<Course> found = courseRepository.findById(id);
+        return found.isPresent() ? found.get() : null;
+    }
+
+    public StudentSetManager getStudentsOfCourseById(long id){
+        Course found = findById(id);
+        if (found == null)
+            return null;
+        return new StudentSetManager(found.getStudents(), found);
+    }
+
+    public StudentSetManager getStudentsOfCourseByCourseId(String course_id){
+        List<Course> found = findByCourseId(course_id);
+        if (found == null)
+            return null;
+        Course c = found.get(0);
+        return new StudentSetManager(c.getStudents(), c);
     }
 
     /**
@@ -52,7 +80,7 @@ public class CourseDB {
         System.out.println("Found target course: " + c.toString());
         c.getStudents().add(u);
         System.out.println("Modified course: " + c.toString());
-        updateCourse(c);
+        update(c);
     }
 
     /**
@@ -88,7 +116,7 @@ public class CourseDB {
         //remove() returns true when the element exists
         if (students.remove(student)){
             c.setStudents(students);
-            updateCourse(c);
+            update(c);
         }
 
         ArrayList<User> toList = new ArrayList<>();
@@ -96,19 +124,17 @@ public class CourseDB {
         return toList;
     }
 
-    public List<Lab> getListOfLabs(String course_id) throws CourseTransactionException{
+    public EntitySetManager<Lab, Course> getLabsOfCourseByCourseId(String course_id) throws CourseTransactionException{
         List<Course> found = findByCourseId(course_id);
         if (found.size() == 0)
             throw new CourseTransactionException(CourseTransactionException.NO_COURSE_FOUND);
         Course c = found.get(0);
         Set<Lab> labs = c.getLabs();
-
-        ArrayList<Lab> toList = new ArrayList<>();
-        toList.addAll(labs);
-        return toList;
+        return new EntitySetManager<Lab, Course>(labs, c);
     }
 
-    public boolean updateCourse(Course c){
+    @Override
+    public boolean update(Course c){
         courseRepository.save(c);
         return true;
     }
@@ -150,8 +176,4 @@ public class CourseDB {
             return true;
         return false;
     }
-
-    @Autowired
-    UserRepository userRepository;
-
 }

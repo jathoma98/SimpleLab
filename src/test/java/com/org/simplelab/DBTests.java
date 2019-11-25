@@ -1,15 +1,25 @@
 package com.org.simplelab;
 
-import com.org.simplelab.database.LabDB;
-import com.org.simplelab.database.UserDB;
 import com.org.simplelab.database.entities.Course;
+import com.org.simplelab.database.entities.Equipment;
 import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.repositories.UserRepository;
+import com.org.simplelab.database.services.DBService;
+import com.org.simplelab.database.services.LabDB;
+import com.org.simplelab.database.services.UserDB;
+import com.org.simplelab.restcontrollers.CourseRESTController;
+import com.org.simplelab.restcontrollers.LabRESTController;
+import com.org.simplelab.restcontrollers.dto.DTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -34,7 +44,7 @@ class DBTests extends SpringTestConfig {
 	}
 
 	@Test
-	void User_insertionTest(){
+	void User_insertionTest() throws Exception{
 
 		User user = new User();
 		StringBuilder sb = new StringBuilder();
@@ -47,10 +57,10 @@ class DBTests extends SpringTestConfig {
 
 		//adding metadata to delete this entity later.
 		user._metadata = metadata;
-		assertEquals(userDB.insertUser(user), UserDB.UserInsertionStatus.SUCCESSFUL);
+		assertEquals(userDB.insert(user), true);
 
 		//ensure duplicate insertion returns false
-		assertEquals(userDB.insertUser(user), UserDB.UserInsertionStatus.FAILED);
+		assertThrows(UserDB.UserInsertionException.class, () -> userDB.insert(user));
 
 		//ensure duplicate insertion doesn't insert an additional instance with the same username
 		UserRepository repo = userDB.DEBUG_getInterface();
@@ -59,7 +69,7 @@ class DBTests extends SpringTestConfig {
 	}
 
 	@Test
-	void User_retrievalTest(){
+	void User_retrievalTest() throws Exception{
 		StringBuilder sb = new StringBuilder();
 		String username = sb.append("Another test user -- ").append(metadata).toString();
 
@@ -69,14 +79,14 @@ class DBTests extends SpringTestConfig {
 		user.setPassword("passy pass");
 		user._metadata = metadata;
 
-		userDB.insertUser(user);
+		userDB.insert(user);
 		User found = userDB.findUser(username);
 		assertNotNull(found);
 		assertEquals(found.getUsername(), username);
 	}
 
 	@Test
-	void User_deletionTest(){
+	void User_deletionTest() throws Exception{
 		StringBuilder sb = new StringBuilder();
 		String username = sb.append("Test user to delete -- ").append(metadata).toString();
 
@@ -84,7 +94,7 @@ class DBTests extends SpringTestConfig {
 		user._metadata = metadata;
 		user.setUsername(username);
 		user.setPassword("a pass");
-		userDB.insertUser(user);
+		userDB.insert(user);
 
 		userDB.deleteUser(user);
 		assertNull(userDB.findUser(user.getUsername()));
@@ -104,7 +114,7 @@ class DBTests extends SpringTestConfig {
 		user.setPassword("pass");
 		user.setFirstname("This is before updating.");
 		System.out.println(user.toString());
-		userDB.insertUser(user);
+		userDB.insert(user);
 
 		User toUpdate = userDB.findUser(username);
 		userDB.deleteUser(toUpdate);
@@ -112,7 +122,7 @@ class DBTests extends SpringTestConfig {
 
 		toUpdate.setFirstname("This is after updating.");
 		System.out.println(toUpdate.toString());
-		userDB.updateUser(user);
+		userDB.update(user);
 
 		User updated = userDB.findUser(username);
 		System.out.println(updated.toString());
@@ -121,14 +131,14 @@ class DBTests extends SpringTestConfig {
 	} */
 
 	@Test
-	void User_Authenticate_test(){
+	void User_Authenticate_test() throws Exception{
 		String password = "Password!";
 
 		User user = new User();
 		user._metadata = metadata;
 		user.setUsername(new StringBuilder().append("auth -- ").append(metadata).toString());
 		user.setPassword(password);
-		userDB.insertUser(user);
+		userDB.insert(user);
 
 		//make sure the wrong username results in failure
 		String wrong = new StringBuilder().append("wrong -- ").append(metadata).toString();
@@ -151,12 +161,131 @@ class DBTests extends SpringTestConfig {
 	}
 
 	@Autowired
+	LabRESTController lrc;
+
+	@Autowired
 	LabDB labDB;
 
+	/**
+	 * @Test test add equipment to lab endpoint
+	 */
 	@Test
-	void sql(){
+	@Transactional
+	void testEquipmentSetManager(){
+		List<Equipment> list = new ArrayList<>();
+		for (int i = 0; i < 1; i++){
+			Equipment e = new Equipment();
+			e.set_metadata(metadata);
+			e.setName(metadata);
+			list.add(e);
+		}
+		Lab l = new Lab();
+		l.setName(metadata);
+		l.set_metadata(metadata);
+		lr.save(l);
+		l = lr.findByName(metadata).get(0);
+		lrc.addEquipmentToLab(l.getId(), list);
+		Set<Equipment> found = l.getEquipments();
+		assertEquals(1, found.size());
+	}
+
+	@Autowired
+	CourseRESTController crc;
+
+	/**
+	 * @Test add labs to course endpoint.
+	 */
+	@Test
+	@Transactional
+	void testAddLabsToCourse() throws Exception{
+		Lab l = new Lab();
+		l.set_metadata(metadata);
+		l.setName(metadata);
+		Course c = new Course();
+		c.set_metadata(metadata);
+		c.setCourse_id(metadata);
+		c.setName(metadata);
+		c.setDescription(metadata);
+		cr.save(c);
+		lr.save(l);
+
+		DBService.EntitySetManager<Lab, Course> manager = courseDB.getLabsOfCourseByCourseId(c.getCourse_id());
+		manager.insert(l);
+		courseDB.update(manager.getFullEntity());
+
+
+		DTO.CourseAddLabsDTO dto = new DTO.CourseAddLabsDTO();
+		dto.setLab_ids(new long[]{lr.findByName(metadata).get(0).getId()});
+		dto.setCourse_id(c.getCourse_id());
+		crc.addLabsToCourse(dto);
+
+		DBService.EntitySetManager setManager = courseDB.getLabsOfCourseByCourseId(c.getCourse_id());
+		assertEquals(1, setManager.getEntitySet().size());
+		assertEquals(metadata, l.getName());
+	}
+
+	@Test
+	@Transactional
+	@WithMockUser(username = username, password = username)
+	void testAddStudentToCourse() throws Exception{
+		Course c = new Course();
+		c.set_metadata(metadata);
+		c.setCourse_id(metadata);
+		c.setName(metadata);
+		c.setDescription(metadata);
+		cr.save(c);
+		List<String> usernames = new ArrayList<>();
+
+		for (int i = 0; i < 3; i++){
+			String username = metadata + " " + i;
+			usernames.add(username);
+			User u = new User();
+			u.setUsername(username);
+			u.set_metadata(metadata);
+			userDB.insert(u);
+		}
+
+		DTO.CourseUpdateStudentListDTO dto = new DTO.CourseUpdateStudentListDTO();
+		dto.setUsernameList(usernames);
+		dto.setCourse_id(metadata);
+		crc.addStudentToCourse(dto);
+
+		DBService.EntitySetManager<User, Course> set = courseDB.getStudentsOfCourseByCourseId(metadata);
+		assertEquals(3, set.getEntitySet().size());
+		assertEquals(metadata, ((User)set.getEntitySet().toArray()[0]).get_metadata());
 
 	}
+
+	@Test
+	@Transactional
+	void testDeleteFromStudentList(){
+		Course c = new Course();
+		Set<User> users = new HashSet<>();
+		List<String> usernames = new ArrayList<>();
+		c.setName(metadata);
+		c.setCourse_id(metadata);
+		c.set_metadata(metadata);
+		for (int i = 0; i < 3; i++){
+			User u = new User();
+			u.setUsername(metadata + i);
+			users.add(u);
+			usernames.add(u.getUsername());
+		}
+		c.setStudents(users);
+		cr.save(c);
+		DBService.EntitySetManager<User, Course> original = courseDB.getStudentsOfCourseByCourseId(c.getCourse_id());
+		assertEquals(3, original.getEntitySet().size());
+
+		DTO.CourseUpdateStudentListDTO dto = new DTO.CourseUpdateStudentListDTO();
+		dto.setCourse_id(c.getCourse_id());
+		dto.setUsernameList(usernames);
+		crc.deleteStudentList(dto);
+
+		DBService.EntitySetManager<User, Course> newUsers = courseDB.getStudentsOfCourseByCourseId(c.getCourse_id());
+		assertEquals(0, newUsers.getEntitySet().size());
+
+	}
+
 
 
 
