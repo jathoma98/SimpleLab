@@ -2,6 +2,7 @@ package com.org.simplelab.restcontrollers;
 
 import com.org.simplelab.database.UserDB;
 import com.org.simplelab.database.entities.User;
+import com.org.simplelab.database.validators.UserValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ import java.util.List;
     public static final String LOAD_USER_MAPPING = "/loadUserInfo";
     public static final String RESET_USER_MAPPING = "/restUserInfo";
     public static final String SEARCH_USER_MAPPING = "/searchUser";
+    public static final String FORGOT_PASSWORD_MAPPING = "/fpChangePassword";
 
     /**
      * Returns a list of Users with attributes that match a given string
@@ -67,9 +69,28 @@ import java.util.List;
         try {
             userId = (long) session.getAttribute("user_id");
         } catch (Exception e) {
-            //redirect to login
+
         }
         user.setId(userId);
         userDB.updateUser(user);
     }
+
+
+
+    public class userNewPassword{
+        private String password;
+        private User user;
+    }
+
+    @PostMapping(FORGOT_PASSWORD_MAPPING)
+    public void changepassword (@RequestBody userNewPassword newPassword){
+        try{
+            newPassword.user.setPassword(newPassword.password);
+        }catch (Exception e){
+
+        }
+
+    }
+
+
 }
