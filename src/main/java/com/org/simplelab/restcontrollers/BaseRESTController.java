@@ -26,6 +26,12 @@ public class BaseRESTController<T extends BaseTable> extends BaseController {
     @Autowired
     HttpSession session;
 
+    /**
+     * Adds an entity to the application database.
+     * @param validator - Validator object which contains all fields which need to be copied to the Entity object
+     * @param db - The DB that manages the entity to be created
+     * @return - success: true on successful creation
+     */
     protected Map addEntity(Validator<T> validator, DBService<T> db){
         RequestResponse response = new RequestResponse();
         try{
