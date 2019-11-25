@@ -1,12 +1,12 @@
 let current_user;
-function finduser() {
+function findUser() {
     let username = {userName : $("#userName").val()};
     let user_json =  JSON.stringify(username);
     $.ajax({
         url: "/fpFindUser",
         type: 'POST',
-        // dataTye: 'json',
-        // contentType: 'application/json; charset=utf-8',
+        dataTye: 'json',
+        contentType: 'application/json; charset=utf-8',
         data: user_json,
         success: function(){
             console.log("123");
@@ -38,6 +38,7 @@ function changepassword(){
     $.ajax({
         url: "/user/rest/fpFindUser",
         type: "POST",
+        dataTye: 'json',
         contentType: 'application/json; charset=utf-8',
         data: course_json,
         success: function(user){
@@ -60,6 +61,6 @@ function changepassword(){
 
 $(document).ready( function () {
 
-    $("#submitbtn").on("click",finduser);
+    $("#submitbtn").on("click",findUser);
     $("#savebtn").on("click",changepassword);
 })

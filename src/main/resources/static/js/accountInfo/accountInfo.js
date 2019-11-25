@@ -43,14 +43,16 @@ let ACC_INFO ={
             $.ajax({
                 url: "/user/rest/loadUserInfo",
                 type: "GET",
-                success: function(user){
-                    let data = {
-                        accModal:{
-                            active: "active",
-                            user: user,
+                success: function(result){
+                    retObjHandle(result, (user)=>{
+                        let data = {
+                            accModal:{
+                                active: "active",
+                                user: user,
+                            }
                         }
-                    }
-                    rebuildComponent('#modalAccount ul',"#modalAccTpl", data,ACC_INFO.btnEvents);
+                        rebuildComponent('#modalAccount ul',"#modalAccTpl", data, ACC_INFO.btnEvents);
+                    })
                 }
             })
         }
