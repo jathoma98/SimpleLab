@@ -94,16 +94,20 @@ let COURSES_TABLE = {
                 dataTye: 'json',
                 contentType: 'application/json; charset=utf-8',
                 data: course_json,
-                success: function (course) {
-                    let data = {
-                        courseModal:{
-                            active: "active",
-                            course: course,
+                success: function (result) {
+                    retObjHandle(result, function(){
+                        let data = {
+                            courseModal:{
+                                active: "active",
+                                course: result.data,
+                            }
                         }
-                    }
-                    rebuildComponent('#modal ul',"#modalTpl", data,  COURSES_TABLE.btnEvents);
-                    //load
-                    COURSES_TABLE.reLoadStudentsList(course_json)
+                        rebuildComponent(ElEM_ID.MODAL_UL,TEMPLATE_ID.MODAL, data,  COURSES_TABLE.btnEvents);
+                        //load
+                        COURSES_TABLE.reLoadStudentsList(course_json)
+                    })
+
+
                 }
             })
         };
@@ -138,15 +142,16 @@ let COURSES_TABLE = {
                 url: "/course/rest/loadCourseList",
                 type: "GET",
                 success: function (result) {
-                    if (result.success !== true) return;
-                    let data = {
-                        isEnabled: COURSES_TABLE.toggle,
-                        courses: result.data.reverse()
-                    }
-                    rebuildComponent(ElEM_ID.COURSE_TABLE_TBODY, '#course_tbody', data);
-                    if (COURSES_TABLE.toggle) {
-                        setTableBodyRowEvent(ElEM_ID.COURSE_TABLE_TBODY, COURSES_TABLE.tableRowEvent);
-                    }
+                    retObjHandle(result, function(){
+                        let data = {
+                            isEnabled: COURSES_TABLE.toggle,
+                            courses: result.data.reverse()
+                        }
+                        rebuildComponent(ElEM_ID.COURSE_TABLE_TBODY, TEMPLATE_ID.COURSE_TBODY, data);
+                        if (COURSES_TABLE.toggle) {
+                            setTableBodyRowEvent(ElEM_ID.COURSE_TABLE_TBODY, COURSES_TABLE.tableRowEvent);
+                        }
+                    })
                 }
             })
         };
