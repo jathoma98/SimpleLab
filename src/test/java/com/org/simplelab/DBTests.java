@@ -255,7 +255,35 @@ class DBTests extends SpringTestConfig {
 		assertEquals(3, set.getEntitySet().size());
 		assertEquals(metadata, ((User)set.getEntitySet().toArray()[0]).get_metadata());
 
+	}
 
+	@Test
+	@Transactional
+	void testDeleteFromStudentList(){
+		Course c = new Course();
+		Set<User> users = new HashSet<>();
+		List<String> usernames = new ArrayList<>();
+		c.setName(metadata);
+		c.setCourse_id(metadata);
+		c.set_metadata(metadata);
+		for (int i = 0; i < 3; i++){
+			User u = new User();
+			u.setUsername(metadata + i);
+			users.add(u);
+			usernames.add(u.getUsername());
+		}
+		c.setStudents(users);
+		cr.save(c);
+		DBService.EntitySetManager<User, Course> original = courseDB.getStudentsOfCourseByCourseId(c.getCourse_id());
+		assertEquals(3, original.getEntitySet().size());
+
+		DTO.CourseUpdateStudentListDTO dto = new DTO.CourseUpdateStudentListDTO();
+		dto.setCourse_id(c.getCourse_id());
+		dto.setUsernameList(usernames);
+		crc.deleteStudentList(dto);
+
+		DBService.EntitySetManager<User, Course> newUsers = courseDB.getStudentsOfCourseByCourseId(c.getCourse_id());
+		assertEquals(0, newUsers.getEntitySet().size());
 
 	}
 

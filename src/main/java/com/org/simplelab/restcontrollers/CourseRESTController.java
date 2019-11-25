@@ -177,26 +177,17 @@ public class CourseRESTController extends BaseRESTController<Course> {
 
 
     @DeleteMapping(DELETE_STUDENTS_MAPPING)
-    public Map deleteStudentList(@RequestBody DTO.CourseUpdateStudentListDTO course,
-                                        HttpSession session) {
-        RequestResponse r = new RequestResponse();
-        r.setSuccess(false);
-
-        long own_id = -1;
-        own_id = getUserIdFromSession(session);
-        String errorMsg = "";
+    public Map deleteStudentList(@RequestBody DTO.CourseUpdateStudentListDTO course) {
         List<String> usernameList = course.getUsernameList();
-        for(int i = 0; i < usernameList.size(); i++ ){
-            User u = userDB.findUser(usernameList.get(i));
-            try {
-                courseDB.removeStudentFromCourse(u, course.getCourse_id());
-            } catch (CourseDB.CourseTransactionException e) {
-                errorMsg += e.getMessage() + "\n";
+        List<User> toDelete = new ArrayList<>();
+        for (String username: usernameList){
+            User u = userDB.findUser(username);
+            if (u != null){
+                toDelete.add(u);
             }
         }
-        r.setError(errorMsg);
-        r.setSuccess(true);
-        return r.map();
+        DBService.EntitySetManager<User, Course> toUpdate = courseDB.getStudentsOfCourseByCourseId(course.getCourse_id());
+        return super.removeEntitiesFromEntityList(toUpdate, toDelete, courseDB);
     }
 
 }

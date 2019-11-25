@@ -134,7 +134,6 @@ public abstract class BaseRESTController<T extends BaseTable> extends BaseContro
         return response.map();
     }
 
-    //TODO: test this
     protected  <U extends BaseTable>
     Map removeEntitiesFromEntityList(DBService.EntitySetManager<U, T> set,
                                      List<U> toRemove, DBService<T> db){
