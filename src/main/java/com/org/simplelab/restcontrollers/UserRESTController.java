@@ -5,6 +5,7 @@ import com.org.simplelab.database.validators.UserValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
 import com.org.simplelab.restcontrollers.rro.RRO_ACTION_TYPE;
+import com.org.simplelab.restcontrollers.rro.RRO_MSG;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -55,10 +56,19 @@ public class UserRESTController extends BaseRESTController<User> {
     }
 
     @GetMapping(LOAD_USER_MAPPING)
-    public User getUserInfo(HttpSession session){
+    public RRO<User> getUserInfo(HttpSession session){
+        RRO<User> rro = new RRO();
         long userId = getUserIdFromSession(session);
         User user = userDB.findById(userId);
-        return user;
+        if(user == null){
+            rro.setSuccess(false);
+            rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
+            rro.setMsg(RRO_MSG.USER_NO_FOUND.getMsg());
+        }
+        rro.setSuccess(true);
+        rro.setData(user);
+        rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
+        return rro;
     }
 
     @PostMapping(RESET_USER_MAPPING)
