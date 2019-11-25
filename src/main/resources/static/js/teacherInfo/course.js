@@ -99,6 +99,7 @@ let COURSES_TABLE = {
                         let data = {
                             courseModal: {
                                 active: "active",
+                                create: false,
                                 course: result.data,
                             }
                         }
@@ -222,6 +223,7 @@ let COURSES_TABLE = {
             let data = {
                 courseModal: {
                     active: "active",
+                    create: true,
                     course: true,
                 }
             }
