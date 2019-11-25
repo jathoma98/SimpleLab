@@ -1,18 +1,23 @@
 var globalselect=undefined;
 var sidebar_step_select=undefined;
+var itemcount=0;
+var current_drag=undefined;
+var current_drap=undefined;
 
 $(document).ready(function(){
 
+    // add item to operation area when click sidebar item
     $(".sidebaritem").click(function (event) {
-        var c = $('<div id="item_three" class="ui-widget-content draggable_item center">' +
+        var item_id="item_"+itemcount;
+        var c = $('<div id='+item_id+' class="ui-widget-content draggable_item center">' +
             '<img src="../img/beaker.png" class="item_img">' +
-            '<p >draggable block</p>' +
+            '<p >200ml H2SO4</p>' +
             '</div>');
+
         c.click(function (event) {
             selectItem(this.id);
             event.stopPropagation();
         })
-        console.log(c.id);
         c.draggable({
             containment: "parent",
             start: startDrag,
@@ -22,19 +27,11 @@ $(document).ready(function(){
             drop: dropitem
         });
         $("#operation_area").append(c);
+        c.offset({top:150,left:100})
+        itemcount++;
     })
 
-
-    $(".draggable_item").draggable({
-        containment: "parent",
-        start: startDrag,
-        stop: stopDrag
-    });
-    $( ".draggable_item" ).droppable({
-        drop: dropitem
-    });
-
-
+    // to avoid propagation
     $("#operation_area").click(function (event) {
         selectItem(this.id);
         event.stopPropagation();
@@ -51,6 +48,7 @@ $(document).ready(function(){
         selectItem(this.id);
         event.stopPropagation();
     })
+
     //to select item in sidebar steps
     $(".sidebar_selectable_item").click(function(event){
         if(sidebar_step_select==this.id){
@@ -65,17 +63,19 @@ $(document).ready(function(){
         }
     })
 
+    //to open add equipment modal
     $("#sidebar_add").click(function (event) {
         $("#equipmentModal").modal("open");
     })
 
 
 
-
+    //to open add compound modal
     $("#addcompound").click(function (event) {
         $("#compoundmodal").modal("open");
     })
 
+    //side bar on hover
     $(function(){
         $('#sidebar_trigger').hover(function(){
             $("#sidebar").show("slide", { direction: "left" }, 400);
@@ -84,19 +84,13 @@ $(document).ready(function(){
         }).trigger('mouseleave');
     });
 
-
-
-
-    //every item that added to the operation table should have the function below
-    //every item should be selectable
-    $("#item_one").click(function (event) {
-        selectItem(this.id);
-        event.stopPropagation();
-    })
-
-    $("#item_two").click(function (event) {
-        selectItem(this.id);
-        event.stopPropagation();
+    //for popup dialog rotate back
+    //not complete
+    $(".popup_dialog").modal({
+        onCloseEnd: function (event) {
+            alert("close")
+            $("#"+current_drag).css({"transform": "rotate(180deg)"});
+        }
     })
 
 });
@@ -120,7 +114,15 @@ function dropitem(event, ui) {
     // this could be used to get two interactive items
     var draggableId = ui.draggable.attr("id");
     var droppableId = $(this).attr("id");
-    console.log("drag item  " +draggableId+"drop item  "+droppableId )
+    current_drag=draggableId;
+    current_drap=droppableId;
+    console.log("drag item  " +draggableId+"drop item  "+droppableId)
+    var item2ps=$("#"+draggableId).position()
+    $("#"+droppableId).offset({top:item2ps.top+75,left:item2ps.left+140})
+    console.log( $("#"+draggableId))
+    $("#"+draggableId).css({"transform": "rotate(20deg)"});
+    // console.log(item2ps)
+    // console.log($("#"+draggableId).position())
 }
 
 
