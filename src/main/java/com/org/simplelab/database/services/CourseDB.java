@@ -61,6 +61,14 @@ public class CourseDB extends DBService<Course> {
         return new StudentSetManager(found.getStudents(), found);
     }
 
+    public StudentSetManager getStudentsOfCourseByCourseId(String course_id){
+        List<Course> found = findByCourseId(course_id);
+        if (found == null)
+            return null;
+        Course c = found.get(0);
+        return new StudentSetManager(c.getStudents(), c);
+    }
+
     /**
      * Adds a student to a Course.
      * @param course_id - course_id of the course to be modified

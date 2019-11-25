@@ -25,6 +25,7 @@ public class DTO {
 
     }
 
+
     /**
      * Contains information needed to search for Users through the
      * User Search endpoint.
@@ -54,5 +55,17 @@ public class DTO {
         private String course_id;
         //list of username need to add or delete
         private List<String> usernameList;
+    }
+
+    /**
+     * Contains info to add a lab to a course.
+     */
+    @Getter
+    @Setter
+    public static class CourseAddLabsDTO {
+        //ids of labs to add
+        private long[] lab_ids;
+        //course_id of course to add labs to
+        private String course_id;
     }
 }

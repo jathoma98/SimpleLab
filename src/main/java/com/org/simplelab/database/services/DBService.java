@@ -60,6 +60,7 @@ public abstract class DBService<T extends BaseTable> {
 
         private Set<T> entitySet;
         private U fullEntity;
+        public static final String NOT_FOUND_STRING = "Could not find entity to update. ";
         public EntitySetManager(Set<T> set, U fullEntity){
             this.entitySet = set;
             this.fullEntity = fullEntity;

@@ -1,6 +1,7 @@
 package com.org.simplelab.restcontrollers;
 
 import com.org.simplelab.controllers.RequestResponse;
+import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.services.CourseDB;
 import com.org.simplelab.database.entities.Course;
 import com.org.simplelab.database.entities.User;
@@ -16,7 +17,6 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 //TODO: secure rest endpoints with authentication
 @RestController
@@ -32,7 +32,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
     public static final String ADD_STUDENT_MAPPING = "/addStudent";
     public static final String GET_STUDENTS_MAPPING = "/getStudents";
     public static final String DELETE_STUDENTS_MAPPING = "/deleteStudents";
-    public static final String ADD_LAB_TO_COURSE_MAPPING = "/addLab";
+    public static final String ADD_LABS_TO_COURSE_MAPPING = "/addLab";
 
 
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -138,19 +138,25 @@ public class CourseRESTController extends BaseRESTController<Course> {
                 toAdd.add(userDB.findUser(username));
             }
         }
-        List<Course> found = courseDB.findByCourseId(course_id);
-        DBService.EntitySetManager toUpdate;
-        if (found != null){
-            toUpdate = courseDB.getStudentsOfCourseById(found.get(0).getId());
-        } else {
-            RequestResponse rsp = new RequestResponse();
-            rsp.setSuccess(false);
-            rsp.setError("Could not find course.");
-            return rsp.map();
-        }
+        DBService.EntitySetManager toUpdate = courseDB.getStudentsOfCourseByCourseId(course_id);
         return super.addEntitiesToEntityList(toUpdate, toAdd, courseDB);
     }
 
+
+    //TODO: test this
+    @Transactional
+    @PostMapping(ADD_LABS_TO_COURSE_MAPPING)
+    public Map addLabsToCourse(@RequestBody DTO.CourseAddLabsDTO dto){
+        long[] ids = dto.getLab_ids();
+        List<Lab> toAdd = new ArrayList<>();
+        for (long id: ids){
+            Lab found = labDB.findById(id);
+            if (found != null)
+                toAdd.add(found);
+        }
+        DBService.EntitySetManager toUpdate = courseDB.getStudentsOfCourseByCourseId(dto.getCourse_id());
+        return super.addEntitiesToEntityList(toUpdate, toAdd, courseDB);
+    }
 
     @PostMapping(GET_STUDENTS_MAPPING)
     public List<User> getStudentList(@RequestBody DTO.CourseUpdateStudentListDTO course,
