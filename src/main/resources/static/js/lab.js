@@ -2,7 +2,8 @@ var globalselect=undefined;
 var sidebar_step_select=undefined;
 var itemcount=0;
 var current_drag=undefined;
-var current_drap=undefined;
+var current_drop=undefined;
+var stepcount=1;
 
 $(document).ready(function(){
 
@@ -29,6 +30,14 @@ $(document).ready(function(){
         $("#operation_area").append(c);
         c.offset({top:150,left:100})
         itemcount++;
+
+        //for popup dialog rotate back
+        $(".popup_dialog").modal({
+            onCloseEnd: function (event) {
+                alert("close")
+                $("#"+current_drag).css({"transform": "rotate(0deg)"});
+            }
+        })
     })
 
     // to avoid propagation
@@ -68,7 +77,20 @@ $(document).ready(function(){
         $("#equipmentModal").modal("open");
     })
 
+    //add step
+    $('#addstep').click(function() {
+        $('.sidebar_step_collection').append('' +
+            '<li id="step'+stepcount+'" class="collection-item ui-widget-content sidebar_selectable_item">\n' +
+            '     Step'+stepcount+'\n' +
+            '     <a class="right step_remove" href="#">Remove</a>\n' +
+            '</li>');
+        stepcount++;
+    });
 
+    //remove step
+    $('.collection').on('click', '.step_remove', function() {
+        $(this).closest('li').remove();
+    });
 
     //to open add compound modal
     $("#addcompound").click(function (event) {
@@ -84,14 +106,9 @@ $(document).ready(function(){
         }).trigger('mouseleave');
     });
 
-    //for popup dialog rotate back
-    //not complete
-    $(".popup_dialog").modal({
-        onCloseEnd: function (event) {
-            alert("close")
-            $("#"+current_drag).css({"transform": "rotate(180deg)"});
-        }
-    })
+
+
+
 
 });
 
@@ -115,7 +132,7 @@ function dropitem(event, ui) {
     var draggableId = ui.draggable.attr("id");
     var droppableId = $(this).attr("id");
     current_drag=draggableId;
-    current_drap=droppableId;
+    current_drop=droppableId;
     console.log("drag item  " +draggableId+"drop item  "+droppableId)
     var item2ps=$("#"+draggableId).position()
     $("#"+droppableId).offset({top:item2ps.top+75,left:item2ps.left+140})
