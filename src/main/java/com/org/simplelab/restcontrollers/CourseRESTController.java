@@ -49,9 +49,9 @@ public class CourseRESTController extends BaseRESTController<Course> {
      *            {
      *            course_id_old: "CSE308",
      *            newCourseInfo: {
-     *            name: "Software Dev",
-     *            course_id: "CSE316",
-     *            description: "Revamped Software class for Spring 2020"
+     *               name: "Software Dev",
+     *               course_id: "CSE316",
+     *                description: "Revamped Software class for Spring 2020"
      *            }
      *            }
      * @return success:true on success
@@ -61,34 +61,22 @@ public class CourseRESTController extends BaseRESTController<Course> {
      */
     @PatchMapping(UPDATE_MAPPING)
     public Map<String, String> updateCourse(@RequestBody DTO.CourseUpdateDTO dto, HttpSession session) {
+        System.out.println(dto.toString());
         RequestResponse rsp = new RequestResponse();
         long uid = getUserIdFromSession(session);
-        List<Course> courses = courseDB.findByCourseId(dto.getCourse_id_old());
-        if (courses.size() > 0) {
-            CourseValidator cv = dto.getNewCourseInfo();
-            try {
-                cv.validate();
-            } catch (InvalidFieldException e) {
-                rsp.setError(e.getMessage());
-                return rsp.map();
-            }
-            Course found = courses.get(0);
-            //ensure the found course belongs to the current user -- exception if not (the new course code is a duplicate)
-            if (found.getCreator().getId() != uid) {
-                rsp.setError(CourseValidator.DUPLICATE_ID);
-                return rsp.map();
-            }
-            found.setCourse_id(cv.getCourse_id());
-            found.setName(cv.getName());
-            found.setDescription(cv.getDescription());
-            courseDB.update(found);
+        Course toUpdate;
+        List<Course> foundcourses = courseDB.findByCourseId(dto.getCourse_id_old());
+        if (foundcourses.size() > 0){
+            toUpdate = foundcourses.get(0);
         } else {
-            rsp.setError("No course with this ID was found. ");
+            rsp.setError("No course found.");
             return rsp.map();
         }
-
-        rsp.setSuccess(true);
-        return rsp.map();
+        if (toUpdate.getCreator().getId() != uid){
+            rsp.setError(CourseValidator.DUPLICATE_ID);
+            return rsp.map();
+        }
+        return super.updateEntity(toUpdate.getId(), dto.getNewCourseInfo(), courseDB);
     }
 
     /**

@@ -87,6 +87,26 @@ public class RESTTests extends SpringTestConfig {
                             //.andDo(print())
                             .andExpect(status().isOk());
 
+        /**
+         * @Test: update course
+         */
+        Map<String, Object> newDTO = new HashMap<>();
+        rawJson.put("description", metadata + "UPDATED");
+        newDTO.put("course_id_old", "UNIT_TEST" + metadata);
+        newDTO.put("newCourseInfo", new JSONObject(rawJson));
+        json = new JSONObject(newDTO);
+        this.mockMvc.perform(patch(CourseRESTController.BASE_MAPPING + CourseRESTController.UPDATE_MAPPING)
+                            .sessionAttrs(session_atr)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(json.toString()))
+                            .andDo(print())
+                            .andExpect(status().isOk())
+                            .andExpect(content().json("{'success': 'true'}"));
+
+        //make sure the course in the DB has the new info
+        Course updated = courseDB.findByCourseId("UNIT_TEST" + metadata).get(0);
+        assertEquals(updated.getDescription(), metadata + "UPDATED");
+
 
         //delete the course afterwards
         List<Course> found = courseDB.findCourseByName(metadata);

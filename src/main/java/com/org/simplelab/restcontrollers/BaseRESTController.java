@@ -33,6 +33,7 @@ public class BaseRESTController<T extends BaseTable> extends BaseController {
             return response.map();
         }
         T created = validator.build();
+
         //set the creator if its a UserCreated entity
         if (UserCreated.class.isInstance(created)){
             UserCreated created_assign = (UserCreated)created;
