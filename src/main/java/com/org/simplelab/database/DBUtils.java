@@ -1,12 +1,8 @@
 package com.org.simplelab.database;
 
-import com.org.simplelab.database.entities.BaseTable;
-import com.org.simplelab.database.entities.interfaces.UserCreated;
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
 
-import javax.xml.transform.Source;
 import java.security.MessageDigest;
 
 /**

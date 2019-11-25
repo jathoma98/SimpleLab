@@ -4,8 +4,6 @@ import com.org.simplelab.database.CourseDB;
 import com.org.simplelab.database.EquipmentDB;
 import com.org.simplelab.database.LabDB;
 import com.org.simplelab.database.UserDB;
-import com.org.simplelab.database.entities.Course;
-import com.org.simplelab.database.entities.Equipment;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpSession;

@@ -1,9 +1,6 @@
 package com.org.simplelab.database;
 
 import com.org.simplelab.database.entities.Lab;
-import com.org.simplelab.database.repositories.CourseRepository;
-import com.org.simplelab.database.repositories.LabRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 

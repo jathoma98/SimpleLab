@@ -1,8 +1,5 @@
 package com.org.simplelab.controllers;
 
-import com.org.simplelab.database.UserDB;
-import com.org.simplelab.database.entities.User;
-import com.org.simplelab.database.validators.InvalidFieldException;
 import com.org.simplelab.database.validators.UserValidator;
 import com.org.simplelab.restcontrollers.UserRESTController;
 import org.springframework.beans.factory.annotation.Autowired;

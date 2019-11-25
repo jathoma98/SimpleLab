@@ -5,8 +5,6 @@ import com.org.simplelab.database.entities.Equipment;
 import com.org.simplelab.database.validators.EquipmentValidator;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.ManyToMany;
-import javax.persistence.MapsId;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 

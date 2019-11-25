@@ -2,8 +2,6 @@ package com.org.simplelab.database;
 
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
