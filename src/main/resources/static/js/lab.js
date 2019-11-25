@@ -10,15 +10,51 @@ $(document).ready(function(){
     // add item to operation area when click sidebar item
     $(".sidebaritem").click(function (event) {
         var item_id="item_"+itemcount;
-        var c = $('<div id='+item_id+' class="ui-widget-content draggable_item center">' +
-            '<img src="../img/beaker.png" class="item_img">' +
-            '<p >200ml H2SO4</p>' +
-            '</div>');
+
+        if(this.id=="500mlbeaker"){
+            var c = $('<div id='+item_id+' class="ui-widget-content draggable_item center">' +
+                '<img src="../img/beaker.png" class="item_img">' +
+                '<p >500ml beaker</p>' +
+                '</div>');
+
+            var cur_item= $('<li class="collection-item">\n' +
+                '                        <div class="row sidebaritem">\n' +
+                '                            <div class="col s6">\n' +
+                '                                <img src="../img/beaker.png" class="item_img">\n' +
+                '                            </div>\n' +
+                '                            <div class="col s6">\n' +
+                '                                <p>500ml beaker</p>\n' +
+                '                                <p>0.01L</p>\n' +
+                '                                <a class="right cur_item_remove" href="#">Remove</a>\n' +
+                '                            </div>\n' +
+                '                        </div>\n' +
+                '                    </li>');
+        }else{
+            var c = $('<div id='+item_id+' class="ui-widget-content draggable_item center">' +
+                '<img src="../img/cylinder.png" class="item_img">' +
+                '<p >200ml cylinder</p>' +
+                '</div>');
+
+            var cur_item= $('<li class="collection-item">\n' +
+                '                        <div class="row sidebaritem">\n' +
+                '                            <div class="col s6">\n' +
+                '                                <img src="../img/cylinder.png" class="item_img">\n' +
+                '                            </div>\n' +
+                '                            <div class="col s6">\n' +
+                '                                <p>200ml cylinder</p>\n' +
+                '                                <p>0.01L</p>\n' +
+                '                                <a class="right cur_item_remove" href="#">Remove</a>\n' +
+                '                            </div>\n' +
+                '                        </div>\n' +
+                '                    </li>');
+        }
+
 
         c.click(function (event) {
             selectItem(this.id);
             event.stopPropagation();
         })
+
         c.draggable({
             containment: "parent",
             start: startDrag,
@@ -27,7 +63,10 @@ $(document).ready(function(){
         c.droppable({
             drop: dropitem
         });
+        //add to operation area
         $("#operation_area").append(c);
+        //add item to current set
+        $(".current_item_set").append(cur_item);
         c.offset({top:150,left:100})
         itemcount++;
 
@@ -37,6 +76,8 @@ $(document).ready(function(){
                 $("#"+current_drag).css({"transform": "rotate(0deg)"});
             }
         })
+
+
     })
 
     // to avoid propagation
@@ -77,6 +118,16 @@ $(document).ready(function(){
     })
 
     //add step
+    $('#additemset').click(function() {
+        $('.itemset').append('' +
+            '<li id="step'+stepcount+'" class="collection-item ui-widget-content sidebar_selectable_item">\n' +
+            '     Step'+stepcount+'\n' +
+            '     <a class="right step_remove" href="#">Remove</a>\n' +
+            '</li>');
+        stepcount++;
+    });
+
+    //add step
     $('#addstep').click(function() {
         $('.sidebar_step_collection').append('' +
             '<li id="step'+stepcount+'" class="collection-item ui-widget-content sidebar_selectable_item">\n' +
@@ -109,8 +160,17 @@ $(document).ready(function(){
 
 
 
-});
 
+
+
+
+
+
+
+});
+//--------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------
 function startDrag(event,ui){
     var itemid = $(this).attr("id");
     var item=document.getElementById(itemid);
@@ -134,9 +194,9 @@ function dropitem(event, ui) {
     current_drop=droppableId;
     console.log("drag item  " +draggableId+"drop item  "+droppableId)
     var item2ps=$("#"+draggableId).position()
-    $("#"+droppableId).offset({top:item2ps.top+75,left:item2ps.left+140})
+    $("#"+droppableId).offset({top:item2ps.top+50,left:item2ps.left+100})
     console.log( $("#"+draggableId))
-    $("#"+draggableId).css({"transform": "rotate(20deg)"});
+    $("#"+draggableId).css({"transform": "rotate(45deg)"});
     // console.log(item2ps)
     // console.log($("#"+draggableId).position())
 }
