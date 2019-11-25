@@ -1,5 +1,6 @@
 package com.org.simplelab.database.validators;
 
+import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.Lab;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,7 +31,7 @@ public class LabValidator extends Validator<Lab> {
 
     @Override
     public Lab build() {
-        ModelMapper mm = new ModelMapper();
+        ModelMapper mm = DBUtils.getMapper();
         Lab lab = mm.map(this, Lab.class);
         return lab;
     }
