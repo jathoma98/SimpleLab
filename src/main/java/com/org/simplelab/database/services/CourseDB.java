@@ -128,16 +128,13 @@ public class CourseDB extends DBService<Course> {
         return toList;
     }
 
-    public List<Lab> getListOfLabs(String course_id) throws CourseTransactionException{
+    public EntitySetManager<Lab, Course> getLabsOfCourseByCourseId(String course_id) throws CourseTransactionException{
         List<Course> found = findByCourseId(course_id);
         if (found.size() == 0)
             throw new CourseTransactionException(CourseTransactionException.NO_COURSE_FOUND);
         Course c = found.get(0);
         Set<Lab> labs = c.getLabs();
-
-        ArrayList<Lab> toList = new ArrayList<>();
-        toList.addAll(labs);
-        return toList;
+        return new EntitySetManager<Lab, Course>(labs, c);
     }
 
     @Override

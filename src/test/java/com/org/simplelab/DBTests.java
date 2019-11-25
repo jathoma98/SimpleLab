@@ -1,17 +1,24 @@
 package com.org.simplelab;
 
+import com.org.simplelab.database.entities.Course;
 import com.org.simplelab.database.entities.Equipment;
 import com.org.simplelab.database.entities.Lab;
+import com.org.simplelab.database.services.CourseDB;
+import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.services.LabDB;
 import com.org.simplelab.database.services.UserDB;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.repositories.UserRepository;
+import com.org.simplelab.restcontrollers.CourseRESTController;
 import com.org.simplelab.restcontrollers.LabRESTController;
+import com.org.simplelab.restcontrollers.dto.DTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -160,6 +167,9 @@ class DBTests extends SpringTestConfig {
 	@Autowired
 	LabDB labDB;
 
+	/**
+	 * @Test test add equipment to lab endpoint
+	 */
 	@Test
 	@Transactional
 	void testEquipmentSetManager(){
@@ -178,6 +188,74 @@ class DBTests extends SpringTestConfig {
 		lrc.addEquipmentToLab(l.getId(), list);
 		Set<Equipment> found = l.getEquipments();
 		assertEquals(1, found.size());
+	}
+
+	@Autowired
+	CourseRESTController crc;
+
+	/**
+	 * @Test add labs to course endpoint.
+	 */
+	@Test
+	@Transactional
+	void testAddLabsToCourse() throws Exception{
+		Lab l = new Lab();
+		l.set_metadata(metadata);
+		l.setName(metadata);
+		Course c = new Course();
+		c.set_metadata(metadata);
+		c.setCourse_id(metadata);
+		c.setName(metadata);
+		c.setDescription(metadata);
+		cr.save(c);
+		lr.save(l);
+
+		DBService.EntitySetManager<Lab, Course> manager = courseDB.getLabsOfCourseByCourseId(c.getCourse_id());
+		manager.insert(l);
+		courseDB.update(manager.getFullEntity());
+
+
+		DTO.CourseAddLabsDTO dto = new DTO.CourseAddLabsDTO();
+		dto.setLab_ids(new long[]{lr.findByName(metadata).get(0).getId()});
+		dto.setCourse_id(c.getCourse_id());
+		crc.addLabsToCourse(dto);
+
+		DBService.EntitySetManager setManager = courseDB.getLabsOfCourseByCourseId(c.getCourse_id());
+		assertEquals(1, setManager.getEntitySet().size());
+		assertEquals(metadata, l.getName());
+	}
+
+	@Test
+	@Transactional
+	@WithMockUser(username = username, password = username)
+	void testAddStudentToCourse() throws Exception{
+		Course c = new Course();
+		c.set_metadata(metadata);
+		c.setCourse_id(metadata);
+		c.setName(metadata);
+		c.setDescription(metadata);
+		cr.save(c);
+		List<String> usernames = new ArrayList<>();
+
+		for (int i = 0; i < 3; i++){
+			String username = metadata + " " + i;
+			usernames.add(username);
+			User u = new User();
+			u.setUsername(username);
+			u.set_metadata(metadata);
+			userDB.insert(u);
+		}
+
+		DTO.CourseUpdateStudentListDTO dto = new DTO.CourseUpdateStudentListDTO();
+		dto.setUsernameList(usernames);
+		dto.setCourse_id(metadata);
+		crc.addStudentToCourse(dto);
+
+		DBService.EntitySetManager<User, Course> set = courseDB.getStudentsOfCourseByCourseId(metadata);
+		assertEquals(3, set.getEntitySet().size());
+		assertEquals(metadata, ((User)set.getEntitySet().toArray()[0]).get_metadata());
+
+
 
 	}
 

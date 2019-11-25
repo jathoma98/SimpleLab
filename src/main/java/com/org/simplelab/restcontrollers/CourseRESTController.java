@@ -124,7 +124,6 @@ public class CourseRESTController extends BaseRESTController<Course> {
      *  Return Map
      */
 
-    //TODO: test this
     @Transactional
     @PostMapping(ADD_STUDENT_MAPPING)
     public Map addStudentToCourse(@RequestBody DTO.CourseUpdateStudentListDTO course) {
@@ -138,12 +137,10 @@ public class CourseRESTController extends BaseRESTController<Course> {
                 toAdd.add(userDB.findUser(username));
             }
         }
-        DBService.EntitySetManager toUpdate = courseDB.getStudentsOfCourseByCourseId(course_id);
+        DBService.EntitySetManager<User, Course> toUpdate = courseDB.getStudentsOfCourseByCourseId(course_id);
         return super.addEntitiesToEntityList(toUpdate, toAdd, courseDB);
     }
 
-
-    //TODO: test this
     @Transactional
     @PostMapping(ADD_LABS_TO_COURSE_MAPPING)
     public Map addLabsToCourse(@RequestBody DTO.CourseAddLabsDTO dto){
@@ -154,7 +151,14 @@ public class CourseRESTController extends BaseRESTController<Course> {
             if (found != null)
                 toAdd.add(found);
         }
-        DBService.EntitySetManager toUpdate = courseDB.getStudentsOfCourseByCourseId(dto.getCourse_id());
+        DBService.EntitySetManager<Lab, Course> toUpdate;
+        try {
+            toUpdate = courseDB.getLabsOfCourseByCourseId(dto.getCourse_id());
+        } catch (CourseDB.CourseTransactionException e){
+            RequestResponse rsp = new RequestResponse();
+            rsp.setError(e.getMessage());
+            return rsp.map();
+        }
         return super.addEntitiesToEntityList(toUpdate, toAdd, courseDB);
     }
 

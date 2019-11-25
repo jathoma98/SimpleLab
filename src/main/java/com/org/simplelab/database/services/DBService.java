@@ -48,7 +48,7 @@ public abstract class DBService<T extends BaseTable> {
      */
     @Getter
     @Setter
-    public static abstract class EntitySetManager<T extends BaseTable, U extends BaseTable>{
+    public static class EntitySetManager<T extends BaseTable, U extends BaseTable>{
         /**
          * Exception to be thrown in case of illegal modification of the entity set.
          */

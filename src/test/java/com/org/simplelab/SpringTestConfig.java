@@ -1,5 +1,8 @@
 package com.org.simplelab;
 
+import com.org.simplelab.database.services.CourseDB;
+import com.org.simplelab.database.services.EquipmentDB;
+import com.org.simplelab.database.services.LabDB;
 import com.org.simplelab.database.services.UserDB;
 import com.org.simplelab.database.repositories.CourseRepository;
 import com.org.simplelab.database.repositories.EquipmentRepository;
@@ -31,15 +34,21 @@ public abstract class SpringTestConfig {
 
     @Autowired
     UserDB userDB;
-
     @Autowired
     CourseRepository cr;
-
     @Autowired
     EquipmentRepository er;
-
     @Autowired
     LabRepository lr;
+    @Autowired
+    CourseDB courseDB;
+    @Autowired
+    LabDB labDB;
+    @Autowired
+    EquipmentDB equipmentDB;
+
+    protected static final long user_id = 90;
+    protected static final String username = "12345";
 
     /**
      * Notes on metadata:
@@ -50,7 +59,6 @@ public abstract class SpringTestConfig {
 
     @AfterEach
     void clear(){
-        userDB.deleteByMetadata(metadata);
         cr.deleteBy_metadata(metadata);
         er.deleteBy_metadata(metadata);
         lr.deleteBy_metadata(metadata);
