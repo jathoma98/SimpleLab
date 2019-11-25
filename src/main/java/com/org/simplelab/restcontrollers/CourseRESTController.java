@@ -8,6 +8,8 @@ import com.org.simplelab.database.services.CourseDB;
 import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
+import com.org.simplelab.restcontrollers.rro.RRO;
+import com.org.simplelab.restcontrollers.rro.RRO_ACTION_TYPE;
 import com.org.simplelab.security.SecurityUtils;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
@@ -101,10 +103,16 @@ public class CourseRESTController extends BaseRESTController<Course> {
     }
 
     @GetMapping(LOAD_LIST_COURSE_MAPPING)
-    public List<Course> getListOfCourse(HttpSession session) {
+    public RRO<List<Course>> getListOfCourse(HttpSession session) {
+        RRO<List<Course>> rro = new RRO();
+
         long userId = getUserIdFromSession(session);
         List<Course> courses = courseDB.getCoursesForTeacher(userId);
-        return courses;
+
+        rro.setSuccess(true);
+        rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
+        rro.setData(courses);
+        return rro;
     }
 
     @PostMapping(LOAD_COURSE_INFO_MAPPING)

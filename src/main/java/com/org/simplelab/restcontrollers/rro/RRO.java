@@ -10,15 +10,13 @@ import lombok.Setter;
 @Setter
 public class RRO<T> {
 
-    enum ACTION_TYPE{
-        NOTHING,
-        REDIRECT,
-        LOAD_DATA,
-        PRINT_MSG
-    }
 
-    String success;
+
+    boolean success;
     String action;
     String msg;
     T data;
 }
+
+
+
