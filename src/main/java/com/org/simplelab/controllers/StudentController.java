@@ -10,8 +10,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Controller
-@RequestMapping(path="/student")
-public class StudentController {
+@RequestMapping(StudentController.BASE_MAPPING)
+public class StudentController extends BaseController{
+
+    public static final String BASE_MAPPING = "/student";
+
     @RequestMapping("")
     public String root(HttpSession session, Model model) {
         List<Course> list_course = new LinkedList<>();

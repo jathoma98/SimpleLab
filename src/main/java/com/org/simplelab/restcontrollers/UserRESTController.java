@@ -1,22 +1,20 @@
 package com.org.simplelab.restcontrollers;
 
-import com.org.simplelab.database.UserDB;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.validators.UserValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/user/rest")
-    public class UserRESTController {
+@RequestMapping(UserRESTController.BASE_MAPPING)
+public class UserRESTController extends BaseRESTController<User> {
 
-    @Autowired
-    UserDB userDB;
+    public static final String BASE_MAPPING = "/user/rest";
 
     public static final String LOAD_USER_MAPPING = "/loadUserInfo";
     public static final String RESET_USER_MAPPING = "/restUserInfo";
@@ -45,20 +43,13 @@ import java.util.List;
         if (regex == null || regex.equals("")){
             return new ArrayList<>();
         }
-        //TODO: reimplement this
         return userDB.searchUserWithKeyword(regex);
-//        return null;
     }
 
     @GetMapping(LOAD_USER_MAPPING)
     public User getUserInfo(HttpSession session){
-        long userId = -1;
-        try{
-            userId = (long)session.getAttribute("user_id");
-        } catch (Exception e){
-            //redirect to login
-        }
-        User user = userDB.findUserById(userId);
+        long userId = getUserIdFromSession(session);
+        User user = userDB.findById(userId);
         return user;
     }
 
@@ -71,8 +62,13 @@ import java.util.List;
         } catch (Exception e) {
 
         }
+        long userId = getUserIdFromSession(session);
         user.setId(userId);
-        userDB.updateUser(user);
+        userDB.update(user);
+    }
+
+    public Map registerUser(UserValidator validator, HttpSession session){
+        return super.addEntity(validator, userDB);
     }
 
 

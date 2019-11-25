@@ -1,9 +1,8 @@
-package com.org.simplelab.database;
+package com.org.simplelab.database.services;
 
+import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,10 +12,15 @@ import java.util.Optional;
 
 @Transactional
 @Component
-public class UserDB{
+public class UserDB extends DBService<User>{
 
-    @Autowired
-    UserRepository userRepository;
+    public static final String USERNAME_TAKEN = "username taken";
+
+    public class UserInsertionException extends DBService.EntityInsertionException {
+        UserInsertionException(String msg){
+            super(msg);
+        }
+    }
 
     /**
      * Cannot be used as a username for registered students.
@@ -64,7 +68,8 @@ public class UserDB{
         return found.get(0);
     }
 
-    public User findUserById(long id){
+    @Override
+    public User findById(long id){
         Optional<User> found = userRepository.findById(id);
         return found.isPresent() ? found.get(): null;
     }
@@ -78,13 +83,30 @@ public class UserDB{
      *                                  or
      *                                  The username is reserved
      */
-    public UserInsertionStatus insertUser(User user){
+    @Override
+    public boolean insert(User user) throws UserInsertionException{
 
         if (findUser(user.getUsername()) != null
                 || isReserved(user.getUsername()))
-            return UserInsertionStatus.FAILED;
+            throw new UserInsertionException(USERNAME_TAKEN);
         userRepository.save(user);
-        return UserInsertionStatus.SUCCESSFUL;
+        return true;
+    }
+
+    @Override
+    public boolean deleteById(long id){
+        userRepository.deleteById(id);
+        return true;
+    }
+
+    /**
+     * Updates the corresponding user in the DB given a representative User object.
+     * @param user - User object representing the User to be updated.
+     */
+    @Override
+    public boolean update(User user){
+        userRepository.save(user);
+        return true;
     }
 
     /**
@@ -94,6 +116,7 @@ public class UserDB{
     public void deleteUser(User user){
         deleteUser(user.getUsername());
     }
+
 
     public void deleteByMetadata(String metadata){
         userRepository.deleteBy_metadata(metadata);
@@ -107,14 +130,6 @@ public class UserDB{
         return userRepository.searchUserWithKeyword(keyword);
     }
 
-    /**
-     * Updates the corresponding user in the DB given a representative User object.
-     * @param user - User object representing the User to be updated.
-     */
-    public void updateUser(User user){
-//        deleteUser(user);
-        userRepository.save(user);
-    }
 
 
 

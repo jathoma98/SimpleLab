@@ -1,8 +1,7 @@
 package com.org.simplelab.security;
 
-import com.org.simplelab.database.UserDB;
-
 import com.org.simplelab.database.entities.User;
+import com.org.simplelab.database.services.UserDB;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;

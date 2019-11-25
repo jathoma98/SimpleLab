@@ -20,7 +20,7 @@ public interface UserRepository extends BaseRepository<User> {
     @Transactional
     public void deleteByUsername(String username);
 
-    @Query(nativeQuery = true, value = "SELECT * FROM simplelab.user WHERE  username " +
+    @Query(nativeQuery = true, value = "SELECT * FROM #{#entityName} WHERE  username " +
             " LIKE %:keyword% OR institution LIKE %:keyword%")
     public List<User> searchUserWithKeyword(@Param("keyword") String keyword);
 

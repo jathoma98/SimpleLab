@@ -1,5 +1,6 @@
 package com.org.simplelab.database;
 
+import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 
 import java.security.MessageDigest;
@@ -19,7 +20,7 @@ public class DBUtils {
 
     public static final String METADATA_DELETE_QUERY = "DELETE FROM #{#entityName} WHERE _metadata = :metadata";
 
-    public static final ModelMapper MAPPER = new ModelMapper();
+    public static ModelMapper MAPPER = null;
 
     /**
      * Hashes the given string.
@@ -35,6 +36,27 @@ public class DBUtils {
             System.out.println("Exception occurred while hashing password.");
             return null;
         }
+    }
+
+    public static ModelMapper getMapper(){
+        if (MAPPER == null){
+            ModelMapper mm = new ModelMapper();
+            mm.getConfiguration().setPropertyCondition(Conditions.isNotNull());
+            //TODO: make sure this works
+           /** mm.addMappings(new PropertyMap<BaseTable, BaseTable>() {
+                @Override
+                protected void configure(){
+                    skip(destination.getTimestamp());
+                    skip(destination.getCreatedDate());
+                    if (UserCreated.class.isInstance(destination)) {
+                        UserCreated uc = (UserCreated)destination;
+                        skip(uc.getCreator());
+                    }
+                }
+            });**/
+            MAPPER = mm;
+        }
+        return MAPPER;
     }
 
 

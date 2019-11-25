@@ -1,6 +1,9 @@
 package com.org.simplelab.security;
 
 import com.org.simplelab.controllers.LoginController;
+import com.org.simplelab.controllers.SignUpController;
+import com.org.simplelab.controllers.StudentController;
+import com.org.simplelab.controllers.TeacherController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -43,14 +46,17 @@ public class OAuth2LoginConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 //Allow any user to access static resources like images, CSS, javascript
                 .antMatchers("/login", "/signup/**", "/img/**", "/css/**", "/js/**", "/libs/**","/forgotPassword")
+
+                .antMatchers("/login", SignUpController.BASE_MAPPING + "/**", "/img/**", "/css/**", "/js/**", "/libs/**")
+
                 .permitAll()
 
                 //only students can access /student pages
-                .antMatchers("/student/**")
+                .antMatchers(StudentController.BASE_MAPPING + "/**")
                 .hasAuthority(SecurityUtils.AUTH_STUDENT)
 
                 //only teachers can access /teacher pages
-                .antMatchers("/teacher/**")
+                .antMatchers(TeacherController.BASE_MAPPING + "/**")
                 .hasAuthority(SecurityUtils.AUTH_TEACHER)
 
                 //all other pages require logged in user

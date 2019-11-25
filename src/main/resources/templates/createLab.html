@@ -107,6 +107,17 @@
 <!--**********************************************************************main body*********************************************************************************************************-->
 <!--**********************************************************************main body*********************************************************************************************************-->
 <!--**********************************************************************main body*********************************************************************************************************-->
+<!--sidebar {sidebar item set}-->
+<!--        {sidebar step set}-->
+<!--        {sidebar current itemset}-->
+
+<!--operation area-->
+
+<!--infobar-->
+
+
+
+
 <!--    this operation area at the middle-->
     <div id="operation_area" class="operation_area delete_empty ">
         <!--    side bar-->
@@ -117,10 +128,15 @@
                         <a href="#" class="brand-logo"><i class="material-icons">view_list</i>item sets</a>
                         <a id="sidebar_add" class="right sidebar_add modal-trigger" href="#equipmentModal"><i class="material-icons">add</i></a>
                     </div>
-
+                </nav>
                     <!--        equipment modal-->
                     <div id="equipmentModal" class="modal eq_modal">
                         <div class="modal-content delete_empty">
+                            <nav>
+                                <div class="nav-wrapper my_cran">
+                                    <a href="#!" class="brand-logo"><i class="material-icons">view_list</i>Add Equipment</a>
+                                </div>
+                            </nav>
                             <div class="row delete_empty">
                                 <div class="col s4 center delete_empty">
                                     <img class="eq_upload delete_empty" src="../img/upload.png">
@@ -146,39 +162,39 @@
                                         <option value="3">chem 201</option>
                                     </select>
                                 </div>
-                                <div class="col s8 valign-wrapper">
-                                    <label class="col s2">Item Type:   </label>
-                                    <label class="col s2">
+                                <div class="col s8 valign-wrapper section">
+                                    <label class="col s2"><h6>Item Type: </h6></label>
+                                    <label class="col s3">
                                         <input class="with-gap" name="group1" type="radio" checked/>
                                         <span>Measuring Type</span>
+                                    </label>
+                                    <label class="col s3">
+                                        <input class="with-gap" name="group1" type="radio"/>
+                                        <span>reacting Type</span>
                                     </label>
                                     <label class="col s2">
                                         <input class="with-gap" name="group1" type="radio"/>
                                         <span>heating Type</span>
                                     </label>
+
                                     <label class="col s2">
-                                        <input class="with-gap" name="group1" type="radio"/>
-                                        <span>reacting Type</span>
-                                    </label>
-                                    <label class="col s4">
                                         <input class="with-gap" name="group1" type="radio"/>
                                         <span>Burning Type</span>
                                     </label>
-
                                 </div>
-                                <div class="col s8 valign-wrapper">
-                                    <label class="col s2">Security: </label>
-                                    <label class="col s2">
+                                <div class="col s8 valign-wrapper section">
+                                    <label class="col s2"><h6>Security: </h6></label>
+                                    <label class="col s3">
                                         <input class="with-gap" name="group2" type="radio" checked/>
                                         <span>Public</span>
                                     </label>
-                                    <label class="col s2">
+                                    <label class="col s3">
                                         <input class="with-gap" name="group2" type="radio"/>
                                         <span>Private</span>
                                     </label>
                                     <label class="col s2">
                                     </label>
-                                    <label class="col s4">
+                                    <label class="col s2">
                                     </label>
                                 </div>
 
@@ -222,17 +238,25 @@
 
 <!--                sidebar item set-->
                 <ul class="collapsible row my_white" >
-                    <li>
+                    <li class="active">
                         <div class="collapsible-header ">
-                            Chemistry 123
+                            often use
                         </div>
                         <div class="collapsible-body">
-                            <span>put items here</span>
+                            <div id="beaker1" class="row sidebaritem">
+                                <div class="col s6">
+                                    <img src="../img/beaker.png" class="item_img">
+                                </div>
+                                <div class="col s6">
+                                    <p>200ml h2so4</p>
+                                    <p>20g/L</p>
+                                </div>
+                            </div>
                         </div>
                     </li>
                     <li>
                         <div class="collapsible-header ">
-                            Chemistry 111
+                            beaker
                         </div>
                         <div class="collapsible-body">
                             <span>put items here</span>
@@ -240,7 +264,7 @@
                     </li>
                     <li>
                         <div class="collapsible-header  ">
-                            Chemistry 122
+                            pip
                         </div>
                         <div class="collapsible-body">
                             <span>put items here</span>
@@ -252,25 +276,27 @@
             <div id="sidebartwo" class="sidebar_info">
                 <nav class="delete_empty">
                     <div class="nav-wrapper my_red">
-                        <a href="#" class="brand-logo"><i class="material-icons">view_list</i>item sets</a>
+                        <a href="#" class="brand-logo"><i class="material-icons">view_list</i>Steps</a>
                         <a id="sidebar_stepadd" class="right sidebar_add modal-trigger" href="#equipmentModal"><i class="material-icons">add</i></a>
                     </div>
                 </nav>
-                <ul id="selectable" class="sortable selectable collection row my_white" >
-                    <li id="step1" class="collection-item ui-widget-content sidebar_selectable_item">
-                        Step One
-                    </li>
-                    <li id="step2" class="collection-item ui-widget-content sidebar_selectable_item">
-                        Step Two
-                    </li>
-                    <li id="step3" class="collection-item ui-widget-content sidebar_selectable_item">
-                        Step Three
-                    </li>
+                <ul id="selectable" class="sortable selectable collection row my_white sidebar_step_collection" >
+
                 </ul>
+                <div class="center">
+                    <button id="addstep" class="btn center waves-effect waves-light modal-trigger my_red">
+                        Add Step
+                    </button>
+                </div>
+
             </div>
 <!--            side bar current item set-->
             <div id="sidebarthree" class="sidebar_info ">
-                sidebar three info
+                <nav class="delete_empty">
+                    <div class="nav-wrapper my_gray">
+                        <a href="#" class="brand-logo"><i class="material-icons">view_list</i>Current Items</a>
+                    </div>
+                </nav>
             </div>
 
             <div class="sidebar_trigger delete_empty">
@@ -283,16 +309,12 @@
         </div>
 
 
+<!--sample for the item created in the operation area-->
+<!--        <div id="item_one" class="ui-widget-content draggable_item center">-->
+<!--            <img src="../img/beaker.png" class="item_img">-->
+<!--            <p >draggable block</p>-->
+<!--        </div>-->
 
-        <div id="item_one" class="ui-widget-content draggable_item center">
-            <img src="../img/beaker.png" class="item_img">
-            <p >draggable block</p>
-        </div>
-
-        <div id="item_two" class="ui-widget-content draggable_item center">
-            <img src="../img/beaker.png" class="item_img">
-            <p >draggable block</p>
-        </div>
 
 
 
@@ -338,6 +360,62 @@
                         H2SO4
                     </div>
                 </li>
+                <li class="collection-item row">
+                    <div class="col s12 center">
+                        <button id="addcompound" class="btn waves-effect waves-light modal-trigger"  data-target="#compoundmodal" style="background:#dd0052;">
+                            Add Compound
+                        </button>
+                    </div>
+                </li>
+
+                <div id="compoundmodal" class="modal">
+                    <div class="modal-content">
+                        <nav>
+                            <div class="nav-wrapper my_cran">
+                                <a href="#!" class="brand-logo"><i class="material-icons">view_list</i>Compounds</a>
+                            </div>
+                        </nav>
+                        <form class="col s12">
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <input id="compound_name" type="text" class="validate">
+                                    <label for="compound_name">Compound Name</label>
+                                </div>
+                                <div class="input-field col s6">
+                                    <input id="compound_chemistry_expression" type="email" class="validate">
+                                    <label for="compound_chemistry_expression">Chemistry Expression</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <input id="compound_volume" type="text" class="validate">
+                                    <label for="compound_volume">Compound Volume</label>
+                                </div>
+                                <div class="input-field col s6">
+                                    <input id="compound_concentration" type="password" class="validate">
+                                    <label for="compound_concentration">Compound Concentration</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <input id="compound_color" type="email" class="validate">
+                                    <label for="compound_color">Compound Color</label>
+                                </div>
+                                <div class="input-field col s6">
+                                    <input id="compound_ph" type="text" class="validate">
+                                    <label for="compound_ph">PH</label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="" class="btn waves-effect waves-light modal-close my_cran"  style="background:#dd0052;">
+                            Save
+                        </button>
+                    </div>
+                </div>
+
+
             </ul>
         </div>
 
@@ -354,13 +432,14 @@
             <nav class="my_yellow">
                 <div class="popup_dialog_header">Enter number of liquid</div>
             </nav>
-            <div class="modal-content">
+            <div class="modal-content row">
                 <p class="range-field col s8 zeromargin ">
                     <input type="range" id="test5" min="0" max="200" value="100" oninput="showVal(this.value)" onchange="showVal(this.value)"/>
                 </p>
                 <div class="col s4 zeromargin">
                     <input class="number_picker" type="number" name="quantity" min="1" max="100" value="100">
                 </div>
+
                 <div class="center col s12">
                     <a href="#!" class="modal-close btn my_red">Pour</a>
                 </div>

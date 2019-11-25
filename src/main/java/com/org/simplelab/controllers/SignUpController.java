@@ -1,24 +1,25 @@
 package com.org.simplelab.controllers;
 
-import com.org.simplelab.database.UserDB;
-import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.validators.UserValidator;
-import com.org.simplelab.database.validators.Validator;
+import com.org.simplelab.restcontrollers.UserRESTController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 //import com.sun.org.apache.regexp.internal.RE;
 
 @Controller
-@RequestMapping(path="/signup")
-public class SignUpController {
+@RequestMapping(SignUpController.BASE_MAPPING)
+public class SignUpController extends BaseController {
+
+    public static final String BASE_MAPPING = "/signup";
 
     @Autowired
-    UserDB userDB;
+    UserRESTController userRegistry;
 
     @GetMapping("")
     public String infoPage(){
@@ -37,28 +38,9 @@ public class SignUpController {
      */
     @ResponseBody
     @PostMapping(path="/submit", consumes= MediaType.APPLICATION_JSON_VALUE)
-    public  Map<String, String> submission(@RequestBody UserValidator userV) {
+    public  Map<String, String> submission(@RequestBody UserValidator userV,
+                                           HttpSession session) {
 
-        RequestResponse response = new RequestResponse();
-        try{
-            userV.validate();
-        }catch(Validator.InvalidFieldException e){
-            response.setSuccess(false);
-            response.setError(e.getMessage());
-            return response.map();
-        }
-        User user = userV.build();
-
-
-        if (userDB.insertUser(user) == UserDB.UserInsertionStatus.FAILED){
-            response.setError("username taken");
-            response.setSuccess(false);
-            return response.map();
-        }
-
-        response.setSuccess(true);
-        return response.map();
-
-
+        return userRegistry.registerUser(userV, session);
     }
 }

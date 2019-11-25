@@ -22,8 +22,8 @@
 }
 
 .popup_dialog{
-    width: 400px!important;
-    height: 200px!important;
+    width: 500px!important;
+    height: 220px!important;
 }
 
 .popup_dialog_header{
@@ -65,7 +65,7 @@
     top:16%;
     right: 5px;
     width: 15%;
-    height:50%;
+    max-height:50%;
     border:1px solid black;
     border-radius: 5px;
 }
@@ -182,7 +182,7 @@
     margin-left: 10px!important;
 }
 .eq_modal{
-    max-height: 45%!important;
+    max-height: 55%!important;
     width: 70%!important;
 
 

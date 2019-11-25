@@ -138,9 +138,10 @@ let COURSES_TABLE = {
                 url: "/course/rest/loadCourseList",
                 type: "GET",
                 success: function (result) {
+                    if (result.success !== true) return;
                     let data = {
                         isEnabled: COURSES_TABLE.toggle,
-                        courses: result.reverse()
+                        courses: result.data.reverse()
                     }
                     rebuildComponent(ElEM_ID.COURSE_TABLE_TBODY, '#course_tbody', data);
                     if (COURSES_TABLE.toggle) {
@@ -184,7 +185,7 @@ let COURSES_TABLE = {
          * Delete course.
          **/
         this.delete = function () {
-            removeTableBodyRowEvent($("#course_list tbody"));
+            removeTableBodyRowEvent($(ElEM_ID.COURSE_TABLE_TBODY));
             let course = [];
             $("#course_list tbody tr").each(function (i, row) {
                 if ($(row).find('input[type="checkbox"]').is(':checked')) {

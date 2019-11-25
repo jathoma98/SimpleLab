@@ -1,5 +1,6 @@
 package com.org.simplelab.database.validators;
 
+import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.Course;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,14 +9,13 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class CourseValidator extends Validator{
+public class CourseValidator extends Validator<Course>{
 
     private String name;
     private String course_id;
     private String description;
     private String _metadata;
 
-    public static final String EMPTY_FIELD = "Fields cannot be empty \n";
     public static final String DUPLICATE_ID = "That course ID has been taken. \n";
 
     @Override
@@ -36,13 +36,7 @@ public class CourseValidator extends Validator{
 
     @Override
     public Course build() {
-        //TODO: properly refactor with modelmapper
-
-        Course c = new Course();
-        c.setName(name);
-        c.setCourse_id(course_id);
-        c.setDescription(description);
-        c.set_metadata(_metadata);
+        Course c = DBUtils.getMapper().map(this, Course.class);
         return c;
     }
 }
