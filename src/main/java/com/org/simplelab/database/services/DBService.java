@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 public abstract class DBService<T extends BaseTable> {
@@ -19,9 +21,19 @@ public abstract class DBService<T extends BaseTable> {
         }
     }
 
+    /**
+     * Manager class for handling insertion and deletion of inner lists in entities
+     * ex: If you want to add a User to a Course, you would call getStudents, which would return
+     * a StudentSetManager, which has custom insert and delete methods depending on the behavior
+     * defined for insertion and deletion into that collection.
+     * @param <T> - The entity type of the list.
+     */
     @Getter
     @Setter
     public static abstract class EntitySetManager<T extends BaseTable>{
+        /**
+         * Exception to be thrown in case of illegal modification of the entity set.
+         */
         public static class EntitySetModificationException extends Exception{
             EntitySetModificationException(String msg){
                 super(msg);
@@ -33,9 +45,16 @@ public abstract class DBService<T extends BaseTable> {
             this.entitySet = set;
         }
 
-        public abstract void insert(T toInsert) throws EntitySetModificationException;
-        public abstract void delete(T toDelete) throws EntitySetModificationException;
-
+        public void insert(T toInsert) throws EntitySetModificationException{
+            entitySet.add(toInsert);
+        }
+        public void delete(T toDelete) throws EntitySetModificationException{
+            entitySet.remove(toDelete);
+        }
+        public List<T> getAsList(){
+            T[] array = (T[])entitySet.toArray();
+            return Arrays.asList(array);
+        }
     }
 
     @Autowired
