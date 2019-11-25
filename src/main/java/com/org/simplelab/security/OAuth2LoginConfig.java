@@ -47,7 +47,7 @@ public class OAuth2LoginConfig extends WebSecurityConfigurerAdapter {
                 //Allow any user to access static resources like images, CSS, javascript
                 .antMatchers("/login", "/signup/**", "/img/**", "/css/**", "/js/**", "/libs/**","/forgotPassword")
 
-                .antMatchers("/login", SignUpController.BASE_MAPPING + "/**", "/img/**", "/css/**", "/js/**", "/libs/**")
+//                .antMatchers("/login", SignUpController.BASE_MAPPING + "/**", "/img/**", "/css/**", "/js/**", "/libs/**")
 
                 .permitAll()
 

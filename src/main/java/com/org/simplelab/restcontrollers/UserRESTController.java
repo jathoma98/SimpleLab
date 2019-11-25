@@ -62,7 +62,7 @@ public class UserRESTController extends BaseRESTController<User> {
         } catch (Exception e) {
 
         }
-        long userId = getUserIdFromSession(session);
+        userId = getUserIdFromSession(session);
         user.setId(userId);
         userDB.update(user);
     }
