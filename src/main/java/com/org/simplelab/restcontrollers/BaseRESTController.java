@@ -9,10 +9,12 @@ import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.entities.interfaces.UserCreated;
 import com.org.simplelab.database.validators.InvalidFieldException;
 import com.org.simplelab.database.validators.Validator;
+import org.bouncycastle.cert.ocsp.Req;
 import org.codehaus.jackson.map.Serializers;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -122,6 +124,29 @@ public abstract class BaseRESTController<T extends BaseTable> extends BaseContro
         for (U entity: toAdd){
             try{
                 set.insert(entity);
+            } catch (DBService.EntitySetManager.EntitySetModificationException e){
+                response.setError(e.getMessage());
+                response.setSuccess(false);
+            }
+        }
+        T toSave = set.getFullEntity();
+        db.update(toSave);
+        return response.map();
+    }
+
+    //TODO: test this
+    protected  <U extends BaseTable>
+    Map removeEntitiesFromEntityList(DBService.EntitySetManager<U, T> set,
+                                     List<U> toRemove, DBService<T> db){
+        RequestResponse response = new RequestResponse();
+        if (set == null){
+            response.setError(DBService.EntitySetManager.NOT_FOUND_STRING);
+            return response.map();
+        }
+        response.setSuccess(true);
+        for (U entity: toRemove){
+            try{
+                set.delete(entity);
             } catch (DBService.EntitySetManager.EntitySetModificationException e){
                 response.setError(e.getMessage());
                 response.setSuccess(false);
