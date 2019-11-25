@@ -44,7 +44,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
      *                  }
      */
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, String> saveLab(@RequestBody LabValidator validator, HttpSession session){
+    public Map<String, String> saveLab(@RequestBody LabValidator validator){
         return super.addEntity(validator, labDB);
     }
 
