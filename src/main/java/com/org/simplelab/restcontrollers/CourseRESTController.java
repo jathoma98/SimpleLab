@@ -10,6 +10,7 @@ import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
 import com.org.simplelab.restcontrollers.rro.RRO_ACTION_TYPE;
+import com.org.simplelab.restcontrollers.rro.RRO_MSG;
 import com.org.simplelab.security.SecurityUtils;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,8 +39,8 @@ public class CourseRESTController extends BaseRESTController<Course> {
 
 
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, String> addCourse(@RequestBody CourseValidator courseValidator,
-                                         HttpSession session) {
+    public RRO<String> addCourse(@RequestBody CourseValidator courseValidator,
+                                 HttpSession session) {
         return super.addEntity(courseValidator, courseDB);
     }
 
@@ -66,20 +67,24 @@ public class CourseRESTController extends BaseRESTController<Course> {
      * Duplicate coursecode error message if the new course code is already taken
      */
     @PatchMapping(UPDATE_MAPPING)
-    public Map<String, String> updateCourse(@RequestBody DTO.CourseUpdateDTO dto, HttpSession session) {
-        RequestResponse rsp = new RequestResponse();
+    public RRO<String> updateCourse(@RequestBody DTO.CourseUpdateDTO dto, HttpSession session) {
+        RRO<String> rro = new RRO();
         long uid = getUserIdFromSession(session);
         Course toUpdate;
         List<Course> foundcourses = courseDB.findByCourseId(dto.getCourse_id_old());
         if (foundcourses.size() > 0){
             toUpdate = foundcourses.get(0);
         } else {
-            rsp.setError("No course found.");
-            return rsp.map();
+            rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
+            rro.setMsg(RRO_MSG.COURSE_NO_FOUND.getMsg());
+            rro.setSuccess(false);
+            return rro;
         }
         if (toUpdate.getCreator().getId() != uid){
-            rsp.setError(CourseValidator.DUPLICATE_ID);
-            return rsp.map();
+            rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
+            rro.setMsg(CourseValidator.DUPLICATE_ID);
+            rro.setSuccess(false);
+            return rro;
         }
         return super.updateEntity(toUpdate.getId(), dto.getNewCourseInfo(), courseDB);
     }
@@ -90,16 +95,17 @@ public class CourseRESTController extends BaseRESTController<Course> {
      */
     //TODO: this can probably be refactored better.
     @DeleteMapping(DELETE_MAPPING)
-    public Map<String, String> deleteCourse(@RequestBody CourseValidator[] toDelete,
+    public RRO<String> deleteCourse(@RequestBody CourseValidator[] toDelete,
                                             HttpSession session) {
-        RequestResponse response = new RequestResponse();
+        RRO<String> rro = new RRO();
         long userId =  getUserIdFromSession(session);
         for (CourseValidator c : toDelete) {
             String course_id = c.getCourse_id();
             courseDB.deleteCourseById(userId, course_id);
         }
-        response.setSuccess(true);
-        return response.map();
+        rro.setSuccess(true);
+        rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+        return rro;
     }
 
     @GetMapping(LOAD_LIST_COURSE_MAPPING)
@@ -116,11 +122,23 @@ public class CourseRESTController extends BaseRESTController<Course> {
     }
 
     @PostMapping(LOAD_COURSE_INFO_MAPPING)
-    public Course getCourseInfo(@RequestBody Course course,
+    public RRO<Course> getCourseInfo(@RequestBody Course course,
                                 HttpSession session) {
+        RRO<Course> rro = new RRO();
+
         long uid = getUserIdFromSession(session);
-        Course r = courseDB.findByUserIdAndCourseId(uid, course.getCourse_id());
-        return r;
+        Course c = courseDB.findByUserIdAndCourseId(uid, course.getCourse_id());
+        if (c == null){
+            rro.setSuccess(false);
+            rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
+            //hard code string for dev.
+            rro.setMsg(RRO_MSG.COURSE_NO_FOUND.getMsg() + " " + c.getName());
+            rro.setData(null);
+        }
+        rro.setSuccess(true);
+        rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
+        rro.setData(c);
+        return rro;
     }
 
     /*
@@ -133,7 +151,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
 
     @Transactional
     @PostMapping(ADD_STUDENT_MAPPING)
-    public Map addStudentToCourse(@RequestBody DTO.CourseUpdateStudentListDTO course) {
+    public RRO<String> addStudentToCourse(@RequestBody DTO.CourseUpdateStudentListDTO course) {
         long own_id = getUserIdFromSession(session);
         String own_username = SecurityUtils.getAuthenticatedUsername();
         List<User> toAdd = new ArrayList<>();
@@ -150,7 +168,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
 
     @Transactional
     @PostMapping(ADD_LABS_TO_COURSE_MAPPING)
-    public Map addLabsToCourse(@RequestBody DTO.CourseAddLabsDTO dto){
+    public RRO<String> addLabsToCourse(@RequestBody DTO.CourseAddLabsDTO dto){
         long[] ids = dto.getLab_ids();
         List<Lab> toAdd = new ArrayList<>();
         for (long id: ids){
@@ -162,29 +180,34 @@ public class CourseRESTController extends BaseRESTController<Course> {
         try {
             toUpdate = courseDB.getLabsOfCourseByCourseId(dto.getCourse_id());
         } catch (CourseDB.CourseTransactionException e){
-            RequestResponse rsp = new RequestResponse();
-            rsp.setError(e.getMessage());
-            return rsp.map();
+            RRO<String> rro = new RRO();
+            rro.setMsg(e.getMessage());
+            return rro;
         }
         return super.addEntitiesToEntityList(toUpdate, toAdd, courseDB);
     }
 
     @PostMapping(GET_STUDENTS_MAPPING)
-    public List<User> getStudentList(@RequestBody DTO.CourseUpdateStudentListDTO course,
+    public RRO<List<User>> getStudentList(@RequestBody DTO.CourseUpdateStudentListDTO course,
                                      HttpSession session) {
         String course_id = course.getCourse_id();
         List<User> students;
+        RRO<List<User>> rro = new RRO();
+        rro.setSuccess(true);
+        rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
         try {
             students = courseDB.getStudentsOfCourse(course_id);
+            rro.setData(students);
         } catch (CourseDB.CourseTransactionException e) {
-            return new ArrayList<>();
+            rro.setSuccess(false);
+            rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
         }
-        return students;
+        return rro;
     }
 
 
     @DeleteMapping(DELETE_STUDENTS_MAPPING)
-    public Map deleteStudentList(@RequestBody DTO.CourseUpdateStudentListDTO course) {
+    public RRO<String> deleteStudentList(@RequestBody DTO.CourseUpdateStudentListDTO course) {
         List<String> usernameList = course.getUsernameList();
         List<User> toDelete = new ArrayList<>();
         for (String username: usernameList){

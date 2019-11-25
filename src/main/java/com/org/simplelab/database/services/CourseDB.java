@@ -39,8 +39,13 @@ public class CourseDB extends DBService<Course> {
     }
 
     @Override
+    @Transactional
     public boolean deleteById(long id){
-        courseRepository.deleteById(id);
+        Course found = findById(id);
+        if (found != null){
+            found.setStudents(null);
+            courseRepository.delete(found);
+        }
         return true;
     }
 
@@ -139,9 +144,9 @@ public class CourseDB extends DBService<Course> {
         return true;
     }
 
+    @Transactional
     public boolean deleteCourse(Course c){
-        courseRepository.delete(c);
-        return true;
+        return deleteById(c.getId());
     }
 
     public List<Course> findByCourseId(String course_id){
@@ -156,7 +161,9 @@ public class CourseDB extends DBService<Course> {
 
     @Transactional
     public void deleteCourseById(long user_id, String course_id){
-        courseRepository.deleteBycreator_idAndcourse_id(user_id, course_id);
+       List<Course> found = findByCourseId(course_id);
+       if (found != null && found.size() > 0)
+           deleteById(found.get(0).getId());
     }
 
     public List<Course> getCoursesForTeacher(long id){

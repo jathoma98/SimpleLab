@@ -2,6 +2,7 @@ package com.org.simplelab.controllers;
 
 import com.org.simplelab.database.validators.UserValidator;
 import com.org.simplelab.restcontrollers.UserRESTController;
+import com.org.simplelab.restcontrollers.rro.RRO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -38,9 +39,8 @@ public class SignUpController extends BaseController {
      */
     @ResponseBody
     @PostMapping(path="/submit", consumes= MediaType.APPLICATION_JSON_VALUE)
-    public  Map<String, String> submission(@RequestBody UserValidator userV,
-                                           HttpSession session) {
-
+    public RRO<String> submission(@RequestBody UserValidator userV,
+                                  HttpSession session) {
         return userRegistry.registerUser(userV, session);
     }
 }

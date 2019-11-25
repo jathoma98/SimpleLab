@@ -13,8 +13,9 @@
 }
 
 .selected{
-    border:1px solid #00acc1;
+    border:3px dashed ;
     z-index: 50;
+    background: #00acc1;
 }
 
 .zdeep{
@@ -44,8 +45,8 @@
 }
 
 .item_img{
-    width: 140px;
-    height: 130px;
+    width: 100px;
+    height: 100px;
     margin: 0;
     padding: 0;
 
@@ -66,7 +67,7 @@
     right: 5px;
     width: 15%;
     max-height:50%;
-    border:1px solid black;
+    border:2px solid black;
     border-radius: 5px;
 }
 

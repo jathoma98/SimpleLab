@@ -1,12 +1,12 @@
 let COURSES_TABLE = {
-    init(){
+    init() {
         this.toggle = true;
         this.btnEvents = new Array();
 
-        this.removeStendtBtnEvent = function(){
+        this.removeStendtBtnEvent = function () {
             let course = {
                 course_id: $("#course_code").val(),
-                usernameList : new Array()
+                usernameList: new Array()
             }
             course.usernameList.push($(this).find("td").text());
 
@@ -18,19 +18,18 @@ let COURSES_TABLE = {
                 contentType: 'application/json; charset=utf-8',
                 data: course_json,
                 success: function (result) {
-                    if (result.success === "true") {
-                        COURSES_TABLE.reLoadStudentsList(course_json)
-                    } else {
-                        console.log(result.error);
-                    }
+                    retObjHandle(result,
+                        () => {
+                            COURSES_TABLE.reLoadStudentsList(course_json)
+                        })
                 }
             })
         }
 
-        this.addStudentBtnEvent = function(){
+        this.addStudentBtnEvent = function () {
             let course = {
                 course_id: $("#course_code").val(),
-                usernameList : new Array()
+                usernameList: new Array()
             }
             course.usernameList.push($(this).find("td").text());
 
@@ -44,18 +43,17 @@ let COURSES_TABLE = {
                 contentType: 'application/json; charset=utf-8',
                 data: course_json,
                 success: function (result) {
-                    if (result.success === "true") {
-                        COURSES_TABLE.reLoadStudentsList(course_json)
-                    } else {
-                        console.log(result.error);
-                    }
+                    retObjHandle(result,
+                        () => {
+                            COURSES_TABLE.reLoadStudentsList(course_json);
+                        })
                 }
             })
         };
 
-        this.searchStudent = function (){
+        this.searchStudent = function () {
             let toSearch = {
-                regex : $("#searchStudent").val()
+                regex: $("#searchStudent").val()
             };
             let toSearch_json = JSON.stringify(toSearch);
             $.ajax({
@@ -65,15 +63,17 @@ let COURSES_TABLE = {
                 contentType: 'application/json; charset=utf-8',
                 data: toSearch_json,
                 success: function (result) {
-                    let data = {
-                        result : result
-                    }
-                    rebuildComponent(
-                        ElEM_ID.STUDENT_SEARCH_TBODY,
-                        TEMPLATE_ID.STUDENTS_TBODY,
-                        data);
-                    setTableBodyRowEvent(ElEM_ID.STUDENT_SEARCH_TBODY, COURSES_TABLE.addStudentBtnEvent)
-                    console.log(result)
+                    retObjHandle(result, (students) => {
+                        let data = {
+                            students:students
+                        }
+                        rebuildComponent(
+                            ElEM_ID.STUDENT_SEARCH_TBODY,
+                            TEMPLATE_ID.STUDENTS_TBODY,
+                            data);
+                        setTableBodyRowEvent(ElEM_ID.STUDENT_SEARCH_TBODY, COURSES_TABLE.addStudentBtnEvent)
+
+                    })
                 }
             })
         }
@@ -94,22 +94,27 @@ let COURSES_TABLE = {
                 dataTye: 'json',
                 contentType: 'application/json; charset=utf-8',
                 data: course_json,
-                success: function (course) {
-                    let data = {
-                        courseModal:{
-                            active: "active",
-                            course: course,
+                success: function (result) {
+                    retObjHandle(result, function () {
+                        let data = {
+                            courseModal: {
+                                active: "active",
+                                create: false,
+                                course: result.data,
+                            }
                         }
-                    }
-                    rebuildComponent('#modal ul',"#modalTpl", data,  COURSES_TABLE.btnEvents);
-                    //load
-                    COURSES_TABLE.reLoadStudentsList(course_json)
+                        rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL, data, COURSES_TABLE.btnEvents);
+                        //load
+                        COURSES_TABLE.reLoadStudentsList(course_json)
+                    })
+
+
                 }
             })
         };
 
 
-        this.reLoadStudentsList = function (course_json){
+        this.reLoadStudentsList = function (course_json) {
             $.ajax({
                 url: "/course/rest/getStudents",
                 type: 'POST',
@@ -117,15 +122,18 @@ let COURSES_TABLE = {
                 contentType: 'application/json; charset=utf-8',
                 data: course_json,
                 success: function (result) {
-                    let data = {
-                        result: result
-                    }
-                    rebuildComponent(
-                        ElEM_ID.STUDENT_LIST_TBODY,
-                        TEMPLATE_ID.STUDENTS_TBODY,
-                        data)
-                    setTableBodyRowEvent(ElEM_ID.STUDENT_LIST_TBODY, COURSES_TABLE.removeStendtBtnEvent);
-                }
+                    retObjHandle(result, (students)=>{
+                        let data = {
+                            students: students
+                        }
+                        rebuildComponent(
+                            ElEM_ID.STUDENT_LIST_TBODY,
+                            TEMPLATE_ID.STUDENTS_TBODY,
+                            data)
+                        setTableBodyRowEvent(ElEM_ID.STUDENT_LIST_TBODY, COURSES_TABLE.removeStendtBtnEvent);
+
+                    })
+                  }
             })
         };
 
@@ -138,15 +146,16 @@ let COURSES_TABLE = {
                 url: "/course/rest/loadCourseList",
                 type: "GET",
                 success: function (result) {
-                    if (result.success !== true) return;
-                    let data = {
-                        isEnabled: COURSES_TABLE.toggle,
-                        courses: result.data.reverse()
-                    }
-                    rebuildComponent(ElEM_ID.COURSE_TABLE_TBODY, '#course_tbody', data);
-                    if (COURSES_TABLE.toggle) {
-                        setTableBodyRowEvent(ElEM_ID.COURSE_TABLE_TBODY, COURSES_TABLE.tableRowEvent);
-                    }
+                    retObjHandle(result, function () {
+                        let data = {
+                            isEnabled: COURSES_TABLE.toggle,
+                            courses: result.data.reverse()
+                        }
+                        rebuildComponent(ElEM_ID.COURSE_TABLE_TBODY, TEMPLATE_ID.COURSE_TBODY, data);
+                        if (COURSES_TABLE.toggle) {
+                            setTableBodyRowEvent(ElEM_ID.COURSE_TABLE_TBODY, COURSES_TABLE.tableRowEvent);
+                        }
+                    })
                 }
             })
         };
@@ -171,11 +180,7 @@ let COURSES_TABLE = {
                 contentType: 'application/json; charset=utf-8',
                 data: course_json,
                 success: function (result) {
-                    if (result.success === "true") {
-                        COURSES_TABLE.reload();
-                    } else {
-                        alert(result.error);
-                    }
+                    retObjHandle(result, COURSES_TABLE.reload);
                 }
             })
         };
@@ -204,11 +209,7 @@ let COURSES_TABLE = {
                 contentType: 'application/json; charset=utf-8',
                 data: course_json,
                 success: function (result) {
-                    if (result.success === "true") {
-                        COURSES_TABLE.reload();
-                    } else {
-                        alert(result.error);
-                    }
+                    retObjHandle(result, COURSES_TABLE.reload)
                 }
             })
         };
@@ -220,12 +221,13 @@ let COURSES_TABLE = {
          */
         this.create = function () {
             let data = {
-                courseModal:{
+                courseModal: {
                     active: "active",
+                    create: true,
                     course: true,
                 }
             }
-            rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL, data,  COURSES_TABLE.btnEvents);
+            rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL, data, COURSES_TABLE.btnEvents);
         };
 
 

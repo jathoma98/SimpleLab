@@ -237,21 +237,37 @@
                 </nav>
 
 <!--                sidebar item set-->
-                <ul class="collapsible row my_white" >
+                <ul class="collapsible row my_white itemset" >
                     <li class="active">
                         <div class="collapsible-header ">
                             often use
                         </div>
                         <div class="collapsible-body">
-                            <div id="beaker1" class="row sidebaritem">
-                                <div class="col s6">
-                                    <img src="../img/beaker.png" class="item_img">
-                                </div>
-                                <div class="col s6">
-                                    <p>200ml h2so4</p>
-                                    <p>20g/L</p>
-                                </div>
-                            </div>
+                            <ul class="collection">
+                                <li>
+                                    <div id="500mlbeaker" class="row sidebaritem">
+                                        <div class="col s6">
+                                            <img src="../img/beaker.png" class="item_img">
+                                        </div>
+                                        <div class="col s6">
+                                            <p>500ml beaker</p>
+                                            <p>0.01L</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div id="200mlcylinder" class="row sidebaritem">
+                                        <div class="col s6">
+                                            <img src="../img/cylinder.png" class="item_img">
+                                        </div>
+                                        <div class="col s6">
+                                            <p>200ml cylinder</p>
+                                            <p>0.025L</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+
                         </div>
                     </li>
                     <li>
@@ -259,7 +275,19 @@
                             beaker
                         </div>
                         <div class="collapsible-body">
-                            <span>put items here</span>
+                            <ul class="collection">
+                                <li>
+                                    <div id="500mlbeaker" class="row sidebaritem">
+                                        <div class="col s6">
+                                            <img src="../img/beaker.png" class="item_img">
+                                        </div>
+                                        <div class="col s6">
+                                            <p>500ml beaker</p>
+                                            <p>0.01L</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
                     </li>
                     <li>
@@ -277,7 +305,7 @@
                 <nav class="delete_empty">
                     <div class="nav-wrapper my_red">
                         <a href="#" class="brand-logo"><i class="material-icons">view_list</i>Steps</a>
-                        <a id="sidebar_stepadd" class="right sidebar_add modal-trigger" href="#equipmentModal"><i class="material-icons">add</i></a>
+<!--                        <a id="sidebar_stepadd" class="right sidebar_add modal-trigger" href="#equipmentModal"><i class="material-icons">add</i></a>-->
                     </div>
                 </nav>
                 <ul id="selectable" class="sortable selectable collection row my_white sidebar_step_collection" >
@@ -297,6 +325,29 @@
                         <a href="#" class="brand-logo"><i class="material-icons">view_list</i>Current Items</a>
                     </div>
                 </nav>
+
+                <ul class="row my_white current_item_set collection" >
+<!--                    keep this as a sample for future edit-->
+<!--                    <li class="collection-item">-->
+<!--                        <div class="row sidebaritem">-->
+<!--                            <div class="col s6">-->
+<!--                                <img src="../img/beaker.png" class="item_img">-->
+<!--                            </div>-->
+<!--                            <div class="col s6">-->
+<!--                                <p>500ml beaker</p>-->
+<!--                                <p>0.01L</p>-->
+
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </li>-->
+
+                </ul>
+
+
+
+
+
+
             </div>
 
             <div class="sidebar_trigger delete_empty">
@@ -333,20 +384,12 @@
                         Name:
                     </div>
                     <div class="col s6">
-                        H2SO4
+                        vitriol
                     </div>
                 </li>
                 <li class="collection-item row">
                     <div class="col s6">
-                        Name:
-                    </div>
-                    <div class="col s6">
-                        H2SO4
-                    </div>
-                </li>
-                <li class="collection-item row">
-                    <div class="col s6">
-                        Name:
+                        chemistry exp:
                     </div>
                     <div class="col s6">
                         H2SO4
@@ -354,17 +397,26 @@
                 </li>
                 <li class="collection-item row">
                     <div class="col s6">
-                        Name:
+                        Color:
                     </div>
                     <div class="col s6">
-                        H2SO4
+                        Blue
                     </div>
                 </li>
                 <li class="collection-item row">
-                    <div class="col s12 center">
+                    <div class="col s6">
+                        PH:
+                    </div>
+                    <div class="col s6">
+                        7
+                    </div>
+                </li>
+                <li class="collection-item row">
+                    <div class="col s12 ">
                         <button id="addcompound" class="btn waves-effect waves-light modal-trigger"  data-target="#compoundmodal" style="background:#dd0052;">
                             Add Compound
                         </button>
+                        <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
                     </div>
                 </li>
 

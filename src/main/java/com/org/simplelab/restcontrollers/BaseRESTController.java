@@ -9,6 +9,10 @@ import com.org.simplelab.database.entities.interfaces.UserCreated;
 import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.validators.InvalidFieldException;
 import com.org.simplelab.database.validators.Validator;
+import com.org.simplelab.restcontrollers.dto.DTO;
+import com.org.simplelab.restcontrollers.rro.RRO;
+import com.org.simplelab.restcontrollers.rro.RRO_ACTION_TYPE;
+import com.org.simplelab.restcontrollers.rro.RRO_MSG;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,7 +27,7 @@ import java.util.Map;
  * @Author Jacob Thomas
  */
 @Component
-public abstract class BaseRESTController<T extends BaseTable> extends BaseController {
+abstract class BaseRESTController<T extends BaseTable> extends BaseController {
 
     @Autowired
     HttpSession session;
@@ -34,14 +38,15 @@ public abstract class BaseRESTController<T extends BaseTable> extends BaseContro
      * @param db - The DB that manages the entity to be created
      * @return - success: true on successful creation
      */
-    protected Map addEntity(Validator<T> validator, DBService<T> db){
-        RequestResponse response = new RequestResponse();
+    protected RRO<String> addEntity(Validator<T> validator, DBService<T> db){
+        RRO<String> rro = new RRO();
         try{
             validator.validate();
         } catch (InvalidFieldException e){
-            response.setSuccess(false);
-            response.setError(e.getMessage());
-            return response.map();
+            rro.setSuccess(false);
+            rro.setMsg(e.getMessage());
+            rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
+            return rro;
         }
         T created = validator.build();
 
@@ -55,102 +60,121 @@ public abstract class BaseRESTController<T extends BaseTable> extends BaseContro
         try{
             db.insert(created);
         } catch (DBService.EntityInsertionException e){
-            response.setSuccess(false);
-            response.setError(e.getMessage());
-            return response.map();
+            rro.setSuccess(true);
+            rro.setMsg(e.getMessage());
+            rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
+            return rro;
         }
-        response.setSuccess(true);
-        return response.map();
+        rro.setSuccess(true);
+        rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+        return rro;
     }
 
     protected T getEntityById(long id, DBService<T> db){
         return db.findById(id);
     }
 
-    protected Map updateEntity(long idToUpdate, Object DTO, DBService<T> db){
-        RequestResponse response = new RequestResponse();
+    protected RRO<String> updateEntity(long idToUpdate, DTO dto, DBService<T> db){
+        RRO<String> rro = new RRO();
         ModelMapper mm = DBUtils.getMapper();
         T found = db.findById(idToUpdate);
         if (found == null){
-            response.setError("Failed to update: Entity not found.");
-            return response.map();
+            rro.setSuccess(false);
+            rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
+            rro.setMsg(RRO_MSG.ENTITY_UPDATE_ENTITY_NO_FOUND.getMsg());
+            return rro;
         }
         //if its a validator, validate before copying.
-        if (Validator.class.isInstance(DTO)){
-            Validator<T> DTOValidator = (Validator<T>)DTO;
+        if (Validator.class.isInstance(dto)){
+            Validator<T> DTOValidator = (Validator<T>)dto;
             try{
                 DTOValidator.validate();
             } catch (InvalidFieldException e){
-                response.setSuccess(false);
-                response.setError(e.getMessage());
-                return response.map();
+                rro.setSuccess(false);
+                rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
+                rro.setMsg(e.getMessage());
+                return rro;
             }
         }
         T toUpdate = db.findById(idToUpdate);
-        mm.map(DTO, toUpdate);
+        mm.map(dto, toUpdate);
         if (db.update(toUpdate)){
-            response.setSuccess(true);
-            return response.map();
+            rro.setSuccess(true);
+            rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+            return rro;
         } else {
-            response.setSuccess(false);
-            response.setError("Error while updating entity");
-            return response.map();
+            rro.setSuccess(false);
+            rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
+            rro.setMsg(RRO_MSG.ENTITY_UPDATE_ERROR.getMsg());
+            return rro;
         }
     }
 
-    protected Map deleteEntity(long idToDelete, DBService<T> db){
-        RequestResponse response = new RequestResponse();
+    protected RRO<String> deleteEntity(long idToDelete, DBService<T> db){
+        RRO<String> rro = new RRO();
         if (db.deleteById(idToDelete)){
-            response.setSuccess(true);
-            return response.map();
+            rro.setSuccess(true);
+            rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+            return rro;
         } else {
-            response.setSuccess(false);
-            return response.map();
+            rro.setSuccess(false);
+            rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+            return rro;
         }
     }
 
     protected <U extends BaseTable>
-    Map addEntitiesToEntityList(DBService.EntitySetManager<U,T> set,
+    RRO<String> addEntitiesToEntityList(DBService.EntitySetManager<U,T> set,
                                 List<U> toAdd, DBService<T> db) {
-        RequestResponse response = new RequestResponse();
+        RRO<String> rro = new RRO();
         if (set == null){
-            response.setError(DBService.EntitySetManager.NOT_FOUND_STRING);
-            return response.map();
+            rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
+            rro.setMsg(DBService.EntitySetManager.NOT_FOUND_STRING);
+            rro.setSuccess(false);
+            return rro;
         }
-        response.setSuccess(true);
+
+        rro.setSuccess(true);
+        rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+
         for (U entity: toAdd){
             try{
                 set.insert(entity);
             } catch (DBService.EntitySetManager.EntitySetModificationException e){
-                response.setError(e.getMessage());
-                response.setSuccess(false);
+                rro.setMsg(e.getMessage());
+                rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
+                rro.setSuccess(false);
             }
         }
         T toSave = set.getFullEntity();
         db.update(toSave);
-        return response.map();
+        return rro;
     }
 
     protected  <U extends BaseTable>
-    Map removeEntitiesFromEntityList(DBService.EntitySetManager<U, T> set,
+    RRO<String> removeEntitiesFromEntityList(DBService.EntitySetManager<U, T> set,
                                      List<U> toRemove, DBService<T> db){
-        RequestResponse response = new RequestResponse();
+        RRO<String> rro = new RRO();
         if (set == null){
-            response.setError(DBService.EntitySetManager.NOT_FOUND_STRING);
-            return response.map();
+            rro.setMsg(DBService.EntitySetManager.NOT_FOUND_STRING);
+            rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+            rro.setSuccess(false);
+            return rro;
         }
-        response.setSuccess(true);
+        rro.setSuccess(true);
+        rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
         for (U entity: toRemove){
             try{
                 set.delete(entity);
             } catch (DBService.EntitySetManager.EntitySetModificationException e){
-                response.setError(e.getMessage());
-                response.setSuccess(false);
+                rro.setMsg(e.getMessage());
+                rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+                rro.setSuccess(false);
             }
         }
         T toSave = set.getFullEntity();
         db.update(toSave);
-        return response.map();
+        return rro;
     }
 
 }

@@ -45,7 +45,7 @@ public class RESTTests extends SpringTestConfig {
                 .content(json.toString()))
                 //.andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().json("{'success': 'true'}"));
+                .andExpect(content().json("{'success': true}"));
     }
 
     private void sendLabToPOSTEndpoint(JSONObject json, String path) throws Exception{
@@ -97,7 +97,7 @@ public class RESTTests extends SpringTestConfig {
                             .content(json.toString()))
                             .andDo(print())
                             .andExpect(status().isOk())
-                            .andExpect(content().json("{'success': 'true'}"));
+                            .andExpect(content().json("{'success': true}"));
 
         //make sure the course in the DB has the new info
         Course updated = courseDB.findByCourseId("UNIT_TEST" + metadata).get(0);
@@ -147,7 +147,7 @@ public class RESTTests extends SpringTestConfig {
                 .content(sb.toString()))
                // .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().json("{'success': 'true'}"));
+                .andExpect(content().json("{'success': true}"));
 
         for (JSONObject json: objs){
             assertEquals(courseDB.findByCourseId((String)json.get("course_id")).size(), 0);
@@ -239,7 +239,7 @@ public class RESTTests extends SpringTestConfig {
                         .content(json.toString()))
                         //.andDo(print())
                         .andExpect(status().isOk())
-                        .andExpect(content().json("{'success': 'false'}"));
+                        .andExpect(content().json("{'success': false}"));
 
         long lab_id = found.get(0).getId();
 
@@ -263,7 +263,7 @@ public class RESTTests extends SpringTestConfig {
                 .content(json.toString()))
                 //.andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().json("{'success': 'false'}"));
+                .andExpect(content().json("{'success': false}"));
 
         /**
          * @Test: GET to /lab/rest/{lab_id} to get the lab we created

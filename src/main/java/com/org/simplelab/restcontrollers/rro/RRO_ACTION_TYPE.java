@@ -6,3 +6,4 @@ public enum RRO_ACTION_TYPE {
     LOAD_DATA,
     PRINT_MSG
 }
+
