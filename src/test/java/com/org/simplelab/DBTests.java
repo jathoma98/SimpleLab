@@ -1,11 +1,19 @@
 package com.org.simplelab;
 
+import com.org.simplelab.database.entities.Equipment;
+import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.services.LabDB;
 import com.org.simplelab.database.services.UserDB;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.repositories.UserRepository;
+import com.org.simplelab.restcontrollers.LabRESTController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -144,6 +152,33 @@ class DBTests extends SpringTestConfig {
 		String breaker2 = "qqqqqqqq";
 		userDB.findUser(breaker2);
 		userDB.findUser(breaker1);
+	}
+
+	@Autowired
+	LabRESTController lrc;
+
+	@Autowired
+	LabDB labDB;
+
+	@Test
+	@Transactional
+	void testEquipmentSetManager(){
+		List<Equipment> list = new ArrayList<>();
+		for (int i = 0; i < 1; i++){
+			Equipment e = new Equipment();
+			e.set_metadata(metadata);
+			e.setName(metadata);
+			list.add(e);
+		}
+		Lab l = new Lab();
+		l.setName(metadata);
+		l.set_metadata(metadata);
+		lr.save(l);
+		l = lr.findByName(metadata).get(0);
+		lrc.addEquipmentToLab(l.getId(), list);
+		Set<Equipment> found = l.getEquipments();
+		assertEquals(1, found.size());
+
 	}
 
 

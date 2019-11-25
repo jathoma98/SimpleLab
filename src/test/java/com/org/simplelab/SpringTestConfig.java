@@ -11,6 +11,7 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * IMPORTANT NOTE ON WRITING TESTS:
@@ -24,6 +25,7 @@ import org.springframework.boot.test.context.SpringBootTest;
  */
 
 @TestMethodOrder(MethodOrderer.Alphanumeric.class)
+@Transactional
 @SpringBootTest
 public abstract class SpringTestConfig {
 

@@ -8,6 +8,7 @@ import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.validators.LabValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -60,6 +61,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
         return super.updateEntity(lab_id, labUpdateDTO, labDB);
     }
 
+    @Transactional
     @PostMapping(LAB_ID_EQUIPMENT_MAPPING)
     public Map addEquipmentToLab(@PathVariable("lab_id") long lab_id,
                                  @RequestBody List<Equipment> equipmentToAdd){
