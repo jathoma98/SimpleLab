@@ -34,7 +34,6 @@ $(document).ready(function(){
         //for popup dialog rotate back
         $(".popup_dialog").modal({
             onCloseEnd: function (event) {
-                alert("close")
                 $("#"+current_drag).css({"transform": "rotate(0deg)"});
             }
         })
