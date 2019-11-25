@@ -110,8 +110,9 @@ public abstract class BaseRESTController<T extends BaseTable> extends BaseContro
         }
     }
 
-    protected <U extends BaseTable,T extends BaseTable> Map addEntitiesToEntityList
-            (DBService.EntitySetManager<U,T> set, List<U> toAdd, DBService<T> db) {
+    protected <U extends BaseTable>
+    Map addEntitiesToEntityList(DBService.EntitySetManager<U,T> set,
+                                List<U> toAdd, DBService<T> db) {
         RequestResponse response = new RequestResponse();
         if (set == null){
             response.setError(DBService.EntitySetManager.NOT_FOUND_STRING);

@@ -183,8 +183,4 @@ public class CourseDB extends DBService<Course> {
             return true;
         return false;
     }
-
-    @Autowired
-    UserRepository userRepository;
-
 }
