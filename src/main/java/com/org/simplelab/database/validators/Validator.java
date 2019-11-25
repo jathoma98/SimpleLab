@@ -1,6 +1,7 @@
 package com.org.simplelab.database.validators;
 
 import com.org.simplelab.database.entities.BaseTable;
+import com.org.simplelab.restcontrollers.dto.DTO;
 
 /**
  * Validator classes are used to ensure that data that the user
@@ -8,7 +9,7 @@ import com.org.simplelab.database.entities.BaseTable;
  * @author Jacob Thomas
  */
 
-public abstract class Validator<T extends BaseTable> {
+public abstract class Validator<T extends BaseTable> extends DTO {
 
     public static final String EMPTY_FIELD = "Fields cannot be empty. \n";
 
