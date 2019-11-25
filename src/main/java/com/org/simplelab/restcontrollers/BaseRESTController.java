@@ -22,7 +22,7 @@ import java.util.Map;
  * @Author Jacob Thomas
  */
 @Component
-public class BaseRESTController<T extends BaseTable> extends BaseController {
+public abstract class BaseRESTController<T extends BaseTable> extends BaseController {
 
     @Autowired
     HttpSession session;
@@ -107,5 +107,7 @@ public class BaseRESTController<T extends BaseTable> extends BaseController {
             return response.map();
         }
     }
+
+    protected  Map addEntityToEntityList() { return null; }
 
 }
