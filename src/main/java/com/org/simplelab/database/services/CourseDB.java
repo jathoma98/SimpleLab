@@ -44,6 +44,7 @@ public class CourseDB extends DBService<Course> {
         Course found = findById(id);
         if (found != null){
             found.setStudents(null);
+            found.setLabs(null);
             courseRepository.delete(found);
         }
         return true;
@@ -175,12 +176,5 @@ public class CourseDB extends DBService<Course> {
         List<Course> found = courseRepository.findBycreator_idAndcourse_id(user_id, course_id);
         if (found.size() != 0) return found.get(0);
         return null;
-    }
-
-    public boolean isUserInCourse(Long uid, long cid){
-        List<User> user = courseRepository.findUserInCourse(uid, cid);
-        if(user != null && user.size() == 0)
-            return true;
-        return false;
     }
 }

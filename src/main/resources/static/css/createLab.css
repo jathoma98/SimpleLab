@@ -58,6 +58,9 @@
     padding: 0;
     /*border:1px solid black;*/
 }
+.fixed{
+    position: fixed;
+}
 
 .infobar{
     z-index: 1000;

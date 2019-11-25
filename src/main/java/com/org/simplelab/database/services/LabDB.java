@@ -24,7 +24,11 @@ public class LabDB extends DBService<Lab> {
 
     @Override
     public boolean deleteById(long id){
-        labRepository.deleteById(id);
+        Lab found = findById(id);
+        if (found != null) {
+            found.setEquipments(null);
+            labRepository.delete(found);
+        }
         return true;
     }
 

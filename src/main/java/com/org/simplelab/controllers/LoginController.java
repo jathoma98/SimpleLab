@@ -2,6 +2,8 @@ package com.org.simplelab.controllers;
 
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.services.UserDB;
+import com.org.simplelab.restcontrollers.rro.RRO;
+import com.org.simplelab.restcontrollers.rro.RRO_ACTION_TYPE;
 import com.org.simplelab.security.SecurityUtils;
 import com.org.simplelab.security.SimpleLabAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,11 +57,15 @@ public class LoginController{
      */
     @ResponseBody
     @PostMapping("/login")
-    public Map<String, String> login(@RequestParam("userName") String username,
-                                     @RequestParam("password") String password,
-                                     HttpSession session) {
-        RequestResponse resp = new RequestResponse();
-        resp.setSuccess(false);
+    public RRO<String> login(@RequestParam("userName") String username,
+                             @RequestParam("password") String password,
+                             HttpSession session) {
+
+        RRO rro = new RRO<String>();
+        rro.setSuccess(false);
+        rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
+        rro.setMsg("Please check your username and password!");
+
 
         //setup Spring security context
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
@@ -67,10 +73,12 @@ public class LoginController{
         try{
             auth = authManager.authenticate(token);
         } catch (BadCredentialsException e) {
-            return resp.map();
+
+            return rro;
         }
         if (auth == null){
-            return resp.map();
+
+            return rro;
         }
         SecurityContext sc = SecurityContextHolder.getContext();
         sc.setAuthentication(auth);
@@ -99,8 +107,9 @@ public class LoginController{
             return resp.map();
         }**/
 
-        resp.setSuccess(true);
-        return resp.map();
+        rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+        rro.setSuccess(true);
+        return rro;
     }
 
 

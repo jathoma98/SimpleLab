@@ -12,12 +12,12 @@ $(document).ready(function(){
         var item_id="item_"+itemcount;
 
         if(this.id=="500mlbeaker"){
-            var c = $('<div id="'+item_id+'" class="ui-widget-content draggable_item center '+item_id+'">' +
+            var c = $('<div id='+item_id+' class="ui-widget-content fixed draggable_item center '+item_id+'">' +
                 '<img src="../img/beaker.png" class="item_img">' +
                 '<p >500ml beaker</p>' +
                 '</div>');
 
-            var cur_item= $('<li  id="'+item_id+'" class="collection-item">\n' +
+            var cur_item= $('<li id='+item_id+' class="collection-item">\n' +
                 '                        <div class="row sidebaritem">\n' +
                 '                            <div class="col s6">\n' +
                 '                                <img src="../img/beaker.png" class="item_img">\n' +
@@ -30,12 +30,12 @@ $(document).ready(function(){
                 '                        </div>\n' +
                 '                    </li>');
         }else{
-            var c = $('<div id="'+item_id+'" class="ui-widget-content draggable_item center '+item_id+'">' +
+            var c = $('<div id='+item_id+' class="ui-widget-content fixed draggable_item center '+item_id+'">' +
                 '<img src="../img/cylinder.png" class="item_img">' +
                 '<p >200ml cylinder</p>' +
                 '</div>');
 
-            var cur_item= $('<li id="'+item_id+'"  class="collection-item">\n' +
+            var cur_item= $('<li id='+item_id+'  class="collection-item">\n' +
                 '                        <div class="row sidebaritem">\n' +
                 '                            <div class="col s6">\n' +
                 '                                <img src="../img/cylinder.png" class="item_img">\n' +
@@ -67,13 +67,13 @@ $(document).ready(function(){
         $("#operation_area").append(c);
         //add item to current set
         $(".current_item_set").append(cur_item);
-        c.offset({top:300,left:100}).css("position", "fixed");
+        c.offset({top:300,left:100})
         itemcount++;
 
         //for popup dialog rotate back
         $(".popup_dialog").modal({
             onCloseEnd: function (event) {
-                $("#"+current_drag).css({"transform": "rotate(0deg)"});
+                $("."+current_drag).css({"transform": "rotate(0deg)"});
             }
         })
 
@@ -201,13 +201,12 @@ function dropitem(event, ui) {
     var droppableId = $(this).attr("id");
     current_drag=draggableId;
     current_drop=droppableId;
-    console.log("drag item  " +draggableId+"drop item  "+droppableId)
-    var item2ps=$("#"+draggableId).position()
-    $("#"+droppableId).offset({top:item2ps.top+50,left:item2ps.left+100})
+    // console.log("drag item  " +draggableId+"drop item  "+droppableId)
+    var item2ps=$("."+draggableId).position()
+    console.log(item2ps)
+    $("."+droppableId).offset({top:item2ps.top+50,left:item2ps.left+100})
     console.log( $("#"+draggableId))
-    $("#"+draggableId).css({"transform": "rotate(45deg)"});
-    // console.log(item2ps)
-    // console.log($("#"+draggableId).position())
+    $("."+draggableId).css({"transform": "rotate(45deg)"});
 }
 
 
