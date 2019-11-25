@@ -12,12 +12,12 @@ $(document).ready(function(){
         var item_id="item_"+itemcount;
 
         if(this.id=="500mlbeaker"){
-            var c = $('<div id='+item_id+' class="ui-widget-content draggable_item center">' +
+            var c = $('<div id="'+item_id+'" class="ui-widget-content draggable_item center '+item_id+'">' +
                 '<img src="../img/beaker.png" class="item_img">' +
                 '<p >500ml beaker</p>' +
                 '</div>');
 
-            var cur_item= $('<li class="collection-item">\n' +
+            var cur_item= $('<li  id="'+item_id+'" class="collection-item">\n' +
                 '                        <div class="row sidebaritem">\n' +
                 '                            <div class="col s6">\n' +
                 '                                <img src="../img/beaker.png" class="item_img">\n' +
@@ -30,12 +30,12 @@ $(document).ready(function(){
                 '                        </div>\n' +
                 '                    </li>');
         }else{
-            var c = $('<div id='+item_id+' class="ui-widget-content draggable_item center">' +
+            var c = $('<div id="'+item_id+'" class="ui-widget-content draggable_item center '+item_id+'">' +
                 '<img src="../img/cylinder.png" class="item_img">' +
                 '<p >200ml cylinder</p>' +
                 '</div>');
 
-            var cur_item= $('<li class="collection-item">\n' +
+            var cur_item= $('<li id="'+item_id+'"  class="collection-item">\n' +
                 '                        <div class="row sidebaritem">\n' +
                 '                            <div class="col s6">\n' +
                 '                                <img src="../img/cylinder.png" class="item_img">\n' +
@@ -67,7 +67,7 @@ $(document).ready(function(){
         $("#operation_area").append(c);
         //add item to current set
         $(".current_item_set").append(cur_item);
-        c.offset({top:150,left:100})
+        c.offset({top:300,left:100}).css("position", "fixed");
         itemcount++;
 
         //for popup dialog rotate back
@@ -125,6 +125,15 @@ $(document).ready(function(){
             '     <a class="right step_remove" href="#">Remove</a>\n' +
             '</li>');
         stepcount++;
+    });
+
+    //remove current item
+    $('.collection').on('click', '.cur_item_remove', function() {
+        var temp=$(this).closest('li')["0"].id;
+        $("."+temp).remove();
+        $(this).closest('li').remove();
+
+
     });
 
     //add step
@@ -207,8 +216,7 @@ function selectItem(id){
     console.log(id);
     if(id=="operation_area"){
         if(!(globalselect==undefined)){
-            var unselect = document.getElementById(globalselect);
-            unselect.classList.remove("selected")
+            $("."+globalselect).removeClass("selected")
         }
         $("#infobar").hide("slide", { direction: "right" }, 400);
         globalselect=undefined;
@@ -218,18 +226,15 @@ function selectItem(id){
 
     }else if(globalselect===undefined){
         globalselect=id;
-        var element = document.getElementById(id);
-        element.classList.add("selected");
+        $("."+id).addClass("selected")
         loadInfo(id);
         $("#infobar").show("slide", { direction: "right" }, 400);
 
     }else if(globalselect==id){
 
     }else{
-        var unselect = document.getElementById(globalselect);
-        unselect.classList.remove("selected")
-        var element = document.getElementById(id);
-        element.classList.add("selected");
+        $("."+globalselect).removeClass("selected")
+        $("."+id).addClass("selected")
         globalselect=id;
         $("#infobar").hide("slide", { direction: "right" }, 400);
         loadInfo(id);
