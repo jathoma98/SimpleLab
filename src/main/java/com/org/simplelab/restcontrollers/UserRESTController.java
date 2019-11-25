@@ -22,7 +22,6 @@ public class UserRESTController extends BaseRESTController<User> {
     public static final String LOAD_USER_MAPPING = "/loadUserInfo";
     public static final String RESET_USER_MAPPING = "/restUserInfo";
     public static final String SEARCH_USER_MAPPING = "/searchUser";
-    public static final String FORGOT_PASSWORD_MAPPING = "/fpChangePassword";
 
     /**
      * Returns a list of Users with attributes that match a given string
@@ -86,20 +85,7 @@ public class UserRESTController extends BaseRESTController<User> {
 
 
 
-    public class userNewPassword{
-        private String password;
-        private User user;
-    }
 
-    @PostMapping(FORGOT_PASSWORD_MAPPING)
-    public void changepassword (@RequestBody userNewPassword newPassword){
-        try{
-            newPassword.user.setPassword(newPassword.password);
-        }catch (Exception e){
-
-        }
-
-    }
 
 
 }

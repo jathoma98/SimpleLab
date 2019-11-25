@@ -3,7 +3,7 @@ let current_user;
 function findUser() {
     // let username = {userName : $("#userName").val()};
     // let user_json =  JSON.stringify(username);
-    $.post("/fpFindUser", { userName : $("#userName").val()},
+    $.post("/forgetPage/fpFindUser", { userName : $("#userName").val()},
         function(user){
             if (user !== null) {
                 current_user = user;
@@ -31,8 +31,16 @@ function checkAnswer(){
         dataTye: 'json',
         contentType: 'application/json; charset=utf-8',
         data: user_json,
-        success: function (answer) {
-
+        success: function (result) {
+            if(result === true){
+                $("#fpPassword").css('display','');
+                $(".fpSend1").css('display','none');
+                $("#fpQuestion").css('display','none');
+                $("#fpAnswer").css('display','none');
+            }
+            else {
+                alert("Wrong answer for the question");
+            }
 
         }
     })
@@ -42,8 +50,9 @@ function checkAnswer(){
 
 function changepassword(){
     let userNewPassword = {
-        newPassword : $("#a")
+        newPassword : $("#password").val(),
     }
+
     $.ajax({
         url: "/user/rest/fpFindUser",
         type: "POST",
@@ -52,14 +61,8 @@ function changepassword(){
         data: course_json,
         success: function(user){
             if (user.success === "true") {
-                current_user = user;
-                $(".fpUserName").prop('disabled',true);
-                $(".fpEmail").prop('disabled',true);
-                $(".fpQuestion").val(user.question);
-                $(".fpQuestion").prop('disable',false);
-                $(".fpAnswer").prop('disable',false);
-                $(".fpSend").prop('disable',true);
-                $(".fpSave").prop('disable',false);
+
+                console.log("You have changed your password")
             } else {
                 console.log("User Not Exist");
             }
@@ -71,5 +74,6 @@ function changepassword(){
 $(document).ready( function () {
 
     $("#submitbtn").on("click",findUser);
+    $("#submitbtn1").on("click",checkAnswer);
     $("#savebtn").on("click",changepassword);
 })
