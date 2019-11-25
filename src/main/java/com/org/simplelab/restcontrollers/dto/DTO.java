@@ -1,7 +1,6 @@
 package com.org.simplelab.restcontrollers.dto;
 
 import com.org.simplelab.database.validators.CourseValidator;
-import com.org.simplelab.database.validators.LabValidator;
 import lombok.Getter;
 import lombok.Setter;
 

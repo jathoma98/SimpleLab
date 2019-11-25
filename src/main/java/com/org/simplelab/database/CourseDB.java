@@ -4,7 +4,6 @@ package com.org.simplelab.database;
 import com.org.simplelab.database.entities.Course;
 import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;
-import com.org.simplelab.database.repositories.CourseRepository;
 import com.org.simplelab.database.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,12 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Transactional
 @Component
-public class CourseDB {
-
+public class CourseDB extends DBService<Course> {
     public static class CourseTransactionException extends Exception{
         public static final String NO_COURSE_FOUND = "The requested course could not be found.";
         CourseTransactionException(String message){
@@ -25,16 +24,25 @@ public class CourseDB {
         }
     }
 
-
-    @Autowired
-    CourseRepository courseRepository;
-
-    public boolean insertCourse(Course c){
+    @Override
+    public boolean insert(Course c){
         List<Course> found = findByCourseId(c.getCourse_id());
         if (found != null && found.size() > 0)
             return false;
         courseRepository.save(c);
         return true;
+    }
+
+    @Override
+    public boolean deleteById(long id){
+        courseRepository.deleteById(id);
+        return true;
+    }
+
+    @Override
+    public Course findById(long id) {
+        Optional<Course> found = courseRepository.findById(id);
+        return found.isPresent() ? found.get() : null;
     }
 
     /**
@@ -52,7 +60,7 @@ public class CourseDB {
         System.out.println("Found target course: " + c.toString());
         c.getStudents().add(u);
         System.out.println("Modified course: " + c.toString());
-        updateCourse(c);
+        update(c);
     }
 
     /**
@@ -88,7 +96,7 @@ public class CourseDB {
         //remove() returns true when the element exists
         if (students.remove(student)){
             c.setStudents(students);
-            updateCourse(c);
+            update(c);
         }
 
         ArrayList<User> toList = new ArrayList<>();
@@ -108,7 +116,8 @@ public class CourseDB {
         return toList;
     }
 
-    public boolean updateCourse(Course c){
+    @Override
+    public boolean update(Course c){
         courseRepository.save(c);
         return true;
     }

@@ -1,13 +1,9 @@
 package com.org.simplelab.database;
 
 import com.org.simplelab.database.entities.Lab;
-import com.org.simplelab.database.repositories.CourseRepository;
-import com.org.simplelab.database.repositories.LabRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,32 +12,31 @@ import java.util.Optional;
  */
 @Transactional
 @Component
-public class LabDB {
+public class LabDB extends DBService<Lab> {
 
-    @Autowired
-    private LabRepository labRepository;
-
-    @Autowired
-    private CourseRepository courseRepository;
-
-    public void deleteLabById(long id){
+    @Override
+    public boolean deleteById(long id){
         labRepository.deleteById(id);
+        return true;
     }
 
-    public boolean insertLab(Lab lab){
+    @Override
+    public boolean insert(Lab lab){
         labRepository.save(lab);
         return true;
     }
 
-    public boolean updateLab(Lab lab){
-        return insertLab(lab);
+    @Override
+    public boolean update(Lab lab){
+        return insert(lab);
     }
 
     public List<Lab> getLabsByCreatorId(long id){
         return labRepository.findByCreator_id(id);
     }
 
-    public Lab getLabById(long id){
+    @Override
+    public Lab findById(long id){
         Optional<Lab> found = labRepository.findById(id);
         return found.isPresent()? found.get() : null;
     }

@@ -1,27 +1,16 @@
 package com.org.simplelab.restcontrollers;
 
 
-import com.org.simplelab.controllers.BaseController;
-import com.org.simplelab.controllers.RequestResponse;
-import com.org.simplelab.database.UserDB;
 import com.org.simplelab.database.entities.Equipment;
-import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.validators.EquipmentValidator;
-import com.org.simplelab.database.validators.InvalidFieldException;
-import com.org.simplelab.database.validators.Validator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.PostLoad;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @RestController
 @RequestMapping(EquipmentRESTController.BASE_MAPPING)
-public class EquipmentRESTController extends BaseController {
+public class EquipmentRESTController extends BaseRESTController<Equipment> {
 
     public static final String BASE_MAPPING = "/equipment/rest";
 
@@ -29,20 +18,24 @@ public class EquipmentRESTController extends BaseController {
 
     @PostMapping
     public Map addEquipment(@RequestBody EquipmentValidator validator, HttpSession session){
-        RequestResponse rsp = new RequestResponse();
-        long user_id = getUserIdFromSession(session);
-        try{
-            validator.validate();
-        } catch (InvalidFieldException e){
-            rsp.setError(e.getMessage());
-            return rsp.map();
-        }
-        Equipment e = validator.build();
-        User creator = userDB.findUserById(user_id);
-        e.setCreator(creator);
+        return super.addEntity(validator, equipmentDB);
+    }
 
-        return rsp.map();
+    @DeleteMapping(EQUIPMENT_ID_MAPPING)
+    public Map deleteEquipment(@PathVariable("equipment_id") long equipment_id){
+        return super.deleteEntity(equipment_id, equipmentDB);
+    }
 
+    @PostMapping(EQUIPMENT_ID_MAPPING)
+    public Map updateEquipment(@PathVariable("equipment_id") long equipment_id,
+                               @RequestBody EquipmentValidator dto){
+        return super.updateEntity(equipment_id, dto, equipmentDB);
+
+    }
+
+    @GetMapping(EQUIPMENT_ID_MAPPING)
+    public Equipment getSpecificEquipment(@PathVariable("equipment_id") long equipment_id){
+        return super.getEntityById(equipment_id, equipmentDB);
     }
 
 }

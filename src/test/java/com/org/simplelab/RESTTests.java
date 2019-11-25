@@ -5,7 +5,6 @@ import com.org.simplelab.database.LabDB;
 import com.org.simplelab.database.entities.Course;
 import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;
-import com.org.simplelab.database.repositories.CourseRepository;
 import com.org.simplelab.restcontrollers.CourseRESTController;
 import com.org.simplelab.restcontrollers.LabRESTController;
 import org.json.JSONObject;
@@ -14,17 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
-import javax.persistence.Temporal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -89,6 +84,26 @@ public class RESTTests extends SpringTestConfig {
                              .sessionAttrs(session_atr))
                             //.andDo(print())
                             .andExpect(status().isOk());
+
+        /**
+         * @Test: update course
+         */
+        Map<String, Object> newDTO = new HashMap<>();
+        rawJson.put("description", metadata + "UPDATED");
+        newDTO.put("course_id_old", "UNIT_TEST" + metadata);
+        newDTO.put("newCourseInfo", new JSONObject(rawJson));
+        json = new JSONObject(newDTO);
+        this.mockMvc.perform(patch(CourseRESTController.BASE_MAPPING + CourseRESTController.UPDATE_MAPPING)
+                            .sessionAttrs(session_atr)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(json.toString()))
+                            .andDo(print())
+                            .andExpect(status().isOk())
+                            .andExpect(content().json("{'success': 'true'}"));
+
+        //make sure the course in the DB has the new info
+        Course updated = courseDB.findByCourseId("UNIT_TEST" + metadata).get(0);
+        assertEquals(updated.getDescription(), metadata + "UPDATED");
 
 
         //delete the course afterwards
@@ -239,7 +254,7 @@ public class RESTTests extends SpringTestConfig {
         json = new JSONObject(rawJson);
 
         sendLabToPOSTEndpoint(json, "/" + lab_id);
-        Lab updated = labDB.getLabById(lab_id);
+        Lab updated = labDB.findById(lab_id);
         assertEquals(updated.getName(), updatedName);
         assertEquals(updated.get_metadata(), metadata);
 
@@ -270,7 +285,7 @@ public class RESTTests extends SpringTestConfig {
                         .sessionAttrs(session_atr))
                         .andExpect(status().isOk());
 
-        Lab found_lab = labDB.getLabById(lab_id);
+        Lab found_lab = labDB.findById(lab_id);
         assertNull(found_lab);
 
 

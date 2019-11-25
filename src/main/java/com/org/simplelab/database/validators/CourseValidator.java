@@ -36,7 +36,7 @@ public class CourseValidator extends Validator<Course>{
 
     @Override
     public Course build() {
-        Course c = DBUtils.MAPPER.map(this, Course.class);
+        Course c = DBUtils.getMapper().map(this, Course.class);
         return c;
     }
 }

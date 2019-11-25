@@ -1,29 +1,23 @@
 package com.org.simplelab.restcontrollers;
 
-import com.org.simplelab.controllers.BaseController;
 import com.org.simplelab.controllers.RequestResponse;
 import com.org.simplelab.database.CourseDB;
-import com.org.simplelab.database.UserDB;
 import com.org.simplelab.database.entities.Course;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.validators.CourseValidator;
-import com.org.simplelab.database.validators.InvalidFieldException;
-import com.org.simplelab.database.validators.Validator;
 import com.org.simplelab.restcontrollers.dto.DTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 //TODO: secure rest endpoints with authentication
 @RestController
 @RequestMapping(CourseRESTController.BASE_MAPPING)
-public class CourseRESTController extends BaseController {
+public class CourseRESTController extends BaseRESTController<Course> {
 
     public static final String BASE_MAPPING = "/course/rest";
 
@@ -39,26 +33,7 @@ public class CourseRESTController extends BaseController {
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> addCourse(@RequestBody CourseValidator courseValidator,
                                          HttpSession session) {
-        long userId = getUserIdFromSession(session);
-        RequestResponse response = new RequestResponse();
-        try {
-            courseValidator.validate();
-        } catch (InvalidFieldException e) {
-            response.setSuccess(false);
-            response.setError(e.getMessage());
-            return response.map();
-        }
-        User user = userDB.findUserById(userId);
-        Course c = courseValidator.build();
-        c.setCreator(user);
-        if (courseDB.insertCourse(c)) {
-            response.setSuccess(true);
-            return response.map();
-        } else { //return error on duplicate ID
-            response.setSuccess(false);
-            response.setError(CourseValidator.DUPLICATE_ID);
-            return response.map();
-        }
+        return super.addEntity(courseValidator, courseDB);
     }
 
     /**
@@ -73,9 +48,9 @@ public class CourseRESTController extends BaseController {
      *            {
      *            course_id_old: "CSE308",
      *            newCourseInfo: {
-     *            name: "Software Dev",
-     *            course_id: "CSE316",
-     *            description: "Revamped Software class for Spring 2020"
+     *               name: "Software Dev",
+     *               course_id: "CSE316",
+     *                description: "Revamped Software class for Spring 2020"
      *            }
      *            }
      * @return success:true on success
@@ -85,41 +60,29 @@ public class CourseRESTController extends BaseController {
      */
     @PatchMapping(UPDATE_MAPPING)
     public Map<String, String> updateCourse(@RequestBody DTO.CourseUpdateDTO dto, HttpSession session) {
+        System.out.println(dto.toString());
         RequestResponse rsp = new RequestResponse();
         long uid = getUserIdFromSession(session);
-        List<Course> courses = courseDB.findByCourseId(dto.getCourse_id_old());
-        if (courses.size() > 0) {
-            CourseValidator cv = dto.getNewCourseInfo();
-            try {
-                cv.validate();
-            } catch (InvalidFieldException e) {
-                rsp.setError(e.getMessage());
-                return rsp.map();
-            }
-            //TODO: refactor with modelmapper?
-            Course found = courses.get(0);
-            //ensure the found course belongs to the current user -- exception if not (the new course code is a duplicate)
-            if (found.getCreator().getId() != uid) {
-                rsp.setError(CourseValidator.DUPLICATE_ID);
-                return rsp.map();
-            }
-            found.setCourse_id(cv.getCourse_id());
-            found.setName(cv.getName());
-            found.setDescription(cv.getDescription());
-            courseDB.updateCourse(found);
+        Course toUpdate;
+        List<Course> foundcourses = courseDB.findByCourseId(dto.getCourse_id_old());
+        if (foundcourses.size() > 0){
+            toUpdate = foundcourses.get(0);
         } else {
-            rsp.setError("No course with this ID was found. ");
+            rsp.setError("No course found.");
             return rsp.map();
         }
-
-        rsp.setSuccess(true);
-        return rsp.map();
+        if (toUpdate.getCreator().getId() != uid){
+            rsp.setError(CourseValidator.DUPLICATE_ID);
+            return rsp.map();
+        }
+        return super.updateEntity(toUpdate.getId(), dto.getNewCourseInfo(), courseDB);
     }
 
     /**
      * Takes a JSON object with required parameter "course_id", which is the course id of the course to delete
      * Deletes the course with this id.
      */
+    //TODO: this can probably be refactored better.
     @DeleteMapping(DELETE_MAPPING)
     public Map<String, String> deleteCourse(@RequestBody CourseValidator[] toDelete,
                                             HttpSession session) {
