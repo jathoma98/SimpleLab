@@ -8,6 +8,7 @@ import com.org.simplelab.database.repositories.UserRepository;
 import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.services.LabDB;
 import com.org.simplelab.database.services.UserDB;
+import com.org.simplelab.database.validators.LabValidator;
 import com.org.simplelab.restcontrollers.CourseRESTController;
 import com.org.simplelab.restcontrollers.LabRESTController;
 import com.org.simplelab.restcontrollers.dto.DTO;
@@ -283,6 +284,51 @@ class DBTests extends SpringTestConfig {
 
 		DBService.EntitySetManager<User, Course> newUsers = courseDB.getStudentsOfCourseByCourseId(c.getCourse_id());
 		assertEquals(0, newUsers.getEntitySet().size());
+
+	}
+
+	@Test
+	@Transactional
+	@WithMockUser(username = username, password = username)
+	void testLabRESTMethods(){
+		/**
+		 * @Test - test Add Lab
+		 */
+		LabValidator lv = new LabValidator();
+		lv.set_metadata(metadata);
+		lv.setName(metadata);
+		lv.setDescription(metadata);
+
+		lrc.saveLab(lv);
+
+		List<Lab> found = lr.findByName(metadata);
+		assertEquals(1, found.size());
+		assertEquals(metadata, found.get(0).getName());
+		Lab lab = found.get(0);
+
+		/**
+		 * @Test - test Get Lab
+		 */
+		Lab returnLab = lrc.labGet(lab.getId());
+		assertEquals(returnLab.getName(), lab.getName());
+		assertEquals(returnLab.getId(), lab.getId());
+
+		/**
+		 * @Test test update lab
+		 */
+		lv.setName(metadata + "UPDATED");
+		lrc.labUpdate(returnLab.getId(), lv);
+		returnLab = lrc.labGet(returnLab.getId());
+		assertEquals(metadata + "UPDATED", returnLab.getName());
+
+		/**
+		 * @Test test delete lab
+		 */
+
+		long idToDelete = returnLab.getId();
+		lrc.labDelete(idToDelete);
+		found = lr.findByName(returnLab.getName());
+		assertEquals(0, found.size());
 
 	}
 

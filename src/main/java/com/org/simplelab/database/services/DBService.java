@@ -47,7 +47,6 @@ public abstract class DBService<T extends BaseTable> {
      * example: For Course with list of Users, T = User, U = Course
      */
     @Getter
-    @Setter
     public static class EntitySetManager<T extends BaseTable, U extends BaseTable>{
         /**
          * Exception to be thrown in case of illegal modification of the entity set.

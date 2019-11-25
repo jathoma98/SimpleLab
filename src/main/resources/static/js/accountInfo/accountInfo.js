@@ -63,12 +63,12 @@ let ACC_INFO ={
                     user.lastname = $("#last_name").val();
                     user.institution = $("#institution").val();
                     user.email = $("#email").val();
-                    let course_json =  JSON.stringify(user);
+                    let user_json =  JSON.stringify(user);
                     $.ajax({
                         url: "/user/rest/restUserInfo",
                         type: "POST",
                         contentType: 'application/json; charset=utf-8',
-                        data: course_json,
+                        data: user_json,
                         success:function (){
                             alert("You have saved your information!")
                         }

@@ -13,6 +13,7 @@ import org.modelmapper.ModelMapper;
 public class LabValidator extends Validator<Lab> {
 
     private String name;
+    private String description;
     private String _metadata;
 
     public static final String NO_NAME_ERROR = "You must provide a name for this lab. \n";
@@ -24,6 +25,10 @@ public class LabValidator extends Validator<Lab> {
 
         if (name == null || name.equals(""))
             sb.append(NO_NAME_ERROR);
+
+        if (description == null){
+            description = "";
+        }
 
         if (sb.length() > 0)
             throw new InvalidFieldException(sb.toString());
