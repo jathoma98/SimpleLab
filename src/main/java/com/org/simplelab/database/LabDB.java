@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +15,7 @@ import java.util.Optional;
  */
 @Transactional
 @Component
-public class LabDB {
+public class LabDB extends DBService<Lab> {
 
     @Autowired
     private LabRepository labRepository;
@@ -28,13 +27,14 @@ public class LabDB {
         labRepository.deleteById(id);
     }
 
-    public boolean insertLab(Lab lab){
+    @Override
+    public boolean insert(Lab lab){
         labRepository.save(lab);
         return true;
     }
 
     public boolean updateLab(Lab lab){
-        return insertLab(lab);
+        return insert(lab);
     }
 
     public List<Lab> getLabsByCreatorId(long id){

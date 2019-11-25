@@ -2,23 +2,17 @@ package com.org.simplelab.restcontrollers;
 
 import com.org.simplelab.controllers.BaseController;
 import com.org.simplelab.controllers.RequestResponse;
-import com.org.simplelab.database.CourseDB;
-import com.org.simplelab.database.LabDB;
-import com.org.simplelab.database.UserDB;
 import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.repositories.LabRepository;
 import com.org.simplelab.database.validators.InvalidFieldException;
 import com.org.simplelab.database.validators.LabValidator;
-import com.org.simplelab.database.validators.Validator;
-import com.org.simplelab.restcontrollers.dto.DTO;
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 import java.util.Optional;
@@ -27,7 +21,7 @@ import static com.org.simplelab.restcontrollers.LabRESTController.BASE_MAPPING;
 
 @RestController
 @RequestMapping(BASE_MAPPING)
-public class LabRESTController extends BaseController {
+public class LabRESTController extends BaseRESTController<Lab> {
 
     //lab_id = id of the lab to interact with in the DB
     public static final String BASE_MAPPING = "/lab/rest";
@@ -47,27 +41,7 @@ public class LabRESTController extends BaseController {
      */
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> saveLab(@RequestBody LabValidator validator, HttpSession session){
-        RequestResponse rsp = new RequestResponse();
-        try{
-            validator.validate();
-        } catch (InvalidFieldException e){
-            rsp.setSuccess(false);
-            rsp.setError(e.getMessage());
-            rsp.set("value", validator.getName());
-            return rsp.map();
-        }
-        long user_id = getUserIdFromSession(session);
-        User u = userDB.findUserById(user_id);
-        Lab lab = validator.build();
-        lab.setCreator(u);
-        System.out.println("Adding lab with name: " + lab.getName());
-        if (labDB.insertLab(lab)){
-            rsp.setSuccess(true);
-            return rsp.map();
-        } else {
-            rsp.setSuccess(false);
-            return rsp.map();
-        }
+        return super.addEntity(validator, session, labDB);
     }
 
     /**
