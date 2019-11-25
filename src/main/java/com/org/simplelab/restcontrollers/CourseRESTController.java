@@ -1,10 +1,10 @@
 package com.org.simplelab.restcontrollers;
 
 import com.org.simplelab.controllers.RequestResponse;
-import com.org.simplelab.database.entities.Lab;
-import com.org.simplelab.database.services.CourseDB;
 import com.org.simplelab.database.entities.Course;
+import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;
+import com.org.simplelab.database.services.CourseDB;
 import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
@@ -65,7 +65,6 @@ public class CourseRESTController extends BaseRESTController<Course> {
      */
     @PatchMapping(UPDATE_MAPPING)
     public Map<String, String> updateCourse(@RequestBody DTO.CourseUpdateDTO dto, HttpSession session) {
-        System.out.println(dto.toString());
         RequestResponse rsp = new RequestResponse();
         long uid = getUserIdFromSession(session);
         Course toUpdate;

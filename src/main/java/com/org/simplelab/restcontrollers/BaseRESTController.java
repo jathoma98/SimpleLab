@@ -2,19 +2,16 @@ package com.org.simplelab.restcontrollers;
 
 import com.org.simplelab.controllers.BaseController;
 import com.org.simplelab.controllers.RequestResponse;
-import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.BaseTable;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.entities.interfaces.UserCreated;
+import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.validators.InvalidFieldException;
 import com.org.simplelab.database.validators.Validator;
-import org.bouncycastle.cert.ocsp.Req;
-import org.codehaus.jackson.map.Serializers;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;

@@ -1,12 +1,12 @@
 package com.org.simplelab;
 
+import com.org.simplelab.database.repositories.CourseRepository;
+import com.org.simplelab.database.repositories.EquipmentRepository;
+import com.org.simplelab.database.repositories.LabRepository;
 import com.org.simplelab.database.services.CourseDB;
 import com.org.simplelab.database.services.EquipmentDB;
 import com.org.simplelab.database.services.LabDB;
 import com.org.simplelab.database.services.UserDB;
-import com.org.simplelab.database.repositories.CourseRepository;
-import com.org.simplelab.database.repositories.EquipmentRepository;
-import com.org.simplelab.database.repositories.LabRepository;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;

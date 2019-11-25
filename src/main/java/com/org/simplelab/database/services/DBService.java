@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -73,8 +73,9 @@ public abstract class DBService<T extends BaseTable> {
             entitySet.remove(toDelete);
         }
         public List<T> getAsList(){
-            T[] array = (T[])entitySet.toArray();
-            return Arrays.asList(array);
+            List<T> toList = new ArrayList<>();
+            toList.addAll(entitySet);
+            return toList;
         }
     }
 
