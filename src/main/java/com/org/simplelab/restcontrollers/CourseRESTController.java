@@ -10,6 +10,7 @@ import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
 import com.org.simplelab.restcontrollers.rro.RRO_ACTION_TYPE;
+import com.org.simplelab.restcontrollers.rro.RRO_MSG;
 import com.org.simplelab.security.SecurityUtils;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
@@ -116,11 +117,23 @@ public class CourseRESTController extends BaseRESTController<Course> {
     }
 
     @PostMapping(LOAD_COURSE_INFO_MAPPING)
-    public Course getCourseInfo(@RequestBody Course course,
+    public RRO<Course> getCourseInfo(@RequestBody Course course,
                                 HttpSession session) {
+        RRO<Course> rro = new RRO();
+
         long uid = getUserIdFromSession(session);
-        Course r = courseDB.findByUserIdAndCourseId(uid, course.getCourse_id());
-        return r;
+        Course c = courseDB.findByUserIdAndCourseId(uid, course.getCourse_id());
+        if (c == null){
+            rro.setSuccess(false);
+            rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
+            //hard code string for dev.
+            rro.setMsg(RRO_MSG.COURSE_NO_FOUND.getMsg() + " " + c.getName());
+            rro.setData(null);
+        }
+        rro.setSuccess(true);
+        rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
+        rro.setData(c);
+        return rro;
     }
 
     /*

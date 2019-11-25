@@ -1,3 +1,24 @@
+/*
+* Handler the retObj
+* @Param retObj - obj return from the server rest controller
+* @Param callback - function that deal with data.
+*/
+function retObjHandle(retObj, callback){
+    switch(retObj.action){
+        case "REDIRECT":
+            break;
+        case "LOAD_DATA":
+            if(callback != undefined){
+                callback(retObj.data);
+            }
+            break;
+        case "PRINT_MSG":
+            alert(retObj.msg);
+            break;
+        default:
+    }
+}
+
 
 /**
  * @Param tbody Table Body
@@ -56,3 +77,5 @@ rebuildComponent  = function (component, template_id, data, btnEvents) {
     }
     return html_text;
 };
+
+
