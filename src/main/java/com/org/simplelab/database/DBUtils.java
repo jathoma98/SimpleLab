@@ -1,7 +1,13 @@
 package com.org.simplelab.database;
 
+import com.org.simplelab.database.entities.BaseTable;
+import com.org.simplelab.database.entities.User;
+import org.codehaus.jackson.map.Serializers;
+import org.modelmapper.Condition;
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
+import org.modelmapper.spi.MappingContext;
 
 import java.security.MessageDigest;
 
@@ -42,18 +48,6 @@ public class DBUtils {
         if (MAPPER == null){
             ModelMapper mm = new ModelMapper();
             mm.getConfiguration().setPropertyCondition(Conditions.isNotNull());
-            //TODO: make sure this works
-           /** mm.addMappings(new PropertyMap<BaseTable, BaseTable>() {
-                @Override
-                protected void configure(){
-                    skip(destination.getTimestamp());
-                    skip(destination.getCreatedDate());
-                    if (UserCreated.class.isInstance(destination)) {
-                        UserCreated uc = (UserCreated)destination;
-                        skip(uc.getCreator());
-                    }
-                }
-            });**/
             MAPPER = mm;
         }
         return MAPPER;
