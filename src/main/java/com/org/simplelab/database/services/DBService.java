@@ -78,8 +78,21 @@ public abstract class DBService<T extends BaseTable> {
         }
     }
 
+    /**
+     * Inserts entity into the DB.
+     * @param toInsert - entity of type T to insert.
+     * @return - true if insertion was successful
+     * @throws EntityInsertionException - If an error occurred during insertion
+     */
     public abstract boolean insert(T toInsert) throws EntityInsertionException;
 
+    /**
+     * Deletes the entity from the DB.
+     * Important: Entities which manage EntitySets
+     * must have their Set field set to null before deletion.
+     * @param id - Id of the Entity to delete.
+     * @return - true
+     */
     public abstract boolean deleteById(long id);
 
     public abstract boolean update(T toUpdate);

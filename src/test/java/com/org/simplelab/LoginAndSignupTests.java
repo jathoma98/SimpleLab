@@ -45,7 +45,7 @@ public class LoginAndSignupTests extends SpringTestConfig{
                              .param("password", password))
                 //.andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().json("{\"success\": \"true\"}"));
+                .andExpect(content().json("{\"success\": true}"));
 
         //test wrong username
         this.mockMvc.perform(post("/login")
@@ -53,7 +53,7 @@ public class LoginAndSignupTests extends SpringTestConfig{
                 .param("password", password))
                 //.andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().json("{\"success\": \"false\"}"));
+                .andExpect(content().json("{\"success\": false}"));
 
         //test wrong password
         this.mockMvc.perform(post("/login")
@@ -61,7 +61,7 @@ public class LoginAndSignupTests extends SpringTestConfig{
                 .param("password", "passwrong"))
                 //.andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().json("{\"success\": \"false\"}"));
+                .andExpect(content().json("{\"success\": false}"));
 
         User del = userDB.findUser(user.getUsername());
         userDB.deleteUser(del);
