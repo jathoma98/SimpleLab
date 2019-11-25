@@ -3,20 +3,22 @@ let current_user;
 function findUser() {
     // let username = {userName : $("#userName").val()};
     // let user_json =  JSON.stringify(username);
-    $.post("/fpFindUser", { userName : $("#userName").val()},
+    let data = { username : $("#userName").val()};
+    $.post("/fpFindUser", data,
         function(user){
-            if (user !== null) {
-                current_user = user;
-                $("#fpUserName").css('display','none');
-                $("#fpQuestion").css('display','');
-                $("#fpAnswer").css('display','');
-                $(".fpSend").css('display','none');
-                $(".fpSend1").css('display','');
-                $("#question").val(user.question);
-
-            } else {
-                alert("User Does Not Exist");
-            }
+            // if (user !== null) {
+            //     current_user = user;
+            //     $("#fpUserName").css('display','none');
+            //     $("#fpQuestion").css('display','');
+            //     $("#fpAnswer").css('display','');
+            //     $(".fpSend").css('display','none');
+            //     $(".fpSend1").css('display','');
+            //     $("#question").val(user.question);
+            //
+            // } else {
+            //     alert("User Does Not Exist");
+            // }
+            console.log("abc")
         });
 }
 function checkAnswer(){
@@ -70,6 +72,6 @@ function changepassword(){
 
 $(document).ready( function () {
 
-    $("#submitbtn").on("click",findUser);
+    $("#submitbtn").on("click", findUser);
     $("#savebtn").on("click",changepassword);
 })

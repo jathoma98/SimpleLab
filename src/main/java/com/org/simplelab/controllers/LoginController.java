@@ -145,8 +145,10 @@ public class LoginController{
         return "forgotPassword";
     }
 
+    @ResponseBody
     @PostMapping(FORGOT_USER_MAPPING)
-    public User fpGetUser (@RequestParam("userName") String username){
+    public User fpGetUser (@RequestParam("username") String username,
+                             HttpSession session){
         User user = null;
         try{
             user = userDB.findUser(username);
