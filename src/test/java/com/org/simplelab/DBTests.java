@@ -356,6 +356,28 @@ class DBTests extends SpringTestConfig {
 
 	}
 
+	@Test
+	void foreign_key_test(){
+		List<User> students = new ArrayList<>();
+		for (int i = 0; i < 3; i++){
+			User u = new User();
+			u.setUsername(metadata + "STUDENT " + i);
+			students.add(u);
+		}
+		Course c = new Course();
+		c.setName(metadata);
+		c.setDescription(metadata);
+		c.setCourse_id(metadata);
+		c.set_metadata(metadata);
+		c.setStudents(new HashSet<User>(students));
+		courseDB.insert(c);
+
+		DBService.EntitySetManager<User, Course> found = courseDB.getStudentsOfCourseByCourseId(metadata);
+		assertEquals(3, found.getEntitySet().size());
+
+		courseDB.deleteById(found.getFullEntity().getId());
+	}
+
 
 
 
