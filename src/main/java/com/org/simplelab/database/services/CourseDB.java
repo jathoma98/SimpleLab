@@ -2,6 +2,7 @@ package com.org.simplelab.database.services;
 
 
 import com.org.simplelab.database.entities.Course;
+import com.org.simplelab.database.entities.Equipment;
 import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.repositories.UserRepository;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.parser.Entity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,12 +19,19 @@ import java.util.Set;
 @Transactional
 @Component
 public class CourseDB extends DBService<Course> {
+
     public static class CourseTransactionException extends DBService.EntityInsertionException{
         public static final String NO_COURSE_FOUND = "The requested course could not be found.";
         CourseTransactionException(String message){
             super(message);
         }
     }
+
+    private class StudentSetManager extends EntitySetManager<User, Course>{
+        public StudentSetManager(Set<User> set, Course c) { super(set, c);}
+    }
+
+
 
     @Override
     public boolean insert(Course c){
@@ -43,6 +52,13 @@ public class CourseDB extends DBService<Course> {
     public Course findById(long id) {
         Optional<Course> found = courseRepository.findById(id);
         return found.isPresent() ? found.get() : null;
+    }
+
+    public StudentSetManager getStudentsOfCourseById(long id){
+        Course found = findById(id);
+        if (found == null)
+            return null;
+        return new StudentSetManager(found.getStudents(), found);
     }
 
     /**

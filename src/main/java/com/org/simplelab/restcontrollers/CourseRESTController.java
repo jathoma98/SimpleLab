@@ -4,15 +4,19 @@ import com.org.simplelab.controllers.RequestResponse;
 import com.org.simplelab.database.services.CourseDB;
 import com.org.simplelab.database.entities.Course;
 import com.org.simplelab.database.entities.User;
+import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
+import com.org.simplelab.security.SecurityUtils;
 import org.springframework.http.MediaType;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 //TODO: secure rest endpoints with authentication
 @RestController
@@ -28,6 +32,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
     public static final String ADD_STUDENT_MAPPING = "/addStudent";
     public static final String GET_STUDENTS_MAPPING = "/getStudents";
     public static final String DELETE_STUDENTS_MAPPING = "/deleteStudents";
+    public static final String ADD_LAB_TO_COURSE_MAPPING = "/addLab";
 
 
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -119,31 +124,31 @@ public class CourseRESTController extends BaseRESTController<Course> {
      *  Return Map
      */
 
+    //TODO: test this
+    @Transactional
     @PostMapping(ADD_STUDENT_MAPPING)
-    public Map addStudentToCourse(@RequestBody DTO.CourseUpdateStudentListDTO  course,
-                                  HttpSession session) {
-        RequestResponse r = new RequestResponse();
-        r.setSuccess(false);
-
-        long own_id = -1;
-        own_id = getUserIdFromSession(session);
-        String own_username = (String) session.getAttribute("username");
-
-        String errorMsg = "";
+    public Map addStudentToCourse(@RequestBody DTO.CourseUpdateStudentListDTO course) {
+        long own_id = getUserIdFromSession(session);
+        String own_username = SecurityUtils.getAuthenticatedUsername();
+        List<User> toAdd = new ArrayList<>();
         String course_id = course.getCourse_id();
         List<String> usernameList = course.getUsernameList();
-        for(int i = 0; i < usernameList.size(); i++ ){
-            if(own_username.equals(usernameList.get(i))) continue;
-            User u = userDB.findUser(usernameList.get(i));
-            try {
-                courseDB.addStudentToCourse(course_id, u);
-            } catch (CourseDB.CourseTransactionException e) {
-                errorMsg += e.getMessage() + "\n";
+        for (String username: usernameList){
+            if (!own_username.equals(username)){
+                toAdd.add(userDB.findUser(username));
             }
         }
-        r.setError(errorMsg);
-        r.setSuccess(true);
-        return r.map();
+        List<Course> found = courseDB.findByCourseId(course_id);
+        DBService.EntitySetManager toUpdate;
+        if (found != null){
+            toUpdate = courseDB.getStudentsOfCourseById(found.get(0).getId());
+        } else {
+            RequestResponse rsp = new RequestResponse();
+            rsp.setSuccess(false);
+            rsp.setError("Could not find course.");
+            return rsp.map();
+        }
+        return super.addEntitiesToEntityList(toUpdate, toAdd, courseDB);
     }
 
 
