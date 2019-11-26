@@ -103,7 +103,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
             courseDB.deleteCourseByCourseId(course_id);
         }
         rro.setSuccess(true);
-        rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+        rro.setAction(RRO_ACTION_TYPE.NOTHING.  name());
         return rro;
     }
 

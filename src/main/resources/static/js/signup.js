@@ -29,12 +29,9 @@ function signupbtnEvent(){
         contentType: "application/json; charset=utf-8",
         data: user_data_json,
         success: function(result) {
-            if (result.success === "true") {
+            retObjHandle(result, ()=>{
                 window.location.href= "/";
-            }
-            else {
-                alert(result.error);
-            }
+            })
         }
     });
 }
