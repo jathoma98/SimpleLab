@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Transactional
@@ -77,11 +76,6 @@ public class CourseDB extends DBService<Course> {
         return new EntitySetManager<Lab, Course>(labs, c);
     }
 
-    @Transactional
-    public boolean deleteCourse(Course c){
-        return deleteById(c.getId());
-    }
-
     public List<Course> findByCourseId(String course_id){
         List<Course> found = repository.findByCourse_id(course_id);
         return found;
@@ -93,7 +87,7 @@ public class CourseDB extends DBService<Course> {
     }
 
     @Transactional
-    public void deleteCourseById(long user_id, String course_id){
+    public void deleteCourseByCourseId(String course_id){
        List<Course> found = findByCourseId(course_id);
        if (found != null && found.size() > 0)
            deleteById(found.get(0).getId());

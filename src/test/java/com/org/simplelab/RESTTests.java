@@ -105,7 +105,7 @@ public class RESTTests extends SpringTestConfig {
 
         //delete the course afterwards
         List<Course> found = courseDB.findCourseByName(metadata);
-        courseDB.deleteCourse(found.get(0));
+        courseDB.deleteById(found.get(0).getId());
 
 
     }
@@ -150,7 +150,7 @@ public class RESTTests extends SpringTestConfig {
 
         for (JSONObject json: objs){
             assertEquals(courseDB.findByCourseId((String)json.get("course_id")).size(), 0);
-            courseDB.deleteCourseById(user_id, (String)json.get("course_id"));
+            courseDB.deleteCourseByCourseId((String)json.get("course_id"));
         }
 
     }

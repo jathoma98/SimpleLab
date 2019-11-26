@@ -40,11 +40,6 @@ public class UserDB extends DBService<User>{
         FAILED
     };
 
-    public enum UserInsertionStatus{
-        SUCCESSFUL,
-        FAILED
-    }
-
     /**
      * Attempts to authenticate a user by their given username and password.
      * @param username - username of the user
@@ -60,6 +55,14 @@ public class UserDB extends DBService<User>{
         if (!Arrays.equals(found.getPass_hash(), given_hashed))
             return UserAuthenticationStatus.FAILED;
         return UserAuthenticationStatus.SUCCESSFUL;
+    }
+
+    @Override
+    public User findById(long id){
+        Optional<User> found = getRepository().findById(id);
+        if (found.isPresent())
+            return found.get();
+        return null;
     }
 
     /**
@@ -94,7 +97,6 @@ public class UserDB extends DBService<User>{
         return true;
     }
 
-
     /**
      * Deletes the user from the DB, given a User object or a username String.
      * @param user Can be a User object or a String username.
@@ -109,12 +111,6 @@ public class UserDB extends DBService<User>{
 
     public List<User> searchUserWithKeyword(String keyword) {
         return repository.searchUserWithKeyword(keyword);
-    }
-
-
-
-    public UserRepository DEBUG_getInterface(){
-        return repository;
     }
 
     private boolean isReserved(String username){

@@ -48,6 +48,8 @@ class DBTests extends SpringTestConfig {
 	void aaaaa_contextLoads() {
 	}
 
+	@Autowired
+	UserRepository ur;
 	@Test
 	void User_insertionTest() throws Exception{
 
@@ -68,7 +70,7 @@ class DBTests extends SpringTestConfig {
 		assertThrows(UserDB.UserInsertionException.class, () -> userDB.insert(user));
 
 		//ensure duplicate insertion doesn't insert an additional instance with the same username
-		UserRepository repo = userDB.DEBUG_getInterface();
+		UserRepository repo = ur;
 		assertEquals(repo.findByUsername(user.getUsername()).size(), 1);
 
 	}
