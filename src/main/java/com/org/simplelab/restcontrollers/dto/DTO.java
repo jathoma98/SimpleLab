@@ -1,6 +1,8 @@
 package com.org.simplelab.restcontrollers.dto;
 
+import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.validators.CourseValidator;
+import com.org.simplelab.database.validators.UserValidator;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -67,5 +69,13 @@ public abstract class DTO {
         private long[] lab_ids;
         //course_id of course to add labs to
         private String course_id;
+    }
+
+
+    @Getter
+    @Setter
+    public static class fpUserInput extends DTO{
+        private String userInput;
+        private User user;
     }
 }

@@ -3,6 +3,7 @@ package com.org.simplelab.controllers;
 import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.services.UserDB;
+import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
 import com.org.simplelab.security.SecurityUtils;
 import com.org.simplelab.security.SimpleLabAuthentication;
@@ -37,40 +38,35 @@ public class ForgetController {
 
     @ResponseBody
     @PostMapping(FORGOT_USER_MAPPING)
-    public RRO<String> fpGetUser (@RequestParam("userName") String username){
-        RRO<String> rro = new RRO();
-        User user = null;
+    public RRO<User> fpGetUser (@RequestParam("userName") String username){
+        RRO<User> rro = new RRO();
         try{
-            user = userDB.findUser(username);
+            rro.setData(userDB.findUser(username));
         }catch (Exception e){
 
         }
         return rro;
     }
 
-//    public class fpuserInput{
-//        private String userinput;
-//        private User user;
-//    }
-//
-//    @PostMapping(FORGOT_PASSWORD_MAPPING)
-//    public boolean fpCheckAnswer (@RequestBody fpuserInput checkPassword){
-//        if (Arrays.equals(DBUtils.getHash(checkPassword.userinput),checkPassword.user.getAnswer())){
-//            return true;
-//        }
-//        else
-//            return false;
-//    }
+    @PostMapping(FORGOT_PASSWORD_MAPPING)
+    public boolean fpCheckAnswer (@RequestBody DTO.fpUserInput checkPassword){
+        byte[] temp = DBUtils.getHash(checkPassword.getUserInput());
+        if (Arrays.equals(temp,checkPassword.getUser().getAnswer())){
+            return true;
+        }
+        else
+            return false;
+    }
 //
 //
 //
-//    @PostMapping(FORGOT_PASSWORD_MAPPING)
-//    public void changePassword (@RequestBody fpuserInput newPassword){
-//
-//        try{
-//            newPassword.user.setPassword(newPassword.userinput);
-//        }catch (Exception e){
-//
-//        }
-//    }
+    @PostMapping(FORGOT_PASSWORD_MAPPING)
+    public void changePassword (@RequestBody DTO.fpUserInput newPassword){
+
+        try{
+            newPassword.getUser().setPassword(newPassword.getUserInput());
+        }catch (Exception e){
+
+        }
+    }
 }

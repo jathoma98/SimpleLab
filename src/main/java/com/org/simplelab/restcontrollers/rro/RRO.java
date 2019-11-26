@@ -11,7 +11,6 @@ import lombok.Setter;
 public class RRO<T> {
 
 
-
     boolean success;
     String action;
     String msg;
