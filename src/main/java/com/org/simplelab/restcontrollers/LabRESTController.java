@@ -5,9 +5,12 @@ import com.org.simplelab.database.entities.Equipment;
 import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.repositories.LabRepository;
 import com.org.simplelab.database.services.DBService;
+import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.database.validators.LabValidator;
+import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
 import com.org.simplelab.restcontrollers.rro.RRO_ACTION_TYPE;
+import com.org.simplelab.restcontrollers.rro.RRO_MSG;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +35,8 @@ public class LabRESTController extends BaseRESTController<Lab> {
     public static final String LAB_ID_MAPPING = "/{lab_id}";
     public static final String COURSE_ID_MAPPING = "/{course_id}";
     public static final String LOAD_LIST_LAB_MAPPING = "/loadLabList";
+    public static final String UPDATE_MAPPING = "/updateLab";
+    public static final String DELETE_MAPPING = "/deleteLab";
 
 
     @Autowired
@@ -77,10 +82,19 @@ public class LabRESTController extends BaseRESTController<Lab> {
 
 
     @GetMapping(LOAD_LIST_LAB_MAPPING)
-    public List<Lab> getListOfCourse(HttpSession session) {
+    public RRO<List<Lab>> getListOfCourse(HttpSession session) {
         long userId = getUserIdFromSession(session);
+        RRO rro = new RRO();
         List<Lab> labs = labDB.getLabsByCreatorId(userId);
-        return labs;
+        if (labs == null) {
+            rro.setSuccess(false);
+            rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+            return rro;
+        }
+        rro.setData(labs);
+        rro.setSuccess(true);
+        rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
+        return rro;
     }
 
     /**
@@ -106,4 +120,24 @@ public class LabRESTController extends BaseRESTController<Lab> {
         return super.addEntitiesToEntityList(found, equipmentToAdd, labDB);
     }
 
+
+    @PatchMapping(UPDATE_MAPPING)
+    public RRO<String> updateLab(@RequestBody DTO.LabUpdateDTO dto, HttpSession session) {
+        RRO<String> rro = new RRO();
+        long uid = getUserIdFromSession(session);
+        Lab toUpdate = labDB.findById(dto.getLab_id_old());
+        if (toUpdate == null){
+            rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
+            rro.setMsg("Lab Not Found");
+            rro.setSuccess(false);
+            return rro;
+        }
+        if (toUpdate.getCreator().getId() != uid){
+            rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
+            rro.setMsg("Duplicate ID");
+            rro.setSuccess(false);
+            return rro;
+        }
+        return super.updateEntity(toUpdate.getId(), dto.getNewLabInfo(), labDB);
+    }
 }

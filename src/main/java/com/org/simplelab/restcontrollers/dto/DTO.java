@@ -44,7 +44,8 @@ public abstract class DTO {
     @Getter
     @Setter
     public static class LabUpdateDTO extends DTO {
-        private String temp;
+        private Long lab_id_old;
+        private CourseValidator newLabInfo;
     }
 
     /**
