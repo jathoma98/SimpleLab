@@ -4,6 +4,8 @@ package com.org.simplelab.database.services;
 import com.org.simplelab.database.entities.Course;
 import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;
+import com.org.simplelab.database.repositories.CourseRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +17,9 @@ import java.util.Set;
 @Transactional
 @Component
 public class CourseDB extends DBService<Course> {
+
+    @Autowired
+    private CourseRepository repository;
 
     public static class CourseTransactionException extends DBService.EntityInsertionException{
         public static final String NO_COURSE_FOUND = "The requested course could not be found.";
@@ -34,7 +39,7 @@ public class CourseDB extends DBService<Course> {
         List<Course> found = findByCourseId(c.getCourse_id());
         if (found != null && found.size() > 0)
             return false;
-        courseRepository.save(c);
+        repository.save(c);
         return true;
     }
 
@@ -45,14 +50,14 @@ public class CourseDB extends DBService<Course> {
         if (found != null){
             found.setStudents(null);
             found.setLabs(null);
-            courseRepository.delete(found);
+            repository.delete(found);
         }
         return true;
     }
 
     @Override
     public Course findById(long id) {
-        Optional<Course> found = courseRepository.findById(id);
+        Optional<Course> found = repository.findById(id);
         return found.isPresent() ? found.get() : null;
     }
 
@@ -141,7 +146,7 @@ public class CourseDB extends DBService<Course> {
 
     @Override
     public boolean update(Course c){
-        courseRepository.save(c);
+        repository.save(c);
         return true;
     }
 
@@ -151,12 +156,12 @@ public class CourseDB extends DBService<Course> {
     }
 
     public List<Course> findByCourseId(String course_id){
-        List<Course> found = courseRepository.findByCourse_id(course_id);
+        List<Course> found = repository.findByCourse_id(course_id);
         return found;
     }
 
     public List<Course> findCourseByName(String name){
-        List<Course> found = courseRepository.findByName(name);
+        List<Course> found = repository.findByName(name);
         return found.size() == 0? null: found;
     }
 
@@ -168,12 +173,12 @@ public class CourseDB extends DBService<Course> {
     }
 
     public List<Course> getCoursesForTeacher(long id){
-        List<Course> found = courseRepository.findByCreator_id(id);
+        List<Course> found = repository.findByCreator_id(id);
         return found;
     }
 
     public Course findByUserIdAndCourseId(long user_id, String course_id){
-        List<Course> found = courseRepository.findBycreator_idAndcourse_id(user_id, course_id);
+        List<Course> found = repository.findBycreator_idAndcourse_id(user_id, course_id);
         if (found.size() != 0) return found.get(0);
         return null;
     }

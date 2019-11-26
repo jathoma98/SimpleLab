@@ -6,6 +6,7 @@ import com.org.simplelab.database.entities.Equipment;
 import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.repositories.UserRepository;
+import com.org.simplelab.database.services.CourseDB;
 import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.services.LabDB;
 import com.org.simplelab.database.services.UserDB;
@@ -377,6 +378,7 @@ class DBTests extends SpringTestConfig {
 
 		courseDB.deleteById(found.getFullEntity().getId());
 	}
+
 
 
 

@@ -272,7 +272,7 @@ public class RESTTests extends SpringTestConfig {
                         .sessionAttrs(session_atr))
                         //.andDo(print())
                         .andExpect(status().isOk())
-                        .andExpect(content().json(json.toString()));
+                        .andExpect(content().json("{'data': " + json.toString() + "}"));
 
         /**
          * @Test: Delete the lab we just created with DELETE to /lab/rest/{id}

@@ -3,6 +3,7 @@ package com.org.simplelab.database.services;
 import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +14,9 @@ import java.util.Optional;
 @Transactional
 @Component
 public class UserDB extends DBService<User>{
+
+    @Autowired
+    private UserRepository repository;
 
     public static final String USERNAME_TAKEN = "username taken";
 
@@ -62,7 +66,7 @@ public class UserDB extends DBService<User>{
      * @return A User object if the user exists, null otherwise
      */
     public User findUser(String username){
-        List<User> found = userRepository.findByUsername(username);
+        List<User> found = repository.findByUsername(username);
         if (found.size() == 0)
             return null;
         return found.get(0);
@@ -70,7 +74,7 @@ public class UserDB extends DBService<User>{
 
     @Override
     public User findById(long id){
-        Optional<User> found = userRepository.findById(id);
+        Optional<User> found = repository.findById(id);
         return found.isPresent() ? found.get(): null;
     }
 
@@ -89,13 +93,13 @@ public class UserDB extends DBService<User>{
         if (findUser(user.getUsername()) != null
                 || isReserved(user.getUsername()))
             throw new UserInsertionException(USERNAME_TAKEN);
-        userRepository.save(user);
+        repository.save(user);
         return true;
     }
 
     @Override
     public boolean deleteById(long id){
-        userRepository.deleteById(id);
+        repository.deleteById(id);
         return true;
     }
 
@@ -105,7 +109,7 @@ public class UserDB extends DBService<User>{
      */
     @Override
     public boolean update(User user){
-        userRepository.save(user);
+        repository.save(user);
         return true;
     }
 
@@ -119,15 +123,15 @@ public class UserDB extends DBService<User>{
 
 
     public void deleteByMetadata(String metadata){
-        userRepository.deleteBy_metadata(metadata);
+        repository.deleteBy_metadata(metadata);
     }
 
     public void deleteUser(String username){
-        userRepository.deleteByUsername(username);
+        repository.deleteByUsername(username);
     }
 
     public List<User> searchUserWithKeyword(String keyword) {
-        return userRepository.searchUserWithKeyword(keyword);
+        return repository.searchUserWithKeyword(keyword);
     }
 
 
@@ -135,7 +139,7 @@ public class UserDB extends DBService<User>{
 
 
     public UserRepository DEBUG_getInterface(){
-        return userRepository;
+        return repository;
     }
 
     private boolean isReserved(String username){

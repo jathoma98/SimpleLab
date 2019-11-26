@@ -13,6 +13,7 @@ import java.util.Set;
 @Table(name = DBUtils.COURSE_TABLE_NAME)
 public class Course extends BaseTable implements UserCreated{
 
+    @Column(unique = true)
     private String course_id;
     private String name;
     private String description;
