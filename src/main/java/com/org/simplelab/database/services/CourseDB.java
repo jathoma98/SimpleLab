@@ -42,6 +42,18 @@ public class CourseDB extends DBService<Course> {
         return true;
     }
 
+    public boolean deleteById(long id) {
+        return super.deleteById(id);
+    }
+
+    public boolean update(Course toUpdate) {
+        return super.update(toUpdate);
+    }
+
+    public Course findById(long id) {
+        return super.findById(id);
+    }
+
     public StudentSetManager getStudentsOfCourseByCourseId(String course_id){
         List<Course> found = findByCourseId(course_id);
         if (found == null)

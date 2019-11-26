@@ -15,4 +15,19 @@ public class EquipmentDB extends DBService<Equipment> {
     @Autowired
     private EquipmentRepository repository;
 
+    public boolean insert(Equipment toInsert) throws EntityInsertionException {
+        return super.insert(toInsert);
+    }
+
+    public boolean deleteById(long id) {
+        return super.deleteById(id);
+    }
+
+    public boolean update(Equipment toUpdate) {
+        return super.update(toUpdate);
+    }
+
+    public Equipment findById(long id) {
+        return super.findById(id);
+    }
 }

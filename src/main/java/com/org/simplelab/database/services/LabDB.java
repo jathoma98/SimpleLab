@@ -23,6 +23,22 @@ public class LabDB extends DBService<Lab> {
     @Autowired
     private LabRepository repository;
 
+    public boolean insert(Lab toInsert) throws EntityInsertionException {
+        return super.insert(toInsert);
+    }
+
+    public boolean deleteById(long id) {
+        return super.deleteById(id);
+    }
+
+    public boolean update(Lab toUpdate) {
+        return super.update(toUpdate);
+    }
+
+    public Lab findById(long id) {
+        return super.findById(id);
+    }
+
 
     private class EquipmentSetManager extends EntitySetManager<Equipment, Lab>{
         public EquipmentSetManager(Set<Equipment> set, Lab lab){

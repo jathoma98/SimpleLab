@@ -57,12 +57,16 @@ public class UserDB extends DBService<User>{
         return UserAuthenticationStatus.SUCCESSFUL;
     }
 
-    @Override
-    public User findById(long id){
-        Optional<User> found = getRepository().findById(id);
-        if (found.isPresent())
-            return found.get();
-        return null;
+    public boolean deleteById(long id) {
+        return super.deleteById(id);
+    }
+
+    public boolean update(User toUpdate) {
+        return super.update(toUpdate);
+    }
+
+    public User findById(long id) {
+        return super.findById(id);
     }
 
     /**
@@ -96,6 +100,7 @@ public class UserDB extends DBService<User>{
         repository.save(user);
         return true;
     }
+
 
     /**
      * Deletes the user from the DB, given a User object or a username String.
