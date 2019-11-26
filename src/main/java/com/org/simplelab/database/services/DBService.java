@@ -3,6 +3,7 @@ package com.org.simplelab.database.services;
 import com.org.simplelab.database.entities.BaseTable;
 import com.org.simplelab.database.entities.interfaces.HasEntitySets;
 import com.org.simplelab.database.repositories.*;
+import com.org.simplelab.database.services.interfaces.SetModificationCondition;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,8 @@ public abstract class DBService<T extends BaseTable> {
      * example: For Course with list of Users, T = User, U = Course
      */
     @Getter
-    public static class EntitySetManager<T extends BaseTable, U extends BaseTable>{
+    public static class EntitySetManager<T extends BaseTable, U extends BaseTable>
+            implements SetModificationCondition<T>{
         /**
          * Exception to be thrown in case of illegal modification of the entity set.
          */
@@ -61,9 +63,11 @@ public abstract class DBService<T extends BaseTable> {
         }
 
         public void insert(T toInsert) throws EntitySetModificationException{
+            checkLegalInsertion(toInsert);
             entitySet.add(toInsert);
         }
         public void delete(T toDelete) throws EntitySetModificationException{
+            checkLegalDeletion(toDelete);
             entitySet.remove(toDelete);
         }
         public List<T> getAsList(){
