@@ -30,15 +30,6 @@ public class LabDB extends DBService<Lab> {
         }
     }
 
-    @Override
-    public boolean deleteById(long id){
-        Lab found = findById(id);
-        if (found != null) {
-            found.setEquipments(null);
-            repository.delete(found);
-        }
-        return true;
-    }
 
     public List<Lab> getLabsByCreatorId(long id){
         return repository.findByCreator_id(id);

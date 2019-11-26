@@ -43,55 +43,12 @@ public class CourseDB extends DBService<Course> {
         return true;
     }
 
-    @Override
-    @Transactional
-    public boolean deleteById(long id){
-        Course found = findById(id);
-        if (found != null){
-            found.setStudents(null);
-            found.setLabs(null);
-            repository.delete(found);
-        }
-        return true;
-    }
-
-    @Override
-    public Course findById(long id) {
-        Optional<Course> found = repository.findById(id);
-        return found.isPresent() ? found.get() : null;
-    }
-
-    public StudentSetManager getStudentsOfCourseById(long id){
-        Course found = findById(id);
-        if (found == null)
-            return null;
-        return new StudentSetManager(found.getStudents(), found);
-    }
-
     public StudentSetManager getStudentsOfCourseByCourseId(String course_id){
         List<Course> found = findByCourseId(course_id);
         if (found == null)
             return null;
         Course c = found.get(0);
         return new StudentSetManager(c.getStudents(), c);
-    }
-
-    /**
-     * Adds a student to a Course.
-     * @param course_id - course_id of the course to be modified
-     * @param u - User object representing the student to be added.
-     * @throws CourseTransactionException - when Course with given course_id does not exist
-     */
-    public void addStudentToCourse(String course_id , User u) throws CourseTransactionException{
-        List<Course> found = findByCourseId(course_id);
-        if (found.size() == 0)
-            throw new CourseTransactionException(CourseTransactionException.NO_COURSE_FOUND);
-        Course c = found.get(0);
-
-        System.out.println("Found target course: " + c.toString());
-        c.getStudents().add(u);
-        System.out.println("Modified course: " + c.toString());
-        update(c);
     }
 
     /**
@@ -110,30 +67,6 @@ public class CourseDB extends DBService<Course> {
         return students;
     }
 
-    /**
-     * Removes a student from a course
-     * @param student - User object representing student to be removed.
-     * @param course_id - Id of the course to remove student from.
-     * @return List of students with the given student removed.
-     * @throws CourseTransactionException - if the provided course does not exist.
-     */
-    public List<User> removeStudentFromCourse(User student, String course_id) throws CourseTransactionException{
-        List<Course> found = findByCourseId(course_id);
-        if (found.size() == 0)
-            throw new CourseTransactionException(CourseTransactionException.NO_COURSE_FOUND);
-        Course c = found.get(0);
-        Set<User> students = c.getStudents();
-
-        //remove() returns true when the element exists
-        if (students.remove(student)){
-            c.setStudents(students);
-            update(c);
-        }
-
-        ArrayList<User> toList = new ArrayList<>();
-        toList.addAll(students);
-        return toList;
-    }
 
     public EntitySetManager<Lab, Course> getLabsOfCourseByCourseId(String course_id) throws CourseTransactionException{
         List<Course> found = findByCourseId(course_id);
@@ -142,12 +75,6 @@ public class CourseDB extends DBService<Course> {
         Course c = found.get(0);
         Set<Lab> labs = c.getLabs();
         return new EntitySetManager<Lab, Course>(labs, c);
-    }
-
-    @Override
-    public boolean update(Course c){
-        repository.save(c);
-        return true;
     }
 
     @Transactional
