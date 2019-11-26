@@ -51,8 +51,12 @@ public class LabRESTController extends BaseRESTController<Lab> {
     }
 
     @GetMapping(LAB_ID_MAPPING)
-    public Lab labGet(@PathVariable("lab_id") long lab_id){
-        return super.getEntityById(lab_id, labDB);
+    public RRO<Lab> labGet(@PathVariable("lab_id") long lab_id){
+        RRO<Lab> rro = new RRO();
+        rro.setSuccess(true);
+        rro.setData(super.getEntityById(lab_id, labDB));
+        rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
+        return rro;
     }
 
     @DeleteMapping(LAB_ID_MAPPING)

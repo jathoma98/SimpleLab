@@ -11,14 +11,16 @@ let LABS_TABLE = {
             $.ajax({
                 url: "/lab/rest/" + lab_id,
                 type: 'GET',
-                success: function (lab) {
-                    let data = {
-                        labModal: {
-                            active: "active",
-                            lab: lab,
+                success: function (result) {
+                    retObjHandle(result, (lab)=>{
+                        let data = {
+                            labModal: {
+                                active: "active",
+                                lab: lab,
+                            }
                         }
-                    }
-                    rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL, data);
+                        rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL, data);
+                    })
                 }
             })
         };
@@ -32,14 +34,17 @@ let LABS_TABLE = {
                 url: "/lab/rest/loadLabList",
                 type: "GET",
                 success: function (result) {
-                    let data = {
-                        isEnabled: LABS_TABLE.toggle,
-                        labs: result.reverse()
-                    }
-                    rebuildComponent(ElEM_ID.LAB_TABLE_TBODY, TEMPLATE_ID.LAB_TBODY, data);
-                    if (LABS_TABLE.toggle) {
-                        setTableBodyRowEvent(ElEM_ID.LAB_TABLE_TBODY, LABS_TABLE.tableRowEvent);
-                    }
+                    retObjHandle(result, (labs)=>{
+                        let data = {
+                            isEnabled: LABS_TABLE.toggle,
+                            labs: labs.reverse()
+                        }
+                        rebuildComponent(ElEM_ID.LAB_TABLE_TBODY, TEMPLATE_ID.LAB_TBODY, data);
+                        if (LABS_TABLE.toggle) {
+                            setTableBodyRowEvent(ElEM_ID.LAB_TABLE_TBODY, LABS_TABLE.tableRowEvent);
+                        }
+                    })
+
                 }
             })
         };
@@ -63,11 +68,12 @@ let LABS_TABLE = {
                 contentType: 'application/json; charset=utf-8',
                 data: course_json,
                 success: function (result) {
-                    if (result.success === "true") {
-                        LABS_TABLE.reload();
-                    } else {
-                        alert(result.error);
-                    }
+                    retObjHandle(result, LABS_TABLE.reload)
+                //     if (result.success === "true") {
+                //         LABS_TABLE.reload();
+                //     } else {
+                //         alert(result.error);
+                //     }
                 }
             })
         };
@@ -96,11 +102,12 @@ let LABS_TABLE = {
                 contentType: 'application/json; charset=utf-8',
                 data: lab_json,
                 success: function (result) {
-                    if (result.success === "true") {
-                        LABS_TABLE.reload();
-                    } else {
-                        alert(result.error);
-                    }
+                    retObjHandle(result, LABS_TABLE.reload);
+                    // if (result.success === "true") {
+                    //     LABS_TABLE.reload();
+                    // } else {
+                    //     alert(result.error);
+                    // }
                 }
             })
         };

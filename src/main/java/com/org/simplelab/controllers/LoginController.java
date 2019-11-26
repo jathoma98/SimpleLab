@@ -143,6 +143,4 @@ public class LoginController{
     public String forgotPassword(HttpSession session) {
         return "forgotPassword";
     }
-
-
 }
