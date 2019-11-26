@@ -3,6 +3,7 @@ package com.org.simplelab.controllers;
 import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.services.UserDB;
+import com.org.simplelab.restcontrollers.rro.RRO;
 import com.org.simplelab.security.SecurityUtils;
 import com.org.simplelab.security.SimpleLabAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,46 +32,45 @@ public class ForgetController {
     @Autowired
     SimpleLabAuthentication authManager;
 
-
-
-
     public static final String FORGOT_USER_MAPPING =  "/fpFindUser";
     public static final String FORGOT_PASSWORD_MAPPING = "/fpChangePassword";
 
+    @ResponseBody
     @PostMapping(FORGOT_USER_MAPPING)
-    public User fpGetUser (@RequestParam("userName") String username){
+    public RRO<String> fpGetUser (@RequestParam("userName") String username){
+        RRO<String> rro = new RRO();
         User user = null;
         try{
             user = userDB.findUser(username);
         }catch (Exception e){
 
         }
-        return user;
+        return rro;
     }
 
-    public class fpuserInput{
-        private String userinput;
-        private User user;
-    }
-
-    @PostMapping(FORGOT_PASSWORD_MAPPING)
-    public boolean fpCheckAnswer (@RequestBody fpuserInput checkPassword){
-        if (Arrays.equals(DBUtils.getHash(checkPassword.userinput),checkPassword.user.getAnswer())){
-            return true;
-        }
-        else
-            return false;
-    }
-
-    
-
-    @PostMapping(FORGOT_PASSWORD_MAPPING)
-    public void changePassword (@RequestBody fpuserInput newPassword){
-
-        try{
-            newPassword.user.setPassword(newPassword.userinput);
-        }catch (Exception e){
-
-        }
-    }
+//    public class fpuserInput{
+//        private String userinput;
+//        private User user;
+//    }
+//
+//    @PostMapping(FORGOT_PASSWORD_MAPPING)
+//    public boolean fpCheckAnswer (@RequestBody fpuserInput checkPassword){
+//        if (Arrays.equals(DBUtils.getHash(checkPassword.userinput),checkPassword.user.getAnswer())){
+//            return true;
+//        }
+//        else
+//            return false;
+//    }
+//
+//
+//
+//    @PostMapping(FORGOT_PASSWORD_MAPPING)
+//    public void changePassword (@RequestBody fpuserInput newPassword){
+//
+//        try{
+//            newPassword.user.setPassword(newPassword.userinput);
+//        }catch (Exception e){
+//
+//        }
+//    }
 }

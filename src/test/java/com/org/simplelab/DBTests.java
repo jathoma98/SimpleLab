@@ -13,6 +13,7 @@ import com.org.simplelab.database.validators.LabValidator;
 import com.org.simplelab.restcontrollers.CourseRESTController;
 import com.org.simplelab.restcontrollers.LabRESTController;
 import com.org.simplelab.restcontrollers.dto.DTO;
+import com.org.simplelab.restcontrollers.rro.RRO;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -311,25 +312,24 @@ class DBTests extends SpringTestConfig {
 		/**
 		 * @Test - test Get Lab
 		 */
-		Lab returnLab = lrc.labGet(lab.getId());
-		assertEquals(returnLab.getName(), lab.getName());
-		assertEquals(returnLab.getId(), lab.getId());
+		RRO<Lab> returnLab = lrc.labGet(lab.getId());
+		assertEquals(returnLab.getData().getName(), lab.getName());
+		assertEquals(returnLab.getData().getId(), lab.getId());
 
 		/**
 		 * @Test test update lab
 		 */
 		lv.setName(metadata + "UPDATED");
-		lrc.labUpdate(returnLab.getId(), lv);
-		returnLab = lrc.labGet(returnLab.getId());
-		assertEquals(metadata + "UPDATED", returnLab.getName());
+		lrc.labUpdate(returnLab.getData().getId(), lv);
+		returnLab = lrc.labGet(returnLab.getData().getId());
+		assertEquals(metadata + "UPDATED", returnLab.getData().getName());
 
 		/**
 		 * @Test test delete lab
 		 */
-
-		long idToDelete = returnLab.getId();
+		long idToDelete = returnLab.getData().getId();
 		lrc.labDelete(idToDelete);
-		found = lr.findByName(returnLab.getName());
+		found = lr.findByName(returnLab.getData().getName());
 		assertEquals(0, found.size());
 
 	}
