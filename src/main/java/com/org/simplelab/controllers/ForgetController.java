@@ -45,6 +45,7 @@ public class ForgetController extends BaseController {
         return rro;
     }
 
+
     @PostMapping(FORGOT_CHECKANSWER_MAPPING)
     public boolean fpCheckAnswer (@RequestBody DTO.fpUserInput checkPassword){
         byte[] temp = DBUtils.getHash(checkPassword.getUserInput());
@@ -54,9 +55,7 @@ public class ForgetController extends BaseController {
         else
             return false;
     }
-//
-//
-//
+
     @PostMapping(FORGOT_PASSWORD_MAPPING)
     public void changePassword (@RequestBody DTO.fpUserInput newPassword){
         try{
