@@ -77,10 +77,14 @@ public class LabRESTController extends BaseRESTController<Lab> {
 
 
     @GetMapping(LOAD_LIST_LAB_MAPPING)
-    public List<Lab> getListOfCourse(HttpSession session) {
+    public RRO<List<Lab>> getListOfCourse(HttpSession session) {
         long userId = getUserIdFromSession(session);
+        RRO<List<Lab>> rro = new RRO();
         List<Lab> labs = labDB.getLabsByCreatorId(userId);
-        return labs;
+        rro.setSuccess(true);
+        rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
+        rro.setData(labs);
+        return rro;
     }
 
     /**
