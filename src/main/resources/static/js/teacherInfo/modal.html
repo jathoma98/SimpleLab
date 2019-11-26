@@ -178,10 +178,18 @@ data = {
                 </div>
             </form>
             <div class="row">
+                {{#create}}
                 <button id="labSaveBtn" class="waves-effect waves-light modal-close right btn btn_margin"
                         style="background:#dd0052;" type="submit" name="action">
                     Create
                 </button>
+                {{/create}}
+                {{^create}}
+                <button id="labEditBtn" class="waves-effect waves-light modal-close right btn btn_margin"
+                        style="background:#dd0052;" type="submit" name="action">
+                    Edit
+                </button>
+                {{/create}}
             </div>
         </div>
     </li>
