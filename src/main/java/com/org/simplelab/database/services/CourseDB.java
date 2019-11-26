@@ -5,6 +5,7 @@ import com.org.simplelab.database.entities.Course;
 import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.repositories.CourseRepository;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,7 @@ import java.util.Set;
 
 @Transactional
 @Component
+@Getter
 public class CourseDB extends DBService<Course> {
 
     @Autowired
@@ -31,8 +33,6 @@ public class CourseDB extends DBService<Course> {
     private class StudentSetManager extends EntitySetManager<User, Course>{
         public StudentSetManager(Set<User> set, Course c) { super(set, c);}
     }
-
-
 
     @Override
     public boolean insert(Course c){

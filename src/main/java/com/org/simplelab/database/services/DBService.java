@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
+@Getter
 public abstract class DBService<T extends BaseTable> {
 
-    protected BaseRepository<T> repository;
+    private BaseRepository<T> repository;
 
     /**
      * Exception to be thrown when insertion into a DB violates some constraint.
@@ -74,7 +76,10 @@ public abstract class DBService<T extends BaseTable> {
      * @return - true if insertion was successful
      * @throws EntityInsertionException - If an error occurred during insertion
      */
-    public abstract boolean insert(T toInsert) throws EntityInsertionException;
+    public boolean insert(T toInsert) throws EntityInsertionException{
+        getRepository().save(toInsert);
+        return true;
+    }
 
     /**
      * Deletes the entity from the DB.
@@ -83,10 +88,21 @@ public abstract class DBService<T extends BaseTable> {
      * @param id - Id of the Entity to delete.
      * @return - true
      */
-    public abstract boolean deleteById(long id);
+    public boolean deleteById(long id){
+        getRepository().deleteById(id);
+        return true;
+    }
 
-    public abstract boolean update(T toUpdate);
+    public boolean update(T toUpdate){
+        getRepository().save(toUpdate);
+        return true;
+    }
 
-    public abstract T findById(long id);
+    public T findById(long id){
+        Optional<T> found = getRepository().findById(id);
+        if (found.isPresent())
+            return found.get();
+        return null;
+    }
 
 }

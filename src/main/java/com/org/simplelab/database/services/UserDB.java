@@ -3,6 +3,7 @@ package com.org.simplelab.database.services;
 import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.repositories.UserRepository;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +14,7 @@ import java.util.Optional;
 
 @Transactional
 @Component
+@Getter
 public class UserDB extends DBService<User>{
 
     @Autowired
@@ -72,11 +74,6 @@ public class UserDB extends DBService<User>{
         return found.get(0);
     }
 
-    @Override
-    public User findById(long id){
-        Optional<User> found = repository.findById(id);
-        return found.isPresent() ? found.get(): null;
-    }
 
     /**
      * Inserts the given User object into the DB
@@ -97,21 +94,6 @@ public class UserDB extends DBService<User>{
         return true;
     }
 
-    @Override
-    public boolean deleteById(long id){
-        repository.deleteById(id);
-        return true;
-    }
-
-    /**
-     * Updates the corresponding user in the DB given a representative User object.
-     * @param user - User object representing the User to be updated.
-     */
-    @Override
-    public boolean update(User user){
-        repository.save(user);
-        return true;
-    }
 
     /**
      * Deletes the user from the DB, given a User object or a username String.
@@ -121,11 +103,6 @@ public class UserDB extends DBService<User>{
         deleteUser(user.getUsername());
     }
 
-
-    public void deleteByMetadata(String metadata){
-        repository.deleteBy_metadata(metadata);
-    }
-
     public void deleteUser(String username){
         repository.deleteByUsername(username);
     }
@@ -133,8 +110,6 @@ public class UserDB extends DBService<User>{
     public List<User> searchUserWithKeyword(String keyword) {
         return repository.searchUserWithKeyword(keyword);
     }
-
-
 
 
 
