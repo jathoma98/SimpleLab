@@ -2,6 +2,7 @@ let LABS_TABLE = {
     init() {
         this.toggle = true;
         this.btnEvents = new Array();
+        this.lab_info = undefined
 
         /**
          * Use to onclick Event on each row of lab list.
@@ -16,10 +17,12 @@ let LABS_TABLE = {
                         let data = {
                             labModal: {
                                 active: "active",
+                                create: "false",
                                 lab: lab,
                             }
                         }
-                        rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL, data);
+                        LABS_TABLE.lab_info = lab;
+                        rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL, data, LABS_TABLE.btnEvents);
                     })
                 }
             })
@@ -50,6 +53,31 @@ let LABS_TABLE = {
         };
 
 
+        this.edit = function () {
+            let labUpdata = {
+                lab_id_old: LABS_TABLE.lab_info.id,
+                newLabInfo: {
+                    name: $("#course_name").val(),
+                    course_id: $("#course_code").val(),
+                    description: $("#course_description").val()
+                }
+
+            }
+            let lab_json = JSON.stringify(labUpdata);
+            $.ajax({
+                url: "/lab/rest/updateLab",
+                type: 'PATCH',
+                dataTye: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: lab_json,
+                success: function (result) {
+                    retObjHandle(result, COURSES_TABLE.reload);
+                }
+            })
+        };
+        this.btnEvents[ElEM_ID.LAB_EDIT_BTN] = LABS_TABLE.edit;
+
+
         /**
          * Get lab data from input and text area, then
          * send to the server. If success, re-build course
@@ -69,11 +97,7 @@ let LABS_TABLE = {
                 data: course_json,
                 success: function (result) {
                     retObjHandle(result, LABS_TABLE.reload)
-                //     if (result.success === "true") {
-                //         LABS_TABLE.reload();
-                //     } else {
-                //         alert(result.error);
-                //     }
+
                 }
             })
         };
@@ -103,11 +127,6 @@ let LABS_TABLE = {
                 data: lab_json,
                 success: function (result) {
                     retObjHandle(result, LABS_TABLE.reload);
-                    // if (result.success === "true") {
-                    //     LABS_TABLE.reload();
-                    // } else {
-                    //     alert(result.error);
-                    // }
                 }
             })
         };
@@ -121,6 +140,7 @@ let LABS_TABLE = {
             let data = {
                 labModal:{
                     active: "active",
+                    create: "false",
                     lab: true
                 }
             }

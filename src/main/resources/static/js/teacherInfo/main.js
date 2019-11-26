@@ -7,7 +7,9 @@ ElEM_ID = {
     STUDENT_LIST_TBODY: "#student_list_table tbody",
     MODAL_UL: "#modal ul",
     COURSE_SAVE_BTN: "#courseSaveBtn",
-    LAB_SAVE_BTN: "#labSaveBtn"
+    LAB_SAVE_BTN: "#labSaveBtn",
+    LAB_EDIT_BTN: "#labEditBtn",
+    COURSE_EDIT_BTN: "#courseEditBtn"
 }
 
 TEMPLATE_ID = {

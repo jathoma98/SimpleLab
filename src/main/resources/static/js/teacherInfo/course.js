@@ -2,6 +2,7 @@ let COURSES_TABLE = {
     init() {
         this.toggle = true;
         this.btnEvents = new Array();
+        this.course_info = undefined;
 
         this.removeStendtBtnEvent = function () {
             let course = {
@@ -65,7 +66,7 @@ let COURSES_TABLE = {
                 success: function (result) {
                     retObjHandle(result, (students) => {
                         let data = {
-                            students:students
+                            students: students
                         }
                         rebuildComponent(
                             ElEM_ID.STUDENT_SEARCH_TBODY,
@@ -103,6 +104,7 @@ let COURSES_TABLE = {
                                 course: result.data,
                             }
                         }
+                        COURSES_TABLE.course_info = result.data;
                         rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL, data, COURSES_TABLE.btnEvents);
                         //load
                         COURSES_TABLE.reLoadStudentsList(course_json)
@@ -122,7 +124,7 @@ let COURSES_TABLE = {
                 contentType: 'application/json; charset=utf-8',
                 data: course_json,
                 success: function (result) {
-                    retObjHandle(result, (students)=>{
+                    retObjHandle(result, (students) => {
                         let data = {
                             students: students
                         }
@@ -133,7 +135,7 @@ let COURSES_TABLE = {
                         setTableBodyRowEvent(ElEM_ID.STUDENT_LIST_TBODY, COURSES_TABLE.removeStendtBtnEvent);
 
                     })
-                  }
+                }
             })
         };
 
@@ -185,6 +187,30 @@ let COURSES_TABLE = {
             })
         };
         this.btnEvents[ElEM_ID.COURSE_SAVE_BTN] = COURSES_TABLE.save;
+
+        this.edit = function () {
+            let courseUpdata = {
+                course_id_old: COURSES_TABLE.course_info.course_id,
+                newCourseInfo: {
+                    name: $("#course_name").val(),
+                    course_id: $("#course_code").val(),
+                    description: $("#course_description").val()
+                }
+
+            }
+            let course_json = JSON.stringify(courseUpdata);
+            $.ajax({
+                url: "/course/rest/updateCourse",
+                type: 'PATCH',
+                dataTye: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: course_json,
+                success: function (result) {
+                    retObjHandle(result, COURSES_TABLE.reload);
+                }
+            })
+        };
+        this.btnEvents[ElEM_ID.COURSE_EDIT_BTN] = COURSES_TABLE.edit;
 
         /**
          * Delete course.
