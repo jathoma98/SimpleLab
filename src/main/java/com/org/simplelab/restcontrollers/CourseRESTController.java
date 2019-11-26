@@ -1,6 +1,6 @@
 package com.org.simplelab.restcontrollers;
 
-import com.org.simplelab.controllers.RequestResponse;
+import com.org.simplelab.controllers.StudentController;
 import com.org.simplelab.database.entities.Course;
 import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 //TODO: secure rest endpoints with authentication
 @RestController
@@ -101,7 +100,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
         long userId =  getUserIdFromSession(session);
         for (CourseValidator c : toDelete) {
             String course_id = c.getCourse_id();
-            courseDB.deleteCourseById(userId, course_id);
+            courseDB.deleteCourseByCourseId(course_id);
         }
         rro.setSuccess(true);
         rro.setAction(RRO_ACTION_TYPE.NOTHING.name());

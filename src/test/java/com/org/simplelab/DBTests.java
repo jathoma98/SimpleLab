@@ -6,6 +6,7 @@ import com.org.simplelab.database.entities.Equipment;
 import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.repositories.UserRepository;
+import com.org.simplelab.database.services.CourseDB;
 import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.services.LabDB;
 import com.org.simplelab.database.services.UserDB;
@@ -47,6 +48,8 @@ class DBTests extends SpringTestConfig {
 	void aaaaa_contextLoads() {
 	}
 
+	@Autowired
+	UserRepository ur;
 	@Test
 	void User_insertionTest() throws Exception{
 
@@ -67,7 +70,7 @@ class DBTests extends SpringTestConfig {
 		assertThrows(UserDB.UserInsertionException.class, () -> userDB.insert(user));
 
 		//ensure duplicate insertion doesn't insert an additional instance with the same username
-		UserRepository repo = userDB.DEBUG_getInterface();
+		UserRepository repo = ur;
 		assertEquals(repo.findByUsername(user.getUsername()).size(), 1);
 
 	}
@@ -377,6 +380,7 @@ class DBTests extends SpringTestConfig {
 
 		courseDB.deleteById(found.getFullEntity().getId());
 	}
+
 
 
 

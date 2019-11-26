@@ -7,6 +7,7 @@ import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
 import com.org.simplelab.security.SecurityUtils;
 import com.org.simplelab.security.SimpleLabAuthentication;
+import org.codehaus.jackson.map.Serializers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,12 +27,7 @@ import static org.springframework.security.web.context.HttpSessionSecurityContex
 
 @Controller
 @RequestMapping(path="/forgetPage")
-public class ForgetController {
-    @Autowired
-    UserDB userDB;
-
-    @Autowired
-    SimpleLabAuthentication authManager;
+public class ForgetController extends BaseController {
 
     public static final String FORGOT_USER_MAPPING =  "/fpFindUser";
     public static final String FORGOT_PASSWORD_MAPPING = "/fpChangePassword";

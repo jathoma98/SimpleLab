@@ -1,28 +1,23 @@
 package com.org.simplelab.database.services;
 
 import com.org.simplelab.database.entities.BaseTable;
-import com.org.simplelab.database.repositories.CourseRepository;
-import com.org.simplelab.database.repositories.EquipmentRepository;
-import com.org.simplelab.database.repositories.LabRepository;
-import com.org.simplelab.database.repositories.UserRepository;
+import com.org.simplelab.database.entities.interfaces.HasEntitySets;
+import com.org.simplelab.database.repositories.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
+@Getter
+@Transactional
 public abstract class DBService<T extends BaseTable> {
 
-    @Autowired
-    CourseRepository courseRepository;
-    @Autowired
-    LabRepository labRepository;
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    EquipmentRepository equipmentRepository;
+    private BaseRepository<T> repository;
 
     /**
      * Exception to be thrown when insertion into a DB violates some constraint.
@@ -84,19 +79,45 @@ public abstract class DBService<T extends BaseTable> {
      * @return - true if insertion was successful
      * @throws EntityInsertionException - If an error occurred during insertion
      */
-    public abstract boolean insert(T toInsert) throws EntityInsertionException;
+    public boolean insert(T toInsert) throws EntityInsertionException{
+        getRepository().save(toInsert);
+        return true;
+    }
 
     /**
      * Deletes the entity from the DB.
      * Important: Entities which manage EntitySets
-     * must have their Set field set to null before deletion.
+     * must have their Set field set to null before deletion,
+     * so entities which implement the HasEntitySets will have
+     * those sets nullified prior to deletion.
      * @param id - Id of the Entity to delete.
      * @return - true
      */
-    public abstract boolean deleteById(long id);
+    @Transactional
+    public boolean deleteById(long id){
+        if (HasEntitySets.class.isInstance(this)){
+            T found = findById(id);
+            if (found != null){
+                HasEntitySets clearSets = (HasEntitySets)found;
+                clearSets.nullifyEntitySets();
+                repository.delete(found);
+            }
+        } else {
+            getRepository().deleteById(id);
+        }
+        return true;
+    }
 
-    public abstract boolean update(T toUpdate);
+    public boolean update(T toUpdate){
+        getRepository().save(toUpdate);
+        return true;
+    }
 
-    public abstract T findById(long id);
+    public T findById(long id){
+        Optional<T> found = getRepository().findById(id);
+        if (found.isPresent())
+            return found.get();
+        return null;
+    }
 
 }

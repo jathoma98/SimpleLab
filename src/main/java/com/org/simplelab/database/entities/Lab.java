@@ -1,6 +1,7 @@
 package com.org.simplelab.database.entities;
 
 import com.org.simplelab.database.DBUtils;
+import com.org.simplelab.database.entities.interfaces.HasEntitySets;
 import com.org.simplelab.database.entities.interfaces.UserCreated;
 import lombok.Data;
 
@@ -11,7 +12,7 @@ import java.util.Set;
 @Data
 @Entity(name = DBUtils.LAB_TABLE_NAME)
 @Table(name = DBUtils.LAB_TABLE_NAME)
-public class Lab extends BaseTable implements UserCreated{
+public class Lab extends BaseTable implements UserCreated, HasEntitySets{
 
     private String name;
     private String description;
@@ -26,5 +27,10 @@ public class Lab extends BaseTable implements UserCreated{
 
     public Lab(){
         this.equipments = new HashSet<>();
+    }
+
+    @Override
+    public void nullifyEntitySets() {
+        setEquipments(null);
     }
 }

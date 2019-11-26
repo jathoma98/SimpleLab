@@ -1,30 +1,33 @@
 package com.org.simplelab.database.services;
 
 import com.org.simplelab.database.entities.Equipment;
+import com.org.simplelab.database.repositories.EquipmentRepository;
+import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 @Component
+@Getter
 public class EquipmentDB extends DBService<Equipment> {
 
-    @Override
-    public boolean insert(Equipment toInsert) {
-        return false;
+    @Autowired
+    private EquipmentRepository repository;
+
+    public boolean insert(Equipment toInsert) throws EntityInsertionException {
+        return super.insert(toInsert);
     }
 
-    @Override
     public boolean deleteById(long id) {
-        return false;
+        return super.deleteById(id);
     }
 
-    @Override
     public boolean update(Equipment toUpdate) {
-        return false;
+        return super.update(toUpdate);
     }
 
-    @Override
     public Equipment findById(long id) {
-        return null;
+        return super.findById(id);
     }
 }
