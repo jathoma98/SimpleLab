@@ -3,7 +3,8 @@ let current_user;
 function findUser() {
     // let username = {userName : $("#userName").val()};
     // let user_json =  JSON.stringify(username);
-    $.post("/forgetPage/fpFindUser", { username : $("#username").val()},
+
+    $.post("/forgetPage/fpFindUser", { username : $("#userName").val()},
         function(user){
         //     if (user !== null) {
         //         current_user = user;

@@ -5,6 +5,7 @@ import com.org.simplelab.database.entities.Equipment;
 import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.repositories.LabRepository;
 import com.org.simplelab.database.services.DBService;
+import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.database.validators.LabValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
@@ -35,6 +36,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
     public static final String COURSE_ID_MAPPING = "/{course_id}";
     public static final String LOAD_LIST_LAB_MAPPING = "/loadLabList";
     public static final String UPDATE_MAPPING = "/updateLab";
+    public static final String DELETE_MAPPING = "/deleteLab";
 
 
     @Autowired
@@ -99,7 +101,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
      * Right now just returns all labs.
      */
     @GetMapping("")
-    public Iterable<Lab> labGetForUser(HttpSession session) {
+    public Iterable<Lab> labGetForUser() {
         return labRepository.findAll();
     }
 
@@ -120,7 +122,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
 
 
     @PatchMapping(UPDATE_MAPPING)
-    public RRO<String> updateCourse(@RequestBody DTO.LabUpdateDTO dto, HttpSession session) {
+    public RRO<String> updateLab(@RequestBody DTO.LabUpdateDTO dto, HttpSession session) {
         RRO<String> rro = new RRO();
         long uid = getUserIdFromSession(session);
         Lab toUpdate = labDB.findById(dto.getLab_id_old());

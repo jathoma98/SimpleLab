@@ -26,12 +26,19 @@ import java.util.Map;
 import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
 
 @Controller
-@RequestMapping(path="/forgetPage")
+@RequestMapping(ForgetController.BASE_MAPPING)
 public class ForgetController extends BaseController {
+
+    public static final String BASE_MAPPING = "/forgetPage";
 
     public static final String FORGOT_USER_MAPPING =  "/fpFindUser";
     public static final String FORGOT_PASSWORD_MAPPING = "/fpChangePassword";
     public static final String FORGOT_CHECKANSWER_MAPPING = "/getUserAnswer";
+
+    @GetMapping("")
+    public String forgotPassword(HttpSession session) {
+        return "forgotPassword";
+    }
 
     @ResponseBody
     @PostMapping(FORGOT_USER_MAPPING)
@@ -45,7 +52,7 @@ public class ForgetController extends BaseController {
         return rro;
     }
 
-//
+
 //    @PostMapping(FORGOT_CHECKANSWER_MAPPING)
 //    public boolean fpCheckAnswer (@RequestBody DTO.fpUserInput checkPassword){
 //        byte[] temp = DBUtils.getHash(checkPassword.getUserInput());

@@ -111,14 +111,14 @@ let LABS_TABLE = {
             let lab = [];
             $(ElEM_ID.LAB_TABLE_TBODY).each(function (i, row) {
                 if ($(row).find('input[type="checkbox"]').is(':checked')) {
-                    course.push({
+                    lab.push({
                         name: null,
                         course_id: ($(row).find(".myIdColumn").text()),
                         description: null
                     });
                 }
             });
-            let lab_json = JSON.stringify(course);
+            let lab_json = JSON.stringify(lab);
             $.ajax({
                 url: "/lab/rest/deleteCourse",
                 type: 'DELETE',
