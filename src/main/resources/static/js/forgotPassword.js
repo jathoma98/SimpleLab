@@ -26,7 +26,7 @@ function checkAnswer(){
     };
     let user_json =  JSON.stringify(answer);
     $.ajax({
-        url:"rest/user/getUserAnswer",
+        url:"/forgetPage/getUserAnswer",
         type:'POST',
         dataTye: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -54,7 +54,7 @@ function changepassword(){
     }
 
     $.ajax({
-        url: "/user/rest/fpFindUser",
+        url: "/forgetPage/fpFindUser",
         type: "POST",
         dataTye: 'json',
         contentType: 'application/json; charset=utf-8',

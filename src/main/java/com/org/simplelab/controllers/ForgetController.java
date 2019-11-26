@@ -62,7 +62,7 @@ public class ForgetController {
             return false;
     }
 
-    
+
 
     @PostMapping(FORGOT_PASSWORD_MAPPING)
     public void changePassword (@RequestBody fpuserInput newPassword){
