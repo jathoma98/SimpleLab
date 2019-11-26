@@ -6,7 +6,7 @@ let ACC_INFO ={
             $("#last_name").prop("readonly", false);
             $("#email").prop("readonly", false);
             $("#institution").prop("readonly", false);
-            $("#password").prop("readonly", false);
+            $("#accPassword").prop("readonly", false);
             $("#editInfoBtn").toggle();
             $("#saveInfoBtn").toggle();
             $("#cancelBtn").toggle();
@@ -17,7 +17,7 @@ let ACC_INFO ={
             $("#last_name").prop("readonly", true);
             $("#email").prop("readonly", true);
             $("#institution").prop("readonly", true);
-            $("#password").prop("readonly", true);
+            $("#accPassword").prop("readonly", true);
             $("#editInfoBtn").toggle();
             $("#saveInfoBtn").toggle();
             $("#cancelBtn").toggle();
@@ -28,7 +28,7 @@ let ACC_INFO ={
             $("#last_name").prop("readonly", true);
             $("#email").prop("readonly", true);
             $("#institution").prop("readonly", true);
-            $("#password").prop("readonly", true);
+            $("#accPassword").prop("readonly", true);
             $("#editInfoBtn").toggle();
             $("#saveInfoBtn").toggle();
             $("#cancelBtn").toggle();
@@ -61,11 +61,12 @@ let ACC_INFO ={
                 url: "/user/rest/loadUserInfo",
                 type: "GET",
                 success: function(user){
-                    user.firstname = $("#first_name").val();
-                    user.lastname = $("#last_name").val();
-                    user.institution = $("#institution").val();
-                    user.email = $("#email").val();
-                    let user_json =  JSON.stringify(user);
+                    user.data.firstname = $("#first_name").val();
+                    user.data.lastname = $("#last_name").val();
+                    user.data.institution = $("#institution").val();
+                    user.data.email = $("#email").val();
+                    user.data.password = $("#accPassword").val();
+                    let user_json =  JSON.stringify(user.data);
                     $.ajax({
                         url: "/user/rest/restUserInfo",
                         type: "POST",
