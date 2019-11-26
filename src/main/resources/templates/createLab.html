@@ -9,7 +9,10 @@
     <script type="text/javascript" th:src="@{/libs/jquery-1.9.1.js}"></script>
     <script type="text/javascript" th:src="@{/libs/jquery-ui.js}"></script>
     <script type="text/javascript" th:src="@{/libs/mustache.js}"></script>
+    <script type="text/javascript" th:src="@{/js/tools.js}"></script>
+    <script type="text/javascript" th:src="@{/js/accountInfo/accountInfo.js}"></script>
     <script type="text/javascript" th:src="@{/js/lab.js}"></script>
+    <script id="modalAccTpl" type="x-tmpl-mustache" th:src="@{/js/accountInfo/modalAccount.html}"></script>
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
@@ -23,9 +26,9 @@
 </nav>
 <!-- Dropdown Structure -->
 <ul id='dropdown1' class='dropdown-content'>
-    <li><a href="#!">Home</a></li>
-    <li><a class="modal-trigger" href="#modalAccount">Account</a></li>
-    <li><a href="#!">Sign Out</a></li>
+    <li><a href="/teacher">Home</a></li>
+    <li class="accountDia"><a class=" modal-trigger" href="#modalAccount">Account</a></li>
+    <li><a href="/logout">Logout</a></li>
 </ul>
 
 
