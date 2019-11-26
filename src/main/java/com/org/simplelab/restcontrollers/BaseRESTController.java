@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpSession;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -125,7 +126,7 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
 
     protected <U extends BaseTable>
     RRO<String> addEntitiesToEntityList(DBService.EntitySetManager<U,T> set,
-                                List<U> toAdd, DBService<T> db) {
+                                        Collection<U> toAdd, DBService<T> db) {
         RRO<String> rro = new RRO();
         if (set == null){
             rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
@@ -153,7 +154,7 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
 
     protected  <U extends BaseTable>
     RRO<String> removeEntitiesFromEntityList(DBService.EntitySetManager<U, T> set,
-                                     List<U> toRemove, DBService<T> db){
+                                     Collection<U> toRemove, DBService<T> db){
         RRO<String> rro = new RRO();
         if (set == null){
             rro.setMsg(DBService.EntitySetManager.NOT_FOUND_STRING);

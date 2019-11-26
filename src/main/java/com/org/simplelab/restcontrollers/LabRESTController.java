@@ -101,7 +101,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
      * Right now just returns all labs.
      */
     @GetMapping("")
-    public Iterable<Lab> labGetForUser(HttpSession session) {
+    public Iterable<Lab> labGetForUser() {
         return labRepository.findAll();
     }
 
