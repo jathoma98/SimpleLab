@@ -139,8 +139,8 @@ public class LoginController{
     }
 
 
-    @GetMapping("/forgotPassword")
-    public String forgotPassword(HttpSession session) {
-        return "forgotPassword";
-    }
+//    @GetMapping("/forgotPassword")
+//    public String forgotPassword(HttpSession session) {
+//        return "forgotPassword";
+//    }
 }
