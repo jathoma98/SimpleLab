@@ -55,7 +55,7 @@ function changepassword(){
     }
 
     $.ajax({
-        url: "/forgetPage/fpFindUser",
+        url: "/forgetPage/fpChangePassword",
         type: "POST",
         dataTye: 'json',
         contentType: 'application/json; charset=utf-8',

@@ -31,6 +31,7 @@ public class ForgetController extends BaseController {
 
     public static final String FORGOT_USER_MAPPING =  "/fpFindUser";
     public static final String FORGOT_PASSWORD_MAPPING = "/fpChangePassword";
+    public static final String FORGOT_CHECKANSWER_MAPPING = "/getUserAnswer";
 
     @ResponseBody
     @PostMapping(FORGOT_USER_MAPPING)
@@ -44,7 +45,7 @@ public class ForgetController extends BaseController {
         return rro;
     }
 
-    @PostMapping(FORGOT_PASSWORD_MAPPING)
+    @PostMapping(FORGOT_CHECKANSWER_MAPPING)
     public boolean fpCheckAnswer (@RequestBody DTO.fpUserInput checkPassword){
         byte[] temp = DBUtils.getHash(checkPassword.getUserInput());
         if (Arrays.equals(temp,checkPassword.getUser().getAnswer())){
@@ -58,7 +59,6 @@ public class ForgetController extends BaseController {
 //
     @PostMapping(FORGOT_PASSWORD_MAPPING)
     public void changePassword (@RequestBody DTO.fpUserInput newPassword){
-
         try{
             newPassword.getUser().setPassword(newPassword.getUserInput());
         }catch (Exception e){
