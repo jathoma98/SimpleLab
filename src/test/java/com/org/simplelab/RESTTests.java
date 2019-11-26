@@ -64,7 +64,6 @@ public class RESTTests extends SpringTestConfig {
     @WithMockUser(username = username, password = username)
     void testCreateGetCourseTeacher() throws Exception{
 
-        TestUtils.login(mockMvc);
 
         session_atr.put("user_id", user_id);
         session_atr.put("username", username);

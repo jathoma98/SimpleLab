@@ -38,7 +38,6 @@ public class LoginController{
     SimpleLabAuthentication authManager;
 
     public static final String FORBIDDEN_MAPPING =  "/forbidden";
-    public static final String FORGOT_USER_MAPPING =  "/fpFindUser";
 
     @GetMapping("/login")
     public String loginGet(){
@@ -145,16 +144,5 @@ public class LoginController{
         return "forgotPassword";
     }
 
-    @ResponseBody
-    @PostMapping(FORGOT_USER_MAPPING)
-    public User fpGetUser (@RequestParam("username") String username,
-                             HttpSession session){
-        User user = null;
-        try{
-            user = userDB.findUser(username);
-        }catch (Exception e){
 
-        }
-        return user;
-    }
 }
