@@ -9,10 +9,7 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Transactional
@@ -54,10 +51,10 @@ public abstract class DBService<T extends BaseTable> {
             }
         }
 
-        private Set<T> entitySet;
+        private Collection<T> entitySet;
         private U fullEntity;
         public static final String NOT_FOUND_STRING = "Could not find entity to update. ";
-        public EntitySetManager(Set<T> set, U fullEntity){
+        public EntitySetManager(Collection<T> set, U fullEntity){
             this.entitySet = set;
             this.fullEntity = fullEntity;
         }

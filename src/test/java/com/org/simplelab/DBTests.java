@@ -189,6 +189,7 @@ class DBTests extends SpringTestConfig {
 		Lab l = new Lab();
 		l.setName(metadata);
 		l.set_metadata(metadata);
+		l.setDescription(metadata);
 		lr.save(l);
 		l = lr.findByName(metadata).get(0);
 		lrc.addEquipmentToLab(l.getId(), list);
