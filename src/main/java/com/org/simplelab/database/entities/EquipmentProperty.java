@@ -25,7 +25,7 @@ public class EquipmentProperty extends BaseTable {
 
     @Override
     public String toString(){
-        return "[ id: " + getId() + " Key: " + property_key + " Value: " + property_value + " ]";
+        return "[ id: " + getId() + "| Key: " + property_key + "| Value: " + property_value + " ]";
     }
 
 }

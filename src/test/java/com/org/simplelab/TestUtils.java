@@ -57,4 +57,11 @@ public class TestUtils {
         return ep;
     }
 
+    public static Equipment createJunkEquipmentWithProperties(int numProperties){
+        Equipment e = createJunkEquipment();
+        for (int i = 0; i < numProperties; i++){
+            e.getProperties().add(createJunkEquipmentProperty(e));
+        }
+        return e;
+    }
 }

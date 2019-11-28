@@ -1,6 +1,7 @@
 package com.org.simplelab.database.services;
 
 import com.org.simplelab.database.entities.Equipment;
+import com.org.simplelab.database.entities.EquipmentProperty;
 import com.org.simplelab.database.repositories.EquipmentRepository;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,13 @@ public class EquipmentDB extends DBService<Equipment> {
 
     public Equipment findById(long id) {
         return super.findById(id);
+    }
+
+    public EntitySetManager<EquipmentProperty, Equipment> getPropertiesOfEquipment(long id){
+        Equipment e = findById(id);
+        if (e == null)
+            return null;
+        return new EntitySetManager<>(e.getProperties(), e);
     }
 
 
