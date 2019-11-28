@@ -18,7 +18,8 @@ public class Lab extends BaseTable implements UserCreated, HasEntitySets{
     private String name;
     private String description;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(cascade = {CascadeType.PERSIST},
+            fetch = FetchType.EAGER)
     @JoinColumn(name = "creator_id")
     private User creator;
 
@@ -29,7 +30,7 @@ public class Lab extends BaseTable implements UserCreated, HasEntitySets{
     @OneToMany(cascade = {CascadeType.PERSIST,
                           CascadeType.REMOVE},
                 fetch = FetchType.LAZY,
-                mappedBy = "steps")
+                mappedBy = "lab")
     private List<Step> steps;
 
     public Lab(){

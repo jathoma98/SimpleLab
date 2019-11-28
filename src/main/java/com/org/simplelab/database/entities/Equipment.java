@@ -17,7 +17,8 @@ public class Equipment extends BaseTable implements UserCreated {
 
     private String name;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(cascade = {CascadeType.PERSIST}
+            ,fetch = FetchType.EAGER)
     @JoinColumn(name = "creator_id")
     private User creator;
 

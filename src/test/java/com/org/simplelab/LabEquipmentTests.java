@@ -2,10 +2,12 @@ package com.org.simplelab;
 
 import com.org.simplelab.database.entities.Equipment;
 import com.org.simplelab.database.entities.EquipmentProperty;
+import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.services.DBService;
 import org.junit.jupiter.api.Test;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -87,6 +89,19 @@ public class LabEquipmentTests extends SpringTestConfig {
             assertEquals(UPDATED_VAL, ep.getProperty_value());
         }
 
+    }
+
+    @Test
+    void testAddLabWithSteps() throws Exception{
+        int numSteps = 10;
+        Lab l = TestUtils.createJunkLabWithSteps(numSteps);
+        labDB.insert(l);
+
+        List<Lab> found = labDB.getRepository().findByName(l.getName());
+        Lab foundLab = found.get(0);
+
+        assertEquals(l.getName(), foundLab.getName());
+        System.out.println(foundLab.getSteps().toString());
     }
 
 
