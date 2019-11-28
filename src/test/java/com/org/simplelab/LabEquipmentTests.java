@@ -81,7 +81,7 @@ public class LabEquipmentTests extends SpringTestConfig {
 
         foundList = equipmentDB.getRepository().findByName(e.getName());
         found = foundList.get(0);
-        set = equipmentDB.getPropertiesOfEquipment(found.getId());
+        set = equipmentDB.getPropertiesManager(found);
         assertEquals(UPDATED_NAME, found.getName());
         for (EquipmentProperty ep: set.getEntitySet()){
             assertEquals(UPDATED_VAL, ep.getProperty_value());

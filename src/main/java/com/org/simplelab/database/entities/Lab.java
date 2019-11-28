@@ -7,6 +7,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -24,6 +25,12 @@ public class Lab extends BaseTable implements UserCreated, HasEntitySets{
     @ManyToMany(cascade = {CascadeType.PERSIST},
                fetch = FetchType.LAZY)
     private Set<Equipment> equipments;
+
+    @OneToMany(cascade = {CascadeType.PERSIST,
+                          CascadeType.REMOVE},
+                fetch = FetchType.LAZY,
+                mappedBy = "steps")
+    private List<Step> steps;
 
     public Lab(){
         this.equipments = new HashSet<>();

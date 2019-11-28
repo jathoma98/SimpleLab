@@ -41,10 +41,6 @@ class DBTests extends SpringTestConfig {
 
 	static String prefix = "test user -- ";
 
-	@Test
-	void aaaaa_contextLoads() {
-	}
-
 	@Autowired
 	UserRepository ur;
 	@Test
