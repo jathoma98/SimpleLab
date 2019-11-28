@@ -6,6 +6,7 @@ import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.Step;
 import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.restcontrollers.LabRESTController;
+import com.org.simplelab.restcontrollers.dto.DTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -154,9 +155,37 @@ public class LabEquipmentTests extends SpringTestConfig {
     @Autowired
     LabRESTController lrc;
 
+    //TODO: figure out this null pointer exception
     @Test
-    void testAddStepEndpoint(){
+    void testAddStepEndpoint() throws Exception{
         Lab l = TestUtils.createJunkLab();
+        labDB.insert(l);
+
+        List<Lab> found = labDB.getRepository().findByName(l.getName());
+        Lab foundLab = found.get(0);
+
+        long lab_id = foundLab.getId();
+        int numProperties = 5;
+        DTO.LabAddStepDTO dto = new DTO.LabAddStepDTO();
+        dto.setStepNum(1);
+        dto.setTargetObject(TestUtils.createJunkEquipmentWithProperties(5));
+
+        System.out.println(dto.getStepNum());
+        System.out.println(dto.getTargetObject());
+
+        lrc.addStepToLab(lab_id, dto);
+
+        DBService.EntitySetManager<Step, Lab> set = labDB.getStepsOfLabById(lab_id);
+
+        assertEquals(1, set.getEntitySet().size());
+        for (Step s: set.getEntitySet()){
+            System.out.println(s.toString());
+            assertEquals(dto.getTargetObject(), s.getTargetObject());
+        }
+
+        dto = new DTO.LabAddStepDTO();
+        dto.setStepNum(2);
+        dto.setTargetObject(TestUtils.createJunkEquipmentWithProperties(5));
 
     }
 

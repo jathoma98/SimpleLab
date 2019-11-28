@@ -6,6 +6,7 @@ import com.org.simplelab.database.entities.interfaces.UserCreated;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,6 +36,7 @@ public class Lab extends BaseTable implements UserCreated, HasEntitySets{
 
     public Lab(){
         this.equipments = new HashSet<>();
+        this.steps = new ArrayList<>();
     }
 
     @Override
