@@ -3,8 +3,14 @@ package com.org.simplelab;
 import com.org.simplelab.database.entities.Equipment;
 import com.org.simplelab.database.entities.EquipmentProperty;
 import com.org.simplelab.database.entities.User;
+import com.org.simplelab.database.services.CourseDB;
+import com.org.simplelab.database.services.DBService;
+import com.org.simplelab.database.services.EquipmentDB;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.test.web.servlet.MockMvc;
 
+import javax.swing.text.html.parser.Entity;
 import java.security.Principal;
 import java.util.Random;
 
@@ -14,6 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static com.org.simplelab.SpringTestConfig.metadata;
 
+@Component
 public class TestUtils {
 
     public static void login(MockMvc mvc) throws Exception{
@@ -54,8 +61,10 @@ public class TestUtils {
         ep.setProperty_key(Double.toString(rand.nextDouble()));
         ep.setProperty_value(Double.toString(rand.nextDouble()));
         ep.set_metadata(metadata);
+        ep.setParentEquipment(parent);
         return ep;
     }
+
 
     public static Equipment createJunkEquipmentWithProperties(int numProperties){
         Equipment e = createJunkEquipment();

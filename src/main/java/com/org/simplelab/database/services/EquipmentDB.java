@@ -8,13 +8,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
+
 @Transactional
 @Component
 @Getter
 public class EquipmentDB extends DBService<Equipment> {
 
+    private class EquipmentPropertySetManager extends
+            EntitySetManager<EquipmentProperty, Equipment>{
+        EquipmentPropertySetManager(Collection<EquipmentProperty> set, Equipment eq){
+            super(set, eq);
+        }
+
+        @Override
+        public void insert(EquipmentProperty toInsert) throws EntitySetModificationException{
+            toInsert.setParentEquipment(this.getFullEntity());
+            super.insert(toInsert);
+        }
+    }
+
     @Autowired
     private EquipmentRepository repository;
+
+    /**
+     * This should be how you insert and delete properties to an Equipment entity. Dont
+     * use getProperties() on the object itself.
+     * @param e
+     * @return
+     */
+    public EntitySetManager<EquipmentProperty, Equipment> getPropertiesManager(Equipment e){
+        return new EquipmentPropertySetManager(e.getProperties(), e);
+    }
 
     public boolean insert(Equipment toInsert) throws EntityInsertionException {
         return super.insert(toInsert);
@@ -36,8 +61,9 @@ public class EquipmentDB extends DBService<Equipment> {
         Equipment e = findById(id);
         if (e == null)
             return null;
-        return new EntitySetManager<>(e.getProperties(), e);
+        return new EquipmentPropertySetManager(e.getProperties(), e);
     }
+
 
 
 }

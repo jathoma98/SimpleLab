@@ -5,6 +5,7 @@ import com.org.simplelab.database.entities.interfaces.UserCreated;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 

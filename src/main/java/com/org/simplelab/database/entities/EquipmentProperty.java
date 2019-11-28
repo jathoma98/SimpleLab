@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Table(name = DBUtils.EQUIPMENT_PROPERTY_TABLE_NAME)
 public class EquipmentProperty extends BaseTable {
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     Equipment parentEquipment;
 
     private String property_key;
@@ -25,7 +25,7 @@ public class EquipmentProperty extends BaseTable {
 
     @Override
     public String toString(){
-        return "[ id: " + getId() + "| Key: " + property_key + "| Value: " + property_value + " ]";
+        return "[ id: " + getId() + "| Parent: " + parentEquipment.getName() + "| Key: " + property_key + "| Value: " + property_value + " ]";
     }
 
 }

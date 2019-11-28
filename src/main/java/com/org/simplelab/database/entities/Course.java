@@ -45,4 +45,5 @@ public class Course extends BaseTable implements UserCreated, HasEntitySets{
         setStudents(null);
         setLabs(null);
     }
+
 }
