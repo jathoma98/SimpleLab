@@ -1,8 +1,10 @@
 package com.org.simplelab.restcontrollers;
 
 import com.org.simplelab.controllers.RequestResponse;
+import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.Equipment;
 import com.org.simplelab.database.entities.Lab;
+import com.org.simplelab.database.entities.Step;
 import com.org.simplelab.database.repositories.LabRepository;
 import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.validators.CourseValidator;
@@ -17,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -33,10 +36,8 @@ public class LabRESTController extends BaseRESTController<Lab> {
     //lab_id = id of the lab to interact with in the DB
     public static final String BASE_MAPPING = "/lab/rest";
     public static final String LAB_ID_MAPPING = "/{lab_id}";
-    public static final String COURSE_ID_MAPPING = "/{course_id}";
     public static final String LOAD_LIST_LAB_MAPPING = "/loadLabList";
     public static final String UPDATE_MAPPING = "/updateLab";
-    public static final String DELETE_MAPPING = "/deleteLab";
     public static final String LAB_STEP_ID_MAPPING = LAB_ID_MAPPING + "/step";
 
 
@@ -142,6 +143,9 @@ public class LabRESTController extends BaseRESTController<Lab> {
         if (found == null){
             return RRO.sendErrorMessage("Lab Not Found");
         }
-        return null;
+        Step s = DBUtils.getMapper().map(dto, Step.class);
+        List<Step> toAdd = new ArrayList<>();
+        toAdd.add(s);
+        return super.addEntitiesToEntityList(labDB.getStepManager(found), toAdd, labDB);
     }
 }

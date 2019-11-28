@@ -2,12 +2,14 @@ package com.org.simplelab.database.services;
 
 import com.org.simplelab.database.entities.Equipment;
 import com.org.simplelab.database.entities.Lab;
+import com.org.simplelab.database.entities.Step;
 import com.org.simplelab.database.repositories.LabRepository;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -23,11 +25,19 @@ public class LabDB extends DBService<Lab> {
     @Autowired
     private LabRepository repository;
 
-    private class EquipmentSetManager extends EntitySetManager<Equipment, Lab>{
-        public EquipmentSetManager(Set<Equipment> set, Lab lab){
-            super(set, lab);
+    private class StepSetManager extends EntitySetManager<Step, Lab>{
+
+        public StepSetManager(Collection<Step> set, Lab fullEntity) {
+            super(set, fullEntity);
         }
+
+        @Override
+        public void checkLegalInsertion(Step toInsert){
+            //TODO: make sure steps are in order when inserted
+        }
+
     }
+
 
     public boolean insert(Lab toInsert) throws EntityInsertionException {
         return super.insert(toInsert);
@@ -35,6 +45,17 @@ public class LabDB extends DBService<Lab> {
 
     public boolean deleteById(long id) {
         return super.deleteById(id);
+    }
+
+    public EntitySetManager<Step, Lab> getStepsOfLabById(long id){
+        Lab found = findById(id);
+        if (found == null)
+            return null;
+        return getStepManager(found);
+    }
+
+    public EntitySetManager<Step, Lab> getStepManager(Lab l){
+        return new StepSetManager(l.getSteps(), l);
     }
 
     public boolean update(Lab toUpdate) {
@@ -50,10 +71,10 @@ public class LabDB extends DBService<Lab> {
         return repository.findByCreator_id(id);
     }
 
-    public EquipmentSetManager getEquipmentOfLabById(long id){
+    public EntitySetManager<Equipment, Lab> getEquipmentOfLabById(long id){
         Lab found = findById(id);
         if (found == null)
             return null;
-        return new EquipmentSetManager(found.getEquipments(), found);
+        return new EntitySetManager<>(found.getEquipments(), found);
     }
 }
