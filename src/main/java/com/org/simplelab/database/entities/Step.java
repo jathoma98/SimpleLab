@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class Step extends BaseTable implements UserCreated{
 
     @OneToOne(cascade = {CascadeType.PERSIST},
-            fetch = FetchType.EAGER)
+            fetch = FetchType.LAZY)
     @JoinColumn(name = "creator_id")
     private User creator;
     private int stepNum;
