@@ -170,28 +170,6 @@ class DBTests extends SpringTestConfig {
 	@Autowired
 	LabDB labDB;
 
-	/**
-	 * @Test test add equipment to lab endpoint
-	 */
-	@Test
-	@Transactional
-	void testEquipmentSetManager(){
-		List<Equipment> list = new ArrayList<>();
-		for (int i = 0; i < 1; i++){
-			Equipment e = new Equipment();
-			e.set_metadata(metadata);
-			e.setName(metadata);
-			list.add(e);
-		}
-		Lab l = new Lab();
-		l.setName(metadata);
-		l.set_metadata(metadata);
-		lr.save(l);
-		l = lr.findByName(metadata).get(0);
-		lrc.addEquipmentToLab(l.getId(), list);
-		Set<Equipment> found = l.getEquipments();
-		assertEquals(1, found.size());
-	}
 
 	@Autowired
 	CourseRESTController crc;

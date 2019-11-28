@@ -24,6 +24,9 @@ public class Course extends BaseTable implements UserCreated, HasEntitySets{
     @JoinColumn(name = "creator_id")
     private User creator;
 
+    /**
+     * TODO: think about using SortedSet instead of Set
+     */
     @ManyToMany(cascade = {CascadeType.PERSIST},
             fetch = FetchType.LAZY)
     private Set<User> students;

@@ -30,4 +30,6 @@ public class EquipmentDB extends DBService<Equipment> {
     public Equipment findById(long id) {
         return super.findById(id);
     }
+
+
 }
