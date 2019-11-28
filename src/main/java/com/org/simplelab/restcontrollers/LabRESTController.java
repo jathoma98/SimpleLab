@@ -144,6 +144,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
             return RRO.sendErrorMessage("Lab Not Found");
         }
         Step s = DBUtils.getMapper().map(dto, Step.class);
+        s.setLab(found);
         List<Step> toAdd = new ArrayList<>();
         toAdd.add(s);
         return super.addEntitiesToEntityList(labDB.getStepManager(found), toAdd, labDB);

@@ -5,7 +5,9 @@ import com.org.simplelab.database.entities.EquipmentProperty;
 import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.Step;
 import com.org.simplelab.database.services.DBService;
+import com.org.simplelab.restcontrollers.LabRESTController;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Table;
@@ -146,6 +148,15 @@ public class LabEquipmentTests extends SpringTestConfig {
             System.out.println(s.toString());
             assertEquals(UPDATED_STEP_METADATA, s.get_metadata());
         }
+
+    }
+
+    @Autowired
+    LabRESTController lrc;
+
+    @Test
+    void testAddStepEndpoint(){
+        Lab l = TestUtils.createJunkLab();
 
     }
 

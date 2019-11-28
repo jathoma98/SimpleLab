@@ -28,7 +28,7 @@ public class DBUtils {
 
     public static final String METADATA_DELETE_QUERY = "DELETE FROM #{#entityName} WHERE _metadata = :metadata";
 
-    public static ModelMapper MAPPER = null;
+    private static ModelMapper MAPPER = null;
 
     /**
      * Hashes the given string.

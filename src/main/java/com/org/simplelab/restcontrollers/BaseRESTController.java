@@ -126,6 +126,10 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
         rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
 
         for (U entity: toAdd){
+            if (UserCreated.class.isInstance(entity)){
+                User creator = userDB.findById(getUserIdFromSession(session));
+                ((UserCreated)entity).setCreator(creator);
+            }
             try{
                 set.insert(entity);
             } catch (DBService.EntitySetManager.EntitySetModificationException e){
