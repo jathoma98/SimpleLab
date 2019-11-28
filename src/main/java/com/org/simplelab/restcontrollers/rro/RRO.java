@@ -15,6 +15,14 @@ public class RRO<T> {
     String action;
     String msg;
     T data;
+
+    public static RRO<String> sendErrorMessage(String errormsg){
+        RRO<String> rro = new RRO<>();
+        rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
+        rro.setMsg(errormsg);
+        rro.setSuccess(false);
+        return rro;
+    }
 }
 
 

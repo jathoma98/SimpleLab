@@ -80,10 +80,7 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
         ModelMapper mm = DBUtils.getMapper();
         T found = db.findById(idToUpdate);
         if (found == null){
-            rro.setSuccess(false);
-            rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
-            rro.setMsg(RRO_MSG.ENTITY_UPDATE_ENTITY_NO_FOUND.getMsg());
-            return rro;
+            return RRO.sendErrorMessage(RRO_MSG.ENTITY_UPDATE_ENTITY_NO_FOUND.getMsg());
         }
         //if its a validator, validate before copying.
         if (Validator.class.isInstance(dto)){
@@ -91,10 +88,7 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
             try{
                 DTOValidator.validate();
             } catch (InvalidFieldException e){
-                rro.setSuccess(false);
-                rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
-                rro.setMsg(e.getMessage());
-                return rro;
+                return RRO.sendErrorMessage(e.getMessage());
             }
         }
         T toUpdate = db.findById(idToUpdate);
@@ -104,10 +98,7 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
             rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
             return rro;
         } else {
-            rro.setSuccess(false);
-            rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
-            rro.setMsg(RRO_MSG.ENTITY_UPDATE_ERROR.getMsg());
-            return rro;
+            return RRO.sendErrorMessage(RRO_MSG.ENTITY_UPDATE_ERROR.getMsg());
         }
     }
 
@@ -129,12 +120,8 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
                                         Collection<U> toAdd, DBService<T> db) {
         RRO<String> rro = new RRO();
         if (set == null){
-            rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
-            rro.setMsg(DBService.EntitySetManager.NOT_FOUND_STRING);
-            rro.setSuccess(false);
-            return rro;
+            return RRO.sendErrorMessage(DBService.EntitySetManager.NOT_FOUND_STRING);
         }
-
         rro.setSuccess(true);
         rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
 
@@ -142,9 +129,7 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
             try{
                 set.insert(entity);
             } catch (DBService.EntitySetManager.EntitySetModificationException e){
-                rro.setMsg(e.getMessage());
-                rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
-                rro.setSuccess(false);
+                rro = RRO.sendErrorMessage(e.getMessage());
             }
         }
         T toSave = set.getFullEntity();

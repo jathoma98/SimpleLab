@@ -37,6 +37,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
     public static final String LOAD_LIST_LAB_MAPPING = "/loadLabList";
     public static final String UPDATE_MAPPING = "/updateLab";
     public static final String DELETE_MAPPING = "/deleteLab";
+    public static final String LAB_STEP_ID_MAPPING = LAB_ID_MAPPING + "/step";
 
 
     @Autowired
@@ -123,21 +124,24 @@ public class LabRESTController extends BaseRESTController<Lab> {
 
     @PatchMapping(UPDATE_MAPPING)
     public RRO<String> updateLab(@RequestBody DTO.LabUpdateDTO dto, HttpSession session) {
-        RRO<String> rro = new RRO();
         long uid = getUserIdFromSession(session);
         Lab toUpdate = labDB.findById(dto.getLab_id_old());
         if (toUpdate == null){
-            rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
-            rro.setMsg("Lab Not Found");
-            rro.setSuccess(false);
-            return rro;
+            return RRO.sendErrorMessage("Lab Not Found");
         }
         if (toUpdate.getCreator().getId() != uid){
-            rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
-            rro.setMsg("Duplicate ID");
-            rro.setSuccess(false);
-            return rro;
+            return RRO.sendErrorMessage("Duplicate ID");
         }
         return super.updateEntity(toUpdate.getId(), dto.getNewLabInfo(), labDB);
+    }
+
+    @PostMapping(LAB_STEP_ID_MAPPING)
+    public RRO<String> addStepToLab(@PathVariable("lab_id") long lab_id,
+                                    @RequestBody DTO.LabAddStepDTO dto){
+        Lab found = labDB.findById(lab_id);
+        if (found == null){
+            return RRO.sendErrorMessage("Lab Not Found");
+        }
+        return null;
     }
 }

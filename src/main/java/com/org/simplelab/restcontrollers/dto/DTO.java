@@ -1,5 +1,6 @@
 package com.org.simplelab.restcontrollers.dto;
 
+import com.org.simplelab.database.entities.Equipment;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.database.validators.UserValidator;
@@ -78,5 +79,12 @@ public abstract class DTO {
     public static class fpUserInput extends DTO{
         private String userInput;
         private User user;
+    }
+
+    @Getter
+    @Setter
+    public static class LabAddStepDTO extends DTO{
+        private Equipment targetObject;
+        private int stepNum;
     }
 }
