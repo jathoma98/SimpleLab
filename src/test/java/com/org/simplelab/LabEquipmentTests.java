@@ -3,6 +3,7 @@ package com.org.simplelab;
 import com.org.simplelab.database.entities.Equipment;
 import com.org.simplelab.database.entities.EquipmentProperty;
 import com.org.simplelab.database.entities.Lab;
+import com.org.simplelab.database.entities.Step;
 import com.org.simplelab.database.services.DBService;
 import org.junit.jupiter.api.Test;
 import org.springframework.transaction.annotation.Transactional;
@@ -102,6 +103,50 @@ public class LabEquipmentTests extends SpringTestConfig {
 
         assertEquals(l.getName(), foundLab.getName());
         System.out.println(foundLab.getSteps().toString());
+    }
+
+    @Test
+    void deleteLabWithSteps() throws Exception{
+        int numSteps = 10;
+        Lab l = TestUtils.createJunkLabWithSteps(numSteps);
+
+        labDB.insert(l);
+
+        List<Lab> found = labDB.getRepository().findByName(l.getName());
+        Lab foundLab = found.get(0);
+
+        labDB.deleteById(foundLab.getId());
+        found = labDB.getRepository().findByName(l.getName());
+
+        assertEquals(0, found.size());
+    }
+
+    @Test
+    void updateLabWithSteps() throws Exception{
+        int numSteps = 10;
+        Lab l = TestUtils.createJunkLabWithSteps(numSteps);
+
+        labDB.insert(l);
+
+        List<Lab> found = labDB.getRepository().findByName(l.getName());
+        Lab foundLab = found.get(0);
+
+        String UPDATED_NAME = foundLab.getName() + "UPDATED";
+        String UPDATED_STEP_METADATA = "METADATA";
+        foundLab.setName(UPDATED_NAME);
+        for (Step s: foundLab.getSteps()){
+            s.set_metadata(UPDATED_STEP_METADATA);
+        }
+
+        labDB.update(foundLab);
+
+        foundLab = labDB.findById(foundLab.getId());
+        assertEquals(UPDATED_NAME, foundLab.getName());
+        for (Step s: foundLab.getSteps()){
+            System.out.println(s.toString());
+            assertEquals(UPDATED_STEP_METADATA, s.get_metadata());
+        }
+
     }
 
 
