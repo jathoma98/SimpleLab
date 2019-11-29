@@ -1,6 +1,7 @@
 package com.org.simplelab.restcontrollers;
 
 import com.org.simplelab.controllers.StudentController;
+import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.Course;
 import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;
@@ -12,6 +13,9 @@ import com.org.simplelab.restcontrollers.rro.RRO;
 import com.org.simplelab.restcontrollers.rro.RRO_ACTION_TYPE;
 import com.org.simplelab.restcontrollers.rro.RRO_MSG;
 import com.org.simplelab.security.SecurityUtils;
+import lombok.Data;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -108,15 +112,31 @@ public class CourseRESTController extends BaseRESTController<Course> {
     }
 
     @GetMapping(LOAD_LIST_COURSE_MAPPING)
-    public RRO<List<Course>> getListOfCourse(HttpSession session) {
-        RRO<List<Course>> rro = new RRO();
+    public RRO getListOfCourse(HttpSession session) {
 
         long userId = getUserIdFromSession(session);
         List<Course> courses = courseDB.getCoursesForTeacher(userId);
 
+        //TODO: this is really slow -- move this to DB query side
+        @Data
+        class CourseInfoForTeacherView{
+            String name, course_id, createdDate;
+        }
+
+        RRO<List<CourseInfoForTeacherView>> rro = new RRO();
+        List<CourseInfoForTeacherView> returnInfo = new ArrayList<>();
+
+        courses.forEach((course) -> {
+            CourseInfoForTeacherView mapped = new CourseInfoForTeacherView();
+            mapped.setCourse_id(course.getCourse_id());
+            mapped.setCreatedDate(course.getCreatedDate());
+            mapped.setName(course.getName());
+            returnInfo.add(mapped);
+        });
+
         rro.setSuccess(true);
         rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
-        rro.setData(courses);
+        rro.setData(returnInfo);
         return rro;
     }
 

@@ -10,6 +10,8 @@ import com.org.simplelab.database.validators.LabValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
 import com.org.simplelab.restcontrollers.rro.RRO_ACTION_TYPE;
+import lombok.Data;
+import lombok.Value;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
@@ -81,7 +83,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
 
 
     @GetMapping(LOAD_LIST_LAB_MAPPING)
-    public RRO<List<Lab>> getListOfCourse(HttpSession session) {
+    public RRO getListOfCourse(HttpSession session) {
         long userId = getUserIdFromSession(session);
         RRO rro = new RRO();
         List<Lab> labs = labDB.getLabsByCreatorId(userId);
@@ -90,7 +92,21 @@ public class LabRESTController extends BaseRESTController<Lab> {
             rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
             return rro;
         }
-        rro.setData(labs);
+        //TODO: this is really slow -- move this to SQL side
+        @Data
+        class LabInfoForTeacherView{
+            private long id;
+            private String name, createdDate;
+        }
+        List<LabInfoForTeacherView> returnInfo = new ArrayList<>();
+        labs.forEach((lab) -> {
+            LabInfoForTeacherView info = new LabInfoForTeacherView();
+            info.setCreatedDate(lab.getCreatedDate());
+            info.setId(lab.getId());
+            info.setName(lab.getName());
+            returnInfo.add(info);
+        });
+        rro.setData(returnInfo);
         rro.setSuccess(true);
         rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
         return rro;
@@ -153,7 +169,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
      * @return RRO with data field containing the updated lab
      */
     @DeleteMapping(LAB_ID_STEP_MAPPING)
-    public RRO<Lab> deleteAllStepsFromLab(@PathVariable("lab_id") long lab_id){
+    public RRO deleteAllStepsFromLab(@PathVariable("lab_id") long lab_id){
         Lab found = labDB.findById(lab_id);
         found.setSteps(new ArrayList<>());
         try {
@@ -163,8 +179,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
         }
         RRO<Lab> rro = new RRO<>();
         rro.setSuccess(true);
-        rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
-        rro.setData(found);
+        rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
         return rro;
     }
 }
