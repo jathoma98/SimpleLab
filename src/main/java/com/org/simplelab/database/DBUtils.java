@@ -11,10 +11,6 @@ import org.modelmapper.spi.MappingContext;
 
 import java.security.MessageDigest;
 
-/**
- * Management class for MongoDB entities
- * @author Jacob Thomas
- */
 public class DBUtils {
 
     public static final String USER_TABLE_NAME = "user";

@@ -155,7 +155,6 @@ public class LabEquipmentTests extends SpringTestConfig {
     @Autowired
     LabRESTController lrc;
 
-    //TODO: figure out this null pointer exception
     @Test
     @Transactional
     void testAddStepEndpoint() throws Exception{

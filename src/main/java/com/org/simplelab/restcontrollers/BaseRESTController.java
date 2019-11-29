@@ -1,7 +1,6 @@
 package com.org.simplelab.restcontrollers;
 
 import com.org.simplelab.controllers.BaseController;
-import com.org.simplelab.controllers.RequestResponse;
 import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.BaseTable;
 import com.org.simplelab.database.entities.User;
@@ -19,8 +18,6 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpSession;
 import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Contains generic implementations of common REST endpoints.
