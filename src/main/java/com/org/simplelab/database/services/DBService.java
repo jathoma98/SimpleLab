@@ -1,7 +1,6 @@
 package com.org.simplelab.database.services;
 
 import com.org.simplelab.database.entities.BaseTable;
-import com.org.simplelab.database.entities.interfaces.HasEntitySets;
 import com.org.simplelab.database.repositories.*;
 import com.org.simplelab.database.services.interfaces.SetModificationCondition;
 import lombok.Getter;
@@ -87,25 +86,12 @@ public abstract class DBService<T extends BaseTable> {
 
     /**
      * Deletes the entity from the DB.
-     * Important: Entities which manage EntitySets
-     * must have their Set field set to null before deletion,
-     * so entities which implement the HasEntitySets will have
-     * those sets nullified prior to deletion.
      * @param id - Id of the Entity to delete.
      * @return - true
      */
     @Transactional
     public boolean deleteById(long id){
-        if (HasEntitySets.class.isInstance(this)){
-            T found = findById(id);
-            if (found != null){
-                HasEntitySets clearSets = (HasEntitySets)found;
-                clearSets.nullifyEntitySets();
-                repository.delete(found);
-            }
-        } else {
-            getRepository().deleteById(id);
-        }
+        getRepository().deleteById(id);
         return true;
     }
 
