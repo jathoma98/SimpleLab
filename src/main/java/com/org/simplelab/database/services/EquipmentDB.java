@@ -41,7 +41,7 @@ public class EquipmentDB extends DBService<Equipment> {
         return new EquipmentPropertySetManager(e.getProperties(), e);
     }
 
-    public boolean insert(Equipment toInsert) throws EntityInsertionException {
+    public boolean insert(Equipment toInsert) throws EntityDBModificationException {
         return super.insert(toInsert);
     }
 
@@ -49,7 +49,7 @@ public class EquipmentDB extends DBService<Equipment> {
         return super.deleteById(id);
     }
 
-    public boolean update(Equipment toUpdate) {
+    public boolean update(Equipment toUpdate) throws DBService.EntityDBModificationException {
         return super.update(toUpdate);
     }
 

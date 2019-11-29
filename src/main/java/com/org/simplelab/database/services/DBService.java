@@ -5,8 +5,6 @@ import com.org.simplelab.database.entities.interfaces.HasEntitySets;
 import com.org.simplelab.database.repositories.*;
 import com.org.simplelab.database.services.interfaces.SetModificationCondition;
 import lombok.Getter;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
@@ -18,13 +16,15 @@ public abstract class DBService<T extends BaseTable> {
     private BaseRepository<T> repository;
 
     /**
-     * Exception to be thrown when insertion into a DB violates some constraint.
+     * Exception to be thrown when modification of a DB violates some constraint.
      * The message should include the contraint being violated.
      */
-    public static class EntityInsertionException extends Exception{
+    public static class EntityDBModificationException extends Exception{
+        protected static String GENERIC_INVALID_UPDATE_ERROR = "Attempted to call update() on a new entity. " +
+                "update() should only be called on entities which already exist in the DB.";
         protected static String GENERIC_MODIFICATION_ERROR = "An error occurred while modifying this collection";
-        EntityInsertionException(){super(GENERIC_MODIFICATION_ERROR);}
-        EntityInsertionException(String msg){
+        EntityDBModificationException(){super(GENERIC_MODIFICATION_ERROR);}
+        EntityDBModificationException(String msg){
             super(msg);
         }
     }
@@ -78,9 +78,9 @@ public abstract class DBService<T extends BaseTable> {
      * Inserts entity into the DB.
      * @param toInsert - entity of type T to insert.
      * @return - true if insertion was successful
-     * @throws EntityInsertionException - If an error occurred during insertion
+     * @throws EntityDBModificationException - If an error occurred during insertion
      */
-    public boolean insert(T toInsert) throws EntityInsertionException{
+    public boolean insert(T toInsert) throws EntityDBModificationException {
         getRepository().save(toInsert);
         return true;
     }
@@ -109,7 +109,11 @@ public abstract class DBService<T extends BaseTable> {
         return true;
     }
 
-    public boolean update(T toUpdate){
+    public boolean update(T toUpdate) throws EntityDBModificationException{
+        //cannot call update() on new entities
+        if (toUpdate.isNew()){
+            throw new EntityDBModificationException(EntityDBModificationException.GENERIC_INVALID_UPDATE_ERROR);
+        }
         getRepository().save(toUpdate);
         return true;
     }

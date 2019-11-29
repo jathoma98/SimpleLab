@@ -155,8 +155,12 @@ public class LabRESTController extends BaseRESTController<Lab> {
     @DeleteMapping(LAB_ID_STEP_MAPPING)
     public RRO<Lab> deleteAllStepsFromLab(@PathVariable("lab_id") long lab_id){
         Lab found = labDB.findById(lab_id);
-        found.nullifyEntitySets();
-        labDB.update(found);
+        found.setSteps(new ArrayList<>());
+        try {
+            labDB.update(found);
+        } catch (DBService.EntityDBModificationException e){
+            RRO.sendErrorMessage(e.getMessage());
+        }
         RRO<Lab> rro = new RRO<>();
         rro.setSuccess(true);
         rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());

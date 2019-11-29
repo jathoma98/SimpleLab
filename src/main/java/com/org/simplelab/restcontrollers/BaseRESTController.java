@@ -57,7 +57,7 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
         }
         try{
             db.insert(created);
-        } catch (DBService.EntityInsertionException e){
+        } catch (DBService.EntityDBModificationException e){
             rro.setSuccess(true);
             rro.setMsg(e.getMessage());
             rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
@@ -72,31 +72,32 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
         return db.findById(id);
     }
 
-    protected RRO<String> updateEntity(long idToUpdate, DTO dto, DBService<T> db){
+    protected RRO<String> updateEntity(long idToUpdate, DTO dto, DBService<T> db) {
         RRO<String> rro = new RRO();
         ModelMapper mm = DBUtils.getMapper();
         T found = db.findById(idToUpdate);
-        if (found == null){
+        if (found == null) {
             return RRO.sendErrorMessage(RRO_MSG.ENTITY_UPDATE_ENTITY_NO_FOUND.getMsg());
         }
         //if its a validator, validate before copying.
-        if (Validator.class.isInstance(dto)){
-            Validator<T> DTOValidator = (Validator<T>)dto;
-            try{
+        if (Validator.class.isInstance(dto)) {
+            Validator<T> DTOValidator = (Validator<T>) dto;
+            try {
                 DTOValidator.validate();
-            } catch (InvalidFieldException e){
+            } catch (InvalidFieldException e) {
                 return RRO.sendErrorMessage(e.getMessage());
             }
         }
         T toUpdate = db.findById(idToUpdate);
         mm.map(dto, toUpdate);
-        if (db.update(toUpdate)){
-            rro.setSuccess(true);
-            rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
-            return rro;
-        } else {
-            return RRO.sendErrorMessage(RRO_MSG.ENTITY_UPDATE_ERROR.getMsg());
+        try{
+            db.update(toUpdate);
+        } catch (DBService.EntityDBModificationException e){
+            return RRO.sendErrorMessage(e.getMessage());
         }
+        rro.setSuccess(true);
+        rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+        return rro;
     }
 
     protected RRO<String> deleteEntity(long idToDelete, DBService<T> db){
@@ -134,7 +135,11 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
             }
         }
         T toSave = set.getFullEntity();
-        db.update(toSave);
+        try {
+            db.update(toSave);
+        } catch (DBService.EntityDBModificationException e){
+            RRO.sendErrorMessage(e.getMessage());
+        }
         return rro;
     }
 
@@ -160,7 +165,11 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
             }
         }
         T toSave = set.getFullEntity();
-        db.update(toSave);
+        try {
+            db.update(toSave);
+        } catch (DBService.EntityDBModificationException e){
+            RRO.sendErrorMessage(e.getMessage());
+        }
         return rro;
     }
 

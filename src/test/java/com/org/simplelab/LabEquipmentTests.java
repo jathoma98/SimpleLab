@@ -197,6 +197,24 @@ public class LabEquipmentTests extends SpringTestConfig {
 
     }
 
+    @Test
+    void deleteAllStepsTest() throws Exception{
+        Lab l = TestUtils.createJunkLabWithSteps(5);
+        labDB.insert(l);
+
+        List<Lab> found = labDB.getRepository().findByName(l.getName());
+        Lab foundLab = found.get(0);
+
+        long found_id = foundLab.getId();
+        lrc.deleteAllStepsFromLab(found_id);
+
+        found = labDB.getRepository().findByName(l.getName());
+        foundLab = found.get(0);
+
+        assertEquals(0, foundLab.getSteps().size());
+
+    }
+
 
 
 }

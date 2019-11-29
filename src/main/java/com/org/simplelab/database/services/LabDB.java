@@ -11,8 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 /**
  * Wrapper class for handling retrieval and saving of labs
@@ -39,7 +37,7 @@ public class LabDB extends DBService<Lab> {
     }
 
 
-    public boolean insert(Lab toInsert) throws EntityInsertionException {
+    public boolean insert(Lab toInsert) throws EntityDBModificationException {
         return super.insert(toInsert);
     }
 
@@ -58,7 +56,7 @@ public class LabDB extends DBService<Lab> {
         return new StepSetManager(l.getSteps(), l);
     }
 
-    public boolean update(Lab toUpdate) {
+    public boolean update(Lab toUpdate) throws DBService.EntityDBModificationException {
         return super.update(toUpdate);
     }
 
