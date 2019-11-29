@@ -19,17 +19,16 @@ public class Lab extends BaseTable implements UserCreated, HasEntitySets{
     private String name;
     private String description;
 
-    @OneToOne(cascade = {CascadeType.PERSIST},
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE},
             fetch = FetchType.LAZY)
     @JoinColumn(name = "creator_id")
     private User creator;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST},
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE},
                fetch = FetchType.LAZY)
     private Set<Equipment> equipments;
 
-    @OneToMany(cascade = {CascadeType.PERSIST,
-                          CascadeType.REMOVE},
+    @OneToMany(cascade = {CascadeType.ALL},
                 fetch = FetchType.LAZY,
                 mappedBy = "lab")
     private List<Step> steps;

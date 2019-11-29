@@ -76,6 +76,7 @@ public class TestUtils {
 
     public static Equipment createJunkEquipmentWithProperties(int numProperties){
         Equipment e = createJunkEquipment();
+        e.setCreator(createJunkUser());
         for (int i = 0; i < numProperties; i++){
             e.getProperties().add(createJunkEquipmentProperty(e));
         }
@@ -100,7 +101,7 @@ public class TestUtils {
             step.setTargetObject(tar);
             step.setLab(source);
             step.setStepNum(i+1);
-            step.setCreator(c);
+            //step.setCreator(c);
             steps.add(step);
         }
         return steps;

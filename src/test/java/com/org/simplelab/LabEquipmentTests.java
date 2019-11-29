@@ -157,6 +157,7 @@ public class LabEquipmentTests extends SpringTestConfig {
 
     //TODO: figure out this null pointer exception
     @Test
+    @Transactional
     void testAddStepEndpoint() throws Exception{
         Lab l = TestUtils.createJunkLab();
         labDB.insert(l);
@@ -180,7 +181,15 @@ public class LabEquipmentTests extends SpringTestConfig {
         assertEquals(1, set.getEntitySet().size());
         for (Step s: set.getEntitySet()){
             System.out.println(s.toString());
-            assertEquals(dto.getTargetObject(), s.getTargetObject());
+            assertEquals(dto.getTargetObject().getProperties().size(), s.getTargetObject().getProperties().size());
+            EquipmentProperty[] ep1 = new EquipmentProperty[dto.getTargetObject().getProperties().size()];
+            EquipmentProperty[] ep2 = new EquipmentProperty[ep1.length];
+            dto.getTargetObject().getProperties().toArray(ep1);
+            s.getTargetObject().getProperties().toArray(ep2);
+            for (int i = 0; i < ep1.length; i++){
+                assertEquals(ep1[i].getProperty_key(), ep2[i].getProperty_key());
+                assertEquals(ep1[i].getProperty_value(), ep2[i].getProperty_value());
+            }
         }
 
         dto = new DTO.LabAddStepDTO();

@@ -17,7 +17,7 @@ public class Equipment extends BaseTable implements UserCreated {
 
     private String name;
 
-    @OneToOne(cascade = {CascadeType.PERSIST}
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE}
             ,fetch = FetchType.LAZY)
     @JoinColumn(name = "creator_id")
     private User creator;
@@ -26,8 +26,7 @@ public class Equipment extends BaseTable implements UserCreated {
 
     //properties cannot exist without a parent equipment,
     //so we cascade remove
-    @OneToMany(cascade = {CascadeType.PERSIST,
-                          CascadeType.REMOVE},
+    @OneToMany(cascade = {CascadeType.ALL},
                 fetch = FetchType.EAGER,
                 mappedBy = "parentEquipment")
     private Set<EquipmentProperty> properties;
