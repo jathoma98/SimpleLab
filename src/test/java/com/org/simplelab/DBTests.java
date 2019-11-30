@@ -3,7 +3,6 @@ package com.org.simplelab;
 import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.*;
 import com.org.simplelab.database.repositories.UserRepository;
-import com.org.simplelab.database.services.CourseDB;
 import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.services.LabDB;
 import com.org.simplelab.database.services.UserDB;
@@ -361,8 +360,8 @@ class DBTests extends SpringTestConfig {
 
 		for (int i = 0; i < 5; i++){
 			EquipmentProperty ep = new EquipmentProperty();
-			ep.setProperty_key("test " + i);
-			ep.setProperty_value(Integer.toString(i));
+			ep.setPropertyKey("test " + i);
+			ep.setPropertyValue(Integer.toString(i));
 			ep.setParentEquipment(e);
 			e.getProperties().add(ep);
 		}

@@ -19,7 +19,7 @@ public class Lab extends BaseTable implements UserCreated{
     private String description;
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE},
-            fetch = FetchType.LAZY)
+            fetch = FetchType.EAGER)
     @JoinColumn(name = "creator_id")
     private User creator;
 

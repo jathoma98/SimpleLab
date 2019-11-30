@@ -1,14 +1,9 @@
 package com.org.simplelab;
 
 import com.org.simplelab.database.entities.*;
-import com.org.simplelab.database.services.CourseDB;
-import com.org.simplelab.database.services.DBService;
-import com.org.simplelab.database.services.EquipmentDB;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.test.web.servlet.MockMvc;
 
-import javax.swing.text.html.parser.Entity;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,8 +61,8 @@ public class TestUtils {
     public static EquipmentProperty createJunkEquipmentProperty(Equipment parent){
         EquipmentProperty ep = new EquipmentProperty();
         Random rand = new Random();
-        ep.setProperty_key(Double.toString(rand.nextDouble()));
-        ep.setProperty_value(Double.toString(rand.nextDouble()));
+        ep.setPropertyKey(Double.toString(rand.nextDouble()));
+        ep.setPropertyValue(Double.toString(rand.nextDouble()));
         ep.set_metadata(metadata);
         ep.setParentEquipment(parent);
         return ep;

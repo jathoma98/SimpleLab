@@ -3,6 +3,7 @@ package com.org.simplelab.database.services;
 import com.org.simplelab.database.entities.BaseTable;
 import com.org.simplelab.database.repositories.*;
 import com.org.simplelab.database.services.interfaces.SetModificationCondition;
+import com.org.simplelab.database.services.projections.Projection;
 import lombok.Getter;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -98,7 +99,8 @@ public abstract class DBService<T extends BaseTable> {
     public boolean update(T toUpdate) throws EntityDBModificationException{
         //cannot call update() on new entities
         if (toUpdate.isNew()){
-            throw new EntityDBModificationException(EntityDBModificationException.GENERIC_INVALID_UPDATE_ERROR);
+            throw new EntityDBModificationException
+                    (EntityDBModificationException.GENERIC_INVALID_UPDATE_ERROR);
         }
         getRepository().save(toUpdate);
         return true;
@@ -109,6 +111,15 @@ public abstract class DBService<T extends BaseTable> {
         if (found.isPresent())
             return found.get();
         return null;
+    }
+
+    public <U extends Projection> U findById(long id, Class<U> projection){
+        Optional<U> found = getRepository().findById(id, projection);
+        if (found.isPresent()){
+            return found.get();
+        }
+        return null;
+
     }
 
 }

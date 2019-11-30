@@ -1,21 +1,17 @@
 package com.org.simplelab;
 
-import com.org.simplelab.database.entities.Equipment;
-import com.org.simplelab.database.entities.EquipmentProperty;
-import com.org.simplelab.database.entities.Lab;
-import com.org.simplelab.database.entities.Step;
+import com.org.simplelab.database.entities.*;
+import com.org.simplelab.database.repositories.LabRepository;
 import com.org.simplelab.database.services.DBService;
+import com.org.simplelab.database.services.projections.Projection;
 import com.org.simplelab.restcontrollers.LabRESTController;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.Table;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -80,7 +76,7 @@ public class LabEquipmentTests extends SpringTestConfig {
         String UPDATED_VAL = "UPDATED_VAL";
         DBService.EntitySetManager<EquipmentProperty, Equipment> set = equipmentDB.getPropertiesOfEquipment(found.getId());
         for (EquipmentProperty ep: set.getEntitySet()){
-            ep.setProperty_value(UPDATED_VAL);
+            ep.setPropertyValue(UPDATED_VAL);
         }
         set.getFullEntity().setName(UPDATED_NAME);
         equipmentDB.update(set.getFullEntity());
@@ -90,7 +86,7 @@ public class LabEquipmentTests extends SpringTestConfig {
         set = equipmentDB.getPropertiesManager(found);
         assertEquals(UPDATED_NAME, found.getName());
         for (EquipmentProperty ep: set.getEntitySet()){
-            assertEquals(UPDATED_VAL, ep.getProperty_value());
+            assertEquals(UPDATED_VAL, ep.getPropertyValue());
         }
 
     }
@@ -186,8 +182,8 @@ public class LabEquipmentTests extends SpringTestConfig {
             dto.getTargetObject().getProperties().toArray(ep1);
             s.getTargetObject().getProperties().toArray(ep2);
             for (int i = 0; i < ep1.length; i++){
-                assertEquals(ep1[i].getProperty_key(), ep2[i].getProperty_key());
-                assertEquals(ep1[i].getProperty_value(), ep2[i].getProperty_value());
+                assertEquals(ep1[i].getPropertyKey(), ep2[i].getPropertyKey());
+                assertEquals(ep1[i].getPropertyValue(), ep2[i].getPropertyValue());
             }
         }
 
@@ -214,6 +210,38 @@ public class LabEquipmentTests extends SpringTestConfig {
         assertEquals(0, foundLab.getSteps().size());
 
     }
+
+    @Test
+    void testProjection() throws Exception{
+        User junk = TestUtils.createJunkUser();
+        userDB.insert(junk);
+        User found = userDB.findUser(junk.getUsername());
+
+        Lab l = TestUtils.createJunkLab();
+        l.setCreator(found);
+        labDB.insert(l);
+
+        List<Projection.TeacherLabInfo> returnval = labDB.getLabsByCreatorId(found.getId(), Projection.TeacherLabInfo.class);
+        System.out.println(returnval.toString());
+
+    }
+
+    @Test
+    void testFindByIdProjection() throws Exception{
+        User junk = TestUtils.createJunkUser();
+        userDB.insert(junk);
+        User found = userDB.findUser(junk.getUsername());
+
+        Lab l = TestUtils.createJunkLab();
+        l.setCreator(found);
+        labDB.insert(l);
+
+        LabRepository lr = labDB.getRepository();
+        Optional<Projection.TeacherLabInfo> foundLab = lr.findById(l.getId(), Projection.TeacherLabInfo.class);
+        System.out.println(foundLab.get().toString());
+
+    }
+
 
 
 

@@ -7,6 +7,7 @@ import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.services.CourseDB;
 import com.org.simplelab.database.services.DBService;
+import com.org.simplelab.database.services.projections.Projection;
 import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
@@ -117,20 +118,17 @@ public class CourseRESTController extends BaseRESTController<Course> {
         long userId = getUserIdFromSession(session);
         List<Course> courses = courseDB.getCoursesForTeacher(userId);
 
-        //TODO: this is really slow -- move this to DB query side
-        @Data
-        class CourseInfoForTeacherView{
-            String name, course_id, createdDate;
-        }
 
-        RRO<List<CourseInfoForTeacherView>> rro = new RRO();
-        List<CourseInfoForTeacherView> returnInfo = new ArrayList<>();
+        //we cant use SQL projections on Course because course_id has an underscore in it
+        //which isnt allowed in JPA, so we have to manually copy the fields.
+        RRO<List<Projection.TeacherCourseInfo>> rro = new RRO();
+        List<Projection.TeacherCourseInfo> returnInfo = new ArrayList<>();
 
         courses.forEach((course) -> {
-            CourseInfoForTeacherView mapped = new CourseInfoForTeacherView();
-            mapped.setCourse_id(course.getCourse_id());
-            mapped.setCreatedDate(course.getCreatedDate());
-            mapped.setName(course.getName());
+            Projection.TeacherCourseInfo mapped =
+                    new Projection.TeacherCourseInfo(course.getName(),
+                                                    course.getCreatedDate(),
+                                                    course.getCourse_id());
             returnInfo.add(mapped);
         });
 

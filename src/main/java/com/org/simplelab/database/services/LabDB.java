@@ -66,7 +66,11 @@ public class LabDB extends DBService<Lab> {
 
 
     public List<Lab> getLabsByCreatorId(long id){
-        return repository.findByCreator_id(id);
+        return repository.findByCreator_id(id, Lab.class);
+    }
+
+    public <T> List<T> getLabsByCreatorId(long id, Class<T> projection){
+        return repository.findByCreator_id(id, projection);
     }
 
     public EntitySetManager<Equipment, Lab> getEquipmentOfLabById(long id){

@@ -13,19 +13,19 @@ public class EquipmentProperty extends BaseTable {
     @ManyToOne(fetch = FetchType.EAGER)
     Equipment parentEquipment;
 
-    private String property_key;
+    private String propertyKey;
 
-    private String property_value;
+    private String propertyValue;
 
 
     @Override
     public int hashCode(){
-        return property_key.hashCode() + property_value.hashCode();
+        return propertyKey.hashCode() + propertyValue.hashCode();
     }
 
     @Override
     public String toString(){
-        return "[ id: " + getId() + "| Parent: " + parentEquipment.getName() + "| Key: " + property_key + "| Value: " + property_value + " ]";
+        return "[ id: " + getId() + "| Parent: " + parentEquipment.getName() + "| Key: " + propertyKey + "| Value: " + propertyValue + " ]";
     }
 
 }

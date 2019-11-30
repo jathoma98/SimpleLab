@@ -6,6 +6,7 @@ import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.Step;
 import com.org.simplelab.database.repositories.LabRepository;
 import com.org.simplelab.database.services.DBService;
+import com.org.simplelab.database.services.projections.Projection;
 import com.org.simplelab.database.validators.LabValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
@@ -85,28 +86,15 @@ public class LabRESTController extends BaseRESTController<Lab> {
     @GetMapping(LOAD_LIST_LAB_MAPPING)
     public RRO getListOfCourse(HttpSession session) {
         long userId = getUserIdFromSession(session);
-        RRO rro = new RRO();
-        List<Lab> labs = labDB.getLabsByCreatorId(userId);
+        RRO rro = new RRO<Projection>();
+        //Use TeacherLabInfo projection to only get attributes we want
+        List<Projection.TeacherLabInfo> labs = labDB.getLabsByCreatorId(userId, Projection.TeacherLabInfo.class);
         if (labs == null) {
             rro.setSuccess(false);
             rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
             return rro;
         }
-        //TODO: this is really slow -- move this to SQL side
-        @Data
-        class LabInfoForTeacherView{
-            private long id;
-            private String name, createdDate;
-        }
-        List<LabInfoForTeacherView> returnInfo = new ArrayList<>();
-        labs.forEach((lab) -> {
-            LabInfoForTeacherView info = new LabInfoForTeacherView();
-            info.setCreatedDate(lab.getCreatedDate());
-            info.setId(lab.getId());
-            info.setName(lab.getName());
-            returnInfo.add(info);
-        });
-        rro.setData(returnInfo);
+        rro.setData(labs);
         rro.setSuccess(true);
         rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
         return rro;
