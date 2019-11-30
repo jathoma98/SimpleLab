@@ -63,7 +63,7 @@ public class CourseDB extends DBService<Course> {
     }
 
     /**
-     * Returns list of students in a course.
+     * Returns list of student usernames in a course.
      * @param course_id - course_id of the course to be found
      * @return - List of Users corresponding to the course -- empty list if no users exist
      * @throws CourseTransactionException - when Course with given course_id does not exist
@@ -74,7 +74,12 @@ public class CourseDB extends DBService<Course> {
             throw new CourseTransactionException(CourseTransactionException.NO_COURSE_FOUND);
         Course c = found.get(0);
         ArrayList<User> students = new ArrayList<>();
-        students.addAll(c.getStudents());
+        //project only usernames
+        c.getStudents().forEach((student) -> {
+            User proj = new User();
+            proj.setUsername(student.getUsername());
+            students.add(proj);
+        });
         return students;
     }
 
