@@ -1,24 +1,26 @@
 package com.org.simplelab.restcontrollers;
 
-import com.org.simplelab.controllers.RequestResponse;
+import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.Equipment;
 import com.org.simplelab.database.entities.Lab;
+import com.org.simplelab.database.entities.Step;
 import com.org.simplelab.database.repositories.LabRepository;
 import com.org.simplelab.database.services.DBService;
-import com.org.simplelab.database.validators.CourseValidator;
+import com.org.simplelab.database.services.projections.Projection;
 import com.org.simplelab.database.validators.LabValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
 import com.org.simplelab.restcontrollers.rro.RRO_ACTION_TYPE;
-import com.org.simplelab.restcontrollers.rro.RRO_MSG;
+import lombok.Data;
+import lombok.Value;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import static com.org.simplelab.restcontrollers.LabRESTController.BASE_MAPPING;
 
@@ -33,10 +35,10 @@ public class LabRESTController extends BaseRESTController<Lab> {
     //lab_id = id of the lab to interact with in the DB
     public static final String BASE_MAPPING = "/lab/rest";
     public static final String LAB_ID_MAPPING = "/{lab_id}";
-    public static final String COURSE_ID_MAPPING = "/{course_id}";
     public static final String LOAD_LIST_LAB_MAPPING = "/loadLabList";
     public static final String UPDATE_MAPPING = "/updateLab";
-    public static final String DELETE_MAPPING = "/deleteLab";
+    public static final String LAB_ID_STEP_MAPPING = LAB_ID_MAPPING + "/step";
+    public static final String LAB_ID_STEP_NUMBER_MAPPING = LAB_ID_MAPPING + "/{step_number}";
 
 
     @Autowired
@@ -82,10 +84,11 @@ public class LabRESTController extends BaseRESTController<Lab> {
 
 
     @GetMapping(LOAD_LIST_LAB_MAPPING)
-    public RRO<List<Lab>> getListOfCourse(HttpSession session) {
+    public RRO getListOfCourse(HttpSession session) {
         long userId = getUserIdFromSession(session);
-        RRO rro = new RRO();
-        List<Lab> labs = labDB.getLabsByCreatorId(userId);
+        RRO rro = new RRO<Projection>();
+        //Use TeacherLabInfo projection to only get attributes we want
+        List<Projection.TeacherLabInfo> labs = labDB.getLabsByCreatorId(userId, Projection.TeacherLabInfo.class);
         if (labs == null) {
             rro.setSuccess(false);
             rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
@@ -123,21 +126,48 @@ public class LabRESTController extends BaseRESTController<Lab> {
 
     @PatchMapping(UPDATE_MAPPING)
     public RRO<String> updateLab(@RequestBody DTO.LabUpdateDTO dto, HttpSession session) {
-        RRO<String> rro = new RRO();
         long uid = getUserIdFromSession(session);
         Lab toUpdate = labDB.findById(dto.getLab_id_old());
         if (toUpdate == null){
-            rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
-            rro.setMsg("Lab Not Found");
-            rro.setSuccess(false);
-            return rro;
+            return RRO.sendErrorMessage("Lab Not Found");
         }
         if (toUpdate.getCreator().getId() != uid){
-            rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
-            rro.setMsg("Duplicate ID");
-            rro.setSuccess(false);
-            return rro;
+            return RRO.sendErrorMessage("Duplicate ID");
         }
         return super.updateEntity(toUpdate.getId(), dto.getNewLabInfo(), labDB);
+    }
+
+    @PostMapping(LAB_ID_STEP_MAPPING)
+    public RRO<String> addStepToLab(@PathVariable("lab_id") long lab_id,
+                                    @RequestBody DTO.LabAddStepDTO dto){
+        Lab found = labDB.findById(lab_id);
+        if (found == null){
+            return RRO.sendErrorMessage("Lab Not Found");
+        }
+        Step s = DBUtils.getMapper().map(dto, Step.class);
+        s.setLab(found);
+        List<Step> toAdd = new ArrayList<>();
+        toAdd.add(s);
+        return super.addEntitiesToEntityList(labDB.getStepManager(found), toAdd, labDB);
+    }
+
+    //TODO: implement delete step mapping later, we should get a prototype lab working first
+    /**
+     * THIS IS A TESTING METHOD - deletes all steps in the lab
+     * @return RRO with data field containing the updated lab
+     */
+    @DeleteMapping(LAB_ID_STEP_MAPPING)
+    public RRO deleteAllStepsFromLab(@PathVariable("lab_id") long lab_id){
+        Lab found = labDB.findById(lab_id);
+        found.setSteps(new ArrayList<>());
+        try {
+            labDB.update(found);
+        } catch (DBService.EntityDBModificationException e){
+            RRO.sendErrorMessage(e.getMessage());
+        }
+        RRO<Lab> rro = new RRO<>();
+        rro.setSuccess(true);
+        rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+        return rro;
     }
 }

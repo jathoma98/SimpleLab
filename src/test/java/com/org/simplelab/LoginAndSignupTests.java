@@ -20,9 +20,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Class for testing methods relating to Login and Signup functions.
  * Refer to https://spring.io/guides/gs/testing-web/ for info on how to write requests for testing.
  */
-@AutoConfigureMockMvc
 @Transactional
-public class LoginAndSignupTests extends SpringTestConfig{
+public class LoginAndSignupTests extends SpringMockMVCTestConfig{
 
     @Autowired
     private MockMvc mockMvc;

@@ -13,7 +13,6 @@ import java.util.List;
 @Repository
 public interface CourseRepository extends BaseRepository<Course> {
 
-
     public List<Course> findByName(String name);
 
     public List<Course> findByCreator_id(long id);

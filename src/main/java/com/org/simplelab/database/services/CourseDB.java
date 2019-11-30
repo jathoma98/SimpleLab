@@ -22,7 +22,7 @@ public class CourseDB extends DBService<Course> {
     @Autowired
     private CourseRepository repository;
 
-    public static class CourseTransactionException extends DBService.EntityInsertionException{
+    public static class CourseTransactionException extends EntityDBModificationException {
         public static final String NO_COURSE_FOUND = "The requested course could not be found.";
         CourseTransactionException(String message){
             super(message);
@@ -46,7 +46,7 @@ public class CourseDB extends DBService<Course> {
         return super.deleteById(id);
     }
 
-    public boolean update(Course toUpdate) {
+    public boolean update(Course toUpdate) throws EntityDBModificationException {
         return super.update(toUpdate);
     }
 

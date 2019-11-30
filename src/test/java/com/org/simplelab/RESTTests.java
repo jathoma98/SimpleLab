@@ -25,8 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@AutoConfigureMockMvc
-public class RESTTests extends SpringTestConfig {
+public class RESTTests extends SpringMockMVCTestConfig {
 
 
     private static Map<String, Object> session_atr = new HashMap<>();

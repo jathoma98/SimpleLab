@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @Transactional
 @Component
@@ -22,7 +21,7 @@ public class UserDB extends DBService<User>{
 
     public static final String USERNAME_TAKEN = "username taken";
 
-    public class UserInsertionException extends DBService.EntityInsertionException {
+    public class UserInsertionException extends EntityDBModificationException {
         UserInsertionException(String msg){
             super(msg);
         }
@@ -61,7 +60,7 @@ public class UserDB extends DBService<User>{
         return super.deleteById(id);
     }
 
-    public boolean update(User toUpdate) {
+    public boolean update(User toUpdate) throws EntityDBModificationException {
         return super.update(toUpdate);
     }
 

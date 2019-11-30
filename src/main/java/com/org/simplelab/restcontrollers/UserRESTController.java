@@ -72,7 +72,7 @@ public class UserRESTController extends BaseRESTController<User> {
 
     @PostMapping(RESET_USER_MAPPING)
     public void resetUserInfo(@RequestBody User user
-                                           ,HttpSession session) {
+                                           ,HttpSession session) throws Exception {
 
         long userId = getUserIdFromSession(session);
         user.setId(userId);
