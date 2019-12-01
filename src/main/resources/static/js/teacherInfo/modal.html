@@ -45,11 +45,11 @@ data = {
             </form>
             <div class="row">
                 {{#create}}
-                <button id="courseSaveBtn" class="waves-effect waves-light modal-close right btn btn_margin"
-                        style="background:#dd0052;" type="submit" name="action">
-                    Create
-                </button>
-            {{/create}}
+                    <button id="courseSaveBtn" class="waves-effect waves-light modal-close right btn btn_margin"
+                            style="background:#dd0052;" type="submit" name="action">
+                        Create
+                    </button>
+                {{/create}}
                 {{^create}}
                     <button id="courseEditBtn" class="waves-effect waves-light modal-close right btn btn_margin"
                             style="background:#dd0052;" type="submit" name="action">
@@ -179,16 +179,16 @@ data = {
             </form>
             <div class="row">
                 {{#create}}
-                <button id="labSaveBtn" class="waves-effect waves-light modal-close right btn btn_margin"
-                        style="background:#dd0052;" type="submit" name="action">
-                    Create
-                </button>
+                    <button id="labSaveBtn" class="waves-effect waves-light modal-close right btn btn_margin"
+                            style="background:#dd0052;" type="submit" name="action">
+                        Create
+                    </button>
                 {{/create}}
                 {{^create}}
-                <button id="labEditBtn" class="waves-effect waves-light modal-close right btn btn_margin"
-                        style="background:#dd0052;" type="submit" name="action">
-                    Edit
-                </button>
+                    <button id="labEditBtn" class="waves-effect waves-light modal-close right btn btn_margin"
+                            style="background:#dd0052;" type="submit" name="action">
+                        Edit
+                    </button>
                 {{/create}}
             </div>
         </div>
@@ -230,8 +230,118 @@ data = {
         </div>
     </li>
 {{/labModal}}
+{{#EquipmentModal}}
+    <nav>
+        <div class="nav-wrapper my_cran">
+            <a href="#!" class="brand-logo"><i class="material-icons">view_list</i>Add Equipment</a>
+        </div>
+    </nav>
+    <div class="row">
+        <div class="col s4">
+            <div class="row" style="margin-top: 30px">
+                <div class="col s11 offset-l1">
+                    <div class="card-panel teal" style="height: 200px; width: 200px">
+                        <!--                        put image here-->
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="padding-left: 10px">
+                <table>
+                    <!--                    <tbody>-->
+                    <!--                    <tr style="border: 0px;">-->
+                    <!--                        <td style="height:20px">-->
+                    <!--                            <label style="font-size: large">Properties:</label>-->
+                    <!--                        </td>-->
+                    <!--                    </tr>-->
+                    <!--                    <tr style="border: 0px;">-->
+                    <!--                        <td style="padding: 0px;">-->
+                    <!--                            <form action="#">-->
+                    <!--                                <p class="col s3">-->
+                    <!--                                    <label>-->
+                    <!--                                        <input name="itemtype" class="with-gap" type="radio" checked/>-->
+                    <!--                                        <span>Solid</span>-->
+                    <!--                                    </label>-->
+                    <!--                                </p>-->
+                    <!--                                <p class="col s3 offset-l1">-->
+                    <!--                                    <label>-->
+                    <!--                                        <input name="itemtype" class="with-gap" type="radio"/>-->
+                    <!--                                        <span>Fluid</span>-->
+                    <!--                                    </label>-->
+                    <!--                                </p>-->
+                    <!--                            </form>-->
+                    <!--                        </td>-->
+                    <!--                    </tr>-->
+                    <!--                    <tr style="border: 0px;">-->
+                    <!--                        <td>-->
+                    <!--                            <label class="row col s12">-->
+                    <!--                                <input type="checkbox" class="filled-in" checked="checked"/>-->
+                    <!--                                <span>Heatable</span>-->
+                    <!--                            </label>-->
+                    <!--                        </td>-->
+                    <!--                    </tr>-->
+                    <!--                    </tbody>-->
+                </table>
+
+            </div>
+        </div>
+
+    <div class="col s8">
+        <div class="row" style="margin-top: 30px">
+            <label style="font-size: large">Equipment Type:</label>
+            <form action="#">
+                <p class="col s3">
+                    <label>
+                        <input name="equiptype" class="with-gap" type="radio" checked/>
+                        <span>Item</span>
+                    </label>
+                </p>
+                <p class="col s3 offset-l1">
+                    <label>
+                        <input name="equiptype" class="with-gap" type="radio"/>
+                        <span>Container</span>
+                    </label>
+                </p>
+                <p class="col s3 offset-l1">
+                    <label>
+                        <input name="equiptype" class="with-gap" type="radio"/>
+                        <span>Machine</span>
+                    </label>
+                </p>
+            </form>
+        </div>
+        <div class="row" style="margin-top: 30px; margin-bottom: 0px">
+            <label style="font-size: large">Properties:</label>
+        </div>
+        <div class="row" style="margin-bottom: 0px">
+            <div class="col s12">
+               Name:
+                <div class="input-field inline" style="margin-top: 0px; margin-bottom: 0px">
+                    <input type="text" class="validate">
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 0px">
+            <div class="col s12">
+                <form>
+                    <div class="col s2">
+                        <label>
+                            <input name="equiptype" class="with-gap" type="radio"/>
+                            <span>Solid</span>
+                        </label>
+                    </div>
+                    <div class="col s2 offset-l1">
+                        <label>
+                            <input name="equiptype" class="with-gap" type="radio"/>
+                            <span>Fluid</span>
+                        </label>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+{{/EquipmentModal}}
 
 
-<!--    <button id = "courseSaveBtn" class="waves-effect waves-light modal-close right btn btn_margin" style="background:#dd0052;" type="submit" name="action">-->
-<!--        Save-->
-<!--    </button>-->
+    <!--    <button id = "courseSaveBtn" class="waves-effect waves-light modal-close right btn btn_margin" style="background:#dd0052;" type="submit" name="action">-->
+    <!--        Save-->
+    <!--    </button>-->

@@ -17,7 +17,7 @@ let LABS_TABLE = {
                         let data = {
                             labModal: {
                                 active: "active",
-                                create: "false",
+                                create: false,
                                 lab: lab,
                             }
                         }
@@ -137,7 +137,7 @@ let LABS_TABLE = {
             let data = {
                 labModal:{
                     active: "active",
-                    create: "false",
+                    create: true,
                     lab: true
                 }
             }

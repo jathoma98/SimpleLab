@@ -1,11 +1,12 @@
 
 ElEM_ID = {
+    MODAL_UL: "#modal ul",
     SEARCH_STUDENT_BTN : "#searchStudentBtn",
     COURSE_TABLE_TBODY: "#course_list tbody",
     LAB_TABLE_TBODY: "#lab_list tbody",
+    EQUIPMENT_TABLE_TBODY: "#equipment_list tbody",
     STUDENT_SEARCH_TBODY: "#student_search_result_table tbody",
     STUDENT_LIST_TBODY: "#student_list_table tbody",
-    MODAL_UL: "#modal ul",
     COURSE_SAVE_BTN: "#courseSaveBtn",
     LAB_SAVE_BTN: "#labSaveBtn",
     LAB_EDIT_BTN: "#labEditBtn",
@@ -49,8 +50,11 @@ $(document).ready(function () {
     LABS_TABLE.reload();
 
     //Equipment
-    $("#equipEditBtn").on("click",hideAndShowEquip);
-    $("#equipBackBtn").on("click",hideAndShowEquip);
+    EQUIPMENT_TABLE.init();
+    $("#equipEditBtn").on("click",()=>{EQUIPMENT_TABLE.btnSwitch()});
+    $("#equipBackBtn").on("click",()=>{EQUIPMENT_TABLE.btnSwitch()});
+    $("#equipAddBtn").on("click", ()=>{EQUIPMENT_TABLE.create()});
+
 })
 
 

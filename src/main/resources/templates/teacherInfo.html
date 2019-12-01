@@ -16,6 +16,7 @@
     <script type="text/javascript" th:src="@{/js/tools.js}"></script>
     <script type="text/javascript" th:src="@{/js/teacherInfo/course.js}"></script>
     <script type="text/javascript" th:src="@{/js/teacherInfo/lab.js}"></script>
+    <script type="text/javascript" th:src="@{/js/teacherInfo/equipment.js}"></script>
     <script type="text/javascript" th:src="@{/js/accountInfo/accountInfo.js}"></script>
 
     <!--Template-->
@@ -59,7 +60,7 @@
 
 
 <div id="modal" class="modal" style="max-height: 80%; width: 80%">
-    <div class="modal-content">
+    <div class="modal-content" >
         <ul class="collapsible">
             <!--template -->
         </ul>
@@ -237,97 +238,16 @@
                     </li>
                     <li class="equipcheckcol myhide"><a id="equipBackBtn"><i class="material-icons">arrow_back</i></a>
                     </li>
-                    <li class="equipcheckcol myshow"><a class="modal-trigger" href="#labModal"><i
-                            class="material-icons">add</i></a></li>
+                    <li class="equipcheckcol myshow"><a id="equipAddBtn" class="modal-trigger" href="#modal">
+                        <i class="material-icons">add</i></a>
+                    </li>
                     <li class="equipcheckcol myshow"><a id="equipEditBtn"><i class="material-icons">delete</i></a></li>
                 </ul>
             </div>
         </nav>
 
-        <!-- Modal Structure -->
-        <div id="equipmentModal" class="modal" style="max-height: 80%;">
-            <div class="modal-content">
-                <ul class="collapsible">
-                    <li>
-                        <div class="collapsible-header" style="background: #00acc1"><i class="material-icons">info</i>Create
-                            New Equipment
-                        </div>
-                        <div class="row collapsible-body">
-                            <form class="col s12">
-                                <div class="row">
-                                    <div class="input-field col s12">
-                                        <input id="Equipment_name" type="text" class="validate">
-                                        <label for="Equipment_name">Equipment Name</label>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <form class="col s12">
-                                        <div class="row">
-                                            <div class="input-field col s12">
-                                                <textarea id="equipmenttextarea"
-                                                          class="materialize-textarea"></textarea>
-                                                <label for="equipmenttextarea">Equipment Decription</label>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <button class="btn waves-effect waves-light right modal-close" type="submit"
-                                                    name="action">Continue
-                                                <i class="material-icons right">send</i>
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-
-                            </form>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="collapsible-header" style="background: #f1cc36"><i class="material-icons">view_module</i>Search
-                            for Equipment
-                        </div>
-                        <div class="collapsible-body">
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    <div class="input-field col s10">
-                                        <input id="modalsearchequipment" type="text" class="validate">
-                                        <label for="modalsearchequipment">Equipment Name</label>
-                                    </div>
-                                    <div class="input-field col s2">
-                                        <a><i class="material-icons">search</i></a>
-                                    </div>
-                                    <table >
-                                        <thead>
-                                        <tr>
-                                            <th>Search result</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>Equipment one</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Equipment two</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Equipment three</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <button class="waves-effect waves-light modal-close right btn btn_margin" style="background:#dd0052;"
-                    type="submit" name="action">
-                Save
-            </button>
-        </div>
-
-
         <!--        equipment list table -->
-        <table class="table striped centered responsive-table hoverable ">
+        <table class="highlight centered" id = "#equipment_list">
             <thead>
             <tr>
                 <th class="equipcheckcol myhide mycheckbox"></th>
