@@ -41,6 +41,7 @@ $(document).ready(function () {
     $("#labAddBtn").on("click", ()=>{LABS_TABLE.create()});
     $("#labEditBtn").on("click",()=>{LABS_TABLE.btnSwitch()});
     $("#labBackBtn").on("click",()=>{LABS_TABLE.btnSwitch()});
+    $("#labDeleteBtn").on("click", ()=>{LABS_TABLE.delete()})
     //load lab table
     LABS_TABLE.reload();
 

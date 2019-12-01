@@ -61,13 +61,13 @@
 	border:2px solid black;
 }
 .bot-block-header-name{
-	font-size:28;
+	font-size:28px;
 	float: left;
 	padding-left: 5%;
 }
 
 .bot-block-header-more{
-	font-size:28;
+	font-size:28px;
 	float: right;
 	padding-right:5%;
 }

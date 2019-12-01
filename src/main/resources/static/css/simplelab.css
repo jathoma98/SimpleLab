@@ -1,0 +1,6 @@
+.clickable_row{
+    cursor: pointer
+}
+.clickable_row:hover{
+    background: #00b0ff;
+}

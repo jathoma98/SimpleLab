@@ -84,30 +84,22 @@ let LABS_TABLE = {
          **/
         this.delete = function () {
             removeTableBodyRowEvent($(ElEM_ID.LAB_TABLE_TBODY));
-            let lab = [];
-            $(ElEM_ID.LAB_TABLE_TBODY).each(function (i, row) {
+            let lids = [];
+            $(ElEM_ID.LAB_TABLE_TBODY).find("tr").each(function (i, row) {
                 if ($(row).find('input[type="checkbox"]').is(':checked')) {
-                    course.push({
-                        name: null,
-                        course_id: ($(row).find(".myIdColumn").text()),
-                        description: null
-                    });
+                    lids.push(($(row).find(".myIdColumn").text()));
                 }
             });
-            let lab_json = JSON.stringify(course);
+            let data = {lids:lids};
+            let data_json = JSON.stringify(data);
             $.ajax({
-                url: "/lab/rest/deleteCourse",
+                url: "/lab/rest/deleteLab",
                 type: 'DELETE',
                 dataTye: 'json',
                 contentType: 'application/json; charset=utf-8',
-                data: lab_json,
+                data: data_json,
                 success: function (result) {
                     retObjHandle(result, LABS_TABLE.reload);
-                    // if (result.success === "true") {
-                    //     LABS_TABLE.reload();
-                    // } else {
-                    //     alert(result.error);
-                    // }
                 }
             })
         };

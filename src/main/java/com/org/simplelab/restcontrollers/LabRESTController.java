@@ -5,7 +5,9 @@ import com.org.simplelab.database.entities.Equipment;
 import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.repositories.LabRepository;
 import com.org.simplelab.database.services.DBService;
+import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.database.validators.LabValidator;
+import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
 import com.org.simplelab.restcontrollers.rro.RRO_ACTION_TYPE;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
     public static final String LAB_ID_MAPPING = "/{lab_id}";
     public static final String COURSE_ID_MAPPING = "/{course_id}";
     public static final String LOAD_LIST_LAB_MAPPING = "/loadLabList";
+    public static final String DELETE_MAPPING = "/deleteLab";
 
 
     @Autowired
@@ -48,6 +51,20 @@ public class LabRESTController extends BaseRESTController<Lab> {
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     public RRO<String> saveLab(@RequestBody LabValidator validator){
         return super.addEntity(validator, labDB);
+    }
+
+    //Todo need change later, it not safe, anyone change delete others lab here, because we haven't check create_id
+    @DeleteMapping(DELETE_MAPPING)
+    public RRO<String> deleteCourse(@RequestBody DTO.UserLabsDTO toDelete,
+                                    HttpSession session) {
+        RRO<String> rro = new RRO();
+        long userId =  getUserIdFromSession(session);
+        for (long lid : toDelete.getLids()) {
+            labDB.deleteById(lid);
+        }
+        rro.setSuccess(true);
+        rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+        return rro;
     }
 
     @GetMapping(LAB_ID_MAPPING)

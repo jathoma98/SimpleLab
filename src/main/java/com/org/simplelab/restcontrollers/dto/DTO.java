@@ -68,4 +68,13 @@ public abstract class DTO {
         //course_id of course to add labs to
         private String course_id;
     }
+
+    @Getter
+    @Setter
+    public static class UserLabsDTO extends DTO{
+        private long[] uid;
+        private String username;
+        private long[] lids;
+    }
+
 }

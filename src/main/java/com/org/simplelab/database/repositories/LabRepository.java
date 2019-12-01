@@ -21,6 +21,16 @@ public interface LabRepository extends BaseRepository<Lab> {
     @Modifying
     void deleteById(long lab_id);
 
+//    @Modifying
+//    @Transactional
+//    @Query(value =
+//            "DELETE FROM #{#entityName}" +
+//                    " WHERE (creator_id = :user_id" +
+//                    " AND " +
+//                    "id = :id)", nativeQuery = true)
+//    public void deleteBycreator_idAndlab_id(@Param("user_id") long user_id,
+//                                               @Param("id") long lab_id);
+
     @Query(value = "SELECT *\n" +
             "FROM #{#entityName}\n" +
             "WHERE (creator_id = :user_id\n" +
@@ -28,7 +38,5 @@ public interface LabRepository extends BaseRepository<Lab> {
             "id = :lab_id)", nativeQuery = true)
     public List<Course> findBycreator_idAndLab_id(@Param("user_id") long user_id,
                                                      @Param("lab_id") long lab_id);
-
-
 
 }
