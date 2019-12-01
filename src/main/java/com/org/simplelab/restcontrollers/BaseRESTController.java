@@ -1,7 +1,6 @@
 package com.org.simplelab.restcontrollers;
 
 import com.org.simplelab.controllers.BaseController;
-import com.org.simplelab.controllers.RequestResponse;
 import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.BaseTable;
 import com.org.simplelab.database.entities.User;
@@ -18,8 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
-import java.util.Map;
+import java.util.Collection;
 
 /**
  * Contains generic implementations of common REST endpoints.
@@ -59,7 +57,7 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
         }
         try{
             db.insert(created);
-        } catch (DBService.EntityInsertionException e){
+        } catch (DBService.EntityDBModificationException e){
             rro.setSuccess(true);
             rro.setMsg(e.getMessage());
             rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
@@ -74,40 +72,32 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
         return db.findById(id);
     }
 
-    protected RRO<String> updateEntity(long idToUpdate, DTO dto, DBService<T> db){
+    protected RRO<String> updateEntity(long idToUpdate, DTO dto, DBService<T> db) {
         RRO<String> rro = new RRO();
         ModelMapper mm = DBUtils.getMapper();
         T found = db.findById(idToUpdate);
-        if (found == null){
-            rro.setSuccess(false);
-            rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
-            rro.setMsg(RRO_MSG.ENTITY_UPDATE_ENTITY_NO_FOUND.getMsg());
-            return rro;
+        if (found == null) {
+            return RRO.sendErrorMessage(RRO_MSG.ENTITY_UPDATE_ENTITY_NO_FOUND.getMsg());
         }
         //if its a validator, validate before copying.
-        if (Validator.class.isInstance(dto)){
-            Validator<T> DTOValidator = (Validator<T>)dto;
-            try{
+        if (Validator.class.isInstance(dto)) {
+            Validator<T> DTOValidator = (Validator<T>) dto;
+            try {
                 DTOValidator.validate();
-            } catch (InvalidFieldException e){
-                rro.setSuccess(false);
-                rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
-                rro.setMsg(e.getMessage());
-                return rro;
+            } catch (InvalidFieldException e) {
+                return RRO.sendErrorMessage(e.getMessage());
             }
         }
         T toUpdate = db.findById(idToUpdate);
         mm.map(dto, toUpdate);
-        if (db.update(toUpdate)){
-            rro.setSuccess(true);
-            rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
-            return rro;
-        } else {
-            rro.setSuccess(false);
-            rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
-            rro.setMsg(RRO_MSG.ENTITY_UPDATE_ERROR.getMsg());
-            return rro;
+        try{
+            db.update(toUpdate);
+        } catch (DBService.EntityDBModificationException e){
+            return RRO.sendErrorMessage(e.getMessage());
         }
+        rro.setSuccess(true);
+        rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+        return rro;
     }
 
     protected RRO<String> deleteEntity(long idToDelete, DBService<T> db){
@@ -125,35 +115,37 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
 
     protected <U extends BaseTable>
     RRO<String> addEntitiesToEntityList(DBService.EntitySetManager<U,T> set,
-                                List<U> toAdd, DBService<T> db) {
+                                        Collection<U> toAdd, DBService<T> db) {
         RRO<String> rro = new RRO();
         if (set == null){
-            rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
-            rro.setMsg(DBService.EntitySetManager.NOT_FOUND_STRING);
-            rro.setSuccess(false);
-            return rro;
+            return RRO.sendErrorMessage(DBService.EntitySetManager.NOT_FOUND_STRING);
         }
-
         rro.setSuccess(true);
         rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
 
         for (U entity: toAdd){
+            if (UserCreated.class.isInstance(entity)){
+                User creator = userDB.findById(getUserIdFromSession(session));
+                ((UserCreated)entity).setCreator(creator);
+            }
             try{
                 set.insert(entity);
             } catch (DBService.EntitySetManager.EntitySetModificationException e){
-                rro.setMsg(e.getMessage());
-                rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
-                rro.setSuccess(false);
+                rro = RRO.sendErrorMessage(e.getMessage());
             }
         }
         T toSave = set.getFullEntity();
-        db.update(toSave);
+        try {
+            db.update(toSave);
+        } catch (DBService.EntityDBModificationException e){
+            RRO.sendErrorMessage(e.getMessage());
+        }
         return rro;
     }
 
     protected  <U extends BaseTable>
     RRO<String> removeEntitiesFromEntityList(DBService.EntitySetManager<U, T> set,
-                                     List<U> toRemove, DBService<T> db){
+                                     Collection<U> toRemove, DBService<T> db){
         RRO<String> rro = new RRO();
         if (set == null){
             rro.setMsg(DBService.EntitySetManager.NOT_FOUND_STRING);
@@ -173,7 +165,11 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
             }
         }
         T toSave = set.getFullEntity();
-        db.update(toSave);
+        try {
+            db.update(toSave);
+        } catch (DBService.EntityDBModificationException e){
+            RRO.sendErrorMessage(e.getMessage());
+        }
         return rro;
     }
 

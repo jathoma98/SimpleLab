@@ -15,7 +15,7 @@ public interface LabRepository extends BaseRepository<Lab> {
 
     List<Lab> findByName(String name);
 
-    List<Lab> findByCreator_id(long id);
+    <T> List<T> findByCreator_id(long id, Class<T> projection);
 
     @Transactional
     @Modifying

@@ -1,37 +1,30 @@
 package com.org.simplelab.database.services;
 
 import com.org.simplelab.database.entities.BaseTable;
-import com.org.simplelab.database.repositories.CourseRepository;
-import com.org.simplelab.database.repositories.EquipmentRepository;
-import com.org.simplelab.database.repositories.LabRepository;
-import com.org.simplelab.database.repositories.UserRepository;
+import com.org.simplelab.database.repositories.*;
+import com.org.simplelab.database.services.interfaces.SetModificationCondition;
+import com.org.simplelab.database.services.projections.Projection;
 import lombok.Getter;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
+@Getter
+@Transactional
 public abstract class DBService<T extends BaseTable> {
 
-    @Autowired
-    CourseRepository courseRepository;
-    @Autowired
-    LabRepository labRepository;
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    EquipmentRepository equipmentRepository;
+    private BaseRepository<T> repository;
 
     /**
-     * Exception to be thrown when insertion into a DB violates some constraint.
+     * Exception to be thrown when modification of a DB violates some constraint.
      * The message should include the contraint being violated.
      */
-    public static class EntityInsertionException extends Exception{
+    public static class EntityDBModificationException extends Exception{
+        protected static String GENERIC_INVALID_UPDATE_ERROR = "Attempted to call update() on a new entity. " +
+                "update() should only be called on entities which already exist in the DB.";
         protected static String GENERIC_MODIFICATION_ERROR = "An error occurred while modifying this collection";
-        EntityInsertionException(){super(GENERIC_MODIFICATION_ERROR);}
-        EntityInsertionException(String msg){
+        EntityDBModificationException(){super(GENERIC_MODIFICATION_ERROR);}
+        EntityDBModificationException(String msg){
             super(msg);
         }
     }
@@ -47,7 +40,8 @@ public abstract class DBService<T extends BaseTable> {
      * example: For Course with list of Users, T = User, U = Course
      */
     @Getter
-    public static class EntitySetManager<T extends BaseTable, U extends BaseTable>{
+    public static class EntitySetManager<T extends BaseTable, U extends BaseTable>
+            implements SetModificationCondition<T>{
         /**
          * Exception to be thrown in case of illegal modification of the entity set.
          */
@@ -57,18 +51,20 @@ public abstract class DBService<T extends BaseTable> {
             }
         }
 
-        private Set<T> entitySet;
+        private Collection<T> entitySet;
         private U fullEntity;
         public static final String NOT_FOUND_STRING = "Could not find entity to update. ";
-        public EntitySetManager(Set<T> set, U fullEntity){
+        public EntitySetManager(Collection<T> set, U fullEntity){
             this.entitySet = set;
             this.fullEntity = fullEntity;
         }
 
         public void insert(T toInsert) throws EntitySetModificationException{
+            checkLegalInsertion(toInsert);
             entitySet.add(toInsert);
         }
         public void delete(T toDelete) throws EntitySetModificationException{
+            checkLegalDeletion(toDelete);
             entitySet.remove(toDelete);
         }
         public List<T> getAsList(){
@@ -82,21 +78,48 @@ public abstract class DBService<T extends BaseTable> {
      * Inserts entity into the DB.
      * @param toInsert - entity of type T to insert.
      * @return - true if insertion was successful
-     * @throws EntityInsertionException - If an error occurred during insertion
+     * @throws EntityDBModificationException - If an error occurred during insertion
      */
-    public abstract boolean insert(T toInsert) throws EntityInsertionException;
+    public boolean insert(T toInsert) throws EntityDBModificationException {
+        getRepository().save(toInsert);
+        return true;
+    }
 
     /**
      * Deletes the entity from the DB.
-     * Important: Entities which manage EntitySets
-     * must have their Set field set to null before deletion.
      * @param id - Id of the Entity to delete.
      * @return - true
      */
-    public abstract boolean deleteById(long id);
+    @Transactional
+    public boolean deleteById(long id){
+        getRepository().deleteById(id);
+        return true;
+    }
 
-    public abstract boolean update(T toUpdate);
+    public boolean update(T toUpdate) throws EntityDBModificationException{
+        //cannot call update() on new entities
+        if (toUpdate.isNew()){
+            throw new EntityDBModificationException
+                    (EntityDBModificationException.GENERIC_INVALID_UPDATE_ERROR);
+        }
+        getRepository().save(toUpdate);
+        return true;
+    }
 
-    public abstract T findById(long id);
+    public T findById(long id){
+        Optional<T> found = getRepository().findById(id);
+        if (found.isPresent())
+            return found.get();
+        return null;
+    }
+
+    public <U extends Projection> U findById(long id, Class<U> projection){
+        Optional<U> found = getRepository().findById(id, projection);
+        if (found.isPresent()){
+            return found.get();
+        }
+        return null;
+
+    }
 
 }

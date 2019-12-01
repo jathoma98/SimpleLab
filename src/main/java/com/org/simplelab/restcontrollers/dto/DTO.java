@@ -1,6 +1,9 @@
 package com.org.simplelab.restcontrollers.dto;
 
+import com.org.simplelab.database.entities.Equipment;
+import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.validators.CourseValidator;
+import com.org.simplelab.database.validators.UserValidator;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -42,7 +45,8 @@ public abstract class DTO {
     @Getter
     @Setter
     public static class LabUpdateDTO extends DTO {
-        private String temp;
+        private Long lab_id_old;
+        private CourseValidator newLabInfo;
     }
 
     /**
@@ -77,4 +81,18 @@ public abstract class DTO {
         private long[] lids;
     }
 
+
+    @Getter
+    @Setter
+    public static class fpUserInput extends DTO{
+        private String userInput;
+        private User user;
+    }
+
+     @Getter
+     @Setter
+     public static class LabAddStepDTO extends DTO{
+         private Equipment targetObject;
+         private int stepNum;
+     }
 }

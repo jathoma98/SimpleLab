@@ -7,7 +7,9 @@ ElEM_ID = {
     STUDENT_LIST_TBODY: "#student_list_table tbody",
     MODAL_UL: "#modal ul",
     COURSE_SAVE_BTN: "#courseSaveBtn",
-    LAB_SAVE_BTN: "#labSaveBtn"
+    LAB_SAVE_BTN: "#labSaveBtn",
+    LAB_EDIT_BTN: "#labEditBtn",
+    COURSE_EDIT_BTN: "#courseEditBtn"
 }
 
 TEMPLATE_ID = {
@@ -39,6 +41,7 @@ $(document).ready(function () {
     //Lab
     LABS_TABLE.init();
     $("#labAddBtn").on("click", ()=>{LABS_TABLE.create()});
+    $("#labDeleteBtn").on("click", ()=>{LABS_TABLE.delete()});
     $("#labEditBtn").on("click",()=>{LABS_TABLE.btnSwitch()});
     $("#labBackBtn").on("click",()=>{LABS_TABLE.btnSwitch()});
     $("#labDeleteBtn").on("click", ()=>{LABS_TABLE.delete()})

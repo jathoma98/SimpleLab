@@ -1,17 +1,22 @@
 package com.org.simplelab.restcontrollers;
 
-import com.org.simplelab.controllers.RequestResponse;
+import com.org.simplelab.controllers.StudentController;
+import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.Course;
 import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.services.CourseDB;
 import com.org.simplelab.database.services.DBService;
+import com.org.simplelab.database.services.projections.Projection;
 import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
 import com.org.simplelab.restcontrollers.rro.RRO_ACTION_TYPE;
 import com.org.simplelab.restcontrollers.rro.RRO_MSG;
 import com.org.simplelab.security.SecurityUtils;
+import lombok.Data;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +24,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 //TODO: secure rest endpoints with authentication
 @RestController
@@ -101,23 +105,36 @@ public class CourseRESTController extends BaseRESTController<Course> {
         long userId =  getUserIdFromSession(session);
         for (CourseValidator c : toDelete) {
             String course_id = c.getCourse_id();
-            courseDB.deleteCourseById(userId, course_id);
+            courseDB.deleteCourseByCourseId(course_id);
         }
         rro.setSuccess(true);
-        rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+        rro.setAction(RRO_ACTION_TYPE.NOTHING.  name());
         return rro;
     }
 
     @GetMapping(LOAD_LIST_COURSE_MAPPING)
-    public RRO<List<Course>> getListOfCourse(HttpSession session) {
-        RRO<List<Course>> rro = new RRO();
+    public RRO getListOfCourse(HttpSession session) {
 
         long userId = getUserIdFromSession(session);
         List<Course> courses = courseDB.getCoursesForTeacher(userId);
 
+
+        //we cant use SQL projections on Course because course_id has an underscore in it
+        //which isnt allowed in JPA, so we have to manually copy the fields.
+        RRO<List<Projection.TeacherCourseInfo>> rro = new RRO();
+        List<Projection.TeacherCourseInfo> returnInfo = new ArrayList<>();
+
+        courses.forEach((course) -> {
+            Projection.TeacherCourseInfo mapped =
+                    new Projection.TeacherCourseInfo(course.getName(),
+                                                    course.getCreatedDate(),
+                                                    course.getCourse_id());
+            returnInfo.add(mapped);
+        });
+
         rro.setSuccess(true);
         rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
-        rro.setData(courses);
+        rro.setData(returnInfo);
         return rro;
     }
 

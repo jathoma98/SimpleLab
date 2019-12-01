@@ -25,7 +25,6 @@ import static org.springframework.security.web.context.HttpSessionSecurityContex
  * Controllers for login and signup pages
  */
 
-//TODO: make sure user info is taken from security context, not session.
 
 @Controller
 @RequestMapping(path="/")
@@ -139,8 +138,8 @@ public class LoginController{
     }
 
 
-    @GetMapping("/forgotPassword")
-    public String forgotPassword(HttpSession session) {
-        return "forgotPassword";
-    }
+//    @GetMapping("/forgotPassword")
+//    public String forgotPassword(HttpSession session) {
+//        return "forgotPassword";
+//    }
 }

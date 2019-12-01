@@ -2,64 +2,89 @@ package com.org.simplelab.database.services;
 
 import com.org.simplelab.database.entities.Equipment;
 import com.org.simplelab.database.entities.Lab;
+import com.org.simplelab.database.entities.Step;
+import com.org.simplelab.database.repositories.LabRepository;
+import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 /**
  * Wrapper class for handling retrieval and saving of labs
  */
 @Transactional
 @Component
+@Getter
 public class LabDB extends DBService<Lab> {
 
-    private class EquipmentSetManager extends EntitySetManager<Equipment, Lab>{
-        public EquipmentSetManager(Set<Equipment> set, Lab lab){
-            super(set, lab);
+    @Autowired
+    private LabRepository repository;
+
+    private class StepSetManager extends EntitySetManager<Step, Lab>{
+
+        public StepSetManager(Collection<Step> set, Lab fullEntity) {
+            super(set, fullEntity);
         }
-    }
 
-    @Override
-    public boolean deleteById(long id){
-        Lab found = findById(id);
-        if (found != null) {
-            found.setEquipments(null);
-            labRepository.delete(found);
+        @Override
+        public void checkLegalInsertion(Step toInsert){
+            //TODO: make sure steps are in order when inserted
         }
-        return true;
-    }
 
-    @Override
-    public boolean insert(Lab lab){
-        labRepository.save(lab);
-        return true;
-    }
-
-    @Override
-    public boolean update(Lab lab){
-        return insert(lab);
-    }
-
-    public List<Lab> getLabsByCreatorId(long id){
-        return labRepository.findByCreator_id(id);
     }
 
 
-    public EquipmentSetManager getEquipmentOfLabById(long id){
+    public boolean insert(Lab toInsert) throws EntityDBModificationException {
+        return super.insert(toInsert);
+    }
+
+    public boolean deleteById(long id) {
+        return super.deleteById(id);
+    }
+
+    public EntitySetManager<Step, Lab> getStepsOfLabById(long id){
         Lab found = findById(id);
         if (found == null)
             return null;
-        return new EquipmentSetManager(found.getEquipments(), found);
+        return getStepManager(found);
     }
 
-    @Override
-    public Lab findById(long id){
-        Optional<Lab> found = labRepository.findById(id);
-        return found.isPresent()? found.get() : null;
+    public EntitySetManager<Step, Lab> getStepManager(Lab l){
+        return new StepSetManager(l.getSteps(), l);
     }
+
+    public boolean update(Lab toUpdate) throws DBService.EntityDBModificationException {
+        return super.update(toUpdate);
+    }
+
+    public Lab findById(long id) {
+        return super.findById(id);
+    }
+
+
+    public List<Lab> getLabsByCreatorId(long id){
+        return repository.findByCreator_id(id, Lab.class);
+    }
+
+    public <T> List<T> getLabsByCreatorId(long id, Class<T> projection){
+        return repository.findByCreator_id(id, projection);
+    }
+
+    public EntitySetManager<Equipment, Lab> getEquipmentOfLabById(long id){
+        Lab found = findById(id);
+        if (found == null)
+            return null;
+        return new EntitySetManager<>(found.getEquipments(), found);
+    }
+
+//    @Override
+//    public Lab findById(long id){
+//        Optional<Lab> found = labRepository.findById(id);
+//        return found.isPresent()? found.get() : null;
+//    }
 
 
 

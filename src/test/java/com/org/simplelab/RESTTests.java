@@ -25,8 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@AutoConfigureMockMvc
-public class RESTTests extends SpringTestConfig {
+public class RESTTests extends SpringMockMVCTestConfig {
 
 
     private static Map<String, Object> session_atr = new HashMap<>();
@@ -105,7 +104,7 @@ public class RESTTests extends SpringTestConfig {
 
         //delete the course afterwards
         List<Course> found = courseDB.findCourseByName(metadata);
-        courseDB.deleteCourse(found.get(0));
+        courseDB.deleteById(found.get(0).getId());
 
 
     }
@@ -150,7 +149,7 @@ public class RESTTests extends SpringTestConfig {
 
         for (JSONObject json: objs){
             assertEquals(courseDB.findByCourseId((String)json.get("course_id")).size(), 0);
-            courseDB.deleteCourseById(user_id, (String)json.get("course_id"));
+            courseDB.deleteCourseByCourseId((String)json.get("course_id"));
         }
 
     }
@@ -272,7 +271,7 @@ public class RESTTests extends SpringTestConfig {
                         .sessionAttrs(session_atr))
                         //.andDo(print())
                         .andExpect(status().isOk())
-                        .andExpect(content().json(json.toString()));
+                        .andExpect(content().json("{'data': " + json.toString() + "}"));
 
         /**
          * @Test: Delete the lab we just created with DELETE to /lab/rest/{id}

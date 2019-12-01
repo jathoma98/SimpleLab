@@ -13,6 +13,7 @@ import java.util.Set;
 @Table(name = DBUtils.COURSE_TABLE_NAME)
 public class Course extends BaseTable implements UserCreated{
 
+    @Column(unique = true)
     private String course_id;
     private String name;
     private String description;
@@ -22,6 +23,9 @@ public class Course extends BaseTable implements UserCreated{
     @JoinColumn(name = "creator_id")
     private User creator;
 
+    /**
+     * TODO: think about using SortedSet instead of Set
+     */
     @ManyToMany(cascade = {CascadeType.PERSIST},
             fetch = FetchType.LAZY)
     private Set<User> students;
@@ -34,4 +38,5 @@ public class Course extends BaseTable implements UserCreated{
         students = new HashSet<>();
         labs = new HashSet<>();
     }
+
 }

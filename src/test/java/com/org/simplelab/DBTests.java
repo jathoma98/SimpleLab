@@ -1,10 +1,7 @@
 package com.org.simplelab;
 
 import com.org.simplelab.database.DBUtils;
-import com.org.simplelab.database.entities.Course;
-import com.org.simplelab.database.entities.Equipment;
-import com.org.simplelab.database.entities.Lab;
-import com.org.simplelab.database.entities.User;
+import com.org.simplelab.database.entities.*;
 import com.org.simplelab.database.repositories.UserRepository;
 import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.services.LabDB;
@@ -43,10 +40,8 @@ class DBTests extends SpringTestConfig {
 
 	static String prefix = "test user -- ";
 
-	@Test
-	void aaaaa_contextLoads() {
-	}
-
+	@Autowired
+	UserRepository ur;
 	@Test
 	void User_insertionTest() throws Exception{
 
@@ -67,7 +62,7 @@ class DBTests extends SpringTestConfig {
 		assertThrows(UserDB.UserInsertionException.class, () -> userDB.insert(user));
 
 		//ensure duplicate insertion doesn't insert an additional instance with the same username
-		UserRepository repo = userDB.DEBUG_getInterface();
+		UserRepository repo = ur;
 		assertEquals(repo.findByUsername(user.getUsername()).size(), 1);
 
 	}
@@ -170,28 +165,6 @@ class DBTests extends SpringTestConfig {
 	@Autowired
 	LabDB labDB;
 
-	/**
-	 * @Test test add equipment to lab endpoint
-	 */
-	@Test
-	@Transactional
-	void testEquipmentSetManager(){
-		List<Equipment> list = new ArrayList<>();
-		for (int i = 0; i < 1; i++){
-			Equipment e = new Equipment();
-			e.set_metadata(metadata);
-			e.setName(metadata);
-			list.add(e);
-		}
-		Lab l = new Lab();
-		l.setName(metadata);
-		l.set_metadata(metadata);
-		lr.save(l);
-		l = lr.findByName(metadata).get(0);
-		lrc.addEquipmentToLab(l.getId(), list);
-		Set<Equipment> found = l.getEquipments();
-		assertEquals(1, found.size());
-	}
 
 	@Autowired
 	CourseRESTController crc;
@@ -377,6 +350,30 @@ class DBTests extends SpringTestConfig {
 
 		courseDB.deleteById(found.getFullEntity().getId());
 	}
+
+	@Test
+	void equipmentTest() throws Exception{
+		Equipment e = new Equipment();
+		e.setName(metadata);
+		e.setDescription(metadata);
+
+
+		for (int i = 0; i < 5; i++){
+			EquipmentProperty ep = new EquipmentProperty();
+			ep.setPropertyKey("test " + i);
+			ep.setPropertyValue(Integer.toString(i));
+			ep.setParentEquipment(e);
+			e.getProperties().add(ep);
+		}
+
+		equipmentDB.insert(e);
+		Iterable<Equipment> found = er.findAll();
+		for (Equipment foundEq: found){
+			System.out.println(foundEq.toString());
+			System.out.println("Properties: " + foundEq.getProperties().toString());
+		}
+	}
+
 
 
 

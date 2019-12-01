@@ -11,22 +11,20 @@ import org.modelmapper.spi.MappingContext;
 
 import java.security.MessageDigest;
 
-/**
- * Management class for MongoDB entities
- * @author Jacob Thomas
- */
 public class DBUtils {
 
     public static final String USER_TABLE_NAME = "user";
     public static final String COURSE_TABLE_NAME = "course";
     public static final String LAB_TABLE_NAME = "lab";
     public static final String EQUIPMENT_TABLE_NAME = "equipment";
+    public static final String EQUIPMENT_PROPERTY_TABLE_NAME = "equipment_property";
+    public static final String STEP_TABLE_NAME = "step";
 
     public static final String SALT = "a very salty salt";
 
     public static final String METADATA_DELETE_QUERY = "DELETE FROM #{#entityName} WHERE _metadata = :metadata";
 
-    public static ModelMapper MAPPER = null;
+    private static ModelMapper MAPPER = null;
 
     /**
      * Hashes the given string.
