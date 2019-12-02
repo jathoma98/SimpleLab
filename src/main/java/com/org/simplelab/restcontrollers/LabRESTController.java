@@ -61,8 +61,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
 
     //Todo need change later, it not safe, anyone change delete others lab here, because we haven't check create_id
     @DeleteMapping(DELETE_MAPPING)
-    public RRO<String> deleteCourse(@RequestBody DTO.UserLabsDTO toDelete,
-                                    HttpSession session) {
+    public RRO<String> deleteCourse(@RequestBody DTO.UserLabsDTO toDelete) {
         RRO<String> rro = new RRO();
         long userId =  getUserIdFromSession(session);
         for (long lid : toDelete.getLids()) {
@@ -141,7 +140,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
 
 
     @PatchMapping(UPDATE_MAPPING)
-    public RRO<String> updateLab(@RequestBody DTO.LabUpdateDTO dto, HttpSession session) {
+    public RRO<String> updateLab(@RequestBody DTO.LabUpdateDTO dto) {
         long uid = getUserIdFromSession(session);
         Lab toUpdate = labDB.findById(dto.getLab_id_old());
         if (toUpdate == null){

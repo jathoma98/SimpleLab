@@ -374,6 +374,44 @@ class DBTests extends SpringTestConfig {
 		}
 	}
 
+	@Test
+	void lab_deleteByIdTest() throws Exception{
+		Lab l = TestUtils.createJunkLab();
+		labDB.insert(l);
+
+		Lab found = lr.findByName(l.getName()).get(0);
+		long idToDelete = found.getId();
+
+		labDB.deleteById(idToDelete);
+		assertEquals(0, lr.findByName(l.getName()).size());
+
+		//test LRC delete lab method
+		DTO.UserLabsDTO dto = new DTO.UserLabsDTO();
+
+		int numLabs = 5;
+		String[] labsToFind = new String[numLabs];
+		for (int i = 0; i < numLabs; i++){
+			Lab lab = TestUtils.createJunkLab();
+			labsToFind[i] = lab.getName();
+			labDB.insert(lab);
+		}
+		long[] idsToDelete = new long[numLabs];
+		int count = 0;
+		for (String name: labsToFind){
+			Lab foundLabName = lr.findByName(name).get(0);
+			idsToDelete[count++] = foundLabName.getId();
+		}
+		System.out.println(idsToDelete.toString());
+		dto.setLids(idsToDelete);
+		lrc.deleteCourse(dto);
+
+		for (String name: labsToFind){
+			assertEquals(0, lr.findByName(name).size());
+		}
+
+	}
+
+
 
 
 

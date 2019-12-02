@@ -27,6 +27,9 @@ public abstract class BaseController {
     @Autowired
     protected EquipmentDB equipmentDB;
 
+    @Autowired
+    protected HttpSession session;
+
     protected long getUserIdFromSession(HttpSession session){
         long userId = -1;
         try {

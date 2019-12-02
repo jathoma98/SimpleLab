@@ -80,9 +80,11 @@ public class TestUtils {
 
     public static Lab createJunkLab(){
         Lab l = new Lab();
-        l.setDescription(metadata);
-        l.set_metadata(metadata);
-        l.setName(metadata + "JUNK LAB");
+        Random r = new Random();
+        String random  = Double.toString(r.nextDouble());
+        l.setDescription(metadata + random);
+        l.set_metadata(metadata + random);
+        l.setName(metadata + "JUNK LAB" + random);
         l.setCreator(createJunkUser());
         return l;
     }
