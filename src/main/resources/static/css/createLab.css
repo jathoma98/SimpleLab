@@ -59,7 +59,7 @@
     /*border:1px solid black;*/
 }
 .fixed{
-    position: fixed;
+    position: fixed!important;
 }
 
 .infobar{
