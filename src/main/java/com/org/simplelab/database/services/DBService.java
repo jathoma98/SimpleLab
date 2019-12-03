@@ -13,8 +13,6 @@ import java.util.*;
 @Transactional
 public abstract class DBService<T extends BaseTable> {
 
-    private BaseRepository<T> repository;
-
     /**
      * Exception to be thrown when modification of a DB violates some constraint.
      * The message should include the contraint being violated.
@@ -73,6 +71,8 @@ public abstract class DBService<T extends BaseTable> {
             return toList;
         }
     }
+
+    public abstract BaseRepository<T> getRepository();
 
     /**
      * Inserts entity into the DB.

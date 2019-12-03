@@ -6,14 +6,13 @@ import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.Step;
 import com.org.simplelab.database.repositories.LabRepository;
 import com.org.simplelab.database.services.DBService;
-import com.org.simplelab.database.validators.CourseValidator;
+import com.org.simplelab.database.services.LabDB;
 import com.org.simplelab.database.services.projections.Projection;
 import com.org.simplelab.database.validators.LabValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
 import com.org.simplelab.restcontrollers.rro.RRO_ACTION_TYPE;
-import lombok.Data;
-import lombok.Value;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,11 +26,15 @@ import static com.org.simplelab.restcontrollers.LabRESTController.BASE_MAPPING;
 
 @RestController
 @RequestMapping(BASE_MAPPING)
+@Getter
 /**
  * Refer to BaseRESTController.java for documentation of basic methods.
  * @Author Jacob Thomas
  */
 public class LabRESTController extends BaseRESTController<Lab> {
+
+    @Autowired
+    private LabDB db;
 
     //lab_id = id of the lab to interact with in the DB
     public static final String BASE_MAPPING = "/lab/rest";
@@ -56,7 +59,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
      */
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     public RRO<String> saveLab(@RequestBody LabValidator validator){
-        return super.addEntity(validator, labDB);
+        return super.addEntity(validator);
     }
 
     //Todo need change later, it not safe, anyone change delete others lab here, because we haven't check create_id
@@ -76,14 +79,14 @@ public class LabRESTController extends BaseRESTController<Lab> {
     public RRO<Lab> labGet(@PathVariable("lab_id") long lab_id){
         RRO<Lab> rro = new RRO();
         rro.setSuccess(true);
-        rro.setData(super.getEntityById(lab_id, labDB));
+        rro.setData(super.getEntityById(lab_id));
         rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
         return rro;
     }
 
     @DeleteMapping(LAB_ID_MAPPING)
     public RRO<String> labDelete(@PathVariable("lab_id") long lab_id){
-        return super.deleteEntity(lab_id, labDB);
+        return super.deleteEntity(lab_id);
     }
 
     /**
@@ -93,7 +96,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
     @PostMapping(LAB_ID_MAPPING)
     public RRO<String> labUpdate(@PathVariable("lab_id") long lab_id,
                                  @RequestBody LabValidator labUpdateDTO){
-        return super.updateEntity(lab_id, labUpdateDTO, labDB);
+        return super.updateEntity(lab_id, labUpdateDTO);
     }
 
 
@@ -135,7 +138,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
             rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
             return rro;
         }
-        return super.addEntitiesToEntityList(found, equipmentToAdd, labDB);
+        return super.addEntitiesToEntityList(found, equipmentToAdd);
     }
 
 
@@ -149,7 +152,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
         if (toUpdate.getCreator().getId() != uid){
             return RRO.sendErrorMessage("Duplicate ID");
         }
-        return super.updateEntity(toUpdate.getId(), dto.getNewLabInfo(), labDB);
+        return super.updateEntity(toUpdate.getId(), dto.getNewLabInfo());
     }
 
     @PostMapping(LAB_ID_STEP_MAPPING)
@@ -163,7 +166,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
         s.setLab(found);
         List<Step> toAdd = new ArrayList<>();
         toAdd.add(s);
-        return super.addEntitiesToEntityList(labDB.getStepManager(found), toAdd, labDB);
+        return super.addEntitiesToEntityList(labDB.getStepManager(found), toAdd);
     }
 
     //TODO: implement delete step mapping later, we should get a prototype lab working first

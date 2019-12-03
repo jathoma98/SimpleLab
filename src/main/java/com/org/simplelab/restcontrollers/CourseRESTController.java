@@ -1,7 +1,5 @@
 package com.org.simplelab.restcontrollers;
 
-import com.org.simplelab.controllers.StudentController;
-import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.Course;
 import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.User;
@@ -14,9 +12,8 @@ import com.org.simplelab.restcontrollers.rro.RRO;
 import com.org.simplelab.restcontrollers.rro.RRO_ACTION_TYPE;
 import com.org.simplelab.restcontrollers.rro.RRO_MSG;
 import com.org.simplelab.security.SecurityUtils;
-import lombok.Data;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -27,8 +24,12 @@ import java.util.List;
 
 //TODO: secure rest endpoints with authentication
 @RestController
+@Getter
 @RequestMapping(CourseRESTController.BASE_MAPPING)
 public class CourseRESTController extends BaseRESTController<Course> {
+
+    @Autowired
+    private CourseDB db;
 
     public static final String BASE_MAPPING = "/course/rest";
 
@@ -45,7 +46,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     public RRO<String> addCourse(@RequestBody CourseValidator courseValidator,
                                  HttpSession session) {
-        return super.addEntity(courseValidator, courseDB);
+        return super.addEntity(courseValidator);
     }
 
     /**
@@ -90,7 +91,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
             rro.setSuccess(false);
             return rro;
         }
-        return super.updateEntity(toUpdate.getId(), dto.getNewCourseInfo(), courseDB);
+        return super.updateEntity(toUpdate.getId(), dto.getNewCourseInfo());
     }
 
     /**
@@ -180,7 +181,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
             }
         }
         DBService.EntitySetManager<User, Course> toUpdate = courseDB.getStudentsOfCourseByCourseId(course_id);
-        return super.addEntitiesToEntityList(toUpdate, toAdd, courseDB);
+        return super.addEntitiesToEntityList(toUpdate, toAdd);
     }
 
     @Transactional
@@ -201,7 +202,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
             rro.setMsg(e.getMessage());
             return rro;
         }
-        return super.addEntitiesToEntityList(toUpdate, toAdd, courseDB);
+        return super.addEntitiesToEntityList(toUpdate, toAdd);
     }
 
     @PostMapping(GET_STUDENTS_MAPPING)
@@ -234,6 +235,6 @@ public class CourseRESTController extends BaseRESTController<Course> {
             }
         }
         DBService.EntitySetManager<User, Course> toUpdate = courseDB.getStudentsOfCourseByCourseId(course.getCourse_id());
-        return super.removeEntitiesFromEntityList(toUpdate, toDelete, courseDB);
+        return super.removeEntitiesFromEntityList(toUpdate, toDelete);
     }
 }

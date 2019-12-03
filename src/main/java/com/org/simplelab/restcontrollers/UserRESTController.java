@@ -1,21 +1,26 @@
 package com.org.simplelab.restcontrollers;
 
 import com.org.simplelab.database.entities.User;
+import com.org.simplelab.database.services.UserDB;
 import com.org.simplelab.database.validators.UserValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
 import com.org.simplelab.restcontrollers.rro.RRO_ACTION_TYPE;
 import com.org.simplelab.restcontrollers.rro.RRO_MSG;
+import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping(UserRESTController.BASE_MAPPING)
+@Getter
 public class UserRESTController extends BaseRESTController<User> {
+
+    @Autowired
+    private UserDB db;
 
     public static final String BASE_MAPPING = "/user/rest";
 
@@ -80,7 +85,7 @@ public class UserRESTController extends BaseRESTController<User> {
     }
 
     public RRO<String> registerUser(UserValidator validator, HttpSession session){
-        return super.addEntity(validator, userDB);
+        return super.addEntity(validator);
     }
 
 

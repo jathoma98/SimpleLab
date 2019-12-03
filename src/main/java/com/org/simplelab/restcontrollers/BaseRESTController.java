@@ -30,13 +30,15 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
     @Autowired
     HttpSession session;
 
+    //must be implemented by all RESTControllers
+    public abstract DBService<T> getDb();
+
     /**
      * Adds an entity to the application database.
      * @param validator - Validator object which contains all fields which need to be copied to the Entity object
-     * @param db - The DB that manages the entity to be created
      * @return - success: true on successful creation
      */
-    protected RRO<String> addEntity(Validator<T> validator, DBService<T> db){
+    protected RRO<String> addEntity(Validator<T> validator){
         RRO<String> rro = new RRO();
         try{
             validator.validate();
@@ -56,7 +58,7 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
             created_assign.setCreator(u);
         }
         try{
-            db.insert(created);
+            getDb().insert(created);
         } catch (DBService.EntityDBModificationException e){
             rro.setSuccess(true);
             rro.setMsg(e.getMessage());
@@ -68,14 +70,14 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
         return rro;
     }
 
-    protected T getEntityById(long id, DBService<T> db){
-        return db.findById(id);
+    protected T getEntityById(long id){
+        return getDb().findById(id);
     }
 
-    protected RRO<String> updateEntity(long idToUpdate, DTO dto, DBService<T> db) {
+    protected RRO<String> updateEntity(long idToUpdate, DTO dto) {
         RRO<String> rro = new RRO();
         ModelMapper mm = DBUtils.getMapper();
-        T found = db.findById(idToUpdate);
+        T found = getDb().findById(idToUpdate);
         if (found == null) {
             return RRO.sendErrorMessage(RRO_MSG.ENTITY_UPDATE_ENTITY_NO_FOUND.getMsg());
         }
@@ -88,10 +90,10 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
                 return RRO.sendErrorMessage(e.getMessage());
             }
         }
-        T toUpdate = db.findById(idToUpdate);
+        T toUpdate = getDb().findById(idToUpdate);
         mm.map(dto, toUpdate);
         try{
-            db.update(toUpdate);
+            getDb().update(toUpdate);
         } catch (DBService.EntityDBModificationException e){
             return RRO.sendErrorMessage(e.getMessage());
         }
@@ -100,9 +102,9 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
         return rro;
     }
 
-    protected RRO<String> deleteEntity(long idToDelete, DBService<T> db){
+    protected RRO<String> deleteEntity(long idToDelete){
         RRO<String> rro = new RRO();
-        if (db.deleteById(idToDelete)){
+        if (getDb().deleteById(idToDelete)){
             rro.setSuccess(true);
             rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
             return rro;
@@ -114,8 +116,8 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
     }
 
     protected <U extends BaseTable>
-    RRO<String> addEntitiesToEntityList(DBService.EntitySetManager<U,T> set,
-                                        Collection<U> toAdd, DBService<T> db) {
+    RRO<String> addEntitiesToEntityList(DBService.EntitySetManager<U, T> set,
+                                        Collection<U> toAdd) {
         RRO<String> rro = new RRO();
         if (set == null){
             return RRO.sendErrorMessage(DBService.EntitySetManager.NOT_FOUND_STRING);
@@ -136,7 +138,7 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
         }
         T toSave = set.getFullEntity();
         try {
-            db.update(toSave);
+            getDb().update(toSave);
         } catch (DBService.EntityDBModificationException e){
             RRO.sendErrorMessage(e.getMessage());
         }
@@ -145,7 +147,7 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
 
     protected  <U extends BaseTable>
     RRO<String> removeEntitiesFromEntityList(DBService.EntitySetManager<U, T> set,
-                                     Collection<U> toRemove, DBService<T> db){
+                                             Collection<U> toRemove){
         RRO<String> rro = new RRO();
         if (set == null){
             rro.setMsg(DBService.EntitySetManager.NOT_FOUND_STRING);
@@ -166,7 +168,7 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
         }
         T toSave = set.getFullEntity();
         try {
-            db.update(toSave);
+            getDb().update(toSave);
         } catch (DBService.EntityDBModificationException e){
             RRO.sendErrorMessage(e.getMessage());
         }
