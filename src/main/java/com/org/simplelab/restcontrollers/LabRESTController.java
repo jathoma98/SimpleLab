@@ -66,7 +66,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
     @DeleteMapping(DELETE_MAPPING)
     public RRO<String> deleteCourse(@RequestBody DTO.UserLabsDTO toDelete) {
         RRO<String> rro = new RRO();
-        long userId =  getUserIdFromSession(session);
+        long userId =  getUserIdFromSession();
         for (long lid : toDelete.getLids()) {
             labDB.deleteById(lid);
         }
@@ -103,7 +103,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
 
     @GetMapping(LOAD_LIST_LAB_MAPPING)
     public RRO getListOfCourse(HttpSession session) {
-        long userId = getUserIdFromSession(session);
+        long userId = getUserIdFromSession();
         RRO rro = new RRO<Projection>();
         //Use TeacherLabInfo projection to only get attributes we want
         List<Projection.TeacherLabInfo> labs = labDB.getLabsByCreatorId(userId, Projection.TeacherLabInfo.class);
@@ -144,7 +144,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
 
     @PatchMapping(UPDATE_MAPPING)
     public RRO<String> updateLab(@RequestBody DTO.LabUpdateDTO dto) {
-        long uid = getUserIdFromSession(session);
+        long uid = getUserIdFromSession();
         Lab toUpdate = labDB.findById(dto.getLab_id_old());
         if (toUpdate == null){
             return RRO.sendErrorMessage("Lab Not Found");

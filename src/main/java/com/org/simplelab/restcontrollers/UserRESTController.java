@@ -62,7 +62,7 @@ public class UserRESTController extends BaseRESTController<User> {
     @GetMapping(LOAD_USER_MAPPING)
     public RRO<User> getUserInfo(HttpSession session){
         RRO<User> rro = new RRO();
-        long userId = getUserIdFromSession(session);
+        long userId = getUserIdFromSession();
         User user = userDB.findById(userId);
         if(user == null){
             rro.setSuccess(false);
@@ -79,7 +79,7 @@ public class UserRESTController extends BaseRESTController<User> {
     public void resetUserInfo(@RequestBody User user
                                            ,HttpSession session) throws Exception {
 
-        long userId = getUserIdFromSession(session);
+        long userId = getUserIdFromSession();
         user.setId(userId);
         userDB.update(user);
     }

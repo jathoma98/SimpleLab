@@ -74,7 +74,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
     @PatchMapping(UPDATE_MAPPING)
     public RRO<String> updateCourse(@RequestBody DTO.CourseUpdateDTO dto, HttpSession session) {
         RRO<String> rro = new RRO();
-        long uid = getUserIdFromSession(session);
+        long uid = getUserIdFromSession();
         Course toUpdate;
         List<Course> foundcourses = courseDB.findByCourseId(dto.getCourse_id_old());
         if (foundcourses.size() > 0){
@@ -103,7 +103,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
     public RRO<String> deleteCourse(@RequestBody CourseValidator[] toDelete,
                                             HttpSession session) {
         RRO<String> rro = new RRO();
-        long userId =  getUserIdFromSession(session);
+        long userId =  getUserIdFromSession();
         for (CourseValidator c : toDelete) {
             String course_id = c.getCourse_id();
             courseDB.deleteCourseByCourseId(course_id);
@@ -116,7 +116,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
     @GetMapping(LOAD_LIST_COURSE_MAPPING)
     public RRO getListOfCourse(HttpSession session) {
 
-        long userId = getUserIdFromSession(session);
+        long userId = getUserIdFromSession();
         List<Course> courses = courseDB.getCoursesForTeacher(userId);
 
 
@@ -144,7 +144,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
                                 HttpSession session) {
         RRO<Course> rro = new RRO();
 
-        long uid = getUserIdFromSession(session);
+        long uid = getUserIdFromSession();
         Course c = courseDB.findByUserIdAndCourseId(uid, course.getCourse_id());
         if (c == null){
             rro.setSuccess(false);
@@ -170,7 +170,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
     @Transactional
     @PostMapping(ADD_STUDENT_MAPPING)
     public RRO<String> addStudentToCourse(@RequestBody DTO.CourseUpdateStudentListDTO course) {
-        long own_id = getUserIdFromSession(session);
+        long own_id = getUserIdFromSession();
         String own_username = SecurityUtils.getAuthenticatedUsername();
         List<User> toAdd = new ArrayList<>();
         String course_id = course.getCourse_id();

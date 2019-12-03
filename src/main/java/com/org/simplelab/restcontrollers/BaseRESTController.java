@@ -52,7 +52,7 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
 
         //set the creator if its a UserCreated entity
         if (UserCreated.class.isInstance(created)){
-            long user_id = getUserIdFromSession(session);
+            long user_id = getUserIdFromSession();
             UserCreated created_assign = (UserCreated)created;
             User u = userDB.findById(user_id);
             created_assign.setCreator(u);
@@ -127,7 +127,7 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
 
         for (U entity: toAdd){
             if (UserCreated.class.isInstance(entity)){
-                User creator = userDB.findById(getUserIdFromSession(session));
+                User creator = userDB.findById(getUserIdFromSession());
                 ((UserCreated)entity).setCreator(creator);
             }
             try{

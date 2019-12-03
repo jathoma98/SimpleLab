@@ -30,7 +30,7 @@ public abstract class BaseController {
     @Autowired
     protected HttpSession session;
 
-    protected long getUserIdFromSession(HttpSession session){
+    protected long getUserIdFromSession(){
         long userId = -1;
         try {
             userId = (long) session.getAttribute(USER_ID_KEY);
