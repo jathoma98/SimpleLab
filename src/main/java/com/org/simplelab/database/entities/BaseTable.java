@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Data
 @MappedSuperclass
-public abstract class BaseTable implements Persistable<Long> {
+public abstract class BaseTable implements Persistable<Long>, Comparable<BaseTable> {
 
     /**
      * Fields inherited by all entities in the database
@@ -41,6 +41,12 @@ public abstract class BaseTable implements Persistable<Long> {
     public void setCreatedDate(String createdDate) {}
 
     public void setTimestamp(long timestamp) {}
+
+    //we want to sort entities by creation date so users get new objects first
+    @Override
+    public int compareTo(BaseTable o){
+        return -1 * Long.compare(this.getTimestamp(), o.getTimestamp());
+    }
 
 
     /**
