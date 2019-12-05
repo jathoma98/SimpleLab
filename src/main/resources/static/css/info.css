@@ -155,9 +155,17 @@
 	height:50%
 }
 
-
+.modalheight{
+	min-height: 80%!important;
+	max-height: 85%!important;
+	width: 68%!important;
+}
 .madalheight{
 
 	max-height: 80%!important;
 	width: 68%!important;
+}
+
+.tags_field{
+	min-height: 50px;
 }

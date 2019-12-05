@@ -34,10 +34,19 @@ let ACC_INFO ={
             $("#cancelBtn").toggle();
         }
 
+        this.addtag = function(){
+            tempvalue=$("#tag_input").val();
+            var temp = $('<div class="chip">'+tempvalue+'' +
+                '<i class="close material-icons">close</i>' +
+                '</div>');
+            $("#tags_field").append(temp);
+        }
+
         this.btnEvents = new Array();
         this.btnEvents["#editInfoBtn"] = ACC_INFO.editInfo;
         this.btnEvents["#saveInfoBtn"] = ACC_INFO.saveInfo;
         this.btnEvents["#cancelBtn"] = ACC_INFO.cancelEdit;
+        this.btnEvents["#add_tag"] = ACC_INFO.addtag;
 
         this.showUserInfo = function() {
             $.ajax({
@@ -86,4 +95,7 @@ let ACC_INFO ={
 $(document).ready( function () {
     ACC_INFO.init();
     $(".accountDia").on("click", ()=>{ACC_INFO.showUserInfo()});
+
 });
+
+
