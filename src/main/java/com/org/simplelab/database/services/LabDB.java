@@ -80,6 +80,9 @@ public class LabDB extends DBService<Lab> {
         return new EntitySetManager<>(found.getEquipments(), found);
     }
 
+    public List<Lab> searchLabWithKeyword(String keyword) {
+        return repository.searchLabWithKeyword(keyword);
+    }
 //    @Override
 //    public Lab findById(long id){
 //        Optional<Lab> found = labRepository.findById(id);
