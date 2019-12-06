@@ -120,4 +120,9 @@ public class CourseDB extends DBService<Course> {
         if (found.size() != 0) return found.get(0);
         return null;
     }
+
+    public List<Course> searchCourseWithKeyword(String keyword) {
+        return repository.searchCourseWithKeyword(keyword);
+    }
+
 }

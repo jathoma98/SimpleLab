@@ -12,11 +12,35 @@ $(document).ready( function () {
     $("#labEditBtn").on("click",labHideAndShow);
     $("#labBackBtn").on("click",labHideAndShow);
     $("#editInfoBtn").on("click",editInfo);
+    // $("#searchCourseBtn").on("click",searchCourse);
+    $("#courseSearchBtn").on("click",searchCourse);
+
     // $("#saveInfoBtn").on("click",saveInfo);
     // $("#cancelBtn").on("click",cancelEdit);
 
 })
 
+function searchCourse() {
+        let toSearch = {
+            regex: $("#searchCourse").val()
+        };
+        let toSearch_json = JSON.stringify(toSearch);
+        $.ajax({
+            url: "/course/rest/searchCourse",
+            type: 'POST',
+            dataTye: 'json',
+            contentType: 'application/json; charset=utf-8',
+            data: toSearch_json,
+            success: function (result) {
+                let searchCourseTable = '';
+                for (let f=0;f<result.data.length;f++){
+                    searchCourseTable += '<tr><td>' + result.data[f].name + '</td></tr>'
+                }
+                $('#student_search_course tbody').html(searchCourseTable);
+                console.log(result.data.name);
+            }
+        })
+}
 function labHideAndShow(){
     // $(".table_check").css("display","none");
     $(".labcheckcol").toggle();

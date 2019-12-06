@@ -9,7 +9,7 @@
     <script src="/libs/jquery-1.9.1.js"></script>
     <script src="/js/sudentInfo.js"></script>
 
-
+    <script type="text/javascript" th:src="@{/js/studentInfo/course.js}"></script>
     <script type="text/javascript" th:src="@{/js/accountInfo/accountInfo.js}"></script>
     <script type="text/javascript" th:src="@{/js/tools.js}"></script>
 
@@ -98,28 +98,28 @@
                         <div class="collapsible-body row">
                             <div class="col s12">
                                 <div class="input-field col s10">
-                                    <input id="searchLab" type="text" class="validate">
-                                    <label for="searchLab">Course Name</label>
+                                    <input id="searchCourse" type="text" class="validate">
+                                    <label for="searchCourse">Course Name</label>
                                 </div>
                                 <div class="input-field col s2">
-                                    <a><i class="material-icons">search</i></a>
+                                    <a id="courseSearchBtn" herf="#"><i class="material-icons">search</i></a>
                                 </div>
-                                <table>
+                                <table id="student_search_course">
                                     <thead>
                                     <tr>
                                         <th>Search result</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>Alvin</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Alan</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Jonathan</td>
-                                    </tr>
+<!--                                    <tr>-->
+<!--                                        <td>Alvin</td>-->
+<!--                                    </tr>-->
+<!--                                    <tr>-->
+<!--                                        <td>Alan</td>-->
+<!--                                    </tr>-->
+<!--                                    <tr>-->
+<!--                                        <td>Jonathan</td>-->
+<!--                                    </tr>-->
                                     </tbody>
                                 </table>
 

@@ -41,7 +41,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
     public static final String GET_STUDENTS_MAPPING = "/getStudents";
     public static final String DELETE_STUDENTS_MAPPING = "/deleteStudents";
     public static final String ADD_LABS_TO_COURSE_MAPPING = "/addLab";
-
+    public static final String SEARCH_COURSE_MAPPING = "/searchCourse";
 
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     public RRO<String> addCourse(@RequestBody CourseValidator courseValidator,
@@ -236,5 +236,21 @@ public class CourseRESTController extends BaseRESTController<Course> {
         }
         DBService.EntitySetManager<User, Course> toUpdate = courseDB.getStudentsOfCourseByCourseId(course.getCourse_id());
         return super.removeEntitiesFromEntityList(toUpdate, toDelete);
+    }
+
+    @PostMapping(SEARCH_COURSE_MAPPING)
+    public RRO<List<Course>> searchCourse(@RequestBody DTO.UserSearchDTO toSearch){
+        RRO<List<Course>> rro = new RRO();
+        String courseRegex = toSearch.getRegex();
+        //dont allow empty searches
+        if (courseRegex == null || courseRegex.equals("")){
+            rro.setSuccess(false);
+            rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+            return rro;
+        }
+        rro.setSuccess(true);
+        rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
+        rro.setData(courseDB.searchCourseWithKeyword(courseRegex));
+        return rro;
     }
 }

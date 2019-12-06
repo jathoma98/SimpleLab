@@ -39,6 +39,12 @@ public abstract class DTO {
         private String regex;
     }
 
+    @Getter
+    @Setter
+    public static class CourseSearchDTO extends DTO {
+        private String courseRegex;
+    }
+
     /**
      * Contains information for updating a lab.
      */
