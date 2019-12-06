@@ -355,7 +355,7 @@ class DBTests extends SpringTestConfig {
 	void equipmentTest() throws Exception{
 		Equipment e = new Equipment();
 		e.setName(metadata);
-		e.setDescription(metadata);
+		e.setType(metadata);
 
 
 		for (int i = 0; i < 5; i++){
