@@ -22,7 +22,7 @@ public class Equipment extends BaseTable implements UserCreated {
     @JoinColumn(name = "creator_id")
     private User creator;
 
-    private String description;
+    private String type;
 
     //properties cannot exist without a parent equipment,
     //so we cascade remove
@@ -39,7 +39,7 @@ public class Equipment extends BaseTable implements UserCreated {
 
     @Override
     public int hashCode(){
-        return name.hashCode() + creator.hashCode() + description.hashCode() + properties.hashCode();
+        return name.hashCode() + creator.hashCode() + type.hashCode() + properties.hashCode();
     }
 
 

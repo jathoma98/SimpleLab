@@ -3,6 +3,7 @@ package com.org.simplelab.controllers;
 import com.org.simplelab.database.entities.Course;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
@@ -24,38 +25,8 @@ public class TeacherController extends BaseController {
         return "teacherInfo";
     }
 
-    @RequestMapping("/course")
-    public String course(){
-        return "teacherCourse";
-    }
-
-    @RequestMapping("/equipment")
-    public String equipment(){
-        return "teacherEquipment";
-    }
-
-    @RequestMapping("/lab")
-    public String lab(){
-        return "teacherLab";
-    }
-
-    @RequestMapping("/createCourse")
-    public String createCourse(){
-        return "AddAndEditCourse";
-    }
-
-    @RequestMapping("/createEquipment")
-    public String createEquipment(){
-        return "addAndEditEquipment";
-    }
-
-    @RequestMapping("/createlab")
-    public String createLab(){
+    @RequestMapping("/setuplab/{lab_id}")
+    public String setuplab(@PathVariable("lab_id") long lab_id, HttpSession session){
         return "createLab";
-    }
-
-    @RequestMapping("/teacherSearch")
-    public String teacherSearch(){
-        return "teacherSearch";
     }
 }

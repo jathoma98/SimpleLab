@@ -36,5 +36,4 @@ public class Lab extends BaseTable implements UserCreated{
         this.equipments = new HashSet<>();
         this.steps = new ArrayList<>();
     }
-
 }

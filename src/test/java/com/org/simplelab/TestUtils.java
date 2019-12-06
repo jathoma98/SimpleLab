@@ -52,7 +52,7 @@ public class TestUtils {
 
     public static Equipment createJunkEquipment(){
         Equipment e = new Equipment();
-        e.setDescription(metadata + "DESC");
+        e.setType(metadata + "DESC");
         e.setName(metadata + "NAME");
         e.setCreator(createJunkUser());
         return e;
