@@ -28,7 +28,6 @@ let LABS_TABLE = {
             })
         };
 
-
         /**
          * Use to pull lab list from server in teacher home page
          **/
@@ -58,9 +57,8 @@ let LABS_TABLE = {
                 lab_id_old: LABS_TABLE.lab_info.id,
                 newLabInfo: {
                     name: $("#lab_name").val(),
-                    description: $("#course_description").val()
+                    description: $("#lab_description").val()
                 }
-
             }
             let lab_json = JSON.stringify(labUpdata);
             $.ajax({
