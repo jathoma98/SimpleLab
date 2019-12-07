@@ -58,13 +58,13 @@ let EQUIPMENT_TABLE = {
         this.save = function () {
             let validator = {
                 name: $(EQUIPMENT_TABLE.MODAL_ID.EQUIPMENT_NAME).val(),
-                // type: $(EQUIPMENT_TABLE.MODAL_ID.EQUIPMENT_TYPE).val(),
-                // properties: {
-                //     max_temperature: $(EQUIPMENT_TABLE.MODAL_ID.MAX_TEMPERATURE).val(),
-                //     min_temperature: $(EQUIPMENT_TABLE.MODAL_ID.MIN_TEMPERATURE).val(),
-                //     max_volume: $(EQUIPMENT_TABLE.MODAL_ID.MAX_VOLUME).val(),
-                //     max_weight: $(EQUIPMENT_TABLE.MODAL_ID.MAX_WEIGHT).val()
-                // }
+                type: $(EQUIPMENT_TABLE.MODAL_ID.EQUIPMENT_TYPE).val(),
+                properties: [
+                    {propertyKey: "max_temperature", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MAX_TEMPERATURE).val()},
+                    {propertyKey: "min_temperature", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MIN_TEMPERATURE).val()},
+                    {propertyKey:"max_volume", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MAX_VOLUME).val()},
+                    {propertyKey:"max_weight", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MAX_WEIGHT).val()}
+                ]
             }
             let validator_json = JSON.stringify(validator);
             $.ajax({
