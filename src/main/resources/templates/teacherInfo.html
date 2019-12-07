@@ -21,7 +21,7 @@
     <script type="text/javascript" th:src="@{/js/accountInfo/accountInfo.js}"></script>
 
     <!--Template-->
-    <script id="modalTpl" type="x-tmpl-mustache" th:src="@{/js/teacherInfo/modal.html}"></script>
+    <script id="modalTpl" type="x-tmpl-mustache" th:src="@{/js/template/modal.html}"></script>
     <script id="modalAccTpl" type="x-tmpl-mustache" th:src="@{/js/accountInfo/modalAccount.html}"></script>
     <script id="modalEquip" type="x-tmpl-mustache" th:src="@{/js/template/modalEquip.html}"></script>
     <script type="text/javascript"> templatePreLoad()</script>
@@ -48,7 +48,7 @@
 
 <!-- Modal Structure -->
 <div id="modalAccount" class="modal modalheight">
-            <!--template -->
+    <!--template -->
 </div>
 
 
@@ -58,7 +58,7 @@
 
 
 <div id="modal" class="modal" style="max-height: 80%; width: 80%">
-    <div class="modal-content" >
+    <div class="modal-content">
         <ul class="collapsible">
             <!--template -->
         </ul>
@@ -72,10 +72,7 @@
             <td>{{username}}</td>
         </tr>
     {{/students}}
-
-
 </script>
-
 
 <!--                second nav bar on the top-->
 <nav>
@@ -128,7 +125,8 @@
             <script id="course_tbody" type="mustache">
             {{#courses}}
             <tr class = "modal-trigger" href="#modal">
-                <td class = "coursecheckcol mycheckbox{{#isEnabled}} myhide{{/isEnabled}}{{^isEnabled}} myshow{{/isEnabled}} center">
+                <td class = "coursecheckcol mycheckbox{{#isEnabled}}
+                 myhide{{/isEnabled}}{{^isEnabled}} myshow{{/isEnabled}} center">
                     <label>
                         <input type="checkbox"><span></span>
                     </label>
@@ -138,6 +136,7 @@
                 <td>{{createdDate}}</td>
             </tr>
             {{/courses}}
+
 
 
             </script>
@@ -198,6 +197,7 @@
             {{/labs}}
 
 
+
             </script>
             <tbody>
 
@@ -227,7 +227,7 @@
         </nav>
 
         <!--        equipment list table -->
-        <table class="highlight centered white" id = "#equipment_list">
+        <table class="highlight centered white" id="#equipment_list">
             <thead>
             <tr>
                 <th class="equipcheckcol myhide mycheckbox"></th>
@@ -236,29 +236,27 @@
                 <th>Last Edit</th>
             </tr>
             </thead>
-
+            <script id="equip_tbody" type="mustache">
+            {{#equip}}
+                {{#isEnabled}}
+            <tr class = "modal-trigger" href="#modal">
+                <td class = "labcheckcol mycheckbox myhide center">
+            {{/isEnabled}}
+                {{^isEnabled}}
+            <tr href="#modal">
+                <td class = "labcheckcol mycheckbox myshow center">
+            {{/isEnabled}}
+                    <label>
+                        <input type="checkbox"><span></span>
+                    </label>
+                </td>
+                <td class = "myIdColumn">{{id}}</td>
+                <td>{{name}}</td>
+                <td>{{createdDate}}</td>
+            </tr>
+            {{/equip}}
+            </script>
             <tbody>
-            <tr>
-                <td class="equipcheckcol center myhide mycheckbox "><label class=""><input
-                        type="checkbox"/><span></span></label></td>
-                <td class="myIdColumn"><a th:href="@{/teacher/createEquipment}">item1</a></td>
-                <td>beaker</td>
-                <td>11/6/2019</td>
-            </tr>
-            <tr>
-                <td class="equipcheckcol center myhide mycheckbox"><label class=""><input type="checkbox"/><span></span></label>
-                </td>
-                <td class="myIdColumn"><a th:href="@{/teacher/createEquipment}">item2</a></td>
-                <td>beaker</td>
-                <td>11/6/2019</td>
-            </tr>
-            <tr>
-                <td class="equipcheckcol center myhide mycheckbox"><label class=""><input type="checkbox"/><span></span></label>
-                </td>
-                <td class="myIdColumn"><a th:href="@{/teacher/createEquipment}">item3</a></td>
-                <td>beaker</td>
-                <td>11/6/2019</td>
-            </tr>
             </tbody>
         </table>
     </div>
@@ -280,7 +278,7 @@
 </script>
 <script type="text/javascript">
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         var elems = document.querySelectorAll('select');
         var instances = M.FormSelect.init(elems, {});
     });

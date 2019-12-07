@@ -28,4 +28,10 @@ public abstract class Projection {
         String name, createdDate, course_id;
     }
 
+    @Value
+    public static class TeacherEquipmentInfo extends Projection{
+        String name, createdDate;
+        long id;
+    }
+
 }

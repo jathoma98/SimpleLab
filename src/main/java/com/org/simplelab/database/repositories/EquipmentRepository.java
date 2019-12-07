@@ -10,4 +10,6 @@ public interface EquipmentRepository extends BaseRepository<Equipment> {
 
     List<Equipment> findByName(String name);
 
+    <T> List<T> findByCreator_id(long id, Class<T> projection);
+
 }
