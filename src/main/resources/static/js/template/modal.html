@@ -86,7 +86,7 @@ data = {
                         <label for="searchStudent">Student Name</label>
                     </div>
                     <div class="input-field col s2">
-                        <a id="searchStudentBtn" herf="#"><i class="material-icons">search</i></a>
+                        <a id="searchStudentBtn" href="#"><i class="material-icons">search</i></a>
                     </div>
                     <table id="student_search_result_table">
                         <thead>
@@ -172,7 +172,19 @@ data = {
                                value="{{lab.name}}">
                         <label for="lab_name"{{#lab.name}} class="active"{{/lab.name}}>Lab Name</label>
                     </div>
+                    <div class="col s6 valign-wrapper">
+                        <label class="col s4"><h6>Security: </h6></label>
+                        <label class="col s4">
+                            <input class="with-gap" name="group2" type="radio" checked/>
+                            <span>Public</span>
+                        </label>
+                        <label class="col s4">
+                            <input class="with-gap" name="group2" type="radio"/>
+                            <span>Private</span>
+                        </label>
+                    </div>
                 </div>
+
                 <div class="row">
                     <div class="input-field col s12">
                         <textarea id="lab_description"
