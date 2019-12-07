@@ -29,9 +29,6 @@
 	background: #bdbdbd !important;
 }
 
-
-
-
 .upload_pic{
 	height:300px ;
 	width: 300px;
@@ -73,16 +70,16 @@
 
 }
 
-
-
-
-
 .account_img{
 	height: 50px;
 	width: 50px;
 	margin-top: 10px;
 	margin-right: 10px;
 	/*background: pink;*/
+}
+
+.dropdownoffset{
+	top:60px!important;
 }
 
 .myhide{
