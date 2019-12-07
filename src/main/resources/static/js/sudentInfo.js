@@ -34,7 +34,7 @@ function searchLab() {
         success: function (result) {
             let searchLabTable = '';
             for (let f=0;f<result.data.length;f++){
-                searchLabTable += '<tr><td>' + result.data[f].name + '</td></tr>'
+                searchLabTable += '<tr><td>' + result.data[f].name + '<a href="#" class="right modal-close addlab">add</a></td></tr>'
             }
             $('#student_search_lab tbody').html(searchLabTable);
         }
@@ -56,7 +56,7 @@ function searchCourse() {
             success: function (result) {
                 let searchCourseTable = '';
                 for (let f=0;f<result.data.length;f++){
-                    searchCourseTable += '<tr><td>' + result.data[f].name + '</td></tr>'
+                    searchCourseTable += '<tr><td>' + result.data[f].name + '<a href="#" class="right modal-close addcourse">add</a></td></tr>'
                 }
                 $('#student_search_course tbody').html(searchCourseTable);
             }
