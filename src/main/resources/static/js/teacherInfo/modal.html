@@ -14,322 +14,331 @@ data = {
     },
 }
 -->
-{{#courseModal}}
-    <li{{#active}} class="active"{{/active}}>
-        <div class="collapsible-header" style="background: #00acc1;"><i class="material-icons">info</i>Info</div>
-        <!--        <div id="setCourseText" class="row collapsible-body"{{#active}} style="display: block;"{{/active}}>-->
-        <div class="row collapsible-body"{{#active}} style="display: block;"{{/active}}>
-            <form class="col s12">
-                <div class="row">
-                    <div class="input-field col s6">
-                        <input id="course_name" type="text" class="validate{{#course.name}} valid{{/course.name}}"
-                               value="{{course.name}}">
-                        <label for="course_name"{{#course.name}} class="active"{{/course.name}}>Course Name</label>
-                    </div>
-                    <div class="input-field col s6">
-                        <input id="course_code" type="text"
-                               class="validate{{#course.course_id}} valid{{/course.course_id}}"
-                               value="{{course.course_id}}">
-                        <label for="course_code"{{#course.course_id}} class="active"{{/course.course_id}}>Course
-                            Code</label>
-                    </div>
+<div class="modal-content">
+    <ul class="collapsible">
+        {{#courseModal}}
+            <li{{#active}} class="active"{{/active}}>
+                <div class="collapsible-header" style="background: #00acc1;"><i class="material-icons">info</i>Info
                 </div>
-                <div class="row">
-                    <div class="input-field col s12">
+                <!--        <div id="setCourseText" class="row collapsible-body"{{#active}} style="display: block;"{{/active}}>-->
+                <div class="row collapsible-body"{{#active}} style="display: block;"{{/active}}>
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input id="course_name" type="text"
+                                       class="validate{{#course.name}} valid{{/course.name}}"
+                                       value="{{course.name}}">
+                                <label for="course_name"{{#course.name}} class="active"{{/course.name}}>Course
+                                    Name</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="course_code" type="text"
+                                       class="validate{{#course.course_id}} valid{{/course.course_id}}"
+                                       value="{{course.course_id}}">
+                                <label for="course_code"{{#course.course_id}} class="active"{{/course.course_id}}>Course
+                                    Code</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
                         <textarea id="course_description"
                                   class="materialize-textarea validate{{#course.description}} valid{{/course.description}}">{{course.description}}</textarea>
-                        <label for="course_description"{{#course.description}} class="active"{{/course.description}}>Course
-                            Description</label>
+                                <label for="course_description"{{#course.description}}
+                                       class="active"{{/course.description}}>Course
+                                    Description</label>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row">
+                        {{#create}}
+                            <button id="courseSaveBtn" class="waves-effect waves-light modal-close right btn btn_margin"
+                                    style="background:#dd0052;" type="submit" name="action">
+                                Create
+                            </button>
+                        {{/create}}
+                        {{^create}}
+                            <button id="courseEditBtn" class="waves-effect waves-light modal-close right btn btn_margin"
+                                    style="background:#dd0052;" type="submit" name="action">
+                                Edit
+                            </button>
+                        {{/create}}
                     </div>
                 </div>
-            </form>
-            <div class="row">
-                {{#create}}
-                    <button id="courseSaveBtn" class="waves-effect waves-light modal-close right btn btn_margin"
-                            style="background:#dd0052;" type="submit" name="action">
-                        Create
-                    </button>
-                {{/create}}
-                {{^create}}
-                    <button id="courseEditBtn" class="waves-effect waves-light modal-close right btn btn_margin"
-                            style="background:#dd0052;" type="submit" name="action">
-                        Edit
-                    </button>
-                {{/create}}
-            </div>
-        </div>
-    </li>
-    <!--student list-->
-    <li>
-        <div class="collapsible-header" style="background: #f1cc36"><i class="material-icons">perm_identity</i>Students
-        </div>
-        <div class="collapsible-body">
-            <div class="row">
-                <div class="input-field col s4">
-                    <table id="student_list_table">
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+            </li>
+            <!--student list-->
+            <li>
+                <div class="collapsible-header" style="background: #f1cc36"><i class="material-icons">perm_identity</i>Students
                 </div>
-                <div class="input-field col s8">
-                    <div class="input-field col s10">
-                        <input id="searchStudent" type="text" class="validate">
-                        <label for="searchStudent">Student Name</label>
-                    </div>
-                    <div class="input-field col s2">
-                        <a id="searchStudentBtn" herf="#"><i class="material-icons">search</i></a>
-                    </div>
-                    <table id="student_search_result_table">
-                        <thead>
-                        <tr>
-                            <th>Search result</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </li>
-    <!--Lab list-->
-    <li>
-        <div class="collapsible-header" style="background:#dd0052"><i class="material-icons">laptop</i>Labs</div>
-        <div class="collapsible-body">
-            <div class="row">
-                <div class="input-field col s4">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Alvin</td>
-                        </tr>
-                        <tr>
-                            <td>Alan</td>
-                        </tr>
-                        <tr>
-                            <td>Jonathan</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="input-field col s8">
-                    <div class="input-field col s10">
-                        <input id="searchLab" type="text" class="validate">
-                        <label for="searchLab">Lab Name</label>
-                    </div>
-                    <div class="input-field col s2">
-                        <a href=""><i class="material-icons">search</i></a>
-                    </div>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Search Result</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Alvin</td>
-                        </tr>
-                        <tr>
-                            <td>Alan</td>
-                        </tr>
-                        <tr>
-                            <td>Jonathan</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </li>
-{{/courseModal}}
-{{#labModal}}
-    <li{{#active}} class="active"{{/active}}>
-        <div class="collapsible-header" style="background: #00acc1">
-            <i class="material-icons">info</i>Create New Lab
-        </div>
-        <div class="row collapsible-body"{{#active}} style="display: block;"{{/active}}>
-            <form class="col s12">
-                <div class="row">
-                    <div class="input-field col s6">
-                        <input id="lab_name" type="text" class="validate" type="text"
-                               class="validate{{#lab.name}} valid{{/lab.name}}"
-                               value="{{lab.name}}">
-                        <label for="lab_name"{{#lab.name}} class="active"{{/lab.name}}>Lab Name</label>
+                <div class="collapsible-body">
+                    <div class="row">
+                        <div class="input-field col s4">
+                            <table id="student_list_table">
+                                <thead>
+                                <tr>
+                                    <th>Name</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="input-field col s8">
+                            <div class="input-field col s10">
+                                <input id="searchStudent" type="text" class="validate">
+                                <label for="searchStudent">Student Name</label>
+                            </div>
+                            <div class="input-field col s2">
+                                <a id="searchStudentBtn" herf="#"><i class="material-icons">search</i></a>
+                            </div>
+                            <table id="student_search_result_table">
+                                <thead>
+                                <tr>
+                                    <th>Search result</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="input-field col s12">
+            </li>
+            <!--Lab list-->
+            <li>
+                <div class="collapsible-header" style="background:#dd0052"><i class="material-icons">laptop</i>Labs
+                </div>
+                <div class="collapsible-body">
+                    <div class="row">
+                        <div class="input-field col s4">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>Name</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>Alvin</td>
+                                </tr>
+                                <tr>
+                                    <td>Alan</td>
+                                </tr>
+                                <tr>
+                                    <td>Jonathan</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="input-field col s8">
+                            <div class="input-field col s10">
+                                <input id="searchLab" type="text" class="validate">
+                                <label for="searchLab">Lab Name</label>
+                            </div>
+                            <div class="input-field col s2">
+                                <a href=""><i class="material-icons">search</i></a>
+                            </div>
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>Search Result</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>Alvin</td>
+                                </tr>
+                                <tr>
+                                    <td>Alan</td>
+                                </tr>
+                                <tr>
+                                    <td>Jonathan</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        {{/courseModal}}
+        {{#labModal}}
+            <li{{#active}} class="active"{{/active}}>
+                <div class="collapsible-header" style="background: #00acc1">
+                    <i class="material-icons">info</i>Create New Lab
+                </div>
+                <div class="row collapsible-body"{{#active}} style="display: block;"{{/active}}>
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input id="lab_name" type="text" class="validate" type="text"
+                                       class="validate{{#lab.name}} valid{{/lab.name}}"
+                                       value="{{lab.name}}">
+                                <label for="lab_name"{{#lab.name}} class="active"{{/lab.name}}>Lab Name</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
                         <textarea id="lab_description"
                                   class="materialize-textarea {{#lab.description}} valid{{/lab.description}}">{{lab.description}}</textarea>
-                        <label for="lab_description" {{#lab.description}} class="active"{{/lab.description}}>Lab
-                            Decription</label>
+                                <label for="lab_description" {{#lab.description}} class="active"{{/lab.description}}>Lab
+                                    Decription</label>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row">
+                        {{#create}}
+                            <button id="labSaveBtn" class="waves-effect waves-light modal-close right btn btn_margin"
+                                    style="background:#dd0052;" type="submit" name="action">
+                                Create
+                            </button>
+                        {{/create}}
+                        {{^create}}
+                            <button id="labEditBtn" class="waves-effect waves-light modal-close right btn btn_margin"
+                                    style="background:#dd0052;" type="submit" name="action">
+                                Edit
+                            </button>
+                            <button id="labSetupBtn" class="waves-effect waves-light modal-close right btn btn_margin"
+                                    style="background:#dd0052;" type="submit" name="action">
+                                Setup
+                            </button>
+                        {{/create}}
                     </div>
                 </div>
-            </form>
-            <div class="row">
-                {{#create}}
-                    <button id="labSaveBtn" class="waves-effect waves-light modal-close right btn btn_margin"
-                            style="background:#dd0052;" type="submit" name="action">
-                        Create
-                    </button>
-                {{/create}}
-                {{^create}}
-                    <button id="labEditBtn" class="waves-effect waves-light modal-close right btn btn_margin"
-                            style="background:#dd0052;" type="submit" name="action">
-                        Edit
-                    </button>
-                    <button id="labSetupBtn" class="waves-effect waves-light modal-close right btn btn_margin"
-                            style="background:#dd0052;" type="submit" name="action">
-                        Setup
-                    </button>
-                {{/create}}
-            </div>
-        </div>
-    </li>
-    <li>
-        <div class="collapsible-header" style="background: #f1cc36"><i class="material-icons">laptop</i>Search
-            for Labs
-        </div>
-        <div class="collapsible-body">
-            <div class="row">
-                <div class="input-field col s12">
-                    <div class="input-field col s10">
-                        <input id="modalsearchLab" type="text" class="validate">
-                        <label for="searchLab">Student Name</label>
+            </li>
+            <li>
+                <div class="collapsible-header" style="background: #f1cc36"><i class="material-icons">laptop</i>Search
+                    for Labs
+                </div>
+                <div class="collapsible-body">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <div class="input-field col s10">
+                                <input id="modalsearchLab" type="text" class="validate">
+                                <label for="searchLab">Student Name</label>
+                            </div>
+                            <div class="input-field col s2">
+                                <a><i class="material-icons">search</i></a>
+                            </div>
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>Search result</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>Lab one</td>
+                                </tr>
+                                <tr>
+                                    <td>Lab two</td>
+                                </tr>
+                                <tr>
+                                    <td>Lab three</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="input-field col s2">
-                        <a><i class="material-icons">search</i></a>
+                </div>
+            </li>
+        {{/labModal}}
+        {{#EquipmentModal}}
+            <nav>
+                <div class="nav-wrapper my_cran">
+                    <a href="#!" class="brand-logo"><i class="material-icons">view_list</i>Add Equipment</a>
+                </div>
+            </nav>
+            <div class="row delete_empty">
+                <div class="col s4 center delete_empty">
+                    <div class="row"></div>
+                    <img class="eq_upload delete_empty" src="../img/upload.png">
+                    <div class="file-field input-field col s6 offset-s3">
+                        <div class="btn">
+                            <span>File</span>
+                            <input type="file" class="my_cran">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
                     </div>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Search result</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Lab one</td>
-                        </tr>
-                        <tr>
-                            <td>Lab two</td>
-                        </tr>
-                        <tr>
-                            <td>Lab three</td>
-                        </tr>
-                        </tbody>
-                    </table>
                 </div>
-            </div>
-        </div>
-    </li>
-{{/labModal}}
-{{#EquipmentModal}}
-    <nav>
-        <div class="nav-wrapper my_cran">
-            <a href="#!" class="brand-logo"><i class="material-icons">view_list</i>Add Equipment</a>
-        </div>
-    </nav>
-    <div class="row delete_empty">
-        <div class="col s4 center delete_empty">
-            <div class = "row"></div>
-            <img class="eq_upload delete_empty" src="../img/upload.png">
-            <div class="file-field input-field col s6 offset-s3">
-                <div class="btn">
-                    <span>File</span>
-                    <input type="file" class="my_cran">
+                <div class="input-field col s5 eq_maigin">
+                    <select>
+                        <option value="" selected>Save To Item Set</option>
+                        <option value="1">favorite</option>
+                        <option value="2">chem 101</option>
+                        <option value="3">chem 201</option>
+                    </select>
                 </div>
-                <div class="file-path-wrapper">
-                    <input class="file-path validate" type="text">
+                <div class="col s8 valign-wrapper section">
+                    <label class="col s2"><h6>Item Type: </h6></label>
+                    <label class="col s3">
+                        <input class="with-gap" name="group1" type="radio" checked/>
+                        <span>Item</span>
+                    </label>
+                    <label class="col s3">
+                        <input class="with-gap" name="group1" type="radio"/>
+                        <span>Container</span>
+                    </label>
+                    <label class="col s3">
+                        <input class="with-gap" name="group1" type="radio"/>
+                        <span>Machine</span>
+                    </label>
+                    <label class="col s1">
+                    </label>
                 </div>
-            </div>
-        </div>
-        <div class="input-field col s5 eq_maigin">
-            <select>
-                <option value="" selected>Save To Item Set</option>
-                <option value="1">favorite</option>
-                <option value="2">chem 101</option>
-                <option value="3">chem 201</option>
-            </select>
-        </div>
-        <div class="col s8 valign-wrapper section">
-            <label class="col s2"><h6>Item Type: </h6></label>
-            <label class="col s3">
-                <input class="with-gap" name="group1" type="radio" checked/>
-                <span>Item</span>
-            </label>
-            <label class="col s3">
-                <input class="with-gap" name="group1" type="radio"/>
-                <span>Container</span>
-            </label>
-            <label class="col s3">
-                <input class="with-gap" name="group1" type="radio"/>
-                <span>Machine</span>
-            </label>
-            <label class="col s1">
-            </label>
-        </div>
-        <div class="col s8 valign-wrapper section">
-            <label class="col s2"><h6>Security: </h6></label>
-            <label class="col s3">
-                <input class="with-gap" name="group2" type="radio" checked/>
-                <span>Public</span>
-            </label>
-            <label class="col s3">
-                <input class="with-gap" name="group2" type="radio"/>
-                <span>Private</span>
-            </label>
-            <label class="col s3">
-            </label>
-            <label class="col s1">
-            </label>
-        </div>
+                <div class="col s8 valign-wrapper section">
+                    <label class="col s2"><h6>Security: </h6></label>
+                    <label class="col s3">
+                        <input class="with-gap" name="group2" type="radio" checked/>
+                        <span>Public</span>
+                    </label>
+                    <label class="col s3">
+                        <input class="with-gap" name="group2" type="radio"/>
+                        <span>Private</span>
+                    </label>
+                    <label class="col s3">
+                    </label>
+                    <label class="col s1">
+                    </label>
+                </div>
 
-        <form class="col s8">
-            <div class="col s12 section">
-                <div class="row">
-                    <div class="input-field col s5">
-                        <input  id="item_name" type="text" class="validate">
-                        <label  for="item_name">Item Name</label>
+                <form class="col s8">
+                    <div class="col s12 section">
+                        <div class="row">
+                            <div class="input-field col s5">
+                                <input id="item_name" type="text" class="validate">
+                                <label for="item_name">Item Name</label>
+                            </div>
+                            <div class="input-field col s5">
+                                <input id="max_volume" type="text" class="validate">
+                                <label for="max_volume">Max Volume</label>
+                            </div>
+                        </div>
                     </div>
-                    <div class="input-field col s5">
-                        <input  id="max_volume" type="text" class="validate">
-                        <label for="max_volume">Max Volume</label>
+                    <div class="col s12 section">
+                        <div class="row">
+                            <div class="input-field col s5">
+                                <input id="max_temperature" type="text" class="validate">
+                                <label for="max_temperature">Max Temperature</label>
+                            </div>
+                            <div class="input-field col s5">
+                                <input id="accuracy" type="text" class="validate">
+                                <label for="accuracy">Accuracy</label>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
-            <div class="col s12 section">
-                <div class="row">
-                    <div class="input-field col s5">
-                        <input id="max_temperature" type="text" class="validate">
-                        <label for="max_temperature">Max Temperature</label>
-                    </div>
-                    <div class="input-field col s5">
-                        <input id="accuracy" type="text" class="validate">
-                        <label for="accuracy">Accuracy</label>
-                    </div>
-                </div>
+            <div class="modal-footer">
+                <button class="waves-effect waves-light modal-close btn" type="submit" name="action">
+                    Save
+                </button>
             </div>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <button class="waves-effect waves-light modal-close btn" type="submit" name="action">
-            Save
-        </button>
-    </div>
-{{/EquipmentModal}}
+        {{/EquipmentModal}}
+    </ul>
+</div>
 
 
-    <!--    <button id = "courseSaveBtn" class="waves-effect waves-light modal-close right btn btn_margin" style="background:#dd0052;" type="submit" name="action">-->
-    <!--        Save-->
-    <!--    </button>-->
+<!--    <button id = "courseSaveBtn" class="waves-effect waves-light modal-close right btn btn_margin" style="background:#dd0052;" type="submit" name="action">-->
+<!--        Save-->
+<!--    </button>-->

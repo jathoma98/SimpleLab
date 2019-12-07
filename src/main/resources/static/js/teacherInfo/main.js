@@ -17,7 +17,8 @@ TEMPLATE_ID = {
     STUDENTS_TBODY: "#student_search_tbody",
     LAB_TBODY: "#lab_tbody",
     COURSE_TBODY: "#course_tbody",
-    MODAL: "#modalTpl"
+    MODAL: "#modalTpl",
+    MODAL_EQUIP: "#modalEquip"
 }
 
 function hideAndShowEquip(){
@@ -35,8 +36,6 @@ $(document).ready(function () {
     $("#courseBackBtn").on("click", ()=>{COURSES_TABLE.btnSwitch()});
     //Set tbody row event
     COURSES_TABLE.reload();
-
-
 
 
     //Lab

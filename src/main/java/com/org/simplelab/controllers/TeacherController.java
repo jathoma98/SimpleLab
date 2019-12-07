@@ -1,6 +1,7 @@
 package com.org.simplelab.controllers;
 
 import com.org.simplelab.database.entities.Course;
+import com.org.simplelab.database.entities.Lab;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +27,10 @@ public class TeacherController extends BaseController {
     }
 
     @RequestMapping("/setuplab/{lab_id}")
-    public String setuplab(@PathVariable("lab_id") long lab_id, HttpSession session){
+    public String setuplab(@PathVariable("lab_id") long lab_id, HttpSession session, Model model){
+        Lab lab = labDB.findById(lab_id);
+        model.addAttribute("lab_id", lab.getId());
+        model.addAttribute("lab_name", lab.getName());
         return "createLab";
     }
 }

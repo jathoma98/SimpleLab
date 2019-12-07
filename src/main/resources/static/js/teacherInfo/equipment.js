@@ -51,7 +51,7 @@ let EQUIPMENT_TABLE = {
                     equipment: true
                 }
             }
-            rebuildComponent(ElEM_ID.MODAL_UL,TEMPLATE_ID.MODAL, data);
+            rebuildComponent(ElEM_ID.MODAL_UL,TEMPLATE_ID.MODAL_EQUIP, data);
         };
 
 
