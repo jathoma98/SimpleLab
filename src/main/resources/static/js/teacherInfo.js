@@ -22,7 +22,6 @@ function signOut(){
     });
 }
 
-
 $(document).ready( function () {
 
     //Lab

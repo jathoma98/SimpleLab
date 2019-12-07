@@ -18,7 +18,7 @@ let LABS_TABLE = {
                             labModal: {
                                 active: "active",
                                 create: false,
-                                lab: lab,
+                                lab: lab
                             }
                         }
                         LABS_TABLE.lab_info = lab;
