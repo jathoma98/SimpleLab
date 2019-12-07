@@ -17,7 +17,23 @@ public class DoLabController extends BaseController {
 
     public static final String DO_LAB_BASE_MAPPING = "/doLab";
     public static final String LAB_ID_MAPPING = "/{lab_id}";
+    public static final String INTERACTION_MAPPING  = LAB_ID_MAPPING + "/interaction";
 
+    /**
+     * Returns a Workspace object, which contains all of the info needed to build
+     * the Do Lab user interface. Refer to the Workspace class in restcontrollers.dto.Workspace
+     * for the fields that will be returned.
+     *
+     * Example:
+     * User clicks on lab with id 100 to do the lab ->
+     * @return: {
+     *     name: Name of lab
+     *     description : Description of lab
+     *     steps: List of Step objects
+     *     equipments: List of equipments in the lab
+     *     (TODO: add this) recipes: List of Recipes in the lab
+     * }
+     */
     @GetMapping(LAB_ID_MAPPING)
     @Transactional
     public RRO getLabToDo(@PathVariable("lab_id") long lab_id){
