@@ -129,6 +129,12 @@
 			<version>2.3.0</version>
 		</dependency>
 
+		<!-- allow sending of objects with lazy loaded fields -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-hibernate5</artifactId>
+		</dependency>
+
 
 
 
