@@ -67,7 +67,7 @@ $(document).ready(function(){
         $("#operation_area").append(c);
         //add item to current set
         $(".current_item_set").append(cur_item);
-        c.offset({top:300,left:100})
+        c.offset({top:300,left:500})
         itemcount++;
 
         //for popup dialog rotate back
