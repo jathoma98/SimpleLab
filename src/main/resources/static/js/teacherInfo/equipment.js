@@ -32,7 +32,7 @@ let EQUIPMENT_TABLE = {
                     retObjHandle(result, function () {
                         let data = {
                             isEnabled: EQUIPMENT_TABLE.toggle,
-                            courses: result.data.reverse()
+                            equip: result.data.reverse()
                         }
                         rebuildComponent(ElEM_ID.EQUIPMENT_TABLE_TBODY, TEMPLATE_ID.EQUIPMENT_TBODY, data);
                         if (EQUIPMENT_TABLE.toggle) {
@@ -108,9 +108,9 @@ let EQUIPMENT_TABLE = {
             $(".equipcheckcol").toggle();
             EQUIPMENT_TABLE.toggle = !EQUIPMENT_TABLE.toggle;
             if (EQUIPMENT_TABLE.toggle) {
-                // setTableBodyRowEvent(ElEM_ID.LAB_TABLE_TBODY, LABS_TABLE.tableRowEvent);
+                setTableBodyRowEvent(ElEM_ID.EQUIPMENT_TABLE_TBODY, EQUIPMENT_TABLE.tableRowEvent);
             } else {
-                // removeTableBodyRowEvent(ElEM_ID.LAB_TABLE_TBODY)
+                removeTableBodyRowEvent(ElEM_ID.EQUIPMENT_TABLE_TBODY)
             }
         }
     }

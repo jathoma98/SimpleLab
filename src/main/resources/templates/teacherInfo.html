@@ -227,7 +227,7 @@
         </nav>
 
         <!--        equipment list table -->
-        <table class="highlight centered white" id="#equipment_list">
+        <table id="equipment_list" class="highlight centered white" >
             <thead>
             <tr>
                 <th class="equipcheckcol myhide mycheckbox"></th>
@@ -238,14 +238,8 @@
             </thead>
             <script id="equip_tbody" type="mustache">
             {{#equip}}
-                {{#isEnabled}}
             <tr class = "modal-trigger" href="#modal">
-                <td class = "labcheckcol mycheckbox myhide center">
-            {{/isEnabled}}
-                {{^isEnabled}}
-            <tr href="#modal">
-                <td class = "labcheckcol mycheckbox myshow center">
-            {{/isEnabled}}
+                <td class = "equipcheckcol mycheckbox{{#isEnabled}} myhide{{/isEnabled}}{{^isEnabled}} myshow{{/isEnabled}} center">
                     <label>
                         <input type="checkbox"><span></span>
                     </label>
@@ -301,6 +295,5 @@
             });
         });
     });
-
 </script>
 </html>

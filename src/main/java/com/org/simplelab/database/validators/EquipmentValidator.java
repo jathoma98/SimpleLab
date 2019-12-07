@@ -33,6 +33,7 @@ public class EquipmentValidator extends Validator<Equipment> {
     @Override
     public Equipment build() {
         Equipment e = DBUtils.getMapper().map(this, Equipment.class);
+        e.getProperties().forEach((p)->p.setParentEquipment(e));
         return e;
     }
 }
