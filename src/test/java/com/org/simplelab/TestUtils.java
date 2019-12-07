@@ -5,9 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -106,6 +104,7 @@ public class TestUtils {
 
     public static Lab createJunkLabWithSteps(int numSteps){
         Lab l = createJunkLab();
+        l.getEquipments().add(createJunkEquipmentWithProperties(numSteps));
         l.setSteps(createJunkSteps(numSteps, l));
         return l;
     }

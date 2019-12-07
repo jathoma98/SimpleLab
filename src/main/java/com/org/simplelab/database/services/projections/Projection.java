@@ -1,6 +1,11 @@
 package com.org.simplelab.database.services.projections;
 
+import com.org.simplelab.database.entities.Equipment;
+import com.org.simplelab.database.entities.Step;
 import lombok.Value;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * Defines projections of DB queries.
@@ -27,5 +32,8 @@ public abstract class Projection {
     public static class TeacherCourseInfo extends Projection{
         String name, createdDate, course_id;
     }
+
+
+
 
 }
