@@ -84,17 +84,17 @@ let LABS_TABLE = {
          * table.
          */
         this.save = function () {
-            let course = {
+            let lab = {
                 name: $("#lab_name").val(),
                 description: $("#lab_description").val()
             }
-            let course_json = JSON.stringify(course);
+            let lab_json = JSON.stringify(lab);
             $.ajax({
                 url: "/lab/rest",
                 type: 'POST',
                 dataTye: 'json',
                 contentType: 'application/json; charset=utf-8',
-                data: course_json,
+                data: lab_json,
                 success: function (result) {
                     retObjHandle(result, LABS_TABLE.reload)
 

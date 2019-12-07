@@ -8,15 +8,17 @@ ElEM_ID = {
     STUDENT_SEARCH_TBODY: "#student_search_result_table tbody",
     STUDENT_LIST_TBODY: "#student_list_table tbody",
     COURSE_SAVE_BTN: "#courseSaveBtn",
+    COURSE_EDIT_BTN: "#courseEditBtn",
     LAB_SAVE_BTN: "#labSaveBtn",
     LAB_EDIT_BTN: "#labEditBtn",
-    COURSE_EDIT_BTN: "#courseEditBtn"
+    EQUIPMENT_SAVE_BTN: "#equipmentSaveBtn"
 }
 
 TEMPLATE_ID = {
     STUDENTS_TBODY: "#student_search_tbody",
     LAB_TBODY: "#lab_tbody",
     COURSE_TBODY: "#course_tbody",
+    EQUIPMENT_TBODY: "#equip_tbody",
     MODAL: "#modalTpl",
     MODAL_EQUIP: "#modalEquip"
 }
@@ -30,11 +32,10 @@ $(document).ready(function () {
     COURSES_TABLE.init();
     //Course
     $("#courseAddBtn").on("click", ()=>{COURSES_TABLE.create()});
-    // $("#courseSaveBtn").on("click", ()=>{COURSES_TABLE.save()});
     $("#courseDeleteBtn").on("click", ()=>{COURSES_TABLE.delete()});
     $("#courseEditBtn").on("click", ()=>{COURSES_TABLE.btnSwitch()});
     $("#courseBackBtn").on("click", ()=>{COURSES_TABLE.btnSwitch()});
-    //Set tbody row event
+    //load course table
     COURSES_TABLE.reload();
 
 
@@ -53,6 +54,8 @@ $(document).ready(function () {
     $("#equipEditBtn").on("click",()=>{EQUIPMENT_TABLE.btnSwitch()});
     $("#equipBackBtn").on("click",()=>{EQUIPMENT_TABLE.btnSwitch()});
     $("#equipAddBtn").on("click", ()=>{EQUIPMENT_TABLE.create()});
+    //load equipment table
+    EQUIPMENT_TABLE.reload();
 
 })
 
