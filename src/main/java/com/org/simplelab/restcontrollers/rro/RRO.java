@@ -26,7 +26,12 @@ public class RRO<T> {
         NOTHING,
         REDIRECT,
         LOAD_DATA,
-        PRINT_MSG
+        PRINT_MSG,
+    }
+
+    public static enum LAB_ACTION_TYPE {
+        MODIFY_EQUIPMENT,
+        ADVANCE_STEP
     }
 
     public static enum MSG {
