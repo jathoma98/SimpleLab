@@ -12,13 +12,35 @@ $(document).ready( function () {
     $("#labEditBtn").on("click",labHideAndShow);
     $("#labBackBtn").on("click",labHideAndShow);
     $("#editInfoBtn").on("click",editInfo);
-    // $("#searchCourseBtn").on("click",searchCourse);
+    // $("#searchCourseBtn").on("click",searchLab);
     $("#courseSearchBtn").on("click",searchCourse);
-
+    $("#searchStudentLabBtn").on("click",searchLab)
     // $("#saveInfoBtn").on("click",saveInfo);
     // $("#cancelBtn").on("click",cancelEdit);
 
 })
+
+function searchLab() {
+    let labToSearch = {
+        regex: $("#searchStudentLab").val()
+    }
+    let toSearch_json = JSON.stringify(labToSearch);
+    $.ajax({
+        url: "/lab/rest/searchLab",
+        type: 'POST',
+        dataTye: 'json',
+        contentType: 'application/json; charset=utf-8',
+        data: toSearch_json,
+        success: function (result) {
+            let searchLabTable = '';
+            for (let f=0;f<result.data.length;f++){
+                searchLabTable += '<tr><td>' + result.data[f].name + '</td></tr>'
+            }
+            $('#student_search_lab tbody').html(searchLabTable);
+        }
+    })
+
+}
 
 function searchCourse() {
         let toSearch = {
@@ -37,7 +59,6 @@ function searchCourse() {
                     searchCourseTable += '<tr><td>' + result.data[f].name + '</td></tr>'
                 }
                 $('#student_search_course tbody').html(searchCourseTable);
-                console.log(result.data.name);
             }
         })
 }
