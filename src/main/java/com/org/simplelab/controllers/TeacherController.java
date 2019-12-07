@@ -29,6 +29,8 @@ public class TeacherController extends BaseController {
     @RequestMapping("/setuplab/{lab_id}")
     public String setuplab(@PathVariable("lab_id") long lab_id, HttpSession session, Model model){
         Lab lab = labDB.findById(lab_id);
+        String home_navig = ((String)session.getAttribute("username")) + "'s Home";
+        model.addAttribute("home_navig", home_navig);
         model.addAttribute("lab_id", lab.getId());
         model.addAttribute("lab_name", lab.getName());
         return "createLab";
