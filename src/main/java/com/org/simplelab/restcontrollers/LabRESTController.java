@@ -11,7 +11,6 @@ import com.org.simplelab.database.services.projections.Projection;
 import com.org.simplelab.database.validators.LabValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
-import com.org.simplelab.restcontrollers.rro.RRO_ACTION_TYPE;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -72,7 +71,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
             labDB.deleteById(lid);
         }
         rro.setSuccess(true);
-        rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+        rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
         return rro;
     }
 
@@ -81,7 +80,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
         RRO<Lab> rro = new RRO();
         rro.setSuccess(true);
         rro.setData(super.getEntityById(lab_id));
-        rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
+        rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
         return rro;
     }
 
@@ -110,12 +109,12 @@ public class LabRESTController extends BaseRESTController<Lab> {
         List<Projection.TeacherLabInfo> labs = labDB.getLabsByCreatorId(userId, Projection.TeacherLabInfo.class);
         if (labs == null) {
             rro.setSuccess(false);
-            rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+            rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
             return rro;
         }
         rro.setData(labs);
         rro.setSuccess(true);
-        rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
+        rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
         return rro;
     }
 
@@ -136,7 +135,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
         if (found == null){
             rro.setMsg("Lab not found.");
             rro.setSuccess(false);
-            rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
+            rro.setAction(RRO.ACTION_TYPE.PRINT_MSG.name());
             return rro;
         }
         return super.addEntitiesToEntityList(found, equipmentToAdd);
@@ -186,7 +185,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
         }
         RRO<Lab> rro = new RRO<>();
         rro.setSuccess(true);
-        rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+        rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
         return rro;
     }
 
@@ -197,11 +196,11 @@ public class LabRESTController extends BaseRESTController<Lab> {
         //dont allow empty searches
         if (courseRegex == null || courseRegex.equals("")){
             rro.setSuccess(false);
-            rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+            rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
             return rro;
         }
         rro.setSuccess(true);
-        rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
+        rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
         rro.setData(labDB.searchLabWithKeyword(courseRegex));
         return rro;
     }

@@ -10,8 +10,6 @@ import com.org.simplelab.database.validators.InvalidFieldException;
 import com.org.simplelab.database.validators.Validator;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
-import com.org.simplelab.restcontrollers.rro.RRO_ACTION_TYPE;
-import com.org.simplelab.restcontrollers.rro.RRO_MSG;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -45,7 +43,7 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
         } catch (InvalidFieldException e){
             rro.setSuccess(false);
             rro.setMsg(e.getMessage());
-            rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
+            rro.setAction(RRO.ACTION_TYPE.PRINT_MSG.name());
             return rro;
         }
         T created = validator.build();
@@ -62,11 +60,11 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
         } catch (DBService.EntityDBModificationException e){
             rro.setSuccess(true);
             rro.setMsg(e.getMessage());
-            rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
+            rro.setAction(RRO.ACTION_TYPE.PRINT_MSG.name());
             return rro;
         }
         rro.setSuccess(true);
-        rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+        rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
         return rro;
     }
 
@@ -79,7 +77,7 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
         ModelMapper mm = DBUtils.getMapper();
         T found = getDb().findById(idToUpdate);
         if (found == null) {
-            return RRO.sendErrorMessage(RRO_MSG.ENTITY_UPDATE_ENTITY_NO_FOUND.getMsg());
+            return RRO.sendErrorMessage(RRO.MSG.ENTITY_UPDATE_ENTITY_NO_FOUND.getMsg());
         }
         //if its a validator, validate before copying.
         if (Validator.class.isInstance(dto)) {
@@ -98,7 +96,7 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
             return RRO.sendErrorMessage(e.getMessage());
         }
         rro.setSuccess(true);
-        rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+        rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
         return rro;
     }
 
@@ -106,11 +104,11 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
         RRO<String> rro = new RRO();
         if (getDb().deleteById(idToDelete)){
             rro.setSuccess(true);
-            rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+            rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
             return rro;
         } else {
             rro.setSuccess(false);
-            rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+            rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
             return rro;
         }
     }
@@ -123,7 +121,7 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
             return RRO.sendErrorMessage(DBService.EntitySetManager.NOT_FOUND_STRING);
         }
         rro.setSuccess(true);
-        rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+        rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
 
         for (U entity: toAdd){
             if (UserCreated.class.isInstance(entity)){
@@ -151,18 +149,18 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
         RRO<String> rro = new RRO();
         if (set == null){
             rro.setMsg(DBService.EntitySetManager.NOT_FOUND_STRING);
-            rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+            rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
             rro.setSuccess(false);
             return rro;
         }
         rro.setSuccess(true);
-        rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+        rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
         for (U entity: toRemove){
             try{
                 set.delete(entity);
             } catch (DBService.EntitySetManager.EntitySetModificationException e){
                 rro.setMsg(e.getMessage());
-                rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+                rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
                 rro.setSuccess(false);
             }
         }
