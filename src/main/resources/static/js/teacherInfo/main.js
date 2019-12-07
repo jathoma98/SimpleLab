@@ -54,6 +54,8 @@ $(document).ready(function () {
     $("#equipEditBtn").on("click",()=>{EQUIPMENT_TABLE.btnSwitch()});
     $("#equipBackBtn").on("click",()=>{EQUIPMENT_TABLE.btnSwitch()});
     $("#equipAddBtn").on("click", ()=>{EQUIPMENT_TABLE.create()});
+    $("#equipDeleteBtn").on("click", ()=>{EQUIPMENT_TABLE.delete()});
+
     //load equipment table
     EQUIPMENT_TABLE.reload();
 

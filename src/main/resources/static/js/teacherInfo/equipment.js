@@ -18,6 +18,7 @@ let EQUIPMENT_TABLE = {
          * Use to onclick Event on each row of lab list.
          **/
         this.tableRowEvent = function () {
+
         };
 
 
@@ -85,6 +86,23 @@ let EQUIPMENT_TABLE = {
          * Delete LAB.
          **/
         this.delete = function () {
+            let ids = [];
+            $(ElEM_ID.EQUIPMENT_TABLE_TBODY).find("tr").each(function (i, row) {
+                if ($(row).find('input[type="checkbox"]').is(':checked')) {
+                    ids.push(($(row).find(".myIdColumn").text()));
+                }
+            });
+            let ids_json = JSON.stringify(ids);
+            $.ajax({
+                url: "/equipment/rest/deleteEquipment",
+                type: 'DELETE',
+                dataTye: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: ids_json,
+                success: function (result) {
+                    retObjHandle(result, EQUIPMENT_TABLE.reload);
+                }
+            })
         };
 
 

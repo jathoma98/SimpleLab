@@ -57,8 +57,7 @@ let LABS_TABLE = {
             let labUpdata = {
                 lab_id_old: LABS_TABLE.lab_info.id,
                 newLabInfo: {
-                    name: $("#course_name").val(),
-                    course_id: $("#course_code").val(),
+                    name: $("#lab_name").val(),
                     description: $("#course_description").val()
                 }
 
@@ -107,7 +106,6 @@ let LABS_TABLE = {
          * Delete LAB.
          **/
         this.delete = function () {
-            removeTableBodyRowEvent($(ElEM_ID.LAB_TABLE_TBODY));
             let lids = [];
             $(ElEM_ID.LAB_TABLE_TBODY).find("tr").each(function (i, row) {
                 if ($(row).find('input[type="checkbox"]').is(':checked')) {

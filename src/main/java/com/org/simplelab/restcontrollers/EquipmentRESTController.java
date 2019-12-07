@@ -4,6 +4,7 @@ package com.org.simplelab.restcontrollers;
 import com.org.simplelab.database.entities.Equipment;
 import com.org.simplelab.database.services.EquipmentDB;
 import com.org.simplelab.database.services.projections.Projection;
+import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.database.validators.EquipmentValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
@@ -31,6 +32,7 @@ public class EquipmentRESTController extends BaseRESTController<Equipment> {
     public static final String BASE_MAPPING = "/equipment/rest";
 
     public static final String EQUIPMENT_ID_MAPPING = "/{equipment_id}";
+    public static final String DELETE_MAPPING = "/deleteEquipment";
     public static final String EQUIPMENT_LIST_MAPPING = "/loadEquipmentList";
 
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -71,4 +73,17 @@ public class EquipmentRESTController extends BaseRESTController<Equipment> {
         return rro;
     }
 
+    @DeleteMapping(DELETE_MAPPING)
+    public RRO<String> deleteEquipment(@RequestBody Long[] toDelete,
+                                    HttpSession session) {
+        RRO<String> rro = new RRO();
+        long userId =  getUserIdFromSession();
+        for (Long id : toDelete) {
+            //TODO: check ownership
+            equipmentDB.deleteById(id);
+        }
+        rro.setSuccess(true);
+        rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+        return rro;
+    }
 }
