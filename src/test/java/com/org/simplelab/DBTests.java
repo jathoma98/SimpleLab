@@ -411,19 +411,6 @@ class DBTests extends SpringTestConfig {
 
 	}
 
-	@Test
-	@WithMockUser(username = username, password = username)
-	void testAddCourse() throws Exception{
-		DTO.CourseUpdateStudentListDTO dto = new DTO.CourseUpdateStudentListDTO();
-		dto.setCourse_id("asdwwetr");
-		List<String> usernameList = new ArrayList<>();
-		usernameList.add("4321");
-		dto.setUsernameList(usernameList);
-		crc.addStudentToCourse(dto);
-		crc.getStudentList(dto);
-
-		assertEquals(1, courseDB.getStudentsOfCourse(dto.getCourse_id()).size());
-	}
 
 
 

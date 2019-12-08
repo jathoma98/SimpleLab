@@ -57,6 +57,14 @@
 			<artifactId>spring-data-jpa</artifactId>
 		</dependency>
 
+		<!-- MongoDB dependencies -->
+		<!--
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-mongodb</artifactId>
+		</dependency>
+		-->
+
 		<!--Spring Transaction-->
 		<dependency>
 			<groupId>org.springframework</groupId>

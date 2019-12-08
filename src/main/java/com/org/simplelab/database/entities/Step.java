@@ -12,14 +12,6 @@ import javax.persistence.*;
 @Table(name = DBUtils.STEP_TABLE_NAME)
 public class Step extends BaseTable{
 
-    //TODO: implement UserCreated?
-
-    /**
-    @OneToOne(cascade = {CascadeType.PERSIST},
-            fetch = FetchType.LAZY)
-    @JoinColumn(name = "creator_id")
-    private User creator;**/
-
     private int stepNum;
 
     @JsonIgnore

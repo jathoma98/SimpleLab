@@ -2,6 +2,7 @@ package com.org.simplelab.restcontrollers;
 
 
 import com.org.simplelab.database.entities.Equipment;
+import com.org.simplelab.database.entities.EquipmentProperty;
 import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.services.EquipmentDB;
 import com.org.simplelab.database.services.projections.Projection;
@@ -99,6 +100,18 @@ public class EquipmentRESTController extends BaseRESTController<Equipment> {
         if (toUpdate.getCreator().getId() != uid){
             return RRO.sendErrorMessage("Duplicate ID");
         }
-        return super.updateEntity(toUpdate.getId(), dto.getNewEquipmentInfo());
+        //TODO: make this more efficient
+        dto.getNewEquipmentInfo().getProperties().forEach((p)->{
+            for(EquipmentProperty ep : toUpdate.getProperties()){
+                if(ep.getPropertyKey().equals(p.getPropertyKey())){
+                    ep.setPropertyValue(p.getPropertyValue());
+                    break;
+                }
+            }
+        });
+        EquipmentValidator newEV = new EquipmentValidator();
+        newEV.setName(dto.getNewEquipmentInfo().getName());
+        newEV.setType(dto.getNewEquipmentInfo().getType());
+        return super.updateEntity(toUpdate.getId(), newEV);
     }
 }
