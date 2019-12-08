@@ -1,6 +1,7 @@
 package com.org.simplelab.controllers;
 
 import com.org.simplelab.database.DBUtils;
+import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.Lab;
 import com.org.simplelab.database.entities.sql.Recipe;
 import com.org.simplelab.database.services.HistoryDB;
@@ -122,19 +123,18 @@ public class DoLabController extends BaseController {
         //save the interaction to lab history
         historyDB.addToLabHistory(interation);
 
-        Recipe found = recipeHandler.findRecipe(dto.getObject1(), dto.getObject2());
+        Equipment eq1 = dto.getObject1();
+        Equipment eq2 = dto.getObject2();
+
+        //perform the user interaction
+        Equipment result = eq1.getInteraction().interactWith(eq2);
+        if (result.exists()){
+            eq2 = result;
+        }
+
+        Recipe found = recipeHandler.findRecipe(eq1, eq2);
         if (found.exists()){
             // do something
-            /*
-            * Todo: That what I think - Zee
-            *       if recipe find
-            *           if check is result equipment in lab step = true
-            *               Return RRO and states which step is complete
-            *           el
-            *               Return RRO without states any step is complete
-            *
-            * Nvm, I just realize you have same idea on the top.
-            */
 
         }
         return RRO.sendErrorMessage(RRO.MSG.RECIPE_NOT_FOUND.getMsg());

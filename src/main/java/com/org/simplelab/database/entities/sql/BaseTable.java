@@ -1,5 +1,6 @@
 package com.org.simplelab.database.entities.sql;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.data.domain.Persistable;
 
@@ -48,6 +49,9 @@ public abstract class BaseTable implements Persistable<Long>, Comparable<BaseTab
         return -1 * Long.compare(this.getTimestamp(), o.getTimestamp());
     }
 
+    public boolean exists(){
+        return getId() != -1;
+    }
 
     /**
      * Below are used internally by JPA to check
@@ -61,6 +65,7 @@ public abstract class BaseTable implements Persistable<Long>, Comparable<BaseTab
     }
 
     @Transient
+    @JsonIgnore
     private boolean isNew = true;
 
     @Override
