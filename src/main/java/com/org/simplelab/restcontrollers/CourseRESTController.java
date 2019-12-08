@@ -168,7 +168,6 @@ public class CourseRESTController extends BaseRESTController<Course> {
     @Transactional
     @PostMapping(ADD_STUDENT_MAPPING)
     public RRO<String> addStudentToCourse(@RequestBody DTO.CourseUpdateStudentListDTO course) {
-        long own_id = getUserIdFromSession();
         String own_username = SecurityUtils.getAuthenticatedUsername();
         List<User> toAdd = new ArrayList<>();
         String course_id = course.getCourse_id();
@@ -203,9 +202,9 @@ public class CourseRESTController extends BaseRESTController<Course> {
         return super.addEntitiesToEntityList(toUpdate, toAdd);
     }
 
+    @Transactional
     @PostMapping(GET_STUDENTS_MAPPING)
-    public RRO<List<User>> getStudentList(@RequestBody DTO.CourseUpdateStudentListDTO course,
-                                     HttpSession session) {
+    public RRO<List<User>> getStudentList(@RequestBody DTO.CourseUpdateStudentListDTO course) {
         String course_id = course.getCourse_id();
         List<User> students;
         RRO<List<User>> rro = new RRO();

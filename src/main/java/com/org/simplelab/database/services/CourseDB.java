@@ -56,7 +56,7 @@ public class CourseDB extends DBService<Course> {
 
     public StudentSetManager getStudentsOfCourseByCourseId(String course_id){
         List<Course> found = findByCourseId(course_id);
-        if (found == null)
+        if (found == null || found.size() == 0)
             return null;
         Course c = found.get(0);
         return new StudentSetManager(c.getStudents(), c);

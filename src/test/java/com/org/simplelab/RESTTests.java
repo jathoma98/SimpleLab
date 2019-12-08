@@ -173,6 +173,12 @@ public class RESTTests extends SpringMockMVCTestConfig {
         //add course first
         sendCourseToPOSTEndpoint(json, "");
 
+        //create DTO to add student
+        rawJson = new HashMap<>();
+        rawJson.put("course_id", cid);
+        rawJson.put("usernameList", "[4321]");
+        json = new JSONObject(rawJson);
+
         sendCourseToPOSTEndpoint(json, CourseRESTController.ADD_STUDENT_MAPPING);
 
         boolean found = false;
@@ -180,6 +186,7 @@ public class RESTTests extends SpringMockMVCTestConfig {
         System.out.println("Students list: " + students.toString());
 
         assertTrue(!students.isEmpty());
+        assertEquals("4321", students.get(0).getUsername());
 
         //check if getStudent endpoint works
         System.out.println("Gettings students from added course...");
@@ -188,7 +195,7 @@ public class RESTTests extends SpringMockMVCTestConfig {
                 .sessionAttrs(session_atr)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json.toString()))
-                //.andDo(print())
+                .andDo(print())
                 .andExpect(status().isOk());
 
         System.out.println("Deleting student from course");
@@ -198,7 +205,7 @@ public class RESTTests extends SpringMockMVCTestConfig {
                 .sessionAttrs(session_atr)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json.toString()))
-                //.andDo(print())
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json("[]"));
 

@@ -9,7 +9,6 @@ import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.database.validators.EquipmentValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
-import com.org.simplelab.restcontrollers.rro.RRO_ACTION_TYPE;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -67,12 +66,12 @@ public class EquipmentRESTController extends BaseRESTController<Equipment> {
         List<Projection.TeacherEquipmentInfo> equips = equipmentDB.getEquipmentByCreatorId(userId, Projection.TeacherEquipmentInfo.class);
         if (equips == null) {
             rro.setSuccess(false);
-            rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+            rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
             return rro;
         }
         rro.setData(equips);
         rro.setSuccess(true);
-        rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
+        rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
         return rro;
     }
 
@@ -86,7 +85,7 @@ public class EquipmentRESTController extends BaseRESTController<Equipment> {
             equipmentDB.deleteById(id);
         }
         rro.setSuccess(true);
-        rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+        rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
         return rro;
     }
 

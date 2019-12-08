@@ -73,12 +73,12 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
         RRO<T> rro = new RRO<T>();
         if (obj == null){
             rro.setSuccess(false);
-            rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
+            rro.setAction(RRO.ACTION_TYPE.PRINT_MSG.name());
             rro.setMsg("Not found!");
             return rro;
         }
         rro.setSuccess(true);
-        rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
+        rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
         rro.setData(obj);
         return rro;
     }
