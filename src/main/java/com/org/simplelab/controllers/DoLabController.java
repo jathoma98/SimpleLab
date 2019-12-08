@@ -119,6 +119,8 @@ public class DoLabController extends BaseController {
                                           @RequestBody EquipmentInteractionDTO dto){
 
         String interation = "test interaction";
+
+        //TODO: implement this
         //save the interaction to lab history
         historyDB.addToLabHistory(interation);
 

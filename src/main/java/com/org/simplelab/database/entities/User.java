@@ -1,6 +1,7 @@
 package com.org.simplelab.database.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.org.simplelab.database.DBUtils;
 import lombok.Data;
@@ -15,11 +16,17 @@ import javax.persistence.Table;
 public class User extends BaseTable {
 
     private String username;
+
+    @JsonIgnore
     private byte[] pass_hash;
     private String firstname;
     private String lastname;
     private String institution;
+
+    @JsonIgnore
     private String question;
+
+    @JsonIgnore
     private byte[] answer;
     private String role;
     private String email;
