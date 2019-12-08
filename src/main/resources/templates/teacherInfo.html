@@ -69,7 +69,11 @@
 <script id="student_search_tbody" type="mustache">
     {{#students}}
         <tr href="#modal">
-            <td>{{username}}<a class="right" href="#">Remove</a></td>
+            <td>{{username}}
+                {{#search}}<a class="right" id="del_student" href="#">Remove</a>{{/search}}
+                {{^search}}<a class="right" id="add_student" href="#">Add</a>{{/search}}
+                <a class="right" id="info" href="#">Info</a>
+            </td>
         </tr>
     {{/students}}
 </script>
@@ -139,6 +143,7 @@
 
 
 
+
             </script>
             <tbody>
             </tbody>
@@ -198,6 +203,7 @@
 
 
 
+
             </script>
             <tbody>
 
@@ -227,7 +233,7 @@
         </nav>
 
         <!--        equipment list table -->
-        <table id="equipment_list" class="highlight centered white" >
+        <table id="equipment_list" class="highlight centered white">
             <thead>
             <tr>
                 <th class="equipcheckcol myhide mycheckbox"></th>
@@ -239,7 +245,8 @@
             <script id="equip_tbody" type="mustache">
             {{#equip}}
             <tr class = "modal-trigger" href="#modal">
-                <td class = "equipcheckcol mycheckbox{{#isEnabled}} myhide{{/isEnabled}}{{^isEnabled}} myshow{{/isEnabled}} center">
+                <td class = "equipcheckcol mycheckbox{{#isEnabled}}
+                 myhide{{/isEnabled}}{{^isEnabled}} myshow{{/isEnabled}} center">
                     <label>
                         <input type="checkbox"><span></span>
                     </label>
@@ -249,6 +256,7 @@
                 <td>{{createdDate}}</td>
             </tr>
             {{/equip}}
+
             </script>
             <tbody>
             </tbody>

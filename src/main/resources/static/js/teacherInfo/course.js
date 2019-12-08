@@ -66,14 +66,14 @@ let COURSES_TABLE = {
                 success: function (result) {
                     retObjHandle(result, (students) => {
                         let data = {
-                            students: students
+                            students: students,
+                            search: true,
                         }
                         rebuildComponent(
                             ElEM_ID.STUDENT_SEARCH_TBODY,
                             TEMPLATE_ID.STUDENTS_TBODY,
                             data);
                         setTableBodyRowEvent(ElEM_ID.STUDENT_SEARCH_TBODY, COURSES_TABLE.addStudentBtnEvent)
-
                     })
                 }
             })
@@ -126,7 +126,8 @@ let COURSES_TABLE = {
                 success: function (result) {
                     retObjHandle(result, (students) => {
                         let data = {
-                            students: students
+                            students: students,
+                            search: false,
                         }
                         rebuildComponent(
                             ElEM_ID.STUDENT_LIST_TBODY,
