@@ -70,10 +70,10 @@
     {{#students}}
         <tr href="#modal">
             <td>
+                <a class="left marginright info" href="#"><i class="material-icons">info</i></a>
                 <span>{{username}}</span>
-                {{^search}}<a class="right del_student" href="#">Remove</a>{{/search}}
-                {{#search}}<a class="right add_student" href="#">Add</a>{{/search}}
-                <a class="right info" href="#">Info</a>
+                {{^search}}<a class="right del_student" href="#"><i class="material-icons">remove_circle_outline</i></a>{{/search}}
+                {{#search}}<a class="right add_student" href="#"><i class="material-icons">add</i></a>{{/search}}
             </td>
         </tr>
     {{/students}}
