@@ -14,7 +14,7 @@ import java.util.Set;
 @Entity(name = DBUtils.EQUIPMENT_TABLE_NAME)
 @Table(name = DBUtils.EQUIPMENT_TABLE_NAME)
 public class Equipment extends BaseTable implements UserCreated {
-    private static final Equipment NO_EQUIPMENT = GEN_NO_EQUIPMENT();
+    public static final Equipment NO_EQUIPMENT = GEN_NO_EQUIPMENT();
 
     private String name;
 
@@ -41,7 +41,7 @@ public class Equipment extends BaseTable implements UserCreated {
     @PostLoad
     public void loadInteraction(){
         //TODO: implement this
-        setInteraction(null);
+        setInteraction(Interaction.DO_NOTHING);
     }
 
     public Equipment(){

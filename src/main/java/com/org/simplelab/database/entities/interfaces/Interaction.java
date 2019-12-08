@@ -6,6 +6,7 @@ import com.org.simplelab.database.entities.sql.Equipment;
  * Base class for Equipment interactions with other equipment.
  */
 public interface Interaction {
+    DoNothing DO_NOTHING = new DoNothing();
 
     /**
      * Defines how this Equipment will interact with another target equipment
@@ -31,8 +32,16 @@ public interface Interaction {
      *     we can just save all data in one big document.
      * @param target - The object that this Equipment will interact with
      * @param <T> - Equipment, or subclass of Equipment.
-     * @return -
+     * @return - The result of this interaction, or Equipment.NO_EQUIPMENT if there is no result.
      */
-    public <T extends Equipment> T interactWith(T target);
+    <T extends Equipment> T interactWith(T target);
+
+    class DoNothing implements Interaction{
+
+        @Override
+        public Equipment interactWith(Equipment target) {
+            return Equipment.NO_EQUIPMENT;
+        }
+    }
 
 }
