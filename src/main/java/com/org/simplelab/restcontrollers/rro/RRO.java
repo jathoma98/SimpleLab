@@ -31,7 +31,8 @@ public class RRO<T> {
 
     public enum LAB_ACTION_TYPE {
         MODIFY_EQUIPMENT,
-        ADVANCE_STEP
+        ADVANCE_STEP,
+        COMPLETE_LAB
     }
 
     public enum MSG {

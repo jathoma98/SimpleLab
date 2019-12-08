@@ -96,6 +96,13 @@ public class DoLabController extends BaseController {
      *     success: true
      *     action: ADVANCE_STEP
      * }
+     *
+     * If the interaction is valid and completes the lab:
+     * RRO with: {
+     *     success: true
+     *     action: COMPLETE_LAB
+     *     data: TODO: discuss this, probably just return a grade or something
+     * }
      */
     @PostMapping(INTERACTION_MAPPING)
     public RRO handleEquipmentInteraction(@PathVariable("lab_id") long lab_id,
@@ -106,6 +113,8 @@ public class DoLabController extends BaseController {
         }
         return RRO.sendErrorMessage(RRO.MSG.RECIPE_NOT_FOUND.getMsg());
     }
+
+
 
 
 
