@@ -38,5 +38,4 @@ public abstract class Projection {
         String name, createdDate;
         long id;
     }
-
 }

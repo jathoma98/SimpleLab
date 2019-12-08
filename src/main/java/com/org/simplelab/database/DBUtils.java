@@ -19,6 +19,7 @@ public class DBUtils {
     public static final String EQUIPMENT_TABLE_NAME = "equipment";
     public static final String EQUIPMENT_PROPERTY_TABLE_NAME = "equipment_property";
     public static final String STEP_TABLE_NAME = "step";
+    public static final String EQUIPMENT_IN_LAB_TABLE_NAME = "equipment_in_lab";
 
     public static final String SALT = "a very salty salt";
 

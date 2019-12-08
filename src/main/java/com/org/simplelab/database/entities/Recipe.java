@@ -10,6 +10,7 @@ public class Recipe extends BaseTable {
 
     private String name;
 
+
     /*Todo: -Zee
     *   Equipment_1
     *   Equipment_2
