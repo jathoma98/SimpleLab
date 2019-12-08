@@ -1,9 +1,9 @@
 package com.org.simplelab;
 
 import com.org.simplelab.database.DBUtils;
-import com.org.simplelab.database.entities.*;
-import com.org.simplelab.database.repositories.RecipeRepository;
-import com.org.simplelab.database.repositories.UserRepository;
+import com.org.simplelab.database.entities.sql.*;
+import com.org.simplelab.database.repositories.sql.RecipeRepository;
+import com.org.simplelab.database.repositories.sql.UserRepository;
 import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.services.LabDB;
 import com.org.simplelab.database.services.UserDB;

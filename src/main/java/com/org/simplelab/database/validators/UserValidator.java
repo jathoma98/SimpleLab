@@ -1,6 +1,6 @@
 package com.org.simplelab.database.validators;
 
-import com.org.simplelab.database.entities.User;
+import com.org.simplelab.database.entities.sql.User;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

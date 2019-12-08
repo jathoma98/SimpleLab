@@ -1,12 +1,10 @@
 package com.org.simplelab.restcontrollers;
 
 
-import com.org.simplelab.database.entities.Equipment;
-import com.org.simplelab.database.entities.EquipmentProperty;
-import com.org.simplelab.database.entities.Lab;
+import com.org.simplelab.database.entities.sql.Equipment;
+import com.org.simplelab.database.entities.sql.EquipmentProperty;
 import com.org.simplelab.database.services.EquipmentDB;
 import com.org.simplelab.database.services.projections.Projection;
-import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.database.validators.EquipmentValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;

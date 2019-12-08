@@ -1,4 +1,4 @@
-package com.org.simplelab.database.entities;
+package com.org.simplelab.database.entities.sql;
 
 import lombok.Data;
 import org.springframework.data.domain.Persistable;

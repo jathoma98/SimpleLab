@@ -1,13 +1,7 @@
 package com.org.simplelab.database;
 
-import com.org.simplelab.database.entities.BaseTable;
-import com.org.simplelab.database.entities.User;
-import org.codehaus.jackson.map.Serializers;
-import org.modelmapper.Condition;
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
-import org.modelmapper.spi.MappingContext;
 
 import java.security.MessageDigest;
 

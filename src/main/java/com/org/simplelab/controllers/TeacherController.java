@@ -1,7 +1,7 @@
 package com.org.simplelab.controllers;
 
-import com.org.simplelab.database.entities.Course;
-import com.org.simplelab.database.entities.Lab;
+import com.org.simplelab.database.entities.sql.Course;
+import com.org.simplelab.database.entities.sql.Lab;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;

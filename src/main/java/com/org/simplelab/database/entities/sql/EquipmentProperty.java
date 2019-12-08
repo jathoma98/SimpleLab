@@ -1,4 +1,4 @@
-package com.org.simplelab.database.entities;
+package com.org.simplelab.database.entities.sql;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.org.simplelab.database.DBUtils;

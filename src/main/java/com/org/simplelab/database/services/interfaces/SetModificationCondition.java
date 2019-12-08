@@ -1,6 +1,6 @@
 package com.org.simplelab.database.services.interfaces;
 
-import com.org.simplelab.database.entities.BaseTable;
+import com.org.simplelab.database.entities.sql.BaseTable;
 import static com.org.simplelab.database.services.DBService.EntitySetManager.EntitySetModificationException;
 
 /**

@@ -1,9 +1,9 @@
 package com.org.simplelab;
 
 import com.org.simplelab.controllers.DoLabController;
-import com.org.simplelab.database.entities.Equipment;
-import com.org.simplelab.database.entities.Lab;
-import com.org.simplelab.database.entities.Step;
+import com.org.simplelab.database.entities.sql.Equipment;
+import com.org.simplelab.database.entities.sql.Lab;
+import com.org.simplelab.database.entities.sql.Step;
 import com.org.simplelab.restcontrollers.dto.Workspace;
 import com.org.simplelab.restcontrollers.rro.RRO;
 import org.junit.jupiter.api.Test;

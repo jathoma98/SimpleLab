@@ -1,8 +1,8 @@
 package com.org.simplelab;
 
-import com.org.simplelab.database.entities.Course;
-import com.org.simplelab.database.entities.Lab;
-import com.org.simplelab.database.entities.User;
+import com.org.simplelab.database.entities.sql.Course;
+import com.org.simplelab.database.entities.sql.Lab;
+import com.org.simplelab.database.entities.sql.User;
 import com.org.simplelab.database.services.CourseDB;
 import com.org.simplelab.database.services.LabDB;
 import com.org.simplelab.restcontrollers.CourseRESTController;
@@ -10,7 +10,6 @@ import com.org.simplelab.restcontrollers.LabRESTController;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;

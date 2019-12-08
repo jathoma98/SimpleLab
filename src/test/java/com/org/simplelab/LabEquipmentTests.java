@@ -1,7 +1,7 @@
 package com.org.simplelab;
 
-import com.org.simplelab.database.entities.*;
-import com.org.simplelab.database.repositories.LabRepository;
+import com.org.simplelab.database.entities.sql.*;
+import com.org.simplelab.database.repositories.sql.LabRepository;
 import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.services.projections.Projection;
 import com.org.simplelab.restcontrollers.LabRESTController;

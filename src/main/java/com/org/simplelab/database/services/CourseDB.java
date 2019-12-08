@@ -1,10 +1,10 @@
 package com.org.simplelab.database.services;
 
 
-import com.org.simplelab.database.entities.Course;
-import com.org.simplelab.database.entities.Lab;
-import com.org.simplelab.database.entities.User;
-import com.org.simplelab.database.repositories.CourseRepository;
+import com.org.simplelab.database.entities.sql.Course;
+import com.org.simplelab.database.entities.sql.Lab;
+import com.org.simplelab.database.entities.sql.User;
+import com.org.simplelab.database.repositories.sql.CourseRepository;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -1,7 +1,7 @@
-package com.org.simplelab.database.repositories;
+package com.org.simplelab.database.repositories.sql;
 
-import com.org.simplelab.database.entities.Course;
-import com.org.simplelab.database.entities.Lab;
+import com.org.simplelab.database.entities.sql.Course;
+import com.org.simplelab.database.entities.sql.Lab;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

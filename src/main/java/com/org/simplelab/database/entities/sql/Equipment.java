@@ -1,11 +1,10 @@
-package com.org.simplelab.database.entities;
+package com.org.simplelab.database.entities.sql;
 
 import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.interfaces.UserCreated;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 

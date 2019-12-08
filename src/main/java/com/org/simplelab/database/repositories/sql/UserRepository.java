@@ -1,6 +1,6 @@
-package com.org.simplelab.database.repositories;
+package com.org.simplelab.database.repositories.sql;
 
-import com.org.simplelab.database.entities.User;
+import com.org.simplelab.database.entities.sql.User;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

@@ -1,10 +1,10 @@
 package com.org.simplelab.restcontrollers;
 
 import com.org.simplelab.database.DBUtils;
-import com.org.simplelab.database.entities.Equipment;
-import com.org.simplelab.database.entities.Lab;
-import com.org.simplelab.database.entities.Step;
-import com.org.simplelab.database.repositories.LabRepository;
+import com.org.simplelab.database.entities.sql.Equipment;
+import com.org.simplelab.database.entities.sql.Lab;
+import com.org.simplelab.database.entities.sql.Step;
+import com.org.simplelab.database.repositories.sql.LabRepository;
 import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.services.LabDB;
 import com.org.simplelab.database.services.projections.Projection;

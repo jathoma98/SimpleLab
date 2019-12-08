@@ -1,7 +1,7 @@
 package com.org.simplelab.restcontrollers.dto;
 
-import com.org.simplelab.database.entities.Equipment;
-import com.org.simplelab.database.entities.Step;
+import com.org.simplelab.database.entities.sql.Equipment;
+import com.org.simplelab.database.entities.sql.Step;
 import lombok.Data;
 
 import java.util.List;

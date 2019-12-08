@@ -1,8 +1,8 @@
 package com.org.simplelab.restcontrollers;
 
-import com.org.simplelab.database.entities.Course;
-import com.org.simplelab.database.entities.Lab;
-import com.org.simplelab.database.entities.User;
+import com.org.simplelab.database.entities.sql.Course;
+import com.org.simplelab.database.entities.sql.Lab;
+import com.org.simplelab.database.entities.sql.User;
 import com.org.simplelab.database.services.CourseDB;
 import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.services.projections.Projection;

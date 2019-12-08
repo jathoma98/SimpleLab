@@ -1,4 +1,4 @@
-package com.org.simplelab.database.entities;
+package com.org.simplelab.database.entities.sql;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.org.simplelab.database.DBUtils;
@@ -19,6 +19,7 @@ public class Course extends BaseTable implements UserCreated{
     private String name;
     private String description;
 
+    //TODO: put this back to lazy initialization after course edit works again
     @JsonIgnore
     @OneToOne(cascade = {CascadeType.PERSIST},
             fetch = FetchType.EAGER)

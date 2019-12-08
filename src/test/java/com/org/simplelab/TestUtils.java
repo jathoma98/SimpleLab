@@ -1,6 +1,6 @@
 package com.org.simplelab;
 
-import com.org.simplelab.database.entities.*;
+import com.org.simplelab.database.entities.sql.*;
 import org.springframework.stereotype.Component;
 import org.springframework.test.web.servlet.MockMvc;
 

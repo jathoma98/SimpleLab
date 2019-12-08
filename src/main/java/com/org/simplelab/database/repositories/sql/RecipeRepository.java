@@ -1,6 +1,6 @@
-package com.org.simplelab.database.repositories;
+package com.org.simplelab.database.repositories.sql;
 
-import com.org.simplelab.database.entities.Recipe;
+import com.org.simplelab.database.entities.sql.Recipe;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 

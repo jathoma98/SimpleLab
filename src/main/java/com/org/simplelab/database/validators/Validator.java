@@ -1,6 +1,6 @@
 package com.org.simplelab.database.validators;
 
-import com.org.simplelab.database.entities.BaseTable;
+import com.org.simplelab.database.entities.sql.BaseTable;
 import com.org.simplelab.restcontrollers.dto.DTO;
 
 /**

@@ -1,6 +1,6 @@
 package com.org.simplelab.restcontrollers;
 
-import com.org.simplelab.database.entities.User;
+import com.org.simplelab.database.entities.sql.User;
 import com.org.simplelab.database.services.UserDB;
 import com.org.simplelab.database.validators.UserValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;

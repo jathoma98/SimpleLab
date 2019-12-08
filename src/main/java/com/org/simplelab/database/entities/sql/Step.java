@@ -1,8 +1,7 @@
-package com.org.simplelab.database.entities;
+package com.org.simplelab.database.entities.sql;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.org.simplelab.database.DBUtils;
-import com.org.simplelab.database.entities.interfaces.UserCreated;
 import lombok.Data;
 
 import javax.persistence.*;

@@ -40,10 +40,9 @@ public class SimpleLabApplication {
 		return resolver;
 	}
 
-	/**
 	@Bean
 	public Module datatypeHibernateModule(){
 		return new Hibernate5Module();
-	}**/
+	}
 
 }
