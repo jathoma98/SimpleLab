@@ -1,8 +1,11 @@
 package com.org.simplelab.restcontrollers.dto;
 
 import com.org.simplelab.database.entities.Equipment;
+import com.org.simplelab.database.entities.EquipmentProperty;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.validators.CourseValidator;
+import com.org.simplelab.database.validators.EquipmentValidator;
+import com.org.simplelab.database.validators.LabValidator;
 import com.org.simplelab.database.validators.UserValidator;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,7 +31,6 @@ public abstract class DTO {
 
     }
 
-
     /**
      * Contains information needed to search for Users through the
      * User Search endpoint.
@@ -52,7 +54,14 @@ public abstract class DTO {
     @Setter
     public static class LabUpdateDTO extends DTO {
         private Long lab_id_old;
-        private CourseValidator newLabInfo;
+        private LabValidator newLabInfo;
+    }
+
+    @Getter
+    @Setter
+    public static class EquipmentUpdateDTO extends DTO {
+        private Long equipment_id_old;
+        private EquipmentValidator newEquipmentInfo;
     }
 
     /**

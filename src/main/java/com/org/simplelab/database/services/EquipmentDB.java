@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 
 @Transactional
 @Component
@@ -64,6 +65,9 @@ public class EquipmentDB extends DBService<Equipment> {
         return new EquipmentPropertySetManager(e.getProperties(), e);
     }
 
+    public <T> List<T> getEquipmentByCreatorId(long id, Class<T> projection){
+        return repository.findByCreator_id(id, projection);
+    }
 
 
 }

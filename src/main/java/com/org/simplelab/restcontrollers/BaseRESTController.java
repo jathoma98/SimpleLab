@@ -68,8 +68,19 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
         return rro;
     }
 
-    protected T getEntityById(long id){
-        return getDb().findById(id);
+    protected RRO<T> getEntityById(long id){
+        T obj = getDb().findById(id);
+        RRO<T> rro = new RRO<T>();
+        if (obj == null){
+            rro.setSuccess(false);
+            rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
+            rro.setMsg("Not found!");
+            return rro;
+        }
+        rro.setSuccess(true);
+        rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
+        rro.setData(obj);
+        return rro;
     }
 
     protected RRO<String> updateEntity(long idToUpdate, DTO dto) {

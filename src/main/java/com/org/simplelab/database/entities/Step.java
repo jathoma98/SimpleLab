@@ -1,5 +1,6 @@
 package com.org.simplelab.database.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.interfaces.UserCreated;
 import lombok.Data;
@@ -21,6 +22,7 @@ public class Step extends BaseTable{
 
     private int stepNum;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "lab_id")
     private Lab lab;

@@ -28,7 +28,6 @@ let LABS_TABLE = {
             })
         };
 
-
         /**
          * Use to pull lab list from server in teacher home page
          **/
@@ -57,11 +56,9 @@ let LABS_TABLE = {
             let labUpdata = {
                 lab_id_old: LABS_TABLE.lab_info.id,
                 newLabInfo: {
-                    name: $("#course_name").val(),
-                    course_id: $("#course_code").val(),
-                    description: $("#course_description").val()
+                    name: $("#lab_name").val(),
+                    description: $("#lab_description").val()
                 }
-
             }
             let lab_json = JSON.stringify(labUpdata);
             $.ajax({
@@ -84,17 +81,17 @@ let LABS_TABLE = {
          * table.
          */
         this.save = function () {
-            let course = {
+            let lab = {
                 name: $("#lab_name").val(),
                 description: $("#lab_description").val()
             }
-            let course_json = JSON.stringify(course);
+            let lab_json = JSON.stringify(lab);
             $.ajax({
                 url: "/lab/rest",
                 type: 'POST',
                 dataTye: 'json',
                 contentType: 'application/json; charset=utf-8',
-                data: course_json,
+                data: lab_json,
                 success: function (result) {
                     retObjHandle(result, LABS_TABLE.reload)
 
@@ -107,7 +104,6 @@ let LABS_TABLE = {
          * Delete LAB.
          **/
         this.delete = function () {
-            removeTableBodyRowEvent($(ElEM_ID.LAB_TABLE_TBODY));
             let lids = [];
             $(ElEM_ID.LAB_TABLE_TBODY).find("tr").each(function (i, row) {
                 if ($(row).find('input[type="checkbox"]').is(':checked')) {

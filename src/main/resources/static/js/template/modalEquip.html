@@ -1,8 +1,10 @@
+{{#equipmentModal}}
 <nav>
     <div class="nav-wrapper my_cran">
         <a href="#!" class="brand-logo"><i class="material-icons">view_list</i>Add Equipment</a>
     </div>
 </nav>
+<div class="row"></div>
 <div class="row delete_empty">
     <div class="col s4 center delete_empty">
         <img class="eq_upload delete_empty" src="../img/upload.png">
@@ -15,84 +17,60 @@
                 <input class="file-path validate" type="text">
             </div>
         </div>
-
     </div>
-    <div class="input-field col s5 eq_maigin">
-        <div class="col s12">
-            <h4></h4>
-        </div>
-        <div class="input-field">
-            <select class="center col s12">
-                <option value="" disabled selected>Save To Item Set</option>
-                <option value="1">favorite</option>
-                <option value="2">chem 101</option>
-                <option value="3">chem 201</option>
-            </select>
-        </div>
-    </div>
-    <div class="col s8 valign-wrapper section">
-        <label class="col s2"><h6>Item Type: </h6></label>
+    <form class="col s8 valign-wrapper section" id = "equip_type">
+        <label class="col s2"><h6>Equipment Type: </h6></label>
         <label class="col s3">
-            <input class="with-gap" name="group1" type="radio" checked/>
-            <span>Item</span>
+            <input class="with-gap" name="group1" value = "liquid" type="radio"{{liquid}}/>
+            <span>Liquid</span>
         </label>
         <label class="col s3">
-            <input class="with-gap" name="group1" type="radio"/>
-            <span>Container</span>
+            <input class="with-gap" name="group1" value ="solid" type="radio"{{solid}}/>
+            <span>Solid</span>
         </label>
         <label class="col s3">
-            <input class="with-gap" name="group1" type="radio"/>
+            <input class="with-gap" name="group1" value = "machine" type="radio"{{machine}}/>
             <span>Machine</span>
         </label>
-        <label class="col s1">
-
-        </label>
-    </div>
-    <div class="col s8 valign-wrapper section">
-        <label class="col s2"><h6>Security: </h6></label>
-        <label class="col s3">
-            <input class="with-gap" name="group2" type="radio" checked/>
-            <span>Public</span>
-        </label>
-        <label class="col s3">
-            <input class="with-gap" name="group2" type="radio"/>
-            <span>Private</span>
-        </label>
-        <label class="col s3">
-        </label>
-        <label class="col s1">
-        </label>
-    </div>
-
+    </form>
     <form class="col s8">
         <div class="col s12 section">
             <div class="row">
-                <div class="input-field col s5">
-                    <input id="item_name" type="text" class="validate">
-                    <label for="item_name">Item Name</label>
+                <div class="input-field col s10">
+                    <input id="equip_name" type="text" class="validate"
+                    value = "{{equipment.name}}">
+                    <label for="equip_name"{{#equipment.name}} class = "active"{{/equipment.name}}>Name</label>
                 </div>
+            </div>
+        </div>
+        <div class="col s12 section">
+            <div class="row">
                 <div class="input-field col s5">
                     <input id="max_volume" type="text" class="validate">
                     <label for="max_volume">Max Volume</label>
                 </div>
+                <div class="input-field col s5">
+                    <input id="max_weight" type="text" class="validate">
+                    <label for="max_weight" >Max Weight</label>
+                </div>
             </div>
         </div>
         <div class="col s12 section">
             <div class="row">
                 <div class="input-field col s5">
+                    <input id="min_temperature" type="text" class="validate">
+                    <label for="min_temperature">Min Temperature</label>
+                </div>
+                <div class="input-field col s5">
                     <input id="max_temperature" type="text" class="validate">
                     <label for="max_temperature">Max Temperature</label>
                 </div>
-                <div class="input-field col s5">
-                    <input id="accuracy" type="text" class="validate">
-                    <label for="accuracy">Accuracy</label>
-                </div>
             </div>
         </div>
+        <a id = "equipmentSaveBtn" class="waves-effect waves-light modal-close btn right">
+            Save
+        </a>
     </form>
 </div>
-<div class="modal-footer">
-    <button class="waves-effect waves-light modal-close btn" type="submit" name="action">
-        Save
-    </button>
-</div>
+{{/equipmentModal}}
+
