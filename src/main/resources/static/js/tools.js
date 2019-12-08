@@ -78,7 +78,7 @@ function templatePreLoad (){
  *
  * @return html_text
  **/
-rebuildComponent  = function (component, template_id, data, btnEvents) {
+rebuildComponent  = function (component, template_id, data, action, btnEvents) {
     $(component).empty();
     let template = $(template_id).html();
     let html_text = Mustache.render(template, data);
@@ -89,4 +89,14 @@ rebuildComponent  = function (component, template_id, data, btnEvents) {
     return html_text;
 };
 
-
+rebuildRepeatComponent = function (component, template_id, repeatElem, data, action, eventFn){
+    $(component).empty();
+    let template = $(template_id).html();
+    data.iterable.forEach((obj)=>{
+        let html_text = Mustache.render(template, obj);
+        let repElem = $(repeatElem)
+        repElem.append(html_text);
+        repElem.on(action, ()=>eventFn(obj));
+        repElem.appendTo(component)
+    })
+};

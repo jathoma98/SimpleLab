@@ -10,7 +10,7 @@ import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.database.validators.EquipmentValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
-import com.org.simplelab.restcontrollers.rro.RRO_ACTION_TYPE;
+import com.org.simplelab.restcontrollers.rro.RRO.ACTION_TYPE;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -38,6 +38,7 @@ public class EquipmentRESTController extends BaseRESTController<Equipment> {
 
     public static final String DELETE_MAPPING = "/deleteEquipment";
     public static final String EQUIPMENT_LIST_MAPPING = "/loadEquipmentList";
+    public static final String EQUIPMENT_OBJ_LIST_MAPPING = "/loadEquipmentList";
 
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     public RRO<String> saveEquipment(@RequestBody EquipmentValidator validator){
@@ -68,14 +69,31 @@ public class EquipmentRESTController extends BaseRESTController<Equipment> {
         List<Projection.TeacherEquipmentInfo> equips = equipmentDB.getEquipmentByCreatorId(userId, Projection.TeacherEquipmentInfo.class);
         if (equips == null) {
             rro.setSuccess(false);
-            rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+            rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
             return rro;
         }
         rro.setData(equips);
         rro.setSuccess(true);
-        rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
+        rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
         return rro;
     }
+
+//    @GetMapping(EQUIPMENT_OBJ_LIST_MAPPING)
+//    public RRO<List<Equipment>> getListOfEquipmentsObj (HttpSession session){
+//        long userId = getUserIdFromSession();
+//        RRO rro = new RRO<Projection>();
+//        //Use TeacherLabInfo projection to only get attributes we want
+//        List<Equipment> equips = equipmentDB.getEquipmentByCreatorId(userId);
+//        if (equips == null) {
+//            rro.setSuccess(false);
+//            rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
+//            return rro;
+//        }
+//        rro.setData(equips);
+//        rro.setSuccess(true);
+//        rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
+//        return rro;
+//    }
 
     @DeleteMapping(DELETE_MAPPING)
     public RRO<String> deleteEquipment(@RequestBody Long[] toDelete,
@@ -87,7 +105,7 @@ public class EquipmentRESTController extends BaseRESTController<Equipment> {
             equipmentDB.deleteById(id);
         }
         rro.setSuccess(true);
-        rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+        rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
         return rro;
     }
 

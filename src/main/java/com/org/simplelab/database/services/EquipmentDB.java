@@ -69,5 +69,10 @@ public class EquipmentDB extends DBService<Equipment> {
         return repository.findByCreator_id(id, projection);
     }
 
+    public List<Equipment> getEquipmentByCreatorId(long id){
+        return repository.findByCreator_id(id);
+    }
+
+
 
 }

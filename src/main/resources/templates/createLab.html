@@ -12,6 +12,11 @@
     <script type="text/javascript" th:src="@{../../js/tools.js}"></script>
     <script type="text/javascript" th:src="@{../../js/accountInfo/accountInfo.js}"></script>
     <script type="text/javascript" th:src="@{../../js/lab.js}"></script>
+    <script type="text/javascript" th:src="@{../../js/setuplab/main.js}"></script>
+
+
+
+    <!--Template-->
     <script id="modalAccTpl" type="x-tmpl-mustache" th:src="@{../../js/accountInfo/modalAccount.html}"></script>
     <script id="modalEquip" type="x-tmpl-mustache" th:src="@{../../js/template/modalEquip.html}"></script>
     <!--Let browser know website is optimized for mobile-->
@@ -46,80 +51,12 @@
     <li><a href="/logout">Logout</a></li>
 </ul>
 
-<!-- Modal Structure -->
-<div id="modalAccount" class="modal">
-    <div class="modal-content">
-        <ul class="collapsible">
-            <li>
-                <div class="collapsible-header" style="background: #00acc1;"><i class="material-icons">info</i>Account
-                    Info
-                </div>
-                <div class="row collapsible-body">
-                    <form class="col s12">
-                        <div class="row">
-                            <div class="input-field col s6">
-                                <input id="first_name" type="text" class="validate">
-                                <label for="first_name">First Name</label>
-                            </div>
-                            <div class="input-field col s6">
-                                <input id="last_name" type="text" class="validate">
-                                <label for="last_name">Last Name</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s6">
-                                <input id="school" type="text" class="validate">
-                                <label for="school">School</label>
-                            </div>
-                            <div class="input-field col s6">
-                                <input id="email" type="text" class="validate">
-                                <label for="email">Email</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <button class="btn waves-effect waves-light right modal-close" type="submit" name="action">
-                                Submit
-                                <i class="material-icons right">send</i>
-                            </button>
-                        </div>
-
-                    </form>
-                </div>
-            </li>
-            <li>
-                <div class="collapsible-header" style="background: #f1cc36"><i class="material-icons">security</i>Password
-                </div>
-                <div class="collapsible-body">
-                    <form class="col s12">
-                        <div class="row">
-                            <div class="input-field col s10">
-                                <input id="password" type="text" class="validate">
-                                <label for="password">Password</label>
-                            </div>
-                            <div class="input-field col s2">
-                                <button class="btn waves-effect waves-light modal-close" type="submit" name="action">
-                                    Submit
-                                    <i class="material-icons right">send</i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </li>
-        </ul>
-    </div>
-    <div class="modal-footer">
-        <button class="waves-effect waves-light modal-close btn" style="background:#dd0052" type="submit" name="action">
-            Save
-        </button>
-    </div>
-</div>
 
 <nav class="delete_empty">
     <div class="nav-wrapper row" style="background: #00acc1">
         <div class="col s12 valign-wrapper" style="background: #00b8ce; height: 30px; margin-top: 20px;">
             <a href="../../" class="breadcrumb" th:text="${home_navig}">Home</a>
-<!--            <a href="#!" class="breadcrumb" th:text="lab-${lab_name}}">Lab</a>-->
+            <!--            <a href="#!" class="breadcrumb" th:text="lab-${lab_name}}">Lab</a>-->
             <!--      <a href="#!" class="breadcrumb"></a>-->
         </div>
     </div>
@@ -154,68 +91,17 @@
 
 
             <!--                sidebar item set-->
-            <ul class="collapsible row my_white itemset">
-                <li class="active">
-                    <div class="collapsible-header ">
-                        often use
+            <script id="all_equipment_template" type="mustache">
+                    <div class="row sidebaritem">
+                        <div class="col s6">
+                            <img src="../img/beaker.png" class="item_img">
+                        </div>
+                        <div class="col s6">
+                         <p>{{name}}</p>
+                         </div>
                     </div>
-                    <div class="collapsible-body">
-                        <ul class="collection">
-                            <li>
-                                <div id="500mlbeaker" class="row sidebaritem">
-                                    <div class="col s6">
-                                        <img src="../img/beaker.png" class="item_img">
-                                    </div>
-                                    <div class="col s6">
-                                        <p>500ml beaker</p>
-                                        <p>0.01L</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div id="200mlcylinder" class="row sidebaritem">
-                                    <div class="col s6">
-                                        <img src="../img/cylinder.png" class="item_img">
-                                    </div>
-                                    <div class="col s6">
-                                        <p>200ml cylinder</p>
-                                        <p>0.025L</p>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-
-                    </div>
-                </li>
-                <li>
-                    <div class="collapsible-header ">
-                        beaker
-                    </div>
-                    <div class="collapsible-body">
-                        <ul class="collection">
-                            <li>
-                                <div id="500mlbeaker" class="row sidebaritem">
-                                    <div class="col s6">
-                                        <img src="../img/beaker.png" class="item_img">
-                                    </div>
-                                    <div class="col s6">
-                                        <p>500ml beaker</p>
-                                        <p>0.01L</p>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li>
-                    <div class="collapsible-header  ">
-                        pip
-                    </div>
-                    <div class="collapsible-body">
-                        <span>put items here</span>
-                    </div>
-                </li>
-            </ul>
+            </script>
+            <ul class="collapsible row my_white" id="all_equipment"></ul>
         </div>
         <!--            side bar step set-->
         <div id="sidebartwo" class="sidebar_info">

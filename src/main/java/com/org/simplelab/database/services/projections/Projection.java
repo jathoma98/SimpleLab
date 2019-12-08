@@ -1,6 +1,7 @@
 package com.org.simplelab.database.services.projections;
 
 import com.org.simplelab.database.entities.Equipment;
+import com.org.simplelab.database.entities.EquipmentProperty;
 import com.org.simplelab.database.entities.Step;
 import lombok.Value;
 
