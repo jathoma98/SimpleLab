@@ -80,6 +80,10 @@ public class DoLabController extends BaseController {
      *     success: false
      *     action: PRINT_MSG
      *     msg: "Invalid action"
+     *     TODO: if recipe not found in client will get breaker with 0 volume image, but data still in there,
+     *           and what's inside of breaker will display in sidebar. Also there will be a string to tell
+     *           student, he/she is doing wrong. - Zee
+     *
      * }
      *
      * If the interaction is valid and fulfills a recipe:
@@ -89,6 +93,7 @@ public class DoLabController extends BaseController {
      *     data: TODO: discuss this, this should return data for UI to render new objects and delete old ones.
      *           ex: mixing water beaker with oil beaker should create 2 new beakers: empty beaker
      *           and beaker with mixture.
+     *           //TODO: if A pour to B = C,  in client side will replace B with C - Zee
      * }
      *
      * If the interaction is valid and completes the step:
@@ -102,6 +107,7 @@ public class DoLabController extends BaseController {
      *     success: true
      *     action: COMPLETE_LAB
      *     data: TODO: discuss this, probably just return a grade or something
+     *     //TODO: May be just return how time student make invalid recipes - Zee
      * }
      */
     @PostMapping(INTERACTION_MAPPING)
@@ -110,6 +116,17 @@ public class DoLabController extends BaseController {
         Recipe found = recipeHandler.findRecipe(dto.getObject1(), dto.getObject2());
         if (found.exists()){
             // do something
+            /*
+            * Todo: That what I think - Zee
+            *       if recipe find
+            *           if check is result equipment in lab step = true
+            *               Return RRO and states which step is complete
+            *           el
+            *               Return RRO without states any step is complete
+            *
+            * Nvm, I just realize you have same idea on the top.
+            */
+
         }
         return RRO.sendErrorMessage(RRO.MSG.RECIPE_NOT_FOUND.getMsg());
     }
