@@ -3,6 +3,7 @@ package com.org.simplelab.controllers;
 import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.entities.Recipe;
+import com.org.simplelab.database.services.HistoryDB;
 import com.org.simplelab.database.services.projections.Projection;
 import com.org.simplelab.game.RecipeHandler;
 import com.org.simplelab.restcontrollers.dto.Workspace;
@@ -110,9 +111,17 @@ public class DoLabController extends BaseController {
      *     //TODO: May be just return how time student make invalid recipes - Zee
      * }
      */
+    @Autowired
+    HistoryDB historyDB;
+
     @PostMapping(INTERACTION_MAPPING)
     public RRO handleEquipmentInteraction(@PathVariable("lab_id") long lab_id,
                                           @RequestBody EquipmentInteractionDTO dto){
+
+        String interation = "test interaction";
+        //save the interaction to lab history
+        historyDB.addToLabHistory(interation);
+
         Recipe found = recipeHandler.findRecipe(dto.getObject1(), dto.getObject2());
         if (found.exists()){
             // do something
