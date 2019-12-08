@@ -9,7 +9,7 @@ let COURSES_TABLE = {
                 course_id: $("#course_code").val(),
                 usernameList: new Array()
             }
-            course.usernameList.push($(this).find("td").text());
+            course.usernameList.push($(this).parent().find("span").text());
 
             let course_json = JSON.stringify(course);
             $.ajax({
@@ -32,7 +32,7 @@ let COURSES_TABLE = {
                 course_id: $("#course_code").val(),
                 usernameList: new Array()
             }
-            course.usernameList.push($(this).find("td").text());
+            course.usernameList.push($(this).parent().find("span").text());
 
 
             let course_json = JSON.stringify(course);
@@ -73,7 +73,10 @@ let COURSES_TABLE = {
                             ElEM_ID.STUDENT_SEARCH_TBODY,
                             TEMPLATE_ID.STUDENTS_TBODY,
                             data);
-                        setTableBodyRowEvent(ElEM_ID.STUDENT_SEARCH_TBODY, COURSES_TABLE.addStudentBtnEvent)
+                        setTableBodyRowBtnEvent(ElEM_ID.STUDENT_SEARCH_TBODY,
+                            ".add_student",
+                            "click",
+                            COURSES_TABLE.addStudentBtnEvent)
                     })
                 }
             })
@@ -133,8 +136,10 @@ let COURSES_TABLE = {
                             ElEM_ID.STUDENT_LIST_TBODY,
                             TEMPLATE_ID.STUDENTS_TBODY,
                             data)
-                        setTableBodyRowEvent(ElEM_ID.STUDENT_LIST_TBODY, COURSES_TABLE.removeStendtBtnEvent);
-
+                        setTableBodyRowBtnEvent(ElEM_ID.STUDENT_LIST_TBODY,
+                            ".del_student",
+                            "click",
+                            COURSES_TABLE.removeStendtBtnEvent)
                     })
                 }
             })

@@ -66,13 +66,14 @@
 </div>
 
 
-<script id="student_search_tbody" type="mustache">
+<script id="student_list_tbody" type="mustache">
     {{#students}}
         <tr href="#modal">
-            <td>{{username}}
-                {{#search}}<a class="right" id="del_student" href="#">Remove</a>{{/search}}
-                {{^search}}<a class="right" id="add_student" href="#">Add</a>{{/search}}
-                <a class="right" id="info" href="#">Info</a>
+            <td>
+                <span>{{username}}</span>
+                {{^search}}<a class="right del_student" href="#">Remove</a>{{/search}}
+                {{#search}}<a class="right add_student" href="#">Add</a>{{/search}}
+                <a class="right info" href="#">Info</a>
             </td>
         </tr>
     {{/students}}

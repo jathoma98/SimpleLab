@@ -17,7 +17,7 @@ ElEM_ID = {
 }
 
 TEMPLATE_ID = {
-    STUDENTS_TBODY: "#student_search_tbody",
+    STUDENTS_TBODY: "#student_list_tbody",
     LAB_TBODY: "#lab_tbody",
     COURSE_TBODY: "#course_tbody",
     EQUIPMENT_TBODY: "#equip_tbody",
