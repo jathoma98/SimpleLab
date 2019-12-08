@@ -172,7 +172,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
         List<User> toAdd = new ArrayList<>();
         String course_id = course.getCourse_id();
         List<Course> c = courseDB.findByCourseId(course_id);
-        if (own_id == c.get(0).getCreator().getId()){
+        if (own_username.equals(c.get(0).getCreator().getUsername())){
             List<String> usernameList = course.getUsernameList();
             for (String username: usernameList){
                 if (!own_username.equals(username)){
