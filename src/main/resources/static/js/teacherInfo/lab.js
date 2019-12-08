@@ -22,7 +22,7 @@ let LABS_TABLE = {
                             }
                         }
                         LABS_TABLE.lab_info = lab;
-                        rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL, data, LABS_TABLE.btnEvents);
+                        rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL, data, "click", LABS_TABLE.btnEvents);
                     })
                 }
             })
@@ -137,7 +137,7 @@ let LABS_TABLE = {
                     lab: true
                 }
             }
-            rebuildComponent(ElEM_ID.MODAL_UL,TEMPLATE_ID.MODAL, data,  LABS_TABLE.btnEvents);
+            rebuildComponent(ElEM_ID.MODAL_UL,TEMPLATE_ID.MODAL, data, "click", LABS_TABLE.btnEvents);
         };
 
 

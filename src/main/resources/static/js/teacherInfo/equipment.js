@@ -163,7 +163,7 @@ let EQUIPMENT_TABLE = {
                     equipment: true
                 }
             }
-            rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL_EQUIP, data, EQUIPMENT_TABLE.btnEvents);
+            rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL_EQUIP, data, "click", EQUIPMENT_TABLE.btnEvents);
     };
 
 

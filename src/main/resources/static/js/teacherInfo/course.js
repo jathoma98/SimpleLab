@@ -108,7 +108,7 @@ let COURSES_TABLE = {
                             }
                         }
                         COURSES_TABLE.course_info = result.data;
-                        rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL, data, COURSES_TABLE.btnEvents);
+                        rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL, data, "click",COURSES_TABLE.btnEvents);
                         //load
                         COURSES_TABLE.reLoadStudentsList(course_json)
                     })
@@ -260,7 +260,7 @@ let COURSES_TABLE = {
                     course: true,
                 }
             }
-            rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL, data, COURSES_TABLE.btnEvents);
+            rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL, data, "click", COURSES_TABLE.btnEvents);
         };
 
 
