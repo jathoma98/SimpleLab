@@ -15,6 +15,7 @@ public class CourseValidator extends Validator<Course>{
     private String course_id;
     private String description;
     private String _metadata;
+    private String invite_code;
 
     public static final String DUPLICATE_ID = "That course ID has been taken. \n";
 
