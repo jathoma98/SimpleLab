@@ -167,8 +167,7 @@ data = {
             <form class="col s12">
                 <div class="row">
                     <div class="input-field col s6">
-                        <input id="lab_name" type="text" class="validate" type="text"
-                               class="validate{{#lab.name}} valid{{/lab.name}}"
+                        <input id="lab_name" type="text" class="validate"
                                value="{{lab.name}}">
                         <label for="lab_name"{{#lab.name}} class="active"{{/lab.name}}>Lab Name</label>
                     </div>
@@ -188,7 +187,7 @@ data = {
                 <div class="row">
                     <div class="input-field col s12">
                         <textarea id="lab_description"
-                                  class="materialize-textarea {{#lab.description}} valid{{/lab.description}}">{{lab.description}}</textarea>
+                                  class="materialize-textarea validate">{{lab.description}}</textarea>
                         <label for="lab_description" {{#lab.description}} class="active"{{/lab.description}}>Lab
                             Decription</label>
                     </div>

@@ -2,6 +2,7 @@ package com.org.simplelab.restcontrollers;
 
 
 import com.org.simplelab.database.entities.Equipment;
+import com.org.simplelab.database.entities.Lab;
 import com.org.simplelab.database.services.EquipmentDB;
 import com.org.simplelab.database.services.projections.Projection;
 import com.org.simplelab.database.validators.CourseValidator;
@@ -32,6 +33,8 @@ public class EquipmentRESTController extends BaseRESTController<Equipment> {
     public static final String BASE_MAPPING = "/equipment/rest";
 
     public static final String EQUIPMENT_ID_MAPPING = "/{equipment_id}";
+    public static final String UPDATE_MAPPING = "/updateEquipment";
+
     public static final String DELETE_MAPPING = "/deleteEquipment";
     public static final String EQUIPMENT_LIST_MAPPING = "/loadEquipmentList";
 
@@ -52,7 +55,7 @@ public class EquipmentRESTController extends BaseRESTController<Equipment> {
     }
 
     @GetMapping(EQUIPMENT_ID_MAPPING)
-    public Equipment getSpecificEquipment(@PathVariable("equipment_id") long equipment_id){
+    public RRO<Equipment> getSpecificEquipment(@PathVariable("equipment_id") long equipment_id){
         return super.getEntityById(equipment_id);
     }
 
@@ -85,5 +88,18 @@ public class EquipmentRESTController extends BaseRESTController<Equipment> {
         rro.setSuccess(true);
         rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
         return rro;
+    }
+
+    @PatchMapping(UPDATE_MAPPING)
+    public RRO<String> updateLab(@RequestBody DTO.EquipmentUpdateDTO dto) {
+        long uid = getUserIdFromSession();
+        Equipment toUpdate = equipmentDB.findById(dto.getEquipment_id_old());
+        if (toUpdate == null){
+            return RRO.sendErrorMessage("Equipment Not Found");
+        }
+        if (toUpdate.getCreator().getId() != uid){
+            return RRO.sendErrorMessage("Duplicate ID");
+        }
+        return super.updateEntity(toUpdate.getId(), dto.getNewEquipmentInfo());
     }
 }

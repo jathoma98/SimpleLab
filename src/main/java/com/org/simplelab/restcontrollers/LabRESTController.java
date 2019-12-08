@@ -44,7 +44,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
     public static final String UPDATE_MAPPING = "/updateLab";
     public static final String LAB_ID_STEP_MAPPING = LAB_ID_MAPPING + "/step";
     public static final String LAB_ID_STEP_NUMBER_MAPPING = LAB_ID_MAPPING + "/{step_number}";
-    public static final String SEARCH_Lab_MAPPING = "/searchLab";
+    public static final String SEARCH_LAB_MAPPING = "/searchLab";
 
 
     @Autowired
@@ -78,11 +78,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
 
     @GetMapping(LAB_ID_MAPPING)
     public RRO<Lab> labGet(@PathVariable("lab_id") long lab_id){
-        RRO<Lab> rro = new RRO();
-        rro.setSuccess(true);
-        rro.setData(super.getEntityById(lab_id));
-        rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
-        return rro;
+        return super.getEntityById(lab_id);
     }
 
     @DeleteMapping(LAB_ID_MAPPING)
@@ -190,7 +186,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
         return rro;
     }
 
-    @PostMapping(SEARCH_Lab_MAPPING)
+    @PostMapping(SEARCH_LAB_MAPPING)
     public RRO<List<Lab>> searchCourse(@RequestBody DTO.UserSearchDTO toSearch){
         RRO<List<Lab>> rro = new RRO();
         String courseRegex = toSearch.getRegex();

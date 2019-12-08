@@ -57,6 +57,13 @@ public abstract class DTO {
         private LabValidator newLabInfo;
     }
 
+    @Getter
+    @Setter
+    public static class EquipmentUpdateDTO extends DTO {
+        private Long equipment_id_old;
+        private EquipmentValidator newEquipmentInfo;
+    }
+
     /**
      * Contains information for updating student list in a course.
      */

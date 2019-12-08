@@ -11,7 +11,9 @@ ElEM_ID = {
     COURSE_EDIT_BTN: "#courseEditBtn",
     LAB_SAVE_BTN: "#labSaveBtn",
     LAB_EDIT_BTN: "#labEditBtn",
-    EQUIPMENT_SAVE_BTN: "#equipmentSaveBtn"
+    EQUIPMENT_SAVE_BTN: "#equipmentSaveBtn",
+    EQUIPMENT_EDIT_BTN: "#equipmentEditBtn",
+
 }
 
 TEMPLATE_ID = {

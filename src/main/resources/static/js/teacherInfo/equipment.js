@@ -12,13 +12,34 @@ let EQUIPMENT_TABLE = {
     init() {
         this.toggle = true;
         this.btnEvents = new Array();
-        this.modal_info = undefined
+        this.modal_info = undefined;
 
         /**
-         * Use to onclick Event on each row of lab list.
+         * Use to onclick Event on each row of equipment list.
          **/
         this.tableRowEvent = function () {
+            let equip_id = $(this).find(".myIdColumn").text();
+            $.ajax({
+                url: "/equipment/rest/" + equip_id,
+                type: 'GET',
+                success: function (result) {
+                    retObjHandle(result, (equipment)=>{
+                        let props = equipment.properties;
+                        equipment.properties = [];
 
+                        let data = {
+                            equipmentModal: {
+                                active: "active",
+                                create: "false",
+                                equipment: equipment,
+                            }
+                        }
+                        data.equipmentModal[equipment.type] = " checked";
+                        EQUIPMENT_TABLE.modal_info = equipment;
+                        rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL, data, EQUIPMENT_TABLE.btnEvents);
+                    })
+                }
+            })
         };
 
 
@@ -46,8 +67,32 @@ let EQUIPMENT_TABLE = {
 
 
         this.edit = function () {
+            let data = {
+                equipment_id_old: LABS_TABLE.lab_info.id,
+                newEquipmentInfo: {
+                    name: $(EQUIPMENT_TABLE.MODAL_ID.EQUIPMENT_NAME).val(),
+                    type: $(EQUIPMENT_TABLE.MODAL_ID.EQUIPMENT_TYPE).val(),
+                    properties: [
+                        {propertyKey: "max_temperature", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MAX_TEMPERATURE).val()},
+                        {propertyKey: "min_temperature", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MIN_TEMPERATURE).val()},
+                        {propertyKey:"max_volume", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MAX_VOLUME).val()},
+                        {propertyKey:"max_weight", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MAX_WEIGHT).val()}
+                    ]
+                }
+            }
+            let lab_json = JSON.stringify(labUpdata);
+            $.ajax({
+                url: "/equipment/rest/updateLab",
+                type: 'PATCH',
+                dataTye: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: lab_json,
+                success: function (result) {
+                    retObjHandle(result, COURSES_TABLE.reload);
+                }
+            })
         };
-        this.btnEvents[ElEM_ID.LAB_EDIT_BTN] = LABS_TABLE.edit;
+        this.btnEvents[ElEM_ID.EQUIPMENT_EDIT_BTN] = EQUIPMENT_TABLE.edit;
 
 
         /**
@@ -112,7 +157,7 @@ let EQUIPMENT_TABLE = {
          */
         this.create = function () {
             let data = {
-                EquipmentModal: {
+                equipmentModal: {
                     active: "active",
                     create: "false",
                     equipment: true

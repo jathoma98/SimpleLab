@@ -1,3 +1,4 @@
+{{#equipmentModal}}
 <nav>
     <div class="nav-wrapper my_cran">
         <a href="#!" class="brand-logo"><i class="material-icons">view_list</i>Add Equipment</a>
@@ -20,15 +21,15 @@
     <form class="col s8 valign-wrapper section" id = "equip_type">
         <label class="col s2"><h6>Equipment Type: </h6></label>
         <label class="col s3">
-            <input class="with-gap" name="group1" value = "liquid" type="radio" checked/>
+            <input class="with-gap" name="group1" value = "liquid" type="radio"{{liquid}}/>
             <span>Liquid</span>
         </label>
         <label class="col s3">
-            <input class="with-gap" name="group1" value ="solid" type="radio"/>
+            <input class="with-gap" name="group1" value ="solid" type="radio"{{solid}}/>
             <span>Solid</span>
         </label>
         <label class="col s3">
-            <input class="with-gap" name="group1" value = "machine" type="radio"/>
+            <input class="with-gap" name="group1" value = "machine" type="radio"{{machine}}/>
             <span>Machine</span>
         </label>
     </form>
@@ -36,8 +37,9 @@
         <div class="col s12 section">
             <div class="row">
                 <div class="input-field col s10">
-                    <input id="equip_name" type="text" class="validate">
-                    <label for="equip_name">Name</label>
+                    <input id="equip_name" type="text" class="validate"
+                    value = "{{equipment.name}}">
+                    <label for="equip_name"{{#equipment.name}} class = "active"{{/equipment.name}}>Name</label>
                 </div>
             </div>
         </div>
@@ -49,7 +51,7 @@
                 </div>
                 <div class="input-field col s5">
                     <input id="max_weight" type="text" class="validate">
-                    <label for="max_weight">Max Weight</label>
+                    <label for="max_weight" >Max Weight</label>
                 </div>
             </div>
         </div>
@@ -70,4 +72,5 @@
         </a>
     </form>
 </div>
+{{/equipmentModal}}
 
