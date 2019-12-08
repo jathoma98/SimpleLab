@@ -9,8 +9,6 @@ import com.org.simplelab.database.services.projections.Projection;
 import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
-import com.org.simplelab.restcontrollers.rro.RRO_ACTION_TYPE;
-import com.org.simplelab.restcontrollers.rro.RRO_MSG;
 import com.org.simplelab.security.SecurityUtils;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,13 +78,13 @@ public class CourseRESTController extends BaseRESTController<Course> {
         if (foundcourses.size() > 0){
             toUpdate = foundcourses.get(0);
         } else {
-            rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
-            rro.setMsg(RRO_MSG.COURSE_NO_FOUND.getMsg());
+            rro.setAction(RRO.ACTION_TYPE.PRINT_MSG.name());
+            rro.setMsg(RRO.MSG.COURSE_NO_FOUND.getMsg());
             rro.setSuccess(false);
             return rro;
         }
         if (toUpdate.getCreator().getId() != uid){
-            rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
+            rro.setAction(RRO.ACTION_TYPE.PRINT_MSG.name());
             rro.setMsg(CourseValidator.DUPLICATE_ID);
             rro.setSuccess(false);
             return rro;
@@ -109,7 +107,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
             courseDB.deleteCourseByCourseId(course_id);
         }
         rro.setSuccess(true);
-        rro.setAction(RRO_ACTION_TYPE.NOTHING.  name());
+        rro.setAction(RRO.ACTION_TYPE.NOTHING.  name());
         return rro;
     }
 
@@ -134,7 +132,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
         });
 
         rro.setSuccess(true);
-        rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
+        rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
         rro.setData(returnInfo);
         return rro;
     }
@@ -148,13 +146,13 @@ public class CourseRESTController extends BaseRESTController<Course> {
         Course c = courseDB.findByUserIdAndCourseId(uid, course.getCourse_id());
         if (c == null){
             rro.setSuccess(false);
-            rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
+            rro.setAction(RRO.ACTION_TYPE.PRINT_MSG.name());
             //hard code string for dev.
-            rro.setMsg(RRO_MSG.COURSE_NO_FOUND.getMsg() + " " + c.getName());
+            rro.setMsg(RRO.MSG.COURSE_NO_FOUND.getMsg() + " " + c.getName());
             rro.setData(null);
         }
         rro.setSuccess(true);
-        rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
+        rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
         rro.setData(c);
         return rro;
     }
@@ -212,13 +210,13 @@ public class CourseRESTController extends BaseRESTController<Course> {
         List<User> students;
         RRO<List<User>> rro = new RRO();
         rro.setSuccess(true);
-        rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
+        rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
         try {
             students = courseDB.getStudentsOfCourse(course_id);
             rro.setData(students);
         } catch (CourseDB.CourseTransactionException e) {
             rro.setSuccess(false);
-            rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+            rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
         }
         return rro;
     }
@@ -245,11 +243,11 @@ public class CourseRESTController extends BaseRESTController<Course> {
         //dont allow empty searches
         if (courseRegex == null || courseRegex.equals("")){
             rro.setSuccess(false);
-            rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+            rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
             return rro;
         }
         rro.setSuccess(true);
-        rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
+        rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
         rro.setData(courseDB.searchCourseWithKeyword(courseRegex));
         return rro;
     }

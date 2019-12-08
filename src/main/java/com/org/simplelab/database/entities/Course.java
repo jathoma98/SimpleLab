@@ -19,7 +19,7 @@ public class Course extends BaseTable implements UserCreated{
     private String description;
 
     @OneToOne(cascade = {CascadeType.PERSIST},
-            fetch = FetchType.EAGER)
+            fetch = FetchType.LAZY)
     @JoinColumn(name = "creator_id")
     private User creator;
 

@@ -1,5 +1,7 @@
 package com.org.simplelab;
 
+import com.fasterxml.jackson.databind.Module;
+import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -34,6 +36,12 @@ public class SimpleLabApplication {
 		resolver.setTemplateMode(properties.getMode());
 		resolver.setCacheable(properties.isCache());
 		return resolver;
+	}
+
+	//TODO: this needs to be thoroughly tested, might break existing REST APIs
+	@Bean
+	public Module datatypeHibernateModule(){
+		return new Hibernate5Module();
 	}
 
 }

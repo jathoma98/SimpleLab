@@ -3,7 +3,6 @@ package com.org.simplelab.controllers;
 import com.org.simplelab.database.entities.User;
 import com.org.simplelab.database.services.UserDB;
 import com.org.simplelab.restcontrollers.rro.RRO;
-import com.org.simplelab.restcontrollers.rro.RRO_ACTION_TYPE;
 import com.org.simplelab.security.SecurityUtils;
 import com.org.simplelab.security.SimpleLabAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.util.Map;
 
 import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
 
@@ -62,7 +60,7 @@ public class LoginController{
 
         RRO rro = new RRO<String>();
         rro.setSuccess(false);
-        rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
+        rro.setAction(RRO.ACTION_TYPE.PRINT_MSG.name());
         rro.setMsg("Please check your username and password!");
 
 
@@ -106,7 +104,7 @@ public class LoginController{
             return resp.map();
         }**/
 
-        rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+        rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
         rro.setSuccess(true);
         return rro;
     }

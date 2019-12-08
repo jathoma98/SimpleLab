@@ -5,8 +5,6 @@ import com.org.simplelab.database.services.UserDB;
 import com.org.simplelab.database.validators.UserValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
-import com.org.simplelab.restcontrollers.rro.RRO_ACTION_TYPE;
-import com.org.simplelab.restcontrollers.rro.RRO_MSG;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -50,11 +48,11 @@ public class UserRESTController extends BaseRESTController<User> {
         //dont allow empty searches
         if (regex == null || regex.equals("")){
             rro.setSuccess(false);
-            rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+            rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
             return rro;
         }
         rro.setSuccess(true);
-        rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
+        rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
         rro.setData(userDB.searchUserWithKeyword(regex));
         return rro;
     }
@@ -66,12 +64,12 @@ public class UserRESTController extends BaseRESTController<User> {
         User user = userDB.findById(userId);
         if(user == null){
             rro.setSuccess(false);
-            rro.setAction(RRO_ACTION_TYPE.PRINT_MSG.name());
-            rro.setMsg(RRO_MSG.USER_NO_FOUND.getMsg());
+            rro.setAction(RRO.ACTION_TYPE.PRINT_MSG.name());
+            rro.setMsg(RRO.MSG.USER_NO_FOUND.getMsg());
         }
         rro.setSuccess(true);
         rro.setData(user);
-        rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
+        rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
         return rro;
     }
 
