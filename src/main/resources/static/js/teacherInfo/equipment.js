@@ -26,17 +26,17 @@ let EQUIPMENT_TABLE = {
                     retObjHandle(result, (equipment)=>{
                         let props = equipment.properties;
                         equipment.properties = [];
-
+                        props.forEach(p=>equipment.properties[p.propertyKey] = p.propertyValue);
                         let data = {
                             equipmentModal: {
                                 active: "active",
-                                create: "false",
+                                create: false,
                                 equipment: equipment,
                             }
                         }
                         data.equipmentModal[equipment.type] = " checked";
                         EQUIPMENT_TABLE.modal_info = equipment;
-                        rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL, data, EQUIPMENT_TABLE.btnEvents);
+                        rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL_EQUIP, data, EQUIPMENT_TABLE.btnEvents);
                     })
                 }
             })
@@ -68,7 +68,7 @@ let EQUIPMENT_TABLE = {
 
         this.edit = function () {
             let data = {
-                equipment_id_old: LABS_TABLE.lab_info.id,
+                equipment_id_old: EQUIPMENT_TABLE.modal_info.id,
                 newEquipmentInfo: {
                     name: $(EQUIPMENT_TABLE.MODAL_ID.EQUIPMENT_NAME).val(),
                     type: $(EQUIPMENT_TABLE.MODAL_ID.EQUIPMENT_TYPE).val(),
@@ -80,13 +80,13 @@ let EQUIPMENT_TABLE = {
                     ]
                 }
             }
-            let lab_json = JSON.stringify(labUpdata);
+            let data_json = JSON.stringify(data);
             $.ajax({
-                url: "/equipment/rest/updateLab",
+                url: "/equipment/rest/updateEquipment",
                 type: 'PATCH',
                 dataTye: 'json',
                 contentType: 'application/json; charset=utf-8',
-                data: lab_json,
+                data: data_json,
                 success: function (result) {
                     retObjHandle(result, COURSES_TABLE.reload);
                 }
@@ -159,7 +159,7 @@ let EQUIPMENT_TABLE = {
             let data = {
                 equipmentModal: {
                     active: "active",
-                    create: "false",
+                    create: true,
                     equipment: true
                 }
             }
