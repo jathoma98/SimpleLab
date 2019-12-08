@@ -20,7 +20,8 @@ public class EquipmentInLab extends BaseTable {
     protected Lab parentLab;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER,
+                mappedBy = "parentLab")
     protected Equipment parentEquipment;
 
     @OneToMany(cascade = {CascadeType.ALL},
