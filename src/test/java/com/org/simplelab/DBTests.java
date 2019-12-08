@@ -2,6 +2,7 @@ package com.org.simplelab;
 
 import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.*;
+import com.org.simplelab.database.repositories.RecipeRepository;
 import com.org.simplelab.database.repositories.UserRepository;
 import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.services.LabDB;
@@ -409,6 +410,48 @@ class DBTests extends SpringTestConfig {
 			assertEquals(0, lr.findByName(name).size());
 		}
 
+	}
+
+	@Autowired
+	RecipeRepository rr;
+
+	@Test
+	void recipeTestAdd(){
+		int numProperties = 10;
+		Equipment eq1 = TestUtils.createJunkEquipmentWithProperties(numProperties),
+				  eq2 = TestUtils.createJunkEquipmentWithProperties(numProperties),
+				  eq3 = TestUtils.createJunkEquipmentWithProperties(numProperties),
+				  eq4 = TestUtils.createJunkEquipmentWithProperties(numProperties);
+
+		Recipe r1 = new Recipe();
+
+		r1.setName(metadata);
+		r1.setEquipmentOne(eq1);
+		r1.setEquipmentTwo(eq2);
+		r1.setResult(eq3);
+
+		rr.save(r1);
+		List<Recipe> found = new ArrayList<>();
+		rr.findAll().forEach((recipe) -> found.add(recipe));
+		assertEquals(found.size(), 1);
+		System.out.println(r1.toString());
+
+		//Test adding another recipe with same equipment in one field.
+
+		Recipe r2 = new Recipe();
+		r2.setName(metadata);
+		r2.setEquipmentOne(eq1);
+		r2.setEquipmentTwo(eq3);
+		r2.setResult(eq4);
+		rr.save(r2);
+
+		//Test adding recipe with different equipment but same result
+		Recipe r3 = new Recipe();
+		r3.setName(metadata);
+		r3.setEquipmentOne(eq4);
+		r3.setEquipmentTwo(eq2);
+		r3.setResult(eq3);
+		rr.save(r3);
 	}
 
 

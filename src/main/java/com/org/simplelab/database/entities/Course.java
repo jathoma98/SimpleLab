@@ -1,5 +1,6 @@
 package com.org.simplelab.database.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.interfaces.UserCreated;
 import lombok.Data;
@@ -18,6 +19,7 @@ public class Course extends BaseTable implements UserCreated{
     private String name;
     private String description;
 
+    @JsonIgnore
     @OneToOne(cascade = {CascadeType.PERSIST},
             fetch = FetchType.EAGER)
     @JoinColumn(name = "creator_id")

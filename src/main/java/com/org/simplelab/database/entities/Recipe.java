@@ -25,17 +25,28 @@ public class Recipe extends BaseTable implements UserCreated {
     private User creator;
 
     @ManyToOne(fetch = FetchType.EAGER,
-               cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE})
+               cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE},
+               optional = false)
     private Equipment equipmentOne;
 
     @ManyToOne(fetch = FetchType.EAGER,
-               cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE})
+               cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE},
+               optional = false)
     private Equipment equipmentTwo;
 
     //TODO: change this back to lazy evaluation after testing
-    @ManyToOne(fetch = FetchType.EAGER,
-                cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE})
+    @ManyToOne( fetch = FetchType.EAGER,
+                cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE},
+                optional = false)
     private Equipment result;
+
+    @Override
+    public String toString(){
+        return  "Name: " + getName() + " \n" +
+                "EQ1: " + equipmentOne.getName() + " Properties: " + equipmentOne.getProperties().toString() + " \n" +
+                "EQ2: " + equipmentTwo.getName() + " Properties: " + equipmentTwo.getProperties().toString() + " \n" +
+                "Result: " + result.getName() + " Properties: " + result.getProperties().toString();
+    }
 
 
     public boolean exists(){
