@@ -1,8 +1,7 @@
 package com.org.simplelab.game;
 
-import com.org.simplelab.database.entities.BaseTable;
-import com.org.simplelab.database.entities.Equipment;
-import com.org.simplelab.database.entities.Recipe;
+import com.org.simplelab.database.entities.sql.Equipment;
+import com.org.simplelab.database.entities.sql.Recipe;
 import org.springframework.stereotype.Component;
 
 /**

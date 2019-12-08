@@ -1,12 +1,10 @@
 package com.org.simplelab.restcontrollers.dto;
 
-import com.org.simplelab.database.entities.Equipment;
-import com.org.simplelab.database.entities.EquipmentProperty;
-import com.org.simplelab.database.entities.User;
+import com.org.simplelab.database.entities.sql.Equipment;
+import com.org.simplelab.database.entities.sql.User;
 import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.database.validators.EquipmentValidator;
 import com.org.simplelab.database.validators.LabValidator;
-import com.org.simplelab.database.validators.UserValidator;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -116,5 +114,11 @@ public abstract class DTO {
      @Setter
      public static class EquipmentInteractionDTO extends DTO{
         private Equipment object1, object2;
+     }
+
+     @Getter
+     @Setter
+     public static class AddRecipeDTO extends DTO{
+        //add fields
      }
 }

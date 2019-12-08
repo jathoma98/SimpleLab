@@ -13,6 +13,8 @@ import org.thymeleaf.templateresolver.FileTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
 @EnableJpaRepositories(basePackages = {"com.org.simplelab.database.repositories"})
+//TODO: enable this for saving lab progress and action history
+//@EnableMongoRepositories(basePackages = {"com.org.simplelab.database.repositories.mongodb"})
 @SpringBootApplication
 public class SimpleLabApplication {
 
@@ -38,7 +40,6 @@ public class SimpleLabApplication {
 		return resolver;
 	}
 
-	//TODO: this needs to be thoroughly tested, might break existing REST APIs
 	@Bean
 	public Module datatypeHibernateModule(){
 		return new Hibernate5Module();

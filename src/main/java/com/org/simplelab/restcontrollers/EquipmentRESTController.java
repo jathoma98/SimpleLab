@@ -1,16 +1,13 @@
 package com.org.simplelab.restcontrollers;
 
 
-import com.org.simplelab.database.entities.Equipment;
-import com.org.simplelab.database.entities.EquipmentProperty;
-import com.org.simplelab.database.entities.Lab;
+import com.org.simplelab.database.entities.sql.Equipment;
+import com.org.simplelab.database.entities.sql.EquipmentProperty;
 import com.org.simplelab.database.services.EquipmentDB;
 import com.org.simplelab.database.services.projections.Projection;
-import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.database.validators.EquipmentValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
-import com.org.simplelab.restcontrollers.rro.RRO.ACTION_TYPE;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -119,6 +116,7 @@ public class EquipmentRESTController extends BaseRESTController<Equipment> {
         if (toUpdate.getCreator().getId() != uid){
             return RRO.sendErrorMessage("Duplicate ID");
         }
+        //TODO: make this more efficient
         dto.getNewEquipmentInfo().getProperties().forEach((p)->{
             for(EquipmentProperty ep : toUpdate.getProperties()){
                 if(ep.getPropertyKey().equals(p.getPropertyKey())){

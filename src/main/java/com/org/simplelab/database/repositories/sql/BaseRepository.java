@@ -1,6 +1,6 @@
-package com.org.simplelab.database.repositories;
+package com.org.simplelab.database.repositories.sql;
 
-import com.org.simplelab.database.entities.BaseTable;
+import com.org.simplelab.database.entities.sql.BaseTable;
 import com.org.simplelab.database.services.projections.Projection;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.repository.CrudRepository;

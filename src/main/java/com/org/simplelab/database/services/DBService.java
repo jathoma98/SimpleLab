@@ -1,7 +1,7 @@
 package com.org.simplelab.database.services;
 
-import com.org.simplelab.database.entities.BaseTable;
-import com.org.simplelab.database.repositories.*;
+import com.org.simplelab.database.entities.sql.BaseTable;
+import com.org.simplelab.database.repositories.sql.BaseRepository;
 import com.org.simplelab.database.services.interfaces.SetModificationCondition;
 import com.org.simplelab.database.services.projections.Projection;
 import lombok.Getter;

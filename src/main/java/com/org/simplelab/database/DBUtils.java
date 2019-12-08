@@ -1,13 +1,7 @@
 package com.org.simplelab.database;
 
-import com.org.simplelab.database.entities.BaseTable;
-import com.org.simplelab.database.entities.User;
-import org.codehaus.jackson.map.Serializers;
-import org.modelmapper.Condition;
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
-import org.modelmapper.spi.MappingContext;
 
 import java.security.MessageDigest;
 
@@ -19,7 +13,7 @@ public class DBUtils {
     public static final String EQUIPMENT_TABLE_NAME = "equipment";
     public static final String EQUIPMENT_PROPERTY_TABLE_NAME = "equipment_property";
     public static final String STEP_TABLE_NAME = "step";
-    public static final String EQUIPMENT_IN_LAB_TABLE_NAME = "equipment_in_lab";
+    public static final String RECIPE_TABLE_NAME = "recipe";
 
     public static final String SALT = "a very salty salt";
 

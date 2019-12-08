@@ -1,7 +1,7 @@
 package com.org.simplelab.database.validators;
 
 import com.org.simplelab.database.DBUtils;
-import com.org.simplelab.database.entities.Course;
+import com.org.simplelab.database.entities.sql.Course;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

@@ -1,8 +1,8 @@
 package com.org.simplelab.database.services;
 
 import com.org.simplelab.database.DBUtils;
-import com.org.simplelab.database.entities.User;
-import com.org.simplelab.database.repositories.UserRepository;
+import com.org.simplelab.database.entities.sql.User;
+import com.org.simplelab.database.repositories.sql.UserRepository;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

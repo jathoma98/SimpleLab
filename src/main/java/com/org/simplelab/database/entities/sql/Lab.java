@@ -1,4 +1,4 @@
-package com.org.simplelab.database.entities;
+package com.org.simplelab.database.entities.sql;
 
 import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.interfaces.UserCreated;

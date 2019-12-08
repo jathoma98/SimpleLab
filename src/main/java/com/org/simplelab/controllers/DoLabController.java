@@ -1,14 +1,14 @@
 package com.org.simplelab.controllers;
 
 import com.org.simplelab.database.DBUtils;
-import com.org.simplelab.database.entities.Lab;
-import com.org.simplelab.database.entities.Recipe;
-import com.org.simplelab.database.services.projections.Projection;
+import com.org.simplelab.database.entities.sql.Equipment;
+import com.org.simplelab.database.entities.sql.Lab;
+import com.org.simplelab.database.entities.sql.Recipe;
+import com.org.simplelab.database.services.HistoryDB;
 import com.org.simplelab.game.RecipeHandler;
 import com.org.simplelab.restcontrollers.dto.Workspace;
 import com.org.simplelab.restcontrollers.rro.RRO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -110,22 +110,31 @@ public class DoLabController extends BaseController {
      *     //TODO: May be just return how time student make invalid recipes - Zee
      * }
      */
+    @Autowired
+    HistoryDB historyDB;
+
     @PostMapping(INTERACTION_MAPPING)
     public RRO handleEquipmentInteraction(@PathVariable("lab_id") long lab_id,
                                           @RequestBody EquipmentInteractionDTO dto){
-        Recipe found = recipeHandler.findRecipe(dto.getObject1(), dto.getObject2());
+
+        String interation = "test interaction";
+
+        //TODO: implement this
+        //save the interaction to lab history
+        historyDB.addToLabHistory(interation);
+
+        Equipment eq1 = dto.getObject1();
+        Equipment eq2 = dto.getObject2();
+
+        //perform the user interaction
+        Equipment result = eq1.getInteraction().interactWith(eq2);
+        if (result.exists()){
+            eq2 = result;
+        }
+
+        Recipe found = recipeHandler.findRecipe(eq1, eq2);
         if (found.exists()){
             // do something
-            /*
-            * Todo: That what I think - Zee
-            *       if recipe find
-            *           if check is result equipment in lab step = true
-            *               Return RRO and states which step is complete
-            *           el
-            *               Return RRO without states any step is complete
-            *
-            * Nvm, I just realize you have same idea on the top.
-            */
 
         }
         return RRO.sendErrorMessage(RRO.MSG.RECIPE_NOT_FOUND.getMsg());

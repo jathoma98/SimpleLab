@@ -1,10 +1,9 @@
 package com.org.simplelab;
 
-import com.org.simplelab.database.entities.User;
+import com.org.simplelab.database.entities.sql.User;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;

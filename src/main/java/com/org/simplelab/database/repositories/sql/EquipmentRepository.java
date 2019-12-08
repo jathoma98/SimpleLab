@@ -1,6 +1,6 @@
-package com.org.simplelab.database.repositories;
+package com.org.simplelab.database.repositories.sql;
 
-import com.org.simplelab.database.entities.Equipment;
+import com.org.simplelab.database.entities.sql.Equipment;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

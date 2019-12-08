@@ -1,5 +1,6 @@
-package com.org.simplelab.database.entities;
+package com.org.simplelab.database.entities.sql;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.interfaces.UserCreated;
 import lombok.Data;
@@ -19,8 +20,10 @@ public class Course extends BaseTable implements UserCreated{
     private String description;
     private String invite_code;
 
+    //TODO: put this back to lazy initialization after course edit works again
+    @JsonIgnore
     @OneToOne(cascade = {CascadeType.PERSIST},
-            fetch = FetchType.LAZY)
+            fetch = FetchType.EAGER)
     @JoinColumn(name = "creator_id")
     private User creator;
 

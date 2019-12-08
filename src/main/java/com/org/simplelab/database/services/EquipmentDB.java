@@ -1,8 +1,8 @@
 package com.org.simplelab.database.services;
 
-import com.org.simplelab.database.entities.Equipment;
-import com.org.simplelab.database.entities.EquipmentProperty;
-import com.org.simplelab.database.repositories.EquipmentRepository;
+import com.org.simplelab.database.entities.sql.Equipment;
+import com.org.simplelab.database.entities.sql.EquipmentProperty;
+import com.org.simplelab.database.repositories.sql.EquipmentRepository;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

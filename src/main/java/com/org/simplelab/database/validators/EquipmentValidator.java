@@ -1,14 +1,13 @@
 package com.org.simplelab.database.validators;
 
 import com.org.simplelab.database.DBUtils;
-import com.org.simplelab.database.entities.Equipment;
-import com.org.simplelab.database.entities.EquipmentProperty;
+import com.org.simplelab.database.entities.sql.Equipment;
+import com.org.simplelab.database.entities.sql.EquipmentProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
