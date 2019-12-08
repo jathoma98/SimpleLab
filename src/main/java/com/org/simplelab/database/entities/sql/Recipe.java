@@ -47,10 +47,6 @@ public class Recipe extends BaseTable implements UserCreated {
     }
 
 
-    public boolean exists(){
-        return getId() != -1;
-    }
-
     private static Recipe NO_RECIPE_GEN(){
         Recipe r = new Recipe();
         r.setName("NO RECIPE");

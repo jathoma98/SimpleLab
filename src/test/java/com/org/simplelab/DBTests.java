@@ -6,6 +6,7 @@ import com.org.simplelab.database.repositories.sql.RecipeRepository;
 import com.org.simplelab.database.repositories.sql.UserRepository;
 import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.services.LabDB;
+import com.org.simplelab.database.services.RecipeDB;
 import com.org.simplelab.database.services.UserDB;
 import com.org.simplelab.database.validators.LabValidator;
 import com.org.simplelab.restcontrollers.CourseRESTController;
@@ -413,10 +414,10 @@ class DBTests extends SpringTestConfig {
 	}
 
 	@Autowired
-	RecipeRepository rr;
+	RecipeDB rdb;
 
 	@Test
-	void recipeTestAdd(){
+	void recipeTestAdd() throws Exception{
 		int numProperties = 10;
 		Equipment eq1 = TestUtils.createJunkEquipmentWithProperties(numProperties),
 				  eq2 = TestUtils.createJunkEquipmentWithProperties(numProperties),
@@ -430,9 +431,9 @@ class DBTests extends SpringTestConfig {
 		r1.setEquipmentTwo(eq2);
 		r1.setResult(eq3);
 
-		rr.save(r1);
+		rdb.insert(r1);
 		List<Recipe> found = new ArrayList<>();
-		rr.findAll().forEach((recipe) -> found.add(recipe));
+		rdb.getRepository().findAll().forEach((recipe) -> found.add(recipe));
 		assertEquals(found.size(), 1);
 		System.out.println(r1.toString());
 
@@ -443,7 +444,7 @@ class DBTests extends SpringTestConfig {
 		r2.setEquipmentOne(eq1);
 		r2.setEquipmentTwo(eq3);
 		r2.setResult(eq4);
-		rr.save(r2);
+		rdb.insert(r2);
 
 		//Test adding recipe with different equipment but same result
 		Recipe r3 = new Recipe();
@@ -451,7 +452,7 @@ class DBTests extends SpringTestConfig {
 		r3.setEquipmentOne(eq4);
 		r3.setEquipmentTwo(eq2);
 		r3.setResult(eq3);
-		rr.save(r3);
+		rdb.insert(r3);
 	}
 
 

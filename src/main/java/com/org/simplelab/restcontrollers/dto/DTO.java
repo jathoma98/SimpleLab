@@ -114,4 +114,10 @@ public abstract class DTO {
      public static class EquipmentInteractionDTO extends DTO{
         private Equipment object1, object2;
      }
+
+     @Getter
+     @Setter
+     public static class AddRecipeDTO extends DTO{
+        //add fields
+     }
 }
