@@ -17,6 +17,7 @@ public class Course extends BaseTable implements UserCreated{
     private String course_id;
     private String name;
     private String description;
+    private String invite_code;
 
     @OneToOne(cascade = {CascadeType.PERSIST},
             fetch = FetchType.LAZY)

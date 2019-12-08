@@ -172,14 +172,23 @@ public class CourseRESTController extends BaseRESTController<Course> {
         String own_username = SecurityUtils.getAuthenticatedUsername();
         List<User> toAdd = new ArrayList<>();
         String course_id = course.getCourse_id();
-        List<String> usernameList = course.getUsernameList();
-        for (String username: usernameList){
-            if (!own_username.equals(username)){
-                toAdd.add(userDB.findUser(username));
+        List<Course> c = courseDB.findByCourseId(course_id);
+        if (own_id == c.get(0).getCreator().getId()){
+            List<String> usernameList = course.getUsernameList();
+            for (String username: usernameList){
+                if (!own_username.equals(username)){
+                    toAdd.add(userDB.findUser(username));
+                }
             }
+            DBService.EntitySetManager<User, Course> toUpdate = courseDB.getStudentsOfCourseByCourseId(course_id);
+            return super.addEntitiesToEntityList(toUpdate, toAdd);
+        }else if(course.getInvite_code().equals(c.get(0).getInvite_code())){
+            toAdd.add(userDB.findUser((String)session.getAttribute("username")));
+            DBService.EntitySetManager<User, Course> toUpdate = courseDB.getStudentsOfCourseByCourseId(course_id);
+            return super.addEntitiesToEntityList(toUpdate, toAdd);
         }
-        DBService.EntitySetManager<User, Course> toUpdate = courseDB.getStudentsOfCourseByCourseId(course_id);
-        return super.addEntitiesToEntityList(toUpdate, toAdd);
+
+        return RRO.sendErrorMessage("Invite Code not match");
     }
 
     @Transactional

@@ -178,6 +178,7 @@ let COURSES_TABLE = {
             let course = {
                 name: $("#course_name").val(),
                 course_id: $("#course_code").val(),
+                invite_code:$("#course_invitecode").val(),
                 description: $("#course_description").val()
             }
             let course_json = JSON.stringify(course);

@@ -24,23 +24,27 @@ data = {
                 <div class="row">
                     <div class="input-field col s6">
                         <input id="course_name" type="text"
-                               class="validate{{#course.name}} valid{{/course.name}}"
                                value="{{course.name}}">
                         <label for="course_name"{{#course.name}} class="active"{{/course.name}}>Course
                             Name</label>
                     </div>
                     <div class="input-field col s6">
                         <input id="course_code" type="text"
-                               class="validate{{#course.course_id}} valid{{/course.course_id}}"
                                value="{{course.course_id}}">
                         <label for="course_code"{{#course.course_id}} class="active"{{/course.course_id}}>Course
                             Code</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <input id="course_invitecode" type="text"
+                               value="{{course.invite_code}}">
+                        <label for="course_code"{{#course.invite_code}} class="active"{{/course.invite_code}}>Course
+                        Invite Code</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
                         <textarea id="course_description"
-                                  class="materialize-textarea validate{{#course.description}} valid{{/course.description}}">{{course.description}}</textarea>
+                                  class="materialize-textarea">{{course.description}}</textarea>
                         <label for="course_description"{{#course.description}}
                                class="active"{{/course.description}}>Course
                             Description</label>
