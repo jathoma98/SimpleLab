@@ -72,6 +72,7 @@ public abstract class DTO {
     public static class CourseUpdateStudentListDTO extends DTO {
         //course need to be update
         private String course_id;
+        private String invite_code;
         //list of username need to add or delete
         private List<String> usernameList;
     }
