@@ -1,5 +1,6 @@
 package com.org.simplelab.database.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.org.simplelab.database.DBUtils;
 import lombok.Data;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Table(name = DBUtils.EQUIPMENT_PROPERTY_TABLE_NAME)
 public class EquipmentProperty extends BaseTable {
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     Equipment parentEquipment;
 
