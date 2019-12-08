@@ -36,7 +36,7 @@ public abstract class Projection {
 
     @Value
     public static class TeacherEquipmentInfo extends Projection{
-        String name, createdDate;
+        String name, createdDate, type;
         long id;
     }
 }
