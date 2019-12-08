@@ -22,22 +22,23 @@ public class RRO<T> {
         return rro;
     }
 
-    public static enum ACTION_TYPE {
+    public enum ACTION_TYPE {
         NOTHING,
         REDIRECT,
         LOAD_DATA,
         PRINT_MSG,
     }
 
-    public static enum LAB_ACTION_TYPE {
+    public enum LAB_ACTION_TYPE {
         MODIFY_EQUIPMENT,
         ADVANCE_STEP
     }
 
-    public static enum MSG {
+    public enum MSG {
         COURSE_NO_FOUND("course not found"),
         ENTITY_UPDATE_ENTITY_NO_FOUND("Failed to update: Entity not found."),
         ENTITY_UPDATE_ERROR("Error while updating entity"),
+        RECIPE_NOT_FOUND("Recipe not found"),
         USER_NO_FOUND("user not found");
         private final String msg;
 

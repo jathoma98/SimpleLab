@@ -2,18 +2,25 @@ package com.org.simplelab.controllers;
 
 import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.Lab;
+import com.org.simplelab.database.entities.Recipe;
 import com.org.simplelab.database.services.projections.Projection;
+import com.org.simplelab.game.RecipeHandler;
 import com.org.simplelab.restcontrollers.dto.Workspace;
 import com.org.simplelab.restcontrollers.rro.RRO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import static com.org.simplelab.restcontrollers.dto.DTO.EquipmentInteractionDTO;
 
 @RequestMapping(DoLabController.DO_LAB_BASE_MAPPING)
 @RestController
 public class DoLabController extends BaseController {
     //TODO: add security
+
+    @Autowired
+    RecipeHandler recipeHandler;
 
     public static final String DO_LAB_BASE_MAPPING = "/doLab";
     public static final String LAB_ID_MAPPING = "/{lab_id}";
@@ -91,8 +98,13 @@ public class DoLabController extends BaseController {
      * }
      */
     @PostMapping(INTERACTION_MAPPING)
-    public RRO handleEquipmentInteraction(@PathVariable("lab_id") long lab_id){
-        return null;
+    public RRO handleEquipmentInteraction(@PathVariable("lab_id") long lab_id,
+                                          @RequestBody EquipmentInteractionDTO dto){
+        Recipe found = recipeHandler.findRecipe(dto.getObject1(), dto.getObject2());
+        if (found.exists()){
+            // do something
+        }
+        return RRO.sendErrorMessage(RRO.MSG.RECIPE_NOT_FOUND.getMsg());
     }
 
 

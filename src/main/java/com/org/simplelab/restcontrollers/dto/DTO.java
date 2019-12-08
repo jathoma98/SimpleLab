@@ -101,4 +101,10 @@ public abstract class DTO {
          private Equipment targetObject;
          private int stepNum;
      }
+
+     @Getter
+     @Setter
+     public static class EquipmentInteractionDTO extends DTO{
+        private Equipment object1, object2;
+     }
 }
