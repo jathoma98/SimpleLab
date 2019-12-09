@@ -6,59 +6,58 @@ import com.org.simplelab.database.entities.interfaces.UserCreated;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Data
 @Entity(name = DBUtils.EQUIPMENT_TABLE_NAME)
 @Table(name = DBUtils.EQUIPMENT_TABLE_NAME)
-public class Equipment extends BaseTable implements UserCreated {
-    public static final Equipment NO_EQUIPMENT = GEN_NO_EQUIPMENT();
-
-    private String name;
+public class Equipment extends AbstractEquipment implements UserCreated {
+    private static final Interaction[] interactions = {Interaction.DO_NOTHING, Interaction.HEAT};
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE}
             ,fetch = FetchType.LAZY)
     @JoinColumn(name = "creator_id")
     private User creator;
 
-    private String type;
-
     //defines the way this object interacts with another object.
     @Transient
     private Interaction interaction;
 
-    @OneToMany(cascade = {CascadeType.ALL},
-                fetch = FetchType.EAGER,
-                mappedBy = "parentEquipment")
-    private Set<EquipmentProperty> properties;
 
     /**
      * Look at the "type" field and set the interaction interface based on its value.
-     * the @PostLoad annotation means the method is run automatically when we pull from DB.
-     */
+     * the @PostLoad annotation means the method is run automatically when we pull from DB. **/
     @PostLoad
     public void loadInteraction(){
-        //TODO: implement this
-        setInteraction(Interaction.DO_NOTHING);
-    }
-
-    public Equipment(){
-        if (isNew()){
-            this.properties = new HashSet<>();
+        if (getType() == null){
+            this.setInteraction(Interaction.DO_NOTHING);
+            return;
         }
+        List<Interaction> assigned_interaction = Arrays.stream(interactions)
+                                                .filter(inter -> getType().equals(inter.getTypeCode()))
+                                                .collect(Collectors.toList());
+        if (assigned_interaction.size() > 0)
+            this.setInteraction(assigned_interaction.get(0));
+        else
+            this.setInteraction(Interaction.DO_NOTHING);
     }
 
     @Override
     public int hashCode(){
-        return name.hashCode() + creator.hashCode() + type.hashCode() + properties.hashCode();
+        return super.hashCode();
     }
 
-    private static Equipment GEN_NO_EQUIPMENT(){
-        Equipment e = new Equipment();
-        e.setId(-1);
-        return e;
+    @Override
+    public boolean equals(Object o){
+        return super.equals(o);
+    }
+
+    @Override
+    public String toString(){
+        return super.toString();
     }
 
 
