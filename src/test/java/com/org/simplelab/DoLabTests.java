@@ -55,6 +55,9 @@ public class DoLabTests extends SpringTestConfig {
         labDB.insert(l);
         l = labDB.searchLabWithKeyword(l.getName()).get(0);
 
+        //initialize the workspace
+        dlc.getLabToDo(l.getId());
+
         //create 3 DTOs representing 3 user actions -- user will heat a container 3 times.
         Equipment heater = new Equipment();
         heater.setInteraction(Interaction.HEAT);

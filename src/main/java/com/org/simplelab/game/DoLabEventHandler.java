@@ -50,20 +50,33 @@ public class DoLabEventHandler {
         return DBUtils.getMapper().map(l, Workspace.class);
     }
 
-    public void addInteractionToHistory(long lab_id, int stepNum, InteractionObjects interactionInfo){
+    public void addInteractionToHistory(LabInstance instance, int stepNum, InteractionObjects interactionInfo){
 
         StepAction action = new StepAction();
         action.setEquipment1ToString(interactionInfo.getEq1().toString());
         action.setEquipment2ToString(interactionInfo.getEq2().toString());
-        action.setInteraction(interactionInfo.getEq2().getInteraction().getTypeCode());
+        action.setInteraction(interactionInfo.getEq1().getInteraction().getTypeCode());
         action.setParameter(interactionInfo.getParameter());
         action.setResult(interactionInfo.result.toString());
 
-        LabInstance currentInstance = instanceDB.findInstanceByLabId(lab_id);
-        StepRecord currentStep = currentInstance.getStepRecords().get(stepNum-1);
+        StepRecord currentStep = instance.getStepRecords().get(stepNum-1);
         currentStep.getUserActions().add(action);
-        instanceDB.update(currentInstance);
+        instanceDB.update(instance);
 
+    }
+
+    public void advanceStep(LabInstance instance){
+        StepRecord lastStep = instance.getStepRecords().get(instance.getStepRecords().size()-1);
+        StepRecord newStep = new StepRecord();
+        newStep.setStepNum(lastStep.getStepNum()+1);
+        instance.getStepRecords().add(newStep);
+        instanceDB.update(instance);
+    }
+
+    public void finalizeInstance(LabInstance instance){
+        instance.setGrade("complete");
+        instance.setFinished(true);
+        instanceDB.update(instance);
     }
 
 }

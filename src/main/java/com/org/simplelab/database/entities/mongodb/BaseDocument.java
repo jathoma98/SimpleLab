@@ -13,7 +13,7 @@ public abstract class BaseDocument{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private String _id;
 
     private long timestamp;
 
@@ -25,7 +25,7 @@ public abstract class BaseDocument{
     }
 
     public boolean exists(){
-        return !(getId().equals(NOT_FOUND_KEY));
+        return !(get_id().equals(NOT_FOUND_KEY));
     }
 
     public void setTimestamp(long timestamp){ }

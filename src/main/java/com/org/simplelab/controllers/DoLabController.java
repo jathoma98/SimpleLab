@@ -1,6 +1,7 @@
 package com.org.simplelab.controllers;
 
 import com.org.simplelab.database.DBUtils;
+import com.org.simplelab.database.entities.mongodb.LabInstance;
 import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.Lab;
 import com.org.simplelab.database.entities.sql.Recipe;
@@ -9,6 +10,7 @@ import com.org.simplelab.game.DoLabEventHandler;
 import com.org.simplelab.game.RecipeHandler;
 import com.org.simplelab.restcontrollers.dto.Workspace;
 import com.org.simplelab.restcontrollers.rro.RRO;
+import org.apache.commons.lang3.SerializationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -120,6 +122,7 @@ public class DoLabController extends BaseController {
 
         String interation = "test interaction";
         RRO<Equipment[]> rro = new RRO<>();
+        LabInstance currentInstance = instanceDB.findInstanceByLabId(lab_id);
 
         Equipment eq1 = dto.getObject1();
         Equipment eq2 = dto.getObject2();
@@ -136,10 +139,10 @@ public class DoLabController extends BaseController {
         DoLabEventHandler.InteractionObjects interactionInfo = new DoLabEventHandler.InteractionObjects();
         interactionInfo.setEq1(eq1);
         interactionInfo.setEq2(eq2);
-        interactionInfo.setInteraction(eq2_original.getInteraction());
+        interactionInfo.setInteraction(eq1.getInteraction());
         interactionInfo.setResult(eq2);
         interactionInfo.setParameter(parameter);
-        eventHandler.addInteractionToHistory(lab_id, dto.getStepNum(), interactionInfo);
+        eventHandler.addInteractionToHistory(currentInstance, dto.getStepNum(), interactionInfo);
 
         rro.setAction(RRO.LAB_ACTION_TYPE.MODIFY_EQUIPMENT.name());
         rro.setData(new Equipment[]{eq1, eq2});
@@ -149,7 +152,7 @@ public class DoLabController extends BaseController {
             // do something
         }
 
-        Lab currentLab = labDB.findById(lab_id);
+        Lab currentLab = SerializationUtils.deserialize(currentInstance.getSerialized_lab());
         Step currentStep =  currentLab.getSteps()
                              .stream()
                              .filter(step -> step.getStepNum() == dto.getStepNum())
@@ -160,8 +163,10 @@ public class DoLabController extends BaseController {
             //if it matches the target object, check if this is the last step
             rro.setData(null);
             if (dto.getStepNum() == currentLab.getLastStepNumber()){
+                eventHandler.finalizeInstance(currentInstance);
                 rro.setAction(RRO.LAB_ACTION_TYPE.COMPLETE_LAB.name());
             } else {
+                eventHandler.advanceStep(currentInstance);
                 rro.setAction(RRO.LAB_ACTION_TYPE.ADVANCE_STEP.name());
             }
         }

@@ -37,7 +37,7 @@ public class LabInstance extends BaseDocument{
 
     private static LabInstance GEN_NO_INSTANCE(){
         LabInstance none = new LabInstance();
-        none.setId(NOT_FOUND_KEY);
+        none.set_id(NOT_FOUND_KEY);
         return none;
     }
 
