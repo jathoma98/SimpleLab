@@ -17,10 +17,14 @@ ElEM_ID = {
     LAB_SEARCH_BTN:"#labSearchBtn",
     EQUIPMENT_SAVE_BTN: "#equipmentSaveBtn",
     EQUIPMENT_EDIT_BTN: "#equipmentEditBtn",
+    LAB_SEARCH_ADDING_TBODY: "#lab_search_adding_table tbody",
+    LAB_SEARCH_RESULT_TBODY:"#lab_search_result_table tbody",
+    LAB_SEARCH_LAB_BTN: "#labSearchLabBtn",
 
 }
 
 TEMPLATE_ID = {
+    LAB_SEARCH_TBODY:"#all_lab_list_tbody",
     STUDENTS_TBODY: "#student_list_tbody",
     ALL_LAB_LIST_TBODY: "#all_lab_list_tbody",
     LAB_TBODY: "#lab_tbody",

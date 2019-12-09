@@ -204,30 +204,32 @@ data = {
         </div>
         <div class="collapsible-body">
             <div class="row">
-                <div class="input-field col s12">
-                    <div class="input-field col s10">
-                        <input id="modalsearchLab" type="text" class="validate">
-                        <label for="modalsearchLab">Lab Name</label>
-                    </div>
-                    <div class="input-field col s2">
-                        <a id="labSearchBtn"><i class="material-icons">search</i></a>
-                    </div>
-                    <table>
+                <div class="input-field col s4">
+                    <table id="lab_search_adding_table">
                         <thead>
                         <tr>
-                            <th>Search result</th>
+                            <th>Name</th>
                         </tr>
                         </thead>
                         <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="input-field col s8">
+                    <div class="input-field col s10">
+                        <input id="labSearchLab" type="text" class="validate">
+                        <label for="courseSearchLab">Lab Name</label>
+                    </div>
+                    <div class="input-field col s2">
+                        <a id="labSearchLabBtn" href="#"><i class="material-icons">search</i></a>
+                    </div>
+                    <table id="lab_search_result_table">
+                        <thead>
                         <tr>
-                            <td>Lab one</td>
+                            <th>Search Result</th>
                         </tr>
-                        <tr>
-                            <td>Lab two</td>
-                        </tr>
-                        <tr>
-                            <td>Lab three</td>
-                        </tr>
+                        </thead>
+                        <tbody>
                         </tbody>
                     </table>
                 </div>

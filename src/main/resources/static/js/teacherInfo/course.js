@@ -54,7 +54,7 @@ let COURSES_TABLE = {
 
         this.searchStudent = function () {
             let toSearch = {
-                regex: $("#searchStudent").val()
+                regex: $("#LabSearchLab").val()
             };
             let toSearch_json = JSON.stringify(toSearch);
             $.ajax({
@@ -94,8 +94,7 @@ let COURSES_TABLE = {
                         }
                         rebuildComponent(ElEM_ID.ALL_LAB_LIST_TBODY, TEMPLATE_ID.ALL_LAB_LIST_TBODY, data);
                         // setTableBodyRowEvent(ElEM_ID.LAB_TABLE_TBODY, LABS_TABLE.tableRowEvent);
-                })
-
+                    })
                 }
             })
         }
