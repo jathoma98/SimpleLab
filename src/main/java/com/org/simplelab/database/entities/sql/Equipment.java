@@ -4,9 +4,12 @@ import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.interfaces.Interaction;
 import com.org.simplelab.database.entities.interfaces.UserCreated;
 import lombok.Data;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -48,6 +51,20 @@ public class Equipment extends BaseTable implements UserCreated {
         if (isNew()){
             this.properties = new HashSet<>();
         }
+    }
+
+    //TODO: this should be a map, not a hashset
+    public EquipmentProperty findProperty(String key){
+        EquipmentProperty toFind = new EquipmentProperty();
+        toFind.setPropertyKey(key);
+        if (this.getProperties().contains(toFind)) {
+            for (EquipmentProperty eqp : this.getProperties()) {
+                if (eqp.getPropertyKey().equals(key)) {
+                    return eqp;
+                }
+            }
+        }
+        return EquipmentProperty.NO_PROPERTY;
     }
 
     @Override

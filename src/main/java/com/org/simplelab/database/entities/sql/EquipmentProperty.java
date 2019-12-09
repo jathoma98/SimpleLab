@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Entity(name = DBUtils.EQUIPMENT_PROPERTY_TABLE_NAME)
 @Table(name = DBUtils.EQUIPMENT_PROPERTY_TABLE_NAME)
 public class EquipmentProperty extends BaseTable {
+    public static final EquipmentProperty NO_PROPERTY = GEN_NO_PROPERTY();
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
@@ -25,9 +26,16 @@ public class EquipmentProperty extends BaseTable {
         return propertyKey.hashCode();
     }
 
+
     @Override
     public String toString(){
         return "[ id: " + getId() + "| Parent: " + parentEquipment.getName() + "| Key: " + propertyKey + "| Value: " + propertyValue + " ]";
+    }
+
+    private static EquipmentProperty GEN_NO_PROPERTY(){
+        EquipmentProperty eqp = new EquipmentProperty();
+        eqp.setId(-1);
+        return eqp;
     }
 
 }

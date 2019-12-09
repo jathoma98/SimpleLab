@@ -1,12 +1,14 @@
 package com.org.simplelab.database.entities.interfaces;
 
 import com.org.simplelab.database.entities.sql.Equipment;
+import com.org.simplelab.database.entities.sql.EquipmentProperty;
 
 /**
  * Base class for Equipment interactions with other equipment.
  */
 public interface Interaction {
-    DoNothing DO_NOTHING = new DoNothing();
+    Interaction DO_NOTHING = new DoNothing();
+    Interaction HEAT = new Heat();
 
     /**
      * Defines how this Equipment will interact with another target equipment
@@ -36,11 +38,34 @@ public interface Interaction {
      */
     <T extends Equipment> T interactWith(T target);
 
-    class DoNothing implements Interaction{
+    /**
+     * @return the type argument that corresponds to this Interaction.
+     */
+    String getTypeCode();
 
+    class DoNothing implements Interaction{
         @Override
         public Equipment interactWith(Equipment target) {
             return Equipment.NO_EQUIPMENT;
+        }
+        @Override
+        public String getTypeCode() {
+            return "nothing";
+        }
+    }
+    class Heat implements Interaction{
+        @Override
+        public Equipment interactWith(Equipment target) {
+            EquipmentProperty temperatureProperty = target.findProperty("temperature");
+            if (temperatureProperty.exists()){
+                String newTemp = Integer.toString(Integer.parseInt(temperatureProperty.getPropertyValue()) + 100);
+                temperatureProperty.setPropertyValue(newTemp);
+            }
+            return target;
+        }
+        @Override
+        public String getTypeCode() {
+            return "heating";
         }
     }
 
