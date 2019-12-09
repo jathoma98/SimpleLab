@@ -83,7 +83,23 @@ let COURSES_TABLE = {
         }
         this.btnEvents[ElEM_ID.SEARCH_STUDENT_BTN] = this.searchStudent;
 
+        this.searchLab = function () {
+            $.ajax({
+                url: "/lab/rest/loadLabList",
+                type: "GET",
+                success: function (result) {
+                    retObjHandle(result, (labs)=>{
+                        let data = {
+                            labs: labs.reverse()
+                        }
+                        rebuildComponent(ElEM_ID.ALL_LAB_LIST_TBODY, TEMPLATE_ID.ALL_LAB_LIST_TBODY, data);
+                        // setTableBodyRowEvent(ElEM_ID.LAB_TABLE_TBODY, LABS_TABLE.tableRowEvent);
+                })
 
+                }
+            })
+        }
+        this.btnEvents[ElEM_ID.COURSE_SEARCH_LAB_BTN] = this.searchLab;
         /**
          * Use to onclick Event on each row of Course list.
          **/

@@ -2,15 +2,19 @@
 ElEM_ID = {
     MODAL_UL: "#modal ul",
     SEARCH_STUDENT_BTN : "#searchStudentBtn",
+    COURSE_SEARCH_LAB_BTN: "#courseSearchLabBtn",
     COURSE_TABLE_TBODY: "#course_list tbody",
     LAB_TABLE_TBODY: "#lab_list tbody",
     EQUIPMENT_TABLE_TBODY: "#equipment_list tbody",
     STUDENT_SEARCH_TBODY: "#student_search_result_table tbody",
+    ALL_LAB_LIST_TBODY: "#all_lab_list_table tbody",
+    COURSE_LAB_LIST_TBODY: "#course_lab_list_table tbody",
     STUDENT_LIST_TBODY: "#student_list_table tbody",
     COURSE_SAVE_BTN: "#courseSaveBtn",
     COURSE_EDIT_BTN: "#courseEditBtn",
     LAB_SAVE_BTN: "#labSaveBtn",
     LAB_EDIT_BTN: "#labEditBtn",
+    LAB_SEARCH_BTN:"#labSearchBtn",
     EQUIPMENT_SAVE_BTN: "#equipmentSaveBtn",
     EQUIPMENT_EDIT_BTN: "#equipmentEditBtn",
 
@@ -18,6 +22,7 @@ ElEM_ID = {
 
 TEMPLATE_ID = {
     STUDENTS_TBODY: "#student_list_tbody",
+    ALL_LAB_LIST_TBODY: "#all_lab_list_tbody",
     LAB_TBODY: "#lab_tbody",
     COURSE_TBODY: "#course_tbody",
     EQUIPMENT_TBODY: "#equip_tbody",
