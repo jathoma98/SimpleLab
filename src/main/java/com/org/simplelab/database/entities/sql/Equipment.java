@@ -62,6 +62,15 @@ public class Equipment extends BaseTable implements UserCreated {
     }
 
     @Override
+    public boolean equals(Object o){
+        if (!Equipment.class.isInstance(o))
+            return false;
+        Equipment cast = (Equipment)o;
+        return  this.getType().equals(cast.getType()) &&
+                this.getProperties().equals(cast.getProperties());
+    }
+
+    @Override
     public int hashCode(){
         return name.hashCode() + creator.hashCode() + type.hashCode() + properties.hashCode();
     }

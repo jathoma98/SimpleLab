@@ -58,4 +58,26 @@ public class DoLabTests extends SpringTestConfig {
         assertEquals("150", e.findProperty("temperature").getPropertyValue());
     }
 
+    @Test
+    void testEquipmentEquals(){
+        Equipment eq1 = TestUtils.createJunkEquipmentWithProperties(5);
+        Equipment eq2 = TestUtils.createJunkEquipmentWithProperties(5);
+        assertFalse(eq1.equals(eq2));
+
+        Equipment eq3 = new Equipment();
+        eq3.setType(eq1.getType());
+
+        for (EquipmentProperty eqp: eq1.getProperties()){
+            EquipmentProperty epcopy = new EquipmentProperty();
+            epcopy.setPropertyKey(eqp.getPropertyKey());
+            epcopy.setPropertyValue(eqp.getPropertyValue());
+            eq3.getProperties().add(epcopy);
+        }
+
+        assertTrue(eq1.equals(eq3));
+
+
+
+    }
+
 }

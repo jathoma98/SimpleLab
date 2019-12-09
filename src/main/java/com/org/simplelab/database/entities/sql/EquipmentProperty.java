@@ -26,6 +26,15 @@ public class EquipmentProperty extends BaseTable {
         return propertyKey.hashCode();
     }
 
+    @Override
+    public boolean equals(Object o){
+        if (!EquipmentProperty.class.isInstance(o))
+            return false;
+        EquipmentProperty cast = (EquipmentProperty)o;
+        return  this.getPropertyKey().equals(cast.getPropertyKey())
+                && this.getPropertyValue().equals(cast.getPropertyValue());
+    }
+
 
     @Override
     public String toString(){
