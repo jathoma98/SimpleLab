@@ -106,6 +106,7 @@ public class DoLabController extends BaseController {
      * RRO with: {
      *     success: true
      *     action: ADVANCE_STEP
+     *     data: Equipment[] with size 2 when there is new equipment to load.
      * }
      *
      * If the interaction is valid and completes the lab:
@@ -161,6 +162,9 @@ public class DoLabController extends BaseController {
         interactionInfo.setParameter(parameter);
         eventHandler.addInteractionToHistory(currentInstance, dto.getStepNum(), interactionInfo);
 
+        /**
+         * Indicate to the UI that equipment was modified, and it should be reloaded.
+         */
         rro.setAction(RRO.LAB_ACTION_TYPE.MODIFY_EQUIPMENT.name());
         rro.setData(new Equipment[]{eq1, eq2});
 
@@ -186,7 +190,6 @@ public class DoLabController extends BaseController {
             /**
              * If it matches, check if the current step is the last step in the lab.
              */
-            rro.setData(null);
             if (dto.getStepNum() == currentLab.returnLastStepNumber()){
                 /**
                  * If the step is complete and the step is the last step in the lab,
@@ -195,6 +198,7 @@ public class DoLabController extends BaseController {
                  * RRO returns COMPLETE_LAB to indicate to the UI that the lab is done.
                  */
                 eventHandler.finalizeInstance(currentInstance);
+                rro.setData(null);
                 rro.setAction(RRO.LAB_ACTION_TYPE.COMPLETE_LAB.name());
             } else {
                 /**
