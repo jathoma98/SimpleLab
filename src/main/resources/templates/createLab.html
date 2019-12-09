@@ -95,7 +95,7 @@
                 <div clas="row">
                     <!--nav here -->
                 </div>
-                <ul class="row my_white" id="in_lab_equipment_list"></ul>
+                <ul class="row my_white" id="in_lab_equipment_list" style="overflow: auto; height:800px"></ul>
             </div>
             <script id="labequip_list_template" type="mustache">
                 <div class="row sidebaritem">
@@ -111,13 +111,13 @@
                     {{#liquid}}
                         <p>Max Volume: {{properties.max_volume}}</p>
                     {{/liquid}}
-                {{#solid}}
+                    {{#solid}}
                         <p>Max Weight: {{properties.max_weight}}</p>
                     {{/solid}}
                         <p>Temperature: {{properties.min_temperature}} - {{properties.max_temperature}}</p>
                     </div>
                     {{/machine}}
-                {{#machine}}
+                    {{#machine}}
                     <div class="col s4"></div>
                     {{/machine}}
                 </div>

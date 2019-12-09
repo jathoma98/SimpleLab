@@ -268,11 +268,11 @@ public class CourseRESTController extends BaseRESTController<Course> {
         //dont allow empty searches
         if (matchRegex == null || matchRegex.equals("")){
             rro.setSuccess(false);
-            rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+            rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
             return rro;
         }
         rro.setSuccess(true);
-        rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
+        rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
         rro.setData(courseDB.findInviteCodeByName(matchRegex));
         return rro;
     }
