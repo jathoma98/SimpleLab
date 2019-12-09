@@ -5,6 +5,7 @@
     <!--Import css-->
     <link rel="stylesheet" th:href="@{../../css/info.css}">
     <link rel="stylesheet" th:href="@{../../css/createLab.css}">
+    <link rel="stylesheet" th:href="@{../../css/equipment.css}">
     <!--    <link type="text/css" rel="stylesheet" th:href="@{../../css/bootstrap.min.css}" media="screen,projection"/>-->
     <link type="text/css" rel="stylesheet" th:href="@{../../css/materialize.css}" media="screen,projection"/>
     <!--Import js lib-->
@@ -81,23 +82,23 @@
 <!--**********************************************************************main body*********************************************************************************************************-->
 <div class="row"></div>
 <div class="row"></div>
-<div class="row center" style="width: 80%;">
+<div class="container">
     <ul class="tabs tabs-fixed-width z-depth-1">
-        <li class="tab"><a class="active" href="#equipment_in_lab"> Equipment In Lab</a></li>
-        <li class="tab"><a href="#recipe">Recipe</a></li>
-        <li class="tab"><a href="#lab">Lab</a></li>
+        <li class="tab "><a href="#equipment_in_lab" class="active"> Equipment In Lab</a></li>
+        <li class="tab "><a href="#recipe">Recipe</a></li>
+        <li class="tab "><a href="#steps">Step</a></li>
     </ul>
-    <div id="equipment_in_lab" class="col s12" style="background:white">
+    <div id="equipment_in_lab" class="col s12" style="height:800px;">
         <div class="row"></div>
-        <div class="row"></div>
-        <div class="row">
+        <div class="row" style="padding-left: 3%; padding-right: 3%">
             <div class="col s6">
-                <div clas="row">
-                    <!--nav here -->
+                <div class="card-panel" style="overflow-y: auto; overflow-x:hidden; margin-right: 3%">
+                    <div class="row">
+                        <!--nav here -->
+                    </div>
+                    <ul class="row my_white" id="lab_equipment_list"></ul>
                 </div>
-                <ul class="row my_white" id="in_lab_equipment_list" style="overflow: auto; height:800px"></ul>
-            </div>
-            <script id="labequip_list_template" type="mustache">
+                <script id="labequip_list_template" type="mustache">
                 <div class="row sidebaritem">
                     <div class="col s2">
                         <img src="../../img/beaker.png" class="item_img">
@@ -121,14 +122,17 @@
                     <div class="col s4"></div>
                     {{/machine}}
                 </div>
-            </script>
-            <div class="col s6" style="border-left: solid rgba(0,0,0,0.23) 1px">
-                <div clas="row">
-                    <!--nav here -->
-                </div>
-                <ul class="row my_white" id="all_equipment"></ul>
+                </script>
             </div>
-            <script id="allequip_list_template" type="mustache">
+            <div class="col s6">
+                <div class="card-panel"
+                     style="border-left: solid rgba(0,0,0,0.23) 1px; overflow-y: auto; overflow-x:hidden; margin-left: 3%">
+                    <div class="row">
+                        <!--nav here -->
+                    </div>
+                    <ul class="row my_white" id="all_equipment"></ul>
+                </div>
+                <script id="allequip_list_template" type="mustache">
                 <div class="row sidebaritem">
                     <div class="col s2">
                         <img src="../../img/beaker.png" class="item_img">
@@ -155,12 +159,87 @@
                         <a href="#">Add</a>
                     </div>
                 </div>
-            </script>
+                </script>
+            </div>
         </div>
+    </div>
+    <div id="recipe" class="row">
+        <div class="delete_empty col s12 white recipeheight z-depth-2">
+<!--            <nav class="center-align"><h3>create your recipe</h3></nav>-->
+
+            <div id="equip1" class="col s4 center margintop">
+                <div class="center col s10 offset-s1 z-depth-1 padding4">
+                    <p class="fontheader">Equipment 1: name</p>
+                    <img src="../../img/beaker.png" class="recipeimg margintop col s4 offset-s4">
+                    <input type="number" class="col s8 offset-s2 center-align">
+                </div>
+            </div>
+
+            <div id="equip2" class="col s4 center margintop">
+                <div class="center col s10 offset-s1 z-depth-1 padding4">
+                    <p class="fontheader">Equipment 2: name</p>
+                    <img src="../../img/beaker.png" class="recipeimg margintop col s4 offset-s4">
+                    <input type="number" class="col s8 offset-s2 center-align">
+                </div>
+            </div>
+            <div id="equip3" class="col s4 center margintop">
+                <div class="center col s10 offset-s1 z-depth-1 padding4">
+                    <p class="fontheader">Equipment 3: name</p>
+                    <img src="../../img/beaker.png" class="recipeimg margintop col s4 offset-s4">
+                    <input type="number" class="col s8 offset-s2 center-align">
+                </div>
+            </div>
+        </div>
+
+        <div class="row"></div>
         <div class="row">
+            <div class="width2  white left height6 z-depth-2">
+            <h1>chen</h1>
+            </div>
+            <div class="width2 height6 white right z-depth-2">
+                <h1>chen</h1>
+            </div>
+<!--            <div class="row" style="padding-left: 3%; padding-right: 3%; height: 100%">-->
+<!--                <div class="col s6" style="height: 100%">-->
+<!--                    <div class="card-panel" style="overflow-y: auto; overflow-x:hidden; margin-right: 1%; height: 100%">-->
+<!--                        <div class="row">-->
+<!--                            &lt;!&ndash;nav here &ndash;&gt;-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="col s6" style="height: 100%">-->
+<!--                    <div class="card-panel"-->
+<!--                         style=" overflow-y: auto; overflow-x:hidden; margin-left: 1%; height: 100%">-->
+<!--                        <div class="row">-->
+<!--                            &lt;!&ndash;nav here &ndash;&gt;-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
         </div>
-        <div id="recipe" class="col s12" style="background:white"><p>Test 3</p></div>
-        <div id="lab" class="col s12" style="background:white"><p>Test 4</p></div>
+    </div>
+    <div id="steps" class="col s12" style="height:800px">
+        <div class="row"></div>
+        <div class="row" style="height: 60%">
+            <div class="row" style="padding-left: 3%; padding-right: 3%; height: 100%">
+                <div class="col s6" style="height: 100%">
+                    <div class="card-panel"
+                         style="overflow-y: auto; overflow-x:hidden; margin-right: 3%; height: 100%">
+                        <div class="row">
+                            <!--nav here -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col s6" style="height: 100%">
+                    <div class="card-panel"
+                         style="overflow-y: auto; overflow-x:hidden; margin-left: 3%; height: 100%">
+                        <div class="row">
+                            <!--nav here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <!--JavaScript at end of body for optimized loading-->

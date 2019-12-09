@@ -26,7 +26,6 @@ public class Recipe extends BaseTable implements UserCreated {
                cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE},
                optional = false)
     private Equipment equipmentOne;
-
     @ManyToOne(fetch = FetchType.EAGER,
                cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE},
                optional = false)
@@ -37,6 +36,9 @@ public class Recipe extends BaseTable implements UserCreated {
                 cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE},
                 optional = false)
     private Equipment result;
+
+    private int rationOne;
+    private int rationTwo;
 
     @Override
     public String toString(){

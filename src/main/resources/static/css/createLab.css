@@ -218,9 +218,40 @@
 
 
 .recipeimg{
-    width: 100px;
-    height: 100px;
-    margin: 0;
-    padding: 0;
+    width: 100px!important;
+    height: 100px!important;
+}
 
+.width_100px{
+     width: 100px;
+ }
+
+.width_150px{
+    width: 150px;
+}
+
+.height_150px{
+    height: 150px;
+}
+
+.margintop{
+    margin-top: 2%!important;
+}
+
+.recipeheight{
+    height: 30%!important;
+}
+.padding4{
+    padding: 1%!important;
+
+}
+.fontheader{
+    font-size: 20px;
+}
+.width2{
+    width: 48%!important;
+}
+
+.height6{
+    height:60%!important;
 }

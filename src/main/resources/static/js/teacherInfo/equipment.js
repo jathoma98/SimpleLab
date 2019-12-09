@@ -124,7 +124,6 @@ let EQUIPMENT_TABLE = {
         };
         this.btnEvents[ElEM_ID.EQUIPMENT_SAVE_BTN] = EQUIPMENT_TABLE.save;
 
-
         /**
          * Delete LAB.
          **/
@@ -148,7 +147,6 @@ let EQUIPMENT_TABLE = {
             })
         };
 
-
         /**
          * Clean data in modal. when user click on
          * add lab button.
@@ -162,8 +160,7 @@ let EQUIPMENT_TABLE = {
                 }
             }
             rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL_EQUIP, data, "click", EQUIPMENT_TABLE.btnEvents);
-    };
-
+        };
 
         this.btnSwitch = function () {
             $(".equipcheckcol").toggle();
