@@ -27,6 +27,25 @@ public class Equipment extends AbstractEquipment implements UserCreated {
     @Transient
     private Interaction interaction;
 
+
+    /**
+     * Look at the "type" field and set the interaction interface based on its value.
+     * the @PostLoad annotation means the method is run automatically when we pull from DB. **/
+    @PostLoad
+    public void loadInteraction(){
+        if (getType() == null){
+            this.setInteraction(Interaction.DO_NOTHING);
+            return;
+        }
+        List<Interaction> assigned_interaction = Arrays.stream(interactions)
+                                                .filter(inter -> getType().equals(inter.getTypeCode()))
+                                                .collect(Collectors.toList());
+        if (assigned_interaction.size() > 0)
+            this.setInteraction(assigned_interaction.get(0));
+        else
+            this.setInteraction(Interaction.DO_NOTHING);
+    }
+
     @Override
     public int hashCode(){
         return super.hashCode();
@@ -35,22 +54,6 @@ public class Equipment extends AbstractEquipment implements UserCreated {
     @Override
     public boolean equals(Object o){
         return super.equals(o);
-    }
-
-    /**
-     * Look at the "type" field and set the interaction interface based on its value.
-     * the @PostLoad annotation means the method is run automatically when we pull from DB. **/
-
-    @PostLoad
-    public void loadInteraction(){
-        /**
-        List<Interaction> assigned_interaction = Arrays.stream(interactions)
-                                                .filter(inter -> getType().equals(inter.getTypeCode()))
-                                                .collect(Collectors.toList());
-        if (assigned_interaction.size() > 0)
-            this.setInteraction(assigned_interaction.get(0));
-        else
-            this.setInteraction(Interaction.DO_NOTHING);**/
     }
 
 
