@@ -83,6 +83,21 @@ public class CourseDB extends DBService<Course> {
         return students;
     }
 
+    public List<Lab> getLabsOfCourse(String course_id) throws CourseTransactionException{
+        List<Course> found = findByCourseId(course_id);
+        if (found.size() == 0)
+            throw new CourseTransactionException(CourseTransactionException.NO_COURSE_FOUND);
+        Course c = found.get(0);
+        ArrayList<Lab> labs = new ArrayList<>();
+        //project only usernames
+        c.getLabs().forEach((lab) -> {
+            Lab proj = new Lab();
+            proj.setName(lab.getName());
+            labs.add(proj);
+        });
+        return labs;
+    }
+
 
     public EntitySetManager<Lab, Course> getLabsOfCourseByCourseId(String course_id) throws CourseTransactionException{
         List<Course> found = findByCourseId(course_id);

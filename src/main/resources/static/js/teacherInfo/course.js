@@ -54,7 +54,7 @@ let COURSES_TABLE = {
 
         this.searchStudent = function () {
             let toSearch = {
-                regex: $("#LabSearchLab").val()
+                regex: $("#searchStudent").val()
             };
             let toSearch_json = JSON.stringify(toSearch);
             $.ajax({
@@ -83,22 +83,6 @@ let COURSES_TABLE = {
         }
         this.btnEvents[ElEM_ID.SEARCH_STUDENT_BTN] = this.searchStudent;
 
-        this.searchLab = function () {
-            $.ajax({
-                url: "/lab/rest/loadLabList",
-                type: "GET",
-                success: function (result) {
-                    retObjHandle(result, (labs)=>{
-                        let data = {
-                            labs: labs.reverse()
-                        }
-                        rebuildComponent(ElEM_ID.ALL_LAB_LIST_TBODY, TEMPLATE_ID.ALL_LAB_LIST_TBODY, data);
-                        // setTableBodyRowEvent(ElEM_ID.LAB_TABLE_TBODY, LABS_TABLE.tableRowEvent);
-                    })
-                }
-            })
-        }
-        this.btnEvents[ElEM_ID.COURSE_SEARCH_LAB_BTN] = this.searchLab;
         /**
          * Use to onclick Event on each row of Course list.
          **/
@@ -288,6 +272,85 @@ let COURSES_TABLE = {
                 removeTableBodyRowEvent($("#course_list tbody"))
             }
         }
+
+//***************************************************search lab and load lab in class modal***********************************************************
+//***************************************************search lab and load lab in class modal***********************************************************
+//***************************************************search lab and load lab in class modal***********************************************************
+
+        this.searchLab = function () {
+            $.ajax({
+                url: "/lab/rest/loadLabList",
+                type: "GET",
+                success: function (result) {
+                    retObjHandle(result, (labs)=>{
+                        let data = {
+                            labs: labs.reverse(),
+                            search: true
+                        }
+                        rebuildComponent(ElEM_ID.ALL_LAB_LIST_TBODY, TEMPLATE_ID.ALL_LAB_LIST_TBODY, data);
+                    setTableBodyRowBtnEvent(ElEM_ID.ALL_LAB_LIST_TBODY,
+                        ".add_lab",
+                        "click",
+                        COURSES_TABLE.addLabBtnEvent)
+                })
+                }
+            })
+        }
+        this.btnEvents[ElEM_ID.COURSE_SEARCH_LAB_BTN] = this.searchLab;
+
+
+
+        this.addLabBtnEvent = function () {
+            let course = {
+                course_id: $("#course_code").val(),
+                labnameList: new Array()
+            }
+            course.labnameList.push($(this).parent().find("span").text());
+
+            let course_json = JSON.stringify(course);
+
+            $.ajax({
+                url: "/course/rest/addLab",
+                type: 'POST',
+                dataTye: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: course_json,
+                success: function (result) {
+                    retObjHandle(result,
+                        () => {
+                        COURSES_TABLE.reLoadLabsList(course_json);
+                })
+                }
+            })
+        };
+
+        this.reLoadLabsList = function (course_json) {
+            $.ajax({
+                url: "/course/rest/getLabs",
+                type: 'POST',
+                dataTye: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: course_json,
+                success: function (result) {
+                    retObjHandle(result, (labs) => {
+                        let data = {
+                            students: labs,
+                            search: false,
+                        }
+                        rebuildComponent(
+                            ElEM_ID.COURSE_LAB_LIST_TBODY,
+                        TEMPLATE_ID.STUDENTS_TBODY,
+                        data)
+                    // setTableBodyRowBtnEvent(ElEM_ID.STUDENT_LIST_TBODY,
+                    //     ".del_student",
+                    //     "click",
+                    //     COURSES_TABLE.removeStendtBtnEvent)
+                })
+                }
+            })
+        };
+
+
     }
 }
 

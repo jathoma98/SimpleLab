@@ -24,7 +24,6 @@ ElEM_ID = {
 }
 
 TEMPLATE_ID = {
-    LAB_SEARCH_TBODY:"#all_lab_list_tbody",
     STUDENTS_TBODY: "#student_list_tbody",
     ALL_LAB_LIST_TBODY: "#all_lab_list_tbody",
     LAB_TBODY: "#lab_tbody",
@@ -52,6 +51,7 @@ $(document).ready(function () {
 
     //Lab
     LABS_TABLE.init();
+    $("#labSearchLabBtn").on("click", ()=>{LABS_TABLE.searchLab()});
     $("#labAddBtn").on("click", ()=>{LABS_TABLE.create()});
     $("#labDeleteBtn").on("click", ()=>{LABS_TABLE.delete()});
     $("#labEditBtn").on("click",()=>{LABS_TABLE.btnSwitch()});

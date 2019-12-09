@@ -2,40 +2,11 @@ let LABS_TABLE = {
     init() {
         this.toggle = true;
         this.btnEvents = new Array();
-        this.lab_info = undefined
+        this.lab_info = undefined;
 
 
 
-        this.searchLab = function () {
-            let toSearch = {
-                regex: $("#labSearchLab").val()
-            };
-            let toSearch_json = JSON.stringify(toSearch);
-            $.ajax({
-                url: "/lab/rest/searchLab",
-                type: 'POST',
-                dataTye: 'json',
-                contentType: 'application/json; charset=utf-8',
-                data: toSearch_json,
-                success: function (result) {
-                    retObjHandle(result, (labs) => {
-                        let data = {
-                            students: labs,
-                            search: true,
-                        }
-                        rebuildComponent(
-                            ElEM_ID.LAB_SEARCH_RESULT_TBODY,
-                            TEMPLATE_ID.LAB_SEARCH_TBODY,
-                            data);
-                    // setTableBodyRowBtnEvent(ElEM_ID.STUDENT_SEARCH_TBODY,
-                    //     ".add_student",
-                    //     "click",
-                    //     COURSES_TABLE.addStudentBtnEvent)
-                    })
-                }
-            })
-        }
-        this.btnEvents[ElEM_ID.LAB_SEARCH_LAB_BTN] = LABS_TABLE.searchLab();
+
         /**
          * Use to onclick Event on each row of lab list.
          **/
@@ -126,7 +97,6 @@ let LABS_TABLE = {
                 data: lab_json,
                 success: function (result) {
                     retObjHandle(result, LABS_TABLE.reload)
-
                 }
             })
         };
@@ -182,5 +152,39 @@ let LABS_TABLE = {
                 removeTableBodyRowEvent(ElEM_ID.LAB_TABLE_TBODY)
             }
         }
+
+
+        this.searchLab = function () {
+            let toSearch = {
+                regex: $("#labSearchLab").val()
+            };
+            let toSearch_json = JSON.stringify(toSearch);
+            $.ajax({
+                url: "/lab/rest/searchLab",
+                type: 'POST',
+                dataTye: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: toSearch_json,
+                success: function (result) {
+                    retObjHandle(result, (labs) => {
+                        let data = {
+                            students: labs,
+                            search: true,
+                        }
+                        rebuildComponent(
+                            ElEM_ID.LAB_SEARCH_RESULT_TBODY,
+                        TEMPLATE_ID.ALL_LAB_LIST_TBODY,
+                        data);
+                    // setTableBodyRowBtnEvent(ElEM_ID.STUDENT_SEARCH_TBODY,
+                    //     ".add_student",
+                    //     "click",
+                    //     COURSES_TABLE.addStudentBtnEvent)
+                })
+                }
+            })
+        }
+
+
+
     }
 }

@@ -39,6 +39,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
     public static final String LOAD_COURSE_INFO_MAPPING = "/loadCourseInfo";
     public static final String ADD_STUDENT_MAPPING = "/addStudent";
     public static final String GET_STUDENTS_MAPPING = "/getStudents";
+    public static final String GET_LABS_MAPPING = "/getLabs";
     public static final String DELETE_STUDENTS_MAPPING = "/deleteStudents";
     public static final String ADD_LABS_TO_COURSE_MAPPING = "/addLab";
     public static final String SEARCH_COURSE_MAPPING = "/searchCourse";
@@ -215,9 +216,28 @@ public class CourseRESTController extends BaseRESTController<Course> {
         return super.addEntitiesToEntityList(toUpdate, toAdd);
     }
 
+
+    @PostMapping(GET_LABS_MAPPING)
+    public RRO<List<Lab>> getLabList(@RequestBody DTO.CourseUpdateStudentListDTO course,
+                                     HttpSession session) {
+        String course_id = course.getCourse_id();
+        List<Lab> labs;
+        RRO<List<Lab>> rro = new RRO();
+        rro.setSuccess(true);
+        rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
+        try {
+            labs = courseDB.getLabsOfCourse(course_id);
+            rro.setData(labs);
+        } catch (CourseDB.CourseTransactionException e) {
+            rro.setSuccess(false);
+            rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+        }
+        return rro;
+    }
+
     @PostMapping(GET_STUDENTS_MAPPING)
     public RRO<List<User>> getStudentList(@RequestBody DTO.CourseUpdateStudentListDTO course,
-                                     HttpSession session) {
+                                          HttpSession session) {
         String course_id = course.getCourse_id();
         List<User> students;
         RRO<List<User>> rro = new RRO();
@@ -232,7 +252,6 @@ public class CourseRESTController extends BaseRESTController<Course> {
         }
         return rro;
     }
-
 
     @DeleteMapping(DELETE_STUDENTS_MAPPING)
     public RRO<String> deleteStudentList(@RequestBody DTO.CourseUpdateStudentListDTO course) {
