@@ -58,12 +58,10 @@
 		</dependency>
 
 		<!-- MongoDB dependencies -->
-		<!--
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-mongodb</artifactId>
 		</dependency>
-		-->
 
 		<!--Spring Transaction-->
 		<dependency>

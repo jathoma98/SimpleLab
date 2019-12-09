@@ -1,7 +1,9 @@
 package com.org.simplelab;
 
 import com.org.simplelab.database.DBUtils;
+import com.org.simplelab.database.entities.mongodb.LabInstance;
 import com.org.simplelab.database.entities.sql.*;
+import com.org.simplelab.database.repositories.mongodb.LabInstanceRepository;
 import com.org.simplelab.database.repositories.sql.RecipeRepository;
 import com.org.simplelab.database.repositories.sql.UserRepository;
 import com.org.simplelab.database.services.DBService;
@@ -17,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -453,6 +456,21 @@ class DBTests extends SpringTestConfig {
 		r3.setEquipmentTwo(eq2);
 		r3.setResult(eq3);
 		rdb.insert(r3);
+	}
+
+	@Autowired
+	LabInstanceRepository lir;
+
+	@Test
+	void mongoDBinitTest(){
+		LabInstance li = new LabInstance();
+		li.setTest("test");
+
+		lir.save(li);
+		lir.findAll().forEach( (found) -> {
+			System.out.println(found.toString());
+		});
+
 	}
 
 

@@ -16,6 +16,8 @@ public class DBUtils {
     public static final String STEP_TABLE_NAME = "step";
     public static final String RECIPE_TABLE_NAME = "recipe";
 
+    public static final String LABINSTANCE_DOCUMENT_NAME = "lab_instance";
+
     public static final String SALT = "a very salty salt";
 
     public static final String METADATA_DELETE_QUERY = "DELETE FROM #{#entityName} WHERE _metadata = :metadata";

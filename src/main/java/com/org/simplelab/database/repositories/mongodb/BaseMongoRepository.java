@@ -1,5 +1,11 @@
 package com.org.simplelab.database.repositories.mongodb;
 
-public interface BaseMongoRepository {
+import com.org.simplelab.database.entities.mongodb.BaseDocument;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.repository.NoRepositoryBean;
+
+@NoRepositoryBean
+public interface BaseMongoRepository<T extends BaseDocument> extends MongoRepository<T, String> {
+
 
 }
