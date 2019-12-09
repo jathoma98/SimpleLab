@@ -46,8 +46,11 @@ public class DoLabEventHandler {
         li.getStepRecords().add(sr);
 
         instanceDB.insert(li);
+        LabInstance current = instanceDB.findByLabIdAndUserId(l.getId(), user_id).get(0);
 
-        return DBUtils.getMapper().map(l, Workspace.class);
+        Workspace ws = DBUtils.getMapper().map(l, Workspace.class);
+        ws.setInstance_id(current.get_id());
+        return ws;
     }
 
     public void addInteractionToHistory(LabInstance instance, int stepNum, InteractionObjects interactionInfo){

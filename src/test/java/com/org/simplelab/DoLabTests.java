@@ -56,7 +56,7 @@ public class DoLabTests extends SpringTestConfig {
         l = labDB.searchLabWithKeyword(l.getName()).get(0);
 
         //initialize the workspace
-        dlc.getLabToDo(l.getId());
+        Workspace ws = (Workspace)dlc.getLabToDo(l.getId()).getData();
 
         //create 3 DTOs representing 3 user actions -- user will heat a container 3 times.
         Equipment heater = new Equipment();
@@ -76,7 +76,7 @@ public class DoLabTests extends SpringTestConfig {
             dto.setObject2(toHeat);
             dto.setStepNum(i+1);
             dto.setParameter("100");
-            String returnMsg = dlc.handleEquipmentInteraction(l.getId(), dto).getAction();
+            String returnMsg = dlc.handleEquipmentInteraction(ws.getInstance_id(), dto).getAction();
             System.out.println(returnMsg);
             if (i == numSteps - 1){
                 assertEquals(RRO.LAB_ACTION_TYPE.COMPLETE_LAB.name(), returnMsg);

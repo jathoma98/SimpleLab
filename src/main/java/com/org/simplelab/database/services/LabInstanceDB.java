@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class LabInstanceDB {
@@ -26,14 +27,14 @@ public class LabInstanceDB {
         return true;
     }
 
-    public LabInstance findInstanceByLabId(long lab_id){
-        //todo: this needs to check user id too
-        List<LabInstance> found = repository.findByLabId(lab_id);
-        if (found == null || found.size() == 0){
-            return LabInstance.NO_INSTANCE;
-        }
-        return found.get(0);
+    public LabInstance findById(String id){
+        Optional<LabInstance> found = repository.findById(id);
+        return found.isPresent() ? found.get() : LabInstance.NO_INSTANCE;
+    }
 
+    public List<LabInstance> findByLabIdAndUserId(long lab_id, long user_id){
+        List<LabInstance> found = repository.findByLabIdAndUserId(lab_id, user_id);
+        return found;
     }
 
 }

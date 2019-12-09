@@ -32,11 +32,11 @@ public class DoLabController extends BaseController {
 
 
     public static final String DO_LAB_BASE_MAPPING = "/doLab";
-    public static final String LAB_ID_MAPPING = "/{lab_id}";
+    public static final String LAB_ID_MAPPING = "/{instance_id}";
     public static final String INTERACTION_MAPPING  = LAB_ID_MAPPING + "/interaction";
 
     /**
-     * Initiates building of a Workspace document, which will record user actions and state of a lab in progress.
+     * Initiates building of a LabInstance document, which will record user actions and state of a lab in progress.
      * Returns a Workspace object, which contains all of the info needed to build
      * the Do Lab user interface. Refer to the Workspace class in restcontrollers.dto.Workspace
      * for the fields that will be returned.
@@ -44,6 +44,7 @@ public class DoLabController extends BaseController {
      * Example:
      * User clicks on lab with id 100 to do the lab ->
      * @return: {
+     *     instance_id: MongoDB id of the lab instance. This should be saved in HTML
      *     name: Name of lab
      *     description : Description of lab
      *     steps: List of Step objects
@@ -117,12 +118,11 @@ public class DoLabController extends BaseController {
      */
 
     @PostMapping(INTERACTION_MAPPING)
-    public RRO handleEquipmentInteraction(@PathVariable("lab_id") long lab_id,
+    public RRO handleEquipmentInteraction(@PathVariable("instance_id") String instance_id,
                                           @RequestBody EquipmentInteractionDTO dto){
 
-        String interation = "test interaction";
         RRO<Equipment[]> rro = new RRO<>();
-        LabInstance currentInstance = instanceDB.findInstanceByLabId(lab_id);
+        LabInstance currentInstance = instanceDB.findById(instance_id);
 
         Equipment eq1 = dto.getObject1();
         Equipment eq2 = dto.getObject2();

@@ -17,7 +17,7 @@ import java.util.Set;
 @Data
 public class Workspace extends DTO {
 
-    String name, description;
+    String name, description, instance_id;
     List<Step> steps;
     Set<AbstractEquipment> equipments;
 

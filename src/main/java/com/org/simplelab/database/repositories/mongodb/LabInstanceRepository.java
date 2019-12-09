@@ -10,6 +10,6 @@ import java.util.List;
 @Transactional
 public interface LabInstanceRepository extends BaseMongoRepository<LabInstance> {
 
-    List<LabInstance> findByLabId(long id);
+    List<LabInstance> findByLabIdAndUserId(long lab_id, long user_id);
 
 }
