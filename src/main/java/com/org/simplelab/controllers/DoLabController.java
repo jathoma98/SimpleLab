@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static com.org.simplelab.restcontrollers.dto.DTO.EquipmentInteractionDTO;
 
 @RequestMapping(DoLabController.DO_LAB_BASE_MAPPING)
@@ -70,8 +72,6 @@ public class DoLabController extends BaseController {
      *                                                                        the beaker the User is holding is object1.
      *     object2: Equipment -- Equipment that the user interacts with.
      *                           In the previous example, the beaker the User clicks on is object2
-     *     TODO: discuss if the interaction should be sent in the DTO -- requires client to manage interactions
-     *     TODO: current plan is to have interactions be defined as Java interfaces on backend
      * }
      *
      * @return:
@@ -80,20 +80,16 @@ public class DoLabController extends BaseController {
      *     success: false
      *     action: PRINT_MSG
      *     msg: "Invalid action"
-     *     TODO: if recipe not found in client will get breaker with 0 volume image, but data still in there,
-     *           and what's inside of breaker will display in sidebar. Also there will be a string to tell
-     *           student, he/she is doing wrong. - Zee
-     *
      * }
      *
-     * If the interaction is valid and fulfills a recipe:
+     * If the interaction is valid and fulfills a recipe or completes a valid interaction:
      * RRO with: {
      *     success: true
      *     action: MODIFY_EQUIPMENT
-     *     data: TODO: discuss this, this should return data for UI to render new objects and delete old ones.
-     *           ex: mixing water beaker with oil beaker should create 2 new beakers: empty beaker
-     *           and beaker with mixture.
-     *           //TODO: if A pour to B = C,  in client side will replace B with C - Zee
+     *     data: Equipment[] with size 2, where:
+     *           index 0 = equipment1
+     *           index 1 = equipment2, which is the result of the recipe or the interaction. this should replace
+     *           the old equipment2 in the UI.
      * }
      *
      * If the interaction is valid and completes the step:
@@ -110,14 +106,13 @@ public class DoLabController extends BaseController {
      *     //TODO: May be just return how time student make invalid recipes - Zee
      * }
      */
-    @Autowired
-    HistoryDB historyDB;
 
     @PostMapping(INTERACTION_MAPPING)
     public RRO handleEquipmentInteraction(@PathVariable("lab_id") long lab_id,
                                           @RequestBody EquipmentInteractionDTO dto){
 
         String interation = "test interaction";
+        RRO<Equipment[]> rro = new RRO<>();
 
         //TODO: implement this
         //save the interaction to lab history
@@ -135,9 +130,11 @@ public class DoLabController extends BaseController {
         Recipe found = recipeHandler.findRecipe(eq1, eq2);
         if (found.exists()){
             // do something
-
         }
-        return RRO.sendErrorMessage(RRO.MSG.RECIPE_NOT_FOUND.getMsg());
+        rro.setData(new Equipment[]{eq1, eq2});
+        rro.setAction(RRO.LAB_ACTION_TYPE.MODIFY_EQUIPMENT.name());
+        rro.setSuccess(true);
+        return rro;
     }
 
 

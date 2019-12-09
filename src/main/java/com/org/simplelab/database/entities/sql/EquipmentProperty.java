@@ -22,7 +22,7 @@ public class EquipmentProperty extends BaseTable {
 
     @Override
     public int hashCode(){
-        return propertyKey.hashCode() + propertyValue.hashCode();
+        return propertyKey.hashCode();
     }
 
     @Override

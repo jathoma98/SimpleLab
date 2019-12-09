@@ -1,9 +1,6 @@
 package com.org.simplelab.controllers;
 
-import com.org.simplelab.database.services.CourseDB;
-import com.org.simplelab.database.services.EquipmentDB;
-import com.org.simplelab.database.services.LabDB;
-import com.org.simplelab.database.services.UserDB;
+import com.org.simplelab.database.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpSession;
@@ -26,6 +23,9 @@ public abstract class BaseController {
 
     @Autowired
     protected EquipmentDB equipmentDB;
+
+    @Autowired
+    protected HistoryDB historyDB;
 
     @Autowired
     protected HttpSession session;
