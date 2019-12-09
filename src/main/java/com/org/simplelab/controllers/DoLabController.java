@@ -5,7 +5,7 @@ import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.Lab;
 import com.org.simplelab.database.entities.sql.Recipe;
 import com.org.simplelab.database.entities.sql.Step;
-import com.org.simplelab.database.services.HistoryDB;
+import com.org.simplelab.game.DoLabEventHandler;
 import com.org.simplelab.game.RecipeHandler;
 import com.org.simplelab.restcontrollers.dto.Workspace;
 import com.org.simplelab.restcontrollers.rro.RRO;
@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.org.simplelab.restcontrollers.dto.DTO.EquipmentInteractionDTO;
@@ -26,11 +25,16 @@ public class DoLabController extends BaseController {
     @Autowired
     RecipeHandler recipeHandler;
 
+    @Autowired
+    DoLabEventHandler eventHandler;
+
+
     public static final String DO_LAB_BASE_MAPPING = "/doLab";
     public static final String LAB_ID_MAPPING = "/{lab_id}";
     public static final String INTERACTION_MAPPING  = LAB_ID_MAPPING + "/interaction";
 
     /**
+     * Initiates building of a Workspace document, which will record user actions and state of a lab in progress.
      * Returns a Workspace object, which contains all of the info needed to build
      * the Do Lab user interface. Refer to the Workspace class in restcontrollers.dto.Workspace
      * for the fields that will be returned.
@@ -48,13 +52,12 @@ public class DoLabController extends BaseController {
     @GetMapping(LAB_ID_MAPPING)
     @Transactional
     public RRO getLabToDo(@PathVariable("lab_id") long lab_id){
-        Workspace ws;
         Lab found = labDB.findById(lab_id);
-        System.out.println(found.toString());
         if (found == null){
             return RRO.sendErrorMessage("Lab Not Found");
         }
-        ws = DBUtils.getMapper().map(found, Workspace.class);
+        Workspace ws = eventHandler.buildWorkspace(found);
+
         RRO<Workspace> rro = new RRO<>();
         rro.setSuccess(true);
         rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
@@ -126,7 +129,7 @@ public class DoLabController extends BaseController {
         Equipment eq2 = dto.getObject2();
         String parameter = dto.getParameter();
 
-        //perform the user interaction
+
         Equipment result = eq1.getInteraction().interactWith(eq2, parameter);
         if (result.exists()){
             eq2 = result;
@@ -158,6 +161,7 @@ public class DoLabController extends BaseController {
         rro.setSuccess(true);
         return rro;
     }
+
 
 
 

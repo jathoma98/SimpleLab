@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 @Data
 @Entity(name = DBUtils.EQUIPMENT_TABLE_NAME)
 @Table(name = DBUtils.EQUIPMENT_TABLE_NAME)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Equipment extends BaseTable implements UserCreated {
     private static final Interaction[] interactions = {Interaction.DO_NOTHING, Interaction.HEAT};
     public static final Equipment NO_EQUIPMENT = GEN_NO_EQUIPMENT();
