@@ -1,94 +1,95 @@
 {{#equipmentModal}}
-    <nav>
-        <div class="nav-wrapper my_cran">
-            <a href="#!" class="brand-logo"><i class="material-icons">view_list</i>Add Equipment</a>
-        </div>
-    </nav>
-    <div class="row"></div>
-    <div class="row delete_empty">
-        <div class="col s4 center delete_empty">
-            <img class="eq_upload delete_empty" src="../img/upload.png">
-            <div class="file-field input-field col s6 offset-s3">
-                <div class="btn">
-                    <span>File</span>
-                    <input type="file" class="my_cran">
-                </div>
-                <div class="file-path-wrapper">
-                    <input class="file-path validate" type="text">
-                </div>
-            </div>
-        </div>
-        <form class="col s8 valign-wrapper section" id="equip_type">
-            <label class="col s2"><h6>Equipment Type: </h6></label>
-            <label class="col s3">
-                <input class="with-gap" name="group1" value="liquid" type="radio"{{liquid}}/>
-                <span>Liquid</span>
-            </label>
-            <label class="col s3">
-                <input class="with-gap" name="group1" value="solid" type="radio"{{solid}}/>
-                <span>Solid</span>
-            </label>
-            <label class="col s3">
-                <input class="with-gap" name="group1" value="machine" type="radio"{{machine}}/>
-                <span>Machine</span>
-            </label>
-        </form>
-        <form class="col s8">
-            <div class="col s12 section">
-                <div class="row">
-                    <div class="input-field col s10">
-                        <input id="equip_name" type="text" class="validate"
-                               value="{{equipment.name}}">
-                        <label for="equip_name"{{#equipment.name}} class="active"{{/equipment.name}}>Name</label>
-                    </div>
-                </div>
-            </div>
-            <div class="col s12 section">
-                <div class="row">
-                    <div class="input-field col s5">
-                        <input id="max_volume" type="text" class="validate"
-                               value="{{equipment.properties.max_volume}}">
-                        <label for="max_volume"{{#equipment.properties.max_volume}}
-                               class="active"{{/equipment.properties.max_volume}}>Max Volume</label>
-                    </div>
-                    <div class="input-field col s5">
-                        <input id="max_weight" type="text" class="validate"
-                               value="{{equipment.properties.max_weight}}">
-                        <label for="max_weight"{{#equipment.properties.max_weight}}
-                               class="active"{{/equipment.properties.max_weight}}>Max Weight</label>
-                    </div>
-                </div>
-            </div>
-            <div class="col s12 section">
-                <div class="row">
-                    <div class="input-field col s5">
-                        <input id="min_temperature" type="text" class="validate"
-                               value="{{equipment.properties.min_temperature}}">
-                        <label for="min_temperature"{{#equipment.properties.min_temperature}}
-                               class="active"{{/equipment.properties.min_temperature}}>Min Temperature</label>
-                    </div>
-                    <div class="input-field col s5">
-                        <input id="max_temperature" type="text" class="validate"
-                               value="{{equipment.properties.max_temperature}}">
-                        <label for="max_temperature"{{#equipment.properties.max_temperature}}
-                               class="active"{{/equipment.properties.max_temperature}}>Max Temperature</label>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                {{#create}}
-                    <a id="equipmentSaveBtn" class="waves-effect waves-light modal-close btn right">
-                        Create
-                    </a>
-                {{/create}}
-                {{^create}}
-                    <button id="equipmentEditBtn" class="waves-effect waves-light modal-close right btn btn_margin"
-                            style="background:#dd0052;" type="submit" name="action">
-                        Edit
-                    </button>
-                {{/create}}
-            </div>
-        </form>
+<nav>
+    <div class="nav-wrapper my_cran">
+        <a href="#!" class="brand-logo"><i class="material-icons">view_list</i>Add Equipment</a>
     </div>
+</nav>
+<div class="row"></div>
+<div class="row delete_empty">
+    <div class="col s4 center delete_empty">
+        <img class="eq_upload delete_empty" src="../img/upload.png">
+        <div class="file-field input-field col s6 offset-s3">
+            <div class="btn">
+                <span>File</span>
+                <input type="file" class="my_cran">
+            </div>
+            <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+            </div>
+        </div>
+    </div>
+    <form class="col s8 valign-wrapper section" id="equip_type">
+        <label class="col s2"><h6>Equipment Type: </h6></label>
+        <label class="col s3">
+            <input class="with-gap" name="group1" value="liquid" type="radio" {{liquid}}/>
+            <span>Liquid</span>
+        </label>
+        <label class="col s3">
+            <input class="with-gap" name="group1" value="solid" type="radio" {{solid}}/>
+            <span>Solid</span>
+        </label>
+        <label class="col s3">
+            <input class="with-gap" name="group1" value="machine" type="radio" {{machine}}/>
+            <span>Machine</span>
+        </label>
+    </form>
+    <form class="col s8">
+        <div class="col s12 section">
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="equip_name" type="text" class="validate"
+                           value="{{equipment.name}}">
+                    <label for="equip_name" {{#equipment.name}} class="active" {{/equipment.name}}>Name</label>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 section">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input id="max_volume" type="text" class="validate"
+                           value="{{equipment.properties.max_volume}}">
+                    <label for="max_volume" {{#equipment.properties.max_volume}}
+                           class="active" {{/equipment.properties.max_volume}}>Max Volume</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="max_weight" type="text" class="validate"
+                           value="{{equipment.properties.max_weight}}">
+                    <label for="max_weight" {{#equipment.properties.max_weight}}
+                           class="active" {{/equipment.properties.max_weight}}>Max Weight</label>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 section">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input id="min_temperature" type="text" class="validate"
+                           value="{{equipment.properties.min_temperature}}">
+                    <label for="min_temperature" {{#equipment.properties.min_temperature}}
+                           class="active" {{/equipment.properties.min_temperature}}>Min Temperature</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="max_temperature" type="text" class="validate"
+                           value="{{equipment.properties.max_temperature}}">
+                    <label for="max_temperature" {{#equipment.properties.max_temperature}}
+                           class="active" {{/equipment.properties.max_temperature}}>Max Temperature</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            {{#create}}
+            <button id="equipmentSaveBtn" class="waves-effect waves-light modal-close right btn btn_margin"
+                    style="background:#dd0052;" type="submit" name="action">
+                Create
+            </button>
+            {{/create}}
+            {{^create}}
+            <button id="equipmentEditBtn" class="waves-effect waves-light modal-close right btn btn_margin"
+                    style="background:#dd0052;" type="submit" name="action">
+                Edit
+            </button>
+            {{/create}}
+        </div>
+    </form>
+</div>
 {{/equipmentModal}}
 

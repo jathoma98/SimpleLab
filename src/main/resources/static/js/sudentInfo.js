@@ -10,6 +10,7 @@ $(document).ready( function () {
     $("#student_search_course").on("click",'tbody tr',searchInvite)
 
 
+    // $("#searchStudentLabBtn").on("click",searchLab)
 
 })
 
@@ -112,6 +113,7 @@ function searchCourse() {
                         '</tr>'
                 }
                 $('#student_search_course tbody').html(searchCourseTable);
+                $(".addcourse").on("click",addCourse);
             }
         })
 }
