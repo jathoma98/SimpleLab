@@ -35,7 +35,7 @@ public class EquipmentRESTController extends BaseRESTController<Equipment> {
 
     public static final String DELETE_MAPPING = "/deleteEquipment";
     public static final String EQUIPMENT_LIST_MAPPING = "/loadEquipmentList";
-    public static final String EQUIPMENT_OBJ_LIST_MAPPING = "/loadEquipmentList";
+    public static final String EQUIPMENT_OBJ_LIST_MAPPING = "/loadEquipmentObjList";
 
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     public RRO<String> saveEquipment(@RequestBody EquipmentValidator validator){
@@ -75,22 +75,21 @@ public class EquipmentRESTController extends BaseRESTController<Equipment> {
         return rro;
     }
 
-//    @GetMapping(EQUIPMENT_OBJ_LIST_MAPPING)
-//    public RRO<List<Equipment>> getListOfEquipmentsObj (HttpSession session){
-//        long userId = getUserIdFromSession();
-//        RRO rro = new RRO<Projection>();
-//        //Use TeacherLabInfo projection to only get attributes we want
-//        List<Equipment> equips = equipmentDB.getEquipmentByCreatorId(userId);
-//        if (equips == null) {
-//            rro.setSuccess(false);
-//            rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
-//            return rro;
-//        }
-//        rro.setData(equips);
-//        rro.setSuccess(true);
-//        rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
-//        return rro;
-//    }
+    @GetMapping(EQUIPMENT_OBJ_LIST_MAPPING)
+    public RRO<List<Equipment>> getListOfEquipmentsObj (HttpSession session){
+        long userId = getUserIdFromSession();
+        RRO rro = new RRO<Projection>();
+        List<Equipment> equips = equipmentDB.getEquipmentByCreatorId(userId);
+        if (equips == null) {
+            rro.setSuccess(false);
+            rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
+            return rro;
+        }
+        rro.setData(equips);
+        rro.setSuccess(true);
+        rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
+        return rro;
+    }
 
     @DeleteMapping(DELETE_MAPPING)
     public RRO<String> deleteEquipment(@RequestBody Long[] toDelete,

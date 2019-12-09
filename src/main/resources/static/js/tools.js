@@ -89,14 +89,27 @@ rebuildComponent  = function (component, template_id, data, action, btnEvents) {
     return html_text;
 };
 
-rebuildRepeatComponent = function (component, template_id, repeatElem, data, action, eventFn){
+rebuildRepeatComponent = function (component, template_id, repeatElem, subRepeatElem, data, action, eventFn){
     $(component).empty();
     let template = $(template_id).html();
     data.iterable.forEach((obj)=>{
         let html_text = Mustache.render(template, obj);
         let repElem = $(repeatElem)
         repElem.append(html_text);
-        repElem.on(action, ()=>eventFn(obj));
-        repElem.appendTo(component)
+        if(subRepeatElem != undefined){
+            repElem.find(subRepeatElem).on(action, ()=>eventFn(obj));
+        }else{
+            repElem.on(action, ()=>eventFn(obj));
+        }
+        repElem.appendTo(component);
+
+
     })
 };
+
+equipmentPropsToKeyValue = function (equipment){
+    let props = equipment.properties;
+    equipment.properties = [];
+    props.forEach(p=>equipment.properties[p.propertyKey] = p.propertyValue);
+}
+

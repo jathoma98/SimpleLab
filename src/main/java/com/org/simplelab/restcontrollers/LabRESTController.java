@@ -1,10 +1,12 @@
 package com.org.simplelab.restcontrollers;
 
 import com.org.simplelab.database.DBUtils;
+import com.org.simplelab.database.entities.sql.Course;
 import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.Lab;
 import com.org.simplelab.database.entities.sql.Step;
 import com.org.simplelab.database.repositories.sql.LabRepository;
+import com.org.simplelab.database.services.CourseDB;
 import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.services.LabDB;
 import com.org.simplelab.database.services.projections.Projection;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static com.org.simplelab.restcontrollers.LabRESTController.BASE_MAPPING;
 
@@ -80,6 +83,23 @@ public class LabRESTController extends BaseRESTController<Lab> {
         return super.getEntityById(lab_id);
     }
 
+    @GetMapping(LAB_ID_EQUIPMENT_MAPPING)
+    public RRO<List<Equipment>> labGetEquipment(@PathVariable("lab_id") long lab_id){
+        List<Equipment> equipments;
+        RRO<List<Equipment>> rro = new RRO();
+        rro.setSuccess(true);
+        rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
+        try {
+            equipments = labDB.getEquipmentOfLabById(lab_id).getAsList();
+            rro.setData(equipments);
+        } catch (Exception e) {
+            rro.setSuccess(false);
+            rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
+        }
+        return rro;
+    }
+
+
     @DeleteMapping(LAB_ID_MAPPING)
     public RRO<String> labDelete(@PathVariable("lab_id") long lab_id){
         return super.deleteEntity(lab_id);
@@ -125,16 +145,22 @@ public class LabRESTController extends BaseRESTController<Lab> {
     @Transactional
     @PostMapping(LAB_ID_EQUIPMENT_MAPPING)
     public RRO<String> addEquipmentToLab(@PathVariable("lab_id") long lab_id,
-                                 @RequestBody List<Equipment> equipmentToAdd){
-        RRO<String> rro = new RRO();
-        DBService.EntitySetManager<Equipment, Lab> found = labDB.getEquipmentOfLabById(lab_id);
-        if (found == null){
-            rro.setMsg("Lab not found.");
-            rro.setSuccess(false);
-            rro.setAction(RRO.ACTION_TYPE.PRINT_MSG.name());
+                                 @RequestBody long[] ids){
+        List<Equipment> toAdd = new ArrayList<>();
+        for (long id: ids){
+            Equipment found = equipmentDB.findById(id);
+            if (found != null)
+                toAdd.add(found);
+        }
+        DBService.EntitySetManager<Equipment, Lab> toUpdate;
+        try {
+            toUpdate = labDB.getEquipmentOfLabById(lab_id);
+        } catch (Exception e){
+            RRO<String> rro = new RRO();
+            rro.setMsg("form LAB_ID_EQUIPMENT_MAPPING");
             return rro;
         }
-        return super.addEntitiesToEntityList(found, equipmentToAdd);
+        return super.addEntitiesToEntityList(toUpdate, toAdd);
     }
 
 
