@@ -1,6 +1,11 @@
-ElEM_ID = {
+ELEM_NAME = {
     ALL_EQUIPMENT_LIST : "#all_equipment",
-    IN_LAB_EQUIPMENT_LIST: "#in_lab_equipment_list",
+    LAB_EQUIPMENT_LIST: "#lab_equipment_list",
+    RECIPE_CARDS:".recipe_card",
+    RECIPE_CARD_ONE:"#equip_1",
+    RECIPE_CARD_TWO:"#equip_2",
+    RECIPE_CARD_RESULT:"#equip_r",
+    RECIPE_EQUIP_LIST:"#recipe_equip_list",
 };
 TEMPLATE_ID ={
     ALL_EQUIPMENT_LIST: "#allequip_list_template",
@@ -9,20 +14,21 @@ TEMPLATE_ID ={
 
 EQUIPMENT = {
     init(){
-        this.all_Equipment_info;
-        this.in_lab_equipment;
+        this.all_equipment;
+        this.lab_equipment;
         this.loadAll = function (){
             $.ajax({
                 url: "/equipment/rest/loadEquipmentObjList",
                 type: "GET",
                 success: function (result) {
                     retObjHandle(result, function () {
-                        EQUIPMENT.all_Equipment_info = result.data;
+                        EQUIPMENT.all_equipment = result.data;
                         let data = {
                             iterable: result.data,
                         }
                         data.iterable.forEach((eqm)=>{eqm[eqm.type]=true;equipmentPropsToKeyValue(eqm);});
-                        rebuildRepeatComponent(ElEM_ID.ALL_EQUIPMENT_LIST, TEMPLATE_ID.ALL_EQUIPMENT_LIST, "<li/>", "a", data, "click",
+                        rebuildRepeatComponent(ELEM_NAME.ALL_EQUIPMENT_LIST, TEMPLATE_ID.ALL_EQUIPMENT_LIST,
+                            "<li/>", "a", data, "click",
                             (eqm)=>{
                                 EQUIPMENT.addToLab(eqm);
                         });
@@ -53,12 +59,13 @@ EQUIPMENT = {
                 type: "GET",
                 success: function (result) {
                     retObjHandle(result, function () {
-                        EQUIPMENT.in_lab_equipment = result.data;
+                        EQUIPMENT.lab_equipment = result.data;
                         let data = {
                             iterable: result.data,
                         }
                         data.iterable.forEach((eqm)=>{eqm[eqm.type]=true;equipmentPropsToKeyValue(eqm);});
-                        rebuildRepeatComponent(ElEM_ID.IN_LAB_EQUIPMENT_LIST, TEMPLATE_ID.LAB_EQUIPMENT_LIST, "<li/>", undefined, data, "click",
+                        rebuildRepeatComponent(ELEM_NAME.LAB_EQUIPMENT_LIST, TEMPLATE_ID.LAB_EQUIPMENT_LIST,
+                            "<li/>", undefined, data, "click",
                             (eqm)=>{
                                 console.log(eqm);
                             });
@@ -67,11 +74,64 @@ EQUIPMENT = {
             })
         }
     }
+}
 
+RECIPE ={
+    selected: "",
+    recipe:{
+        equipmentOne:"",
+        equipmentTwo:"",
+        result:"",
+        rationOne:"",
+        rationTwo:"",
+    },
+
+
+    init(){
+        this.setCard = function(eqm){
+
+        };
+        this.selectCard = function(event){
+            let select_id = "#" + event.target.id;
+            RECIPE.selected = select_id;
+            let data = {iterable: EQUIPMENT.lab_equipment}
+            switch (select_id) {
+                case ELEM_NAME.RECIPE_CARD_ONE:
+                    rebuildRepeatComponent(ELEM_NAME.RECIPE_EQUIP_LIST, TEMPLATE_ID.LAB_EQUIPMENT_LIST,
+                        "<li/>", undefined, data, "click",
+                        (eqm)=>{
+                            RECIPE.recipe.equipmentOne = eqm.id;
+                        });
+                    break;
+                case ELEM_NAME.RECIPE_CARD_TWO:
+                    rebuildRepeatComponent(ELEM_NAME.RECIPE_EQUIP_LIST, TEMPLATE_ID.LAB_EQUIPMENT_LIST,
+                        "<li/>", undefined, data, "click",
+                        (eqm)=>{
+                            RECIPE.recipe.equipmentTwo = eqm.id;
+                        });
+                    break;
+                case ELEM_NAME.RECIPE_CARD_RESULT:
+                    data.iterable = EQUIPMENT.all_equipment;
+                    rebuildRepeatComponent(ELEM_NAME.RECIPE_EQUIP_LIST, TEMPLATE_ID.LAB_EQUIPMENT_LIST,
+                        "<li/>", undefined, data, "click",
+                        (eqm)=>{
+                            RECIPE.recipe.result = eqm.id;
+                        });
+                    break;
+            }
+            console.log(RECIPE.recipe);
+        }
+    },
+    onclickInit(){
+        $(ELEM_NAME.RECIPE_CARDS).on("click", RECIPE.selectCard)
+    }
 }
 
 $(document).ready(()=>{
     EQUIPMENT.init();
     EQUIPMENT.loadAll();
     EQUIPMENT.loadInLab();
+
+    RECIPE.init();
+    RECIPE.onclickInit()
 })
