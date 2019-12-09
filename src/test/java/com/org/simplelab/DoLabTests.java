@@ -1,24 +1,89 @@
 package com.org.simplelab;
 
 import com.org.simplelab.controllers.DoLabController;
+import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.interfaces.Interaction;
 import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.EquipmentProperty;
 import com.org.simplelab.database.entities.sql.Lab;
 import com.org.simplelab.database.entities.sql.Step;
+import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.dto.Workspace;
 import com.org.simplelab.restcontrollers.rro.RRO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
 public class DoLabTests extends SpringTestConfig {
-
     @Autowired
     DoLabController dlc;
+
+    /**
+     * Tests a 3 step lab with target objects that involve the object being heated to 3
+     * different temperatures.
+     */
+    @Test
+    void threeStepHeatLabTest() throws Exception{
+        String target_type = "container";
+        int numSteps = 3;
+
+        Lab l = TestUtils.createJunkLab();
+
+        for (int i = 0; i < numSteps; i++) {
+            Equipment target1 = TestUtils.createJunkEquipment();
+            target1.setType(target_type);
+            EquipmentProperty target1prop = new EquipmentProperty();
+            target1prop.setParentEquipment(target1);
+            target1prop.setPropertyKey("temperature");
+            target1prop.setPropertyValue(Integer.toString((i+1) * 100));
+            target1.getProperties().add(target1prop);
+
+            //now make a step and add to lab
+            Step s = new Step();
+            s.setLab(l);
+            s.setTargetObject(target1);
+            s.setStepNum(i+1);
+            l.getSteps().add(s);
+        }
+
+        //save the lab
+        labDB.insert(l);
+        l = labDB.searchLabWithKeyword(l.getName()).get(0);
+
+        //create 3 DTOs representing 3 user actions -- user will heat a container 3 times.
+        Equipment heater = new Equipment();
+        heater.setInteraction(Interaction.HEAT);
+
+        Equipment toHeat = TestUtils.createJunkEquipment();
+        EquipmentProperty toHeatProp = new EquipmentProperty();
+        toHeatProp.setParentEquipment(toHeat);
+        toHeatProp.setPropertyKey("temperature");
+        toHeatProp.setPropertyValue("0");
+        toHeat.setType(target_type);
+        toHeat.getProperties().add(toHeatProp);
+
+        for (int i = 0; i < numSteps; i++){
+            DTO.EquipmentInteractionDTO dto = new DTO.EquipmentInteractionDTO();
+            dto.setObject1(heater);
+            dto.setObject2(toHeat);
+            dto.setStepNum(i+1);
+            dto.setParameter("100");
+            String returnMsg = dlc.handleEquipmentInteraction(l.getId(), dto).getAction();
+            System.out.println(returnMsg);
+            if (i == numSteps - 1){
+                assertEquals(RRO.LAB_ACTION_TYPE.COMPLETE_LAB.name(), returnMsg);
+            } else {
+                assertEquals(RRO.LAB_ACTION_TYPE.ADVANCE_STEP.name(), returnMsg);
+            }
+        }
+
+
+    }
 
     @Test
     void getWorkspaceTest() throws Exception{
@@ -77,8 +142,7 @@ public class DoLabTests extends SpringTestConfig {
 
         assertTrue(eq1.equals(eq3));
 
-
-
     }
+
 
 }

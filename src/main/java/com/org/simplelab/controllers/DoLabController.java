@@ -148,6 +148,7 @@ public class DoLabController extends BaseController {
         //Check if the object is equal to the current target object.
         if (eq2.equals(currentStep.getTargetObject())){
             //if it matches the target object, check if this is the last step
+            rro.setData(null);
             if (dto.getStepNum() == currentLab.getLastStepNumber()){
                 rro.setAction(RRO.LAB_ACTION_TYPE.COMPLETE_LAB.name());
             } else {
