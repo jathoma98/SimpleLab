@@ -458,13 +458,12 @@ class DBTests extends SpringTestConfig {
 		rdb.insert(r3);
 	}
 
-	@Autowired
-	LabInstanceRepository lir;
+
 
 	@Test
 	void mongoDBinitTest(){
 		LabInstance li = new LabInstance();
-		li.setTest("test");
+		li.set_metadata(metadata);
 
 		lir.save(li);
 		lir.findAll().forEach( (found) -> {
