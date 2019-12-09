@@ -5,10 +5,7 @@ import com.org.simplelab.database.entities.interfaces.UserCreated;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Data
 @Entity(name = DBUtils.LAB_TABLE_NAME)
@@ -35,5 +32,11 @@ public class Lab extends BaseTable implements UserCreated{
     public Lab(){
         this.equipments = new HashSet<>();
         this.steps = new ArrayList<>();
+    }
+
+    public int getLastStepNumber(){
+        return steps.stream()
+                    .max(Comparator.comparing(Step::getStepNum))
+                    .get().getStepNum();
     }
 }

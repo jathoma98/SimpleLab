@@ -114,6 +114,7 @@ public abstract class DTO {
      public static class EquipmentInteractionDTO extends DTO{
         private Equipment object1, object2;
         private String parameter;
+        private int stepNum;
 
         public EquipmentInteractionDTO(){
             parameter = "0";

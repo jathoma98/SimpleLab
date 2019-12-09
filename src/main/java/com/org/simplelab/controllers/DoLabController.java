@@ -4,6 +4,7 @@ import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.Lab;
 import com.org.simplelab.database.entities.sql.Recipe;
+import com.org.simplelab.database.entities.sql.Step;
 import com.org.simplelab.database.services.HistoryDB;
 import com.org.simplelab.game.RecipeHandler;
 import com.org.simplelab.restcontrollers.dto.Workspace;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.org.simplelab.restcontrollers.dto.DTO.EquipmentInteractionDTO;
 
@@ -129,13 +131,29 @@ public class DoLabController extends BaseController {
         if (result.exists()){
             eq2 = result;
         }
+        rro.setAction(RRO.LAB_ACTION_TYPE.MODIFY_EQUIPMENT.name());
+        rro.setData(new Equipment[]{eq1, eq2});
 
         Recipe found = recipeHandler.findRecipe(eq1, eq2);
         if (found.exists()){
             // do something
         }
-        rro.setData(new Equipment[]{eq1, eq2});
-        rro.setAction(RRO.LAB_ACTION_TYPE.MODIFY_EQUIPMENT.name());
+
+        Lab currentLab = labDB.findById(lab_id);
+        Step currentStep =  currentLab.getSteps()
+                             .stream()
+                             .filter(step -> step.getStepNum() == dto.getStepNum())
+                             .collect(Collectors.toList()).get(0);
+
+        //Check if the object is equal to the current target object.
+        if (eq2.equals(currentStep.getTargetObject())){
+            //if it matches the target object, check if this is the last step
+            if (dto.getStepNum() == currentLab.getLastStepNumber()){
+                rro.setAction(RRO.LAB_ACTION_TYPE.COMPLETE_LAB.name());
+            } else {
+                rro.setAction(RRO.LAB_ACTION_TYPE.ADVANCE_STEP.name());
+            }
+        }
         rro.setSuccess(true);
         return rro;
     }
