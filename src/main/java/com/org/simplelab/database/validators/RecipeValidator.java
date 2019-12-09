@@ -2,7 +2,6 @@ package com.org.simplelab.database.validators;
 
 import com.org.simplelab.database.entities.sql.Recipe;
 import lombok.Data;
-import sun.awt.SunHints;
 
 @Data
 public class RecipeValidator extends Validator<Recipe> {

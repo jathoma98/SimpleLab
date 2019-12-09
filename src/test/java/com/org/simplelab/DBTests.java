@@ -3,8 +3,6 @@ package com.org.simplelab;
 import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.mongodb.LabInstance;
 import com.org.simplelab.database.entities.sql.*;
-import com.org.simplelab.database.repositories.mongodb.LabInstanceRepository;
-import com.org.simplelab.database.repositories.sql.RecipeRepository;
 import com.org.simplelab.database.repositories.sql.UserRepository;
 import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.services.LabDB;
@@ -19,9 +17,7 @@ import org.apache.commons.lang3.SerializationUtils;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.aggregation.ComparisonOperators;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;

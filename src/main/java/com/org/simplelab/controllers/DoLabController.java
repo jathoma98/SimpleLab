@@ -1,6 +1,5 @@
 package com.org.simplelab.controllers;
 
-import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.mongodb.LabInstance;
 import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.Lab;
@@ -162,7 +161,7 @@ public class DoLabController extends BaseController {
         if (eq2.equals(currentStep.getTargetObject())){
             //if it matches the target object, check if this is the last step
             rro.setData(null);
-            if (dto.getStepNum() == currentLab.getLastStepNumber()){
+            if (dto.getStepNum() == currentLab.returnLastStepNumber()){
                 eventHandler.finalizeInstance(currentInstance);
                 rro.setAction(RRO.LAB_ACTION_TYPE.COMPLETE_LAB.name());
             } else {

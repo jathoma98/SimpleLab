@@ -1,16 +1,13 @@
 package com.org.simplelab.database.entities.sql;
 
-import com.org.simplelab.database.entities.interfaces.Interaction;
 import lombok.Data;
-import org.apache.commons.lang3.SerializationUtils;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Arrays;
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToMany;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Data
 @MappedSuperclass

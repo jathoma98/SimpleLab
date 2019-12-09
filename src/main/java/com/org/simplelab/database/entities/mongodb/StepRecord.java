@@ -1,6 +1,5 @@
 package com.org.simplelab.database.entities.mongodb;
 
-import com.org.simplelab.database.entities.sql.Step;
 import lombok.Data;
 
 import java.util.ArrayList;

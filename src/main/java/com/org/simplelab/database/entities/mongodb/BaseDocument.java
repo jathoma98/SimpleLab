@@ -1,7 +1,6 @@
 package com.org.simplelab.database.entities.mongodb;
 
 import lombok.Data;
-import org.springframework.data.domain.Persistable;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

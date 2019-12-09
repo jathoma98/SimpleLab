@@ -2,9 +2,9 @@ package com.org.simplelab.restcontrollers;
 
 import com.org.simplelab.controllers.BaseController;
 import com.org.simplelab.database.DBUtils;
+import com.org.simplelab.database.entities.interfaces.UserCreated;
 import com.org.simplelab.database.entities.sql.BaseTable;
 import com.org.simplelab.database.entities.sql.User;
-import com.org.simplelab.database.entities.interfaces.UserCreated;
 import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.validators.InvalidFieldException;
 import com.org.simplelab.database.validators.Validator;

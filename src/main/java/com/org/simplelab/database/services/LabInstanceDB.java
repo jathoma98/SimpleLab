@@ -1,10 +1,7 @@
 package com.org.simplelab.database.services;
 
 import com.org.simplelab.database.entities.mongodb.LabInstance;
-import com.org.simplelab.database.entities.sql.BaseTable;
-import com.org.simplelab.database.entities.sql.Lab;
 import com.org.simplelab.database.repositories.mongodb.LabInstanceRepository;
-import com.org.simplelab.database.repositories.sql.BaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

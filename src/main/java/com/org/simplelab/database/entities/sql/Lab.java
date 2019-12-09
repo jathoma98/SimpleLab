@@ -34,7 +34,7 @@ public class Lab extends BaseTable implements UserCreated{
         this.steps = new ArrayList<>();
     }
 
-    public int getLastStepNumber(){
+    public int returnLastStepNumber(){
         return steps.stream()
                     .max(Comparator.comparing(Step::getStepNum))
                     .get().getStepNum();

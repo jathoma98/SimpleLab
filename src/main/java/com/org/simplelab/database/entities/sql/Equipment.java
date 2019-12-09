@@ -4,11 +4,10 @@ import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.interfaces.Interaction;
 import com.org.simplelab.database.entities.interfaces.UserCreated;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 
