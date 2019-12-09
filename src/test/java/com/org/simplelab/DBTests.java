@@ -15,9 +15,11 @@ import com.org.simplelab.restcontrollers.CourseRESTController;
 import com.org.simplelab.restcontrollers.LabRESTController;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
+import org.apache.commons.lang3.SerializationUtils;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.aggregation.ComparisonOperators;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
@@ -463,6 +465,15 @@ class DBTests extends SpringTestConfig {
 	@Test
 	void mongoDBinitTest(){
 		LabInstance li = new LabInstance();
+		Lab l = TestUtils.createJunkLabWithSteps(10);
+		Set<Equipment> eqlist = new HashSet<>();
+		for (int i = 0; i < 5; i++){
+			eqlist.add(TestUtils.createJunkEquipmentWithProperties(5));
+		}
+		l.setEquipments(eqlist);
+		byte[] serializedLab = SerializationUtils.serialize(l);
+
+		li.setSerialized_lab(serializedLab);
 		li.set_metadata(metadata);
 
 		lir.save(li);
