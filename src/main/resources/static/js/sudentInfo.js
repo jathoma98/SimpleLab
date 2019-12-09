@@ -8,33 +8,71 @@ $(document).ready( function () {
     $("#editInfoBtn").on("click",editInfo);
     $("#courseSearchBtn").on("click",searchCourse);
 
-    // $("#searchStudentLabBtn").on("click",searchLab)
-
 })
 
-function addCourse() {
-    var invitecodeid="invitecode"+this.id;
+
+function loadCourse(){
+    $.ajax({
+        url: "/course/rest/loadCourseList",
+        type: 'GET',
+        success: function (result) {
+            let courseTable = '';
+            for (let f=0;f<result.data.length;f++){
+                courseTable = '<tr><td>' + result.data[f].course_id +'</td>'+
+                    '<td>' + result.data[f].name + '</td>' +
+                    '<td>'+ result.data[f].created_date + '</td></tr>';
+
+            }
+            $("#studentCourse tbody").html(courseTable);
+        }
+    })
+}
+
+function checkInvite() {
     let course = {
-        invite_code:$("#"+invitecodeid).val(),
+        invite_code:$(this).parent().find('#inviteCode').val(),
         course_id: this.id,
         usernameList: new Array()
     }
-    let course_json = JSON.stringify(course);
+    let toMatch_json = JSON.stringify(course);
     $.ajax({
         url: "/course/rest/addStudent",
         type: 'POST',
         dataTye: 'json',
         contentType: 'application/json; charset=utf-8',
-        data: course_json,
+        data: toMatch_json,
         success: function (result) {
-            console.log("success");
-            // retObjHandle(result,
-            //     () => {
-            //     COURSES_TABLE.reLoadStudentsList(course_json)
-            // })
+            retObjHandle(result,function(){
+                //add student into the course
+                loadCourse();
+            })
         }
     })
 }
+
+// function searchLab() {
+//     let labToSearch = {
+//         regex: $("#searchStudentLab").val()
+//     }
+//     let toSearch_json = JSON.stringify(labToSearch);
+//     $.ajax({
+//         url: "/lab/rest/searchLab",
+//         type: 'POST',
+//         dataTye: 'json',
+//         contentType: 'application/json; charset=utf-8',
+//         data: toSearch_json,
+//         success: function (result) {
+//             let searchLabTable = '';
+//             for (let f=0;f<result.data.length;f++){
+//                 searchLabTable += '<tr><td>' + result.data[f].name + '</td>' +
+//                     '<td><input id="invatecode" type="text" class="validate"><a href="#" class="right modal-close addlab">add</a></td>' +
+//                     '</tr>'
+//             }
+//             $('#student_search_lab tbody').html(searchLabTable);
+//         }
+//     })
+//
+// }
 
 function searchCourse() {
         let toSearch = {
@@ -50,13 +88,14 @@ function searchCourse() {
             success: function (result) {
                 let searchCourseTable = '';
                 for (let f=0;f<result.data.length;f++){
-                    searchCourseTable += '<tr><td>' + result.data[f].name + '</td>' +
-                        '<td class="valign-wrapper"><input id="invitecode'+result.data[f].course_id+'"  type="text" placeholder="enter invate code here" class="col s4 offset-s7">' +
-                        '<a id='+result.data[f].course_id+' href="#" class="right addcourse">add</a></td>' +
+                    searchCourseTable +=
+                        '<tr><td class="searched_name">' + result.data[f].course_id + '</td>' +
+                        '<td class="valign-wrapper"><input id="inviteCode" type="text" placeholder="invite code" class="col s4 offset-s7">' +
+                        '<a id='+result.data[f].course_id+' href="#" class="right modal-close add_course">add</a></td>' +
                         '</tr>'
                 }
                 $('#student_search_course tbody').html(searchCourseTable);
-                $(".addcourse").on("click",addCourse);
+                $(".add_course").on("click",checkInvite);
             }
         })
 }

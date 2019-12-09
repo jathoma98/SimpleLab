@@ -125,4 +125,8 @@ public class CourseDB extends DBService<Course> {
         return repository.searchCourseWithKeyword(keyword);
     }
 
+    public Course findInviteCodeByName(String name){
+        return repository.findInviteCodeByName(name);
+    }
+
 }

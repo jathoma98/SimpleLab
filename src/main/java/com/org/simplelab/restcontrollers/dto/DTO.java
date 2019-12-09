@@ -42,7 +42,7 @@ public abstract class DTO {
     @Getter
     @Setter
     public static class CourseSearchDTO extends DTO {
-        private String courseRegex;
+        private String regex;
     }
 
     /**
