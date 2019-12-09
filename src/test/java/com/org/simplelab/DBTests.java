@@ -206,13 +206,16 @@ class DBTests extends SpringTestConfig {
 
 	@Test
 	@Transactional
-	@WithMockUser(username = username, password = username)
+	@WithMockUser(username = "COURSETEST", password = username)
 	void testAddStudentToCourse() throws Exception{
 		Course c = new Course();
 		c.set_metadata(metadata);
 		c.setCourse_id(metadata);
 		c.setName(metadata);
 		c.setDescription(metadata);
+		User creator = TestUtils.createJunkUser();
+		creator.setUsername("COURSETEST");
+		c.setCreator(creator);
 		cr.save(c);
 		List<String> usernames = new ArrayList<>();
 

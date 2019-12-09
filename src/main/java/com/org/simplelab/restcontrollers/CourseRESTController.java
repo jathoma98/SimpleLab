@@ -173,7 +173,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
         List<User> toAdd = new ArrayList<>();
         String course_id = course.getCourse_id();
         List<Course> c = courseDB.findByCourseId(course_id);
-        if (own_username == c.get(0).getCreator().getUsername()){
+        if (own_username.equals(c.get(0).getCreator().getUsername())){
             List<String> usernameList = course.getUsernameList();
             for (String username: usernameList){
                 if (!own_username.equals(username)){
@@ -182,7 +182,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
             }
             DBService.EntitySetManager<User, Course> toUpdate = courseDB.getStudentsOfCourseByCourseId(course_id);
             return super.addEntitiesToEntityList(toUpdate, toAdd);
-        }else if(course.getInvite_code().equals(c.get(0).getInvite_code())){
+        }else if(c.get(0).getInvite_code() == null || course.getInvite_code().equals(c.get(0).getInvite_code())){
             toAdd.add(userDB.findUser((String)session.getAttribute("username")));
             DBService.EntitySetManager<User, Course> toUpdate = courseDB.getStudentsOfCourseByCourseId(course_id);
             return super.addEntitiesToEntityList(toUpdate, toAdd);
