@@ -25,13 +25,6 @@ public interface Interaction {
      *     to the object when we load it in java based on this field.
      *     Look at @PostLoad annotated method in Equipment.
      *
-     *     TODO: Discuss: The current plan is not to save these results in MySQL.
-     *     MySQL equipment is only for equipment that Teachers make.
-     *     My intention is to save all doLab data in a MongoDB document
-     *     for each user. We will update this document every thing user makes a move, so we can save user progress
-     *     and look at where user makes mistakes. MongoDB is good for this because we dont need to maintain references
-     *     or cascade deletes or anything,
-     *     we can just save all data in one big document.
      * @param target - The object that this Equipment will interact with
      * @param <T> - Equipment, or subclass of Equipment.
      * @return - The result of this interaction, or Equipment.NO_EQUIPMENT if there is no result.
