@@ -474,7 +474,7 @@ class DBTests extends SpringTestConfig {
 		byte[] serializedLab = SerializationUtils.serialize(l);
 
 		li.setSerialized_lab(serializedLab);
-		li.set_metadata(metadata);
+		//li.set_metadata(metadata);
 
 		lir.save(li);
 		lir.findAll().forEach( (found) -> {

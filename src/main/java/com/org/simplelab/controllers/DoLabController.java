@@ -56,7 +56,7 @@ public class DoLabController extends BaseController {
         if (found == null){
             return RRO.sendErrorMessage("Lab Not Found");
         }
-        Workspace ws = eventHandler.buildWorkspace(found);
+        Workspace ws = eventHandler.buildWorkspace(found, getUserIdFromSession());
 
         RRO<Workspace> rro = new RRO<>();
         rro.setSuccess(true);
@@ -123,7 +123,7 @@ public class DoLabController extends BaseController {
 
         //TODO: implement this
         //save the interaction to lab history
-        historyDB.addToLabHistory(interation);
+        //historyDB.addToLabHistory(interation);
 
         Equipment eq1 = dto.getObject1();
         Equipment eq2 = dto.getObject2();

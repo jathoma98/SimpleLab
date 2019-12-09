@@ -15,10 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class DoLabEventHandler {
 
     @Transactional
-    public Workspace buildWorkspace(Lab l){
+    public Workspace buildWorkspace(Lab l, long user_id){
         //build lab record
         LabInstance li = new LabInstance();
         li.setSerialized_lab(SerializationUtils.serialize(l));
+        li.setLabId(l.getId());
+        li.setUserId(user_id);
         //serialize equipment
         return DBUtils.getMapper().map(l, Workspace.class);
     }

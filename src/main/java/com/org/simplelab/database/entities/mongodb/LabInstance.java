@@ -8,7 +8,19 @@ import java.util.List;
 
 @Data
 @Document(collection = DBUtils.LABINSTANCE_DOCUMENT_NAME)
-public class LabInstance extends BaseDocument {
+public class LabInstance extends BaseDocument{
+
+    //id of user doing lab
+    private long userId;
+
+    //id of lab being done
+    private long labId;
+
+    //whether the lab is finished or not
+    private boolean finished = false;
+
+    //grade for user
+    private String grade = "unfinished";
 
     //save original lab here
     private byte[] serialized_lab;
