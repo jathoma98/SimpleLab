@@ -1,7 +1,9 @@
 package com.org.simplelab;
 
 import com.org.simplelab.controllers.DoLabController;
+import com.org.simplelab.database.entities.interfaces.Interaction;
 import com.org.simplelab.database.entities.sql.Equipment;
+import com.org.simplelab.database.entities.sql.EquipmentProperty;
 import com.org.simplelab.database.entities.sql.Lab;
 import com.org.simplelab.database.entities.sql.Step;
 import com.org.simplelab.restcontrollers.dto.Workspace;
@@ -36,6 +38,24 @@ public class DoLabTests extends SpringTestConfig {
         }
 
 
+    }
+
+    @Test
+    void testHeatingInteraction(){
+        EquipmentProperty temp = new EquipmentProperty();
+        temp.setPropertyKey("temperature");
+        temp.setPropertyValue("50");
+        Equipment e = TestUtils.createJunkEquipmentWithProperties(5);
+        temp.setParentEquipment(e);
+        e.getProperties().add(temp);
+
+        Equipment heater = new Equipment();
+        heater.setInteraction(Interaction.HEAT);
+        heater.getInteraction().interactWith(e);
+
+        System.out.print(e.getProperties());
+
+        assertEquals("150", e.findProperty("temperature").getPropertyValue());
     }
 
 }

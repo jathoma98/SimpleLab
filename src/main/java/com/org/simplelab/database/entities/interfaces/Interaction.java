@@ -53,6 +53,10 @@ public interface Interaction {
             return "nothing";
         }
     }
+
+    /**
+     * Heating interaction -- heats objects that interact with this object.
+     */
     class Heat implements Interaction{
         @Override
         public Equipment interactWith(Equipment target) {

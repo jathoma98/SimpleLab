@@ -55,14 +55,8 @@ public class Equipment extends BaseTable implements UserCreated {
 
     //TODO: this should be a map, not a hashset
     public EquipmentProperty findProperty(String key){
-        EquipmentProperty toFind = new EquipmentProperty();
-        toFind.setPropertyKey(key);
-        if (this.getProperties().contains(toFind)) {
-            for (EquipmentProperty eqp : this.getProperties()) {
-                if (eqp.getPropertyKey().equals(key)) {
-                    return eqp;
-                }
-            }
+        for (EquipmentProperty eqp : this.getProperties()) {
+            if (eqp.getPropertyKey().equals(key)) { return eqp; }
         }
         return EquipmentProperty.NO_PROPERTY;
     }
