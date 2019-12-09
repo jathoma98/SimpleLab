@@ -210,3 +210,17 @@
 .selectable li { background: white;}
 .selectable li:hover { background: #bdbdbd;}
 
+.recipemodal{
+    height:40%!important;
+    width: 50%!important;
+
+}
+
+
+.recipeimg{
+    width: 100px;
+    height: 100px;
+    margin: 0;
+    padding: 0;
+
+}

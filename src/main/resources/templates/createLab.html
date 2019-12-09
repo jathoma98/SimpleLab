@@ -77,9 +77,10 @@
                             </div>
                         </div>
                         <div class="row">
-                            <button class="btn waves-effect waves-light right modal-close"">
-                                Submit
-                                <i class="material-icons right">send</i>
+                            <button class="btn waves-effect waves-light right modal-close"
+                            ">
+                            Submit
+                            <i class="material-icons right">send</i>
                             </button>
                         </div>
 
@@ -119,7 +120,7 @@
     <div class="nav-wrapper row" style="background: #00acc1">
         <div class="col s12 valign-wrapper" style="background: #00b8ce; height: 30px; margin-top: 20px;">
             <a href="../../" class="breadcrumb" th:text="${home_navig}">Home</a>
-<!--            <a href="#!" class="breadcrumb" th:text="lab-${lab_name}}">Lab</a>-->
+            <!--            <a href="#!" class="breadcrumb" th:text="lab-${lab_name}}">Lab</a>-->
             <!--      <a href="#!" class="breadcrumb"></a>-->
         </div>
     </div>
@@ -379,38 +380,74 @@
                     </button>
                 </div>
             </div>
-
-
         </ul>
     </div>
 
 
-    <!--pop up model to enter number of liquid -->
-    <div id="modal1" class="modal popup_dialog">
-        <nav class="my_yellow">
-            <div class="popup_dialog_header">Enter number of liquid</div>
-        </nav>
-        <div class="modal-content row">
-            <p class="range-field col s8 zeromargin ">
-                <input type="range" id="test5" min="0" max="200" value="100" oninput="showVal(this.value)"
-                       onchange="showVal(this.value)"/>
-            </p>
-            <div class="col s4 zeromargin">
-                <input class="number_picker" type="number" name="quantity" min="1" max="100" value="100">
-            </div>
-
-            <div class="center col s12">
-                <a href="#!" class="modal-close btn my_red">Pour</a>
-            </div>
-        </div>
+    <div class="center col s12">-->
+        <a href="#modal1" class="modal-trigger btn my_red">Pour</a>
     </div>
 
 
-</div>
+<!--    &lt;!&ndash;pop up model to enter number of liquid &ndash;&gt;-->
+<!--    <div id="modal1" class="modal popup_dialog recipemodal" style="display: block;">-->
+<!--        <nav class="my_yellow">-->
+<!--            <div class="popup_dialog_header">Setup Recipe Proportion</div>-->
+<!--        </nav>-->
+<!--        <div class="modal-content row">-->
+<!--            <div class="col s12 valign-wrapper">-->
+<!--                <div class="col s1 center">-->
+<!--                    <h5>Input Item</h5>-->
+<!--                </div>-->
+<!--                <div class="col s4 center">-->
+<!--                    <img src="../../img/add.png" class="item_img col s6 offset-s2">-->
+<!--                    <input type="text" class="col s6 offset-s2">-->
+<!--                </div>-->
+<!--                <div class="col s3">-->
+<!--                    <i class="medium material-icons">arrow_back</i>-->
+<!--                    <i class="medium material-icons">arrow_forward</i>-->
+<!--                </div>-->
+<!--                <div class="col s4 center">-->
+<!--                    <img src="../../img/add.png" class="item_img col s6 offset-s2">-->
+<!--                    <input type="text" class="col s6 offset-s2">-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col s12 valign-wrapper">-->
+<!--                <div class="col s1 center">-->
+<!--                    <h5>Result Item</h5>-->
+<!--                </div>-->
+<!--                <div class="col s11 center">-->
+<!--                    <img src="../../img/add.png" class="item_img col s2 offset-s5">-->
+<!--                </div>-->
+<!--            </div>-->
 
 
-<!--JavaScript at end of body for optimized loading-->
-<script type="text/javascript" th:src="@{../../libs/materialize.min.js}"></script>
+                <!--pop up model to enter number of liquid -->
+                <div id="modal1" class="modal popup_dialog">
+                    <nav class="my_yellow">
+                        <div class="popup_dialog_header">Enter number of liquid</div>
+                    </nav>
+                    <div class="modal-content row">
+                        <p class="range-field col s8 zeromargin ">
+                            <input type="range" id="test5" min="0" max="200" value="100" oninput="showVal(this.value)"
+                                   onchange="showVal(this.value)"/>
+                        </p>
+                        <div class="col s4 zeromargin">
+                            <input class="number_picker" type="number" name="quantity" min="1" max="100" value="100">
+                        </div>
+
+                        <div class="center col s12">
+                            <a href="#!" class="modal-close btn my_red">Pour</a>
+                        </div>
+                    </div>
+                </div>
+
+
+        </div>
+
+
+        <!--JavaScript at end of body for optimized loading-->
+        <script type="text/javascript" th:src="@{../../libs/materialize.min.js}"></script>
 </body>
 
 <script>
