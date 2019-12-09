@@ -25,7 +25,7 @@ public abstract class BaseController {
     protected EquipmentDB equipmentDB;
 
     @Autowired
-    protected HistoryDB historyDB;
+    protected LabInstanceDB instanceDB;
 
     @Autowired
     protected HttpSession session;

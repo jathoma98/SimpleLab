@@ -9,6 +9,7 @@ import javax.persistence.Id;
 
 @Data
 public abstract class BaseDocument{
+    protected static final String NOT_FOUND_KEY = "N/A";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,6 +22,10 @@ public abstract class BaseDocument{
     BaseDocument(){
         this.timestamp = java.time.Instant.now().toEpochMilli();
         this.lastUpdated = timestamp;
+    }
+
+    public boolean exists(){
+        return !(getId().equals(NOT_FOUND_KEY));
     }
 
     public void setTimestamp(long timestamp){ }

@@ -54,6 +54,13 @@ public abstract class AbstractEquipment extends BaseTable{
         return name.hashCode() + type.hashCode() + properties.hashCode();
     }
 
+    @Override
+    public String toString(){
+        return  "Name: " + name + " \n" +
+                "Type: " + type + " \n" +
+                "Properties: " + properties.toString();
+    }
+
     private static Equipment GEN_NO_EQUIPMENT(){
         Equipment e = new Equipment();
         e.setId(-1);

@@ -41,7 +41,9 @@ public interface Interaction {
     /**
      * @return the type argument that corresponds to this Interaction.
      */
-    String getTypeCode();
+     default String getTypeCode(){
+         return "undefined";
+     }
 
     class DoNothing implements Interaction{
         @Override

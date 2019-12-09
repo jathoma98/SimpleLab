@@ -4,11 +4,14 @@ import com.org.simplelab.database.DBUtils;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
+
 
 @Data
 @Document(collection = DBUtils.LABINSTANCE_DOCUMENT_NAME)
 public class LabInstance extends BaseDocument{
+    public static final LabInstance NO_INSTANCE = GEN_NO_INSTANCE();
 
     //id of user doing lab
     private long userId;
@@ -26,5 +29,16 @@ public class LabInstance extends BaseDocument{
     private byte[] serialized_lab;
 
     private List<StepRecord> stepRecords;
+
+    public LabInstance(){
+        super();
+        this.stepRecords = new ArrayList<>();
+    }
+
+    private static LabInstance GEN_NO_INSTANCE(){
+        LabInstance none = new LabInstance();
+        none.setId(NOT_FOUND_KEY);
+        return none;
+    }
 
 }

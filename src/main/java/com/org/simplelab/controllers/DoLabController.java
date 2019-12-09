@@ -121,19 +121,26 @@ public class DoLabController extends BaseController {
         String interation = "test interaction";
         RRO<Equipment[]> rro = new RRO<>();
 
-        //TODO: implement this
-        //save the interaction to lab history
-        //historyDB.addToLabHistory(interation);
-
         Equipment eq1 = dto.getObject1();
         Equipment eq2 = dto.getObject2();
         String parameter = dto.getParameter();
 
-
+        //for saving interaction
+        Equipment eq2_original = eq2;
         Equipment result = eq1.getInteraction().interactWith(eq2, parameter);
         if (result.exists()){
             eq2 = result;
         }
+
+        //save the interaction in labinstance
+        DoLabEventHandler.InteractionObjects interactionInfo = new DoLabEventHandler.InteractionObjects();
+        interactionInfo.setEq1(eq1);
+        interactionInfo.setEq2(eq2);
+        interactionInfo.setInteraction(eq2_original.getInteraction());
+        interactionInfo.setResult(eq2);
+        interactionInfo.setParameter(parameter);
+        eventHandler.addInteractionToHistory(lab_id, dto.getStepNum(), interactionInfo);
+
         rro.setAction(RRO.LAB_ACTION_TYPE.MODIFY_EQUIPMENT.name());
         rro.setData(new Equipment[]{eq1, eq2});
 
