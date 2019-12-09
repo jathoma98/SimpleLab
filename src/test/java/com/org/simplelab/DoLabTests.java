@@ -3,18 +3,17 @@ package com.org.simplelab;
 import com.org.simplelab.controllers.DoLabController;
 import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.interfaces.Interaction;
-import com.org.simplelab.database.entities.sql.Equipment;
-import com.org.simplelab.database.entities.sql.EquipmentProperty;
-import com.org.simplelab.database.entities.sql.Lab;
-import com.org.simplelab.database.entities.sql.Step;
+import com.org.simplelab.database.entities.sql.*;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.dto.Workspace;
 import com.org.simplelab.restcontrollers.rro.RRO;
+import org.apache.commons.lang3.SerializationUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -95,7 +94,7 @@ public class DoLabTests extends SpringTestConfig {
         RRO<Workspace> rro = dlc.getLabToDo(found.getId());
         assertEquals(true, rro.isSuccess());
         System.out.println("Equipment: " + rro.getData().getEquipments().toString());
-        for (Equipment e: rro.getData().getEquipments()){
+        for (AbstractEquipment e: rro.getData().getEquipments()){
             assertTrue(l.getEquipments().contains(e));
         }
         System.out.println("Steps: " + rro.getData().getSteps().toString());
@@ -158,6 +157,11 @@ public class DoLabTests extends SpringTestConfig {
         test2.setType("not valid");
         test2.loadInteraction();
         assertTrue(Interaction.DoNothing.class.isInstance(test2.getInteraction()));
+    }
+
+    @Test
+    void serializationTest(){
+
     }
 
 

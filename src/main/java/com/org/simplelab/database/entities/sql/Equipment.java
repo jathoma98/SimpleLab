@@ -56,5 +56,10 @@ public class Equipment extends AbstractEquipment implements UserCreated {
         return super.equals(o);
     }
 
+    @Override
+    public String toString(){
+        return super.toString();
+    }
+
 
 }

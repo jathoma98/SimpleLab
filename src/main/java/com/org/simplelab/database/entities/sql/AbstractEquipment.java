@@ -2,8 +2,10 @@ package com.org.simplelab.database.entities.sql;
 
 import com.org.simplelab.database.entities.interfaces.Interaction;
 import lombok.Data;
+import org.apache.commons.lang3.SerializationUtils;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -12,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Data
 @MappedSuperclass
-public abstract class AbstractEquipment extends BaseTable {
+public abstract class AbstractEquipment extends BaseTable{
     public static final Equipment NO_EQUIPMENT = GEN_NO_EQUIPMENT();
 
     protected String name;
