@@ -113,6 +113,11 @@ public abstract class DTO {
      @Setter
      public static class EquipmentInteractionDTO extends DTO{
         private Equipment object1, object2;
+        private String parameter;
+
+        public EquipmentInteractionDTO(){
+            parameter = "0";
+        }
      }
 
      @Getter

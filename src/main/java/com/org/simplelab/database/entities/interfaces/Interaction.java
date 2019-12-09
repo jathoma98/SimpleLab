@@ -36,7 +36,7 @@ public interface Interaction {
      * @param <T> - Equipment, or subclass of Equipment.
      * @return - The result of this interaction, or Equipment.NO_EQUIPMENT if there is no result.
      */
-    <T extends Equipment> T interactWith(T target);
+    <T extends Equipment> T interactWith(T target, String parameter);
 
     /**
      * @return the type argument that corresponds to this Interaction.
@@ -45,7 +45,7 @@ public interface Interaction {
 
     class DoNothing implements Interaction{
         @Override
-        public Equipment interactWith(Equipment target) {
+        public Equipment interactWith(Equipment target, String parameter) {
             return Equipment.NO_EQUIPMENT;
         }
         @Override
@@ -59,10 +59,10 @@ public interface Interaction {
      */
     class Heat implements Interaction{
         @Override
-        public Equipment interactWith(Equipment target) {
+        public Equipment interactWith(Equipment target, String parameter) {
             EquipmentProperty temperatureProperty = target.findProperty("temperature");
             if (temperatureProperty.exists()){
-                String newTemp = Integer.toString(Integer.parseInt(temperatureProperty.getPropertyValue()) + 100);
+                String newTemp = Integer.toString(Integer.parseInt(temperatureProperty.getPropertyValue()) + Integer.parseInt(parameter));
                 temperatureProperty.setPropertyValue(newTemp);
             }
             return target;

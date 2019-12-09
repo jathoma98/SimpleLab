@@ -43,6 +43,7 @@ public class DoLabTests extends SpringTestConfig {
     @Test
     void testHeatingInteraction(){
         EquipmentProperty temp = new EquipmentProperty();
+        String parameter = "100";
         temp.setPropertyKey("temperature");
         temp.setPropertyValue("50");
         Equipment e = TestUtils.createJunkEquipmentWithProperties(5);
@@ -51,7 +52,7 @@ public class DoLabTests extends SpringTestConfig {
 
         Equipment heater = new Equipment();
         heater.setInteraction(Interaction.HEAT);
-        heater.getInteraction().interactWith(e);
+        heater.getInteraction().interactWith(e, parameter);
 
         System.out.print(e.getProperties());
 

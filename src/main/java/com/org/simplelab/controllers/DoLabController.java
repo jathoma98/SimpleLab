@@ -72,6 +72,8 @@ public class DoLabController extends BaseController {
      *                                                                        the beaker the User is holding is object1.
      *     object2: Equipment -- Equipment that the user interacts with.
      *                           In the previous example, the beaker the User clicks on is object2
+     *     parameter: String -- Represents parameter for interaction.
+     *                          ex: If we want to pour 100ml liquid from beaker 1 to beaker 2, parameter = 100.
      * }
      *
      * @return:
@@ -120,9 +122,10 @@ public class DoLabController extends BaseController {
 
         Equipment eq1 = dto.getObject1();
         Equipment eq2 = dto.getObject2();
+        String parameter = dto.getParameter();
 
         //perform the user interaction
-        Equipment result = eq1.getInteraction().interactWith(eq2);
+        Equipment result = eq1.getInteraction().interactWith(eq2, parameter);
         if (result.exists()){
             eq2 = result;
         }
