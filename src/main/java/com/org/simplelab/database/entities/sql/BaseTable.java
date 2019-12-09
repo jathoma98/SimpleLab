@@ -5,12 +5,14 @@ import lombok.Data;
 import org.springframework.data.domain.Persistable;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Data
 @MappedSuperclass
-public abstract class BaseTable implements Persistable<Long>, Comparable<BaseTable> {
+public abstract class BaseTable
+        implements Persistable<Long>, Comparable<BaseTable>, Serializable {
 
     /**
      * Fields inherited by all entities in the database

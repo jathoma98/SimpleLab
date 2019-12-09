@@ -1,8 +1,8 @@
 package com.org.simplelab;
 
 import com.org.simplelab.database.DBUtils;
+import com.org.simplelab.database.entities.mongodb.LabInstance;
 import com.org.simplelab.database.entities.sql.*;
-import com.org.simplelab.database.repositories.sql.RecipeRepository;
 import com.org.simplelab.database.repositories.sql.UserRepository;
 import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.services.LabDB;
@@ -13,6 +13,7 @@ import com.org.simplelab.restcontrollers.CourseRESTController;
 import com.org.simplelab.restcontrollers.LabRESTController;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
+import org.apache.commons.lang3.SerializationUtils;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -205,13 +206,16 @@ class DBTests extends SpringTestConfig {
 
 	@Test
 	@Transactional
-	@WithMockUser(username = username, password = username)
+	@WithMockUser(username = "COURSETEST", password = username)
 	void testAddStudentToCourse() throws Exception{
 		Course c = new Course();
 		c.set_metadata(metadata);
 		c.setCourse_id(metadata);
 		c.setName(metadata);
 		c.setDescription(metadata);
+		User creator = TestUtils.createJunkUser();
+		creator.setUsername("COURSETEST");
+		c.setCreator(creator);
 		cr.save(c);
 		List<String> usernames = new ArrayList<>();
 
@@ -453,6 +457,29 @@ class DBTests extends SpringTestConfig {
 		r3.setEquipmentTwo(eq2);
 		r3.setResult(eq3);
 		rdb.insert(r3);
+	}
+
+
+
+	@Test
+	void mongoDBinitTest(){
+		LabInstance li = new LabInstance();
+		Lab l = TestUtils.createJunkLabWithSteps(10);
+		Set<Equipment> eqlist = new HashSet<>();
+		for (int i = 0; i < 5; i++){
+			eqlist.add(TestUtils.createJunkEquipmentWithProperties(5));
+		}
+		l.setEquipments(eqlist);
+		byte[] serializedLab = SerializationUtils.serialize(l);
+
+		li.setSerialized_lab(serializedLab);
+		//li.set_metadata(metadata);
+
+		lir.save(li);
+		lir.findAll().forEach( (found) -> {
+			System.out.println(found.toString());
+		});
+
 	}
 
 

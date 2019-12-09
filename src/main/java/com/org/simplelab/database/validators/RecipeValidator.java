@@ -1,8 +1,9 @@
 package com.org.simplelab.database.validators;
 
 import com.org.simplelab.database.entities.sql.Recipe;
-import sun.awt.SunHints;
+import lombok.Data;
 
+@Data
 public class RecipeValidator extends Validator<Recipe> {
 
     @Override

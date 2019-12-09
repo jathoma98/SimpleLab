@@ -1,6 +1,6 @@
 package com.org.simplelab.restcontrollers.dto;
 
-import com.org.simplelab.database.entities.sql.Equipment;
+import com.org.simplelab.database.entities.sql.AbstractEquipment;
 import com.org.simplelab.database.entities.sql.Step;
 import lombok.Data;
 
@@ -15,8 +15,8 @@ import java.util.Set;
 @Data
 public class Workspace extends DTO {
 
-    String name, description;
+    String name, description, instance_id;
     List<Step> steps;
-    Set<Equipment> equipments;
+    Set<AbstractEquipment> equipments;
 
 }

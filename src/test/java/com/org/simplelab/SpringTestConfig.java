@@ -1,5 +1,6 @@
 package com.org.simplelab;
 
+import com.org.simplelab.database.repositories.mongodb.LabInstanceRepository;
 import com.org.simplelab.database.repositories.sql.CourseRepository;
 import com.org.simplelab.database.repositories.sql.EquipmentRepository;
 import com.org.simplelab.database.repositories.sql.LabRepository;
@@ -46,6 +47,9 @@ public abstract class SpringTestConfig {
     LabDB labDB;
     @Autowired
     EquipmentDB equipmentDB;
+    @Autowired
+    LabInstanceRepository lir;
+
 
     protected static final long user_id = 90;
     protected static final String username = "12345";
@@ -62,6 +66,7 @@ public abstract class SpringTestConfig {
         cr.deleteBy_metadata(metadata);
         er.deleteBy_metadata(metadata);
         lr.deleteBy_metadata(metadata);
+        lir.deleteBy_metadata(metadata);
     }
 
     @BeforeAll

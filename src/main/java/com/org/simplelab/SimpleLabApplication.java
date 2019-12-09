@@ -9,12 +9,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.thymeleaf.templateresolver.FileTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
-@EnableJpaRepositories(basePackages = {"com.org.simplelab.database.repositories"})
-//TODO: enable this for saving lab progress and action history
-//@EnableMongoRepositories(basePackages = {"com.org.simplelab.database.repositories.mongodb"})
+@EnableJpaRepositories(basePackages = {"com.org.simplelab.database.repositories.sql"})
+@EnableMongoRepositories(basePackages = {"com.org.simplelab.database.repositories.mongodb"})
 @SpringBootApplication
 public class SimpleLabApplication {
 
@@ -44,5 +44,12 @@ public class SimpleLabApplication {
 	public Module datatypeHibernateModule(){
 		return new Hibernate5Module();
 	}
+
+	/**
+	//enables rollbacks for MongoDB
+	@Bean
+	MongoTransactionManager txManager(MongoDbFactory dbFactory) {
+		return new MongoTransactionManager(dbFactory);
+	}**/
 
 }
