@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -142,6 +143,21 @@ public class DoLabTests extends SpringTestConfig {
 
         assertTrue(eq1.equals(eq3));
 
+    }
+
+    @Test
+    void testInteractionAssignment(){
+        //test that equipment with Heat type code gets assigned Heat interaction
+        Equipment test1 = TestUtils.createJunkEquipment();
+        test1.setType(Interaction.HEAT.getTypeCode());
+        test1.loadInteraction();
+        assertTrue(Interaction.Heat.class.isInstance(test1.getInteraction()));
+
+        //test that equipment with no valid typecode gets DoNothing interaction
+        Equipment test2 = TestUtils.createJunkEquipment();
+        test2.setType("not valid");
+        test2.loadInteraction();
+        assertTrue(Interaction.DoNothing.class.isInstance(test2.getInteraction()));
     }
 
 

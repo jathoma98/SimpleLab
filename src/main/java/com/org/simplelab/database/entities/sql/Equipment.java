@@ -7,16 +7,15 @@ import lombok.Data;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Data
 @Entity(name = DBUtils.EQUIPMENT_TABLE_NAME)
 @Table(name = DBUtils.EQUIPMENT_TABLE_NAME)
 public class Equipment extends BaseTable implements UserCreated {
+    private static final Interaction[] interactions = {Interaction.DO_NOTHING, Interaction.HEAT};
     public static final Equipment NO_EQUIPMENT = GEN_NO_EQUIPMENT();
 
     private String name;
@@ -43,8 +42,13 @@ public class Equipment extends BaseTable implements UserCreated {
      */
     @PostLoad
     public void loadInteraction(){
-        //TODO: implement this
-        setInteraction(Interaction.DO_NOTHING);
+        List<Interaction> assigned_interaction = Arrays.stream(interactions)
+                                                .filter(inter -> getType().equals(inter.getTypeCode()))
+                                                .collect(Collectors.toList());
+        if (assigned_interaction.size() > 0)
+            this.setInteraction(assigned_interaction.get(0));
+        else
+            this.setInteraction(Interaction.DO_NOTHING);
     }
 
     public Equipment(){

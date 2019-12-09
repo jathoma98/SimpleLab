@@ -13,6 +13,7 @@ import com.org.simplelab.restcontrollers.rro.RRO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
 import java.util.Collection;
@@ -68,6 +69,7 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
         return rro;
     }
 
+    @Transactional
     protected RRO<T> getEntityById(long id){
         T obj = getDb().findById(id);
         RRO<T> rro = new RRO<T>();
