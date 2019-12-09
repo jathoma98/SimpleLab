@@ -42,6 +42,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
     public static final String DELETE_STUDENTS_MAPPING = "/deleteStudents";
     public static final String ADD_LABS_TO_COURSE_MAPPING = "/addLab";
     public static final String SEARCH_COURSE_MAPPING = "/searchCourse";
+    public static final String CHECK_INVITE_MAPPING = "/checkInviteCode";
 
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     public RRO<String> addCourse(@RequestBody CourseValidator courseValidator,
@@ -251,6 +252,22 @@ public class CourseRESTController extends BaseRESTController<Course> {
         rro.setSuccess(true);
         rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
         rro.setData(courseDB.searchCourseWithKeyword(courseRegex));
+        return rro;
+    }
+
+    @PostMapping(CHECK_INVITE_MAPPING)
+    public RRO<Course> searchCourse(@RequestBody DTO.CourseSearchDTO toMatch){
+        RRO<Course> rro = new RRO();
+        String matchRegex = toMatch.getRegex();
+        //dont allow empty searches
+        if (matchRegex == null || matchRegex.equals("")){
+            rro.setSuccess(false);
+            rro.setAction(RRO_ACTION_TYPE.NOTHING.name());
+            return rro;
+        }
+        rro.setSuccess(true);
+        rro.setAction(RRO_ACTION_TYPE.LOAD_DATA.name());
+        rro.setData(courseDB.findInviteCodeByName(matchRegex));
         return rro;
     }
 }

@@ -49,4 +49,9 @@ public interface CourseRepository extends BaseRepository<Course> {
     @Query(nativeQuery = true, value = "SELECT * FROM #{#entityName} WHERE  name " +
             " LIKE %:keyword% OR course_id LIKE %:keyword%")
     public List<Course> searchCourseWithKeyword(@Param("keyword") String keyword);
+
+    @Query(value = "SELECT *\n" +
+            "FROM #{#entityName}\n" +
+            "WHERE name = :checkName\n", nativeQuery = true)
+    public Course findInviteCodeByName(@Param("checkName") String keyword);
 }
