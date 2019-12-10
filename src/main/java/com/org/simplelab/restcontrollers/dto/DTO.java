@@ -115,7 +115,7 @@ public abstract class DTO {
     @Getter
     @Setter
     public static class fpUserInput extends DTO{
-        private String userInput;
+        private String answer;
         private User user;
     }
 

@@ -6,23 +6,37 @@ function findUser() {
 
     $.post("/forgetPage/fpFindUser", { username : $("#userName").val()},
         function(user){
-        //     if (user !== null) {
-        //         current_user = user;
-        //         $("#fpUserName").css('display','none');
-        //         $("#fpQuestion").css('display','');
-        //         $("#fpAnswer").css('display','');
-        //         $(".fpSend").css('display','none');
-        //         $(".fpSend1").css('display','');
-        //         $("#question").val(user.question);
-        //     } else {
-        //         alert("User Does Not Exist");
-        //     }
-            console.log("abc")
+            if (user !== null) {
+                current_user = user.data;
+                let toSearch = {
+                    regex: user.data.username
+                };
+                let toSearch_json = JSON.stringify(toSearch);
+                $.ajax({
+                    url: "/forgetPage/fpGetQuestion",
+                    type: 'POST',
+                    dataTye: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    data: toSearch_json,
+                    success: function (result) {
+                        if(result.success) {
+                            $("#fpUserName").css('display', 'none');
+                            $("#fpQuestion").css('display', '');
+                            $("#fpAnswer").css('display', '');
+                            $(".fpSend").css('display', 'none');
+                            $(".fpSend1").css('display', '');
+                            $("#question").val(result.data);
+                        }
+                    }
+                })
+            } else {
+                alert("User Does Not Exist");
+            }
         });
 }
 function checkAnswer(){
     let answer = {
-        answer : $(".fpAnswer").val(),
+        answer : $("#answer").val(),
         user : current_user
     };
     let user_json =  JSON.stringify(answer);
@@ -33,7 +47,7 @@ function checkAnswer(){
         contentType: 'application/json; charset=utf-8',
         data: user_json,
         success: function (result) {
-            if(result === true){
+            if(result.success){
                 $("#fpPassword").css('display','');
                 $(".fpSend1").css('display','none');
                 $("#fpQuestion").css('display','none');
