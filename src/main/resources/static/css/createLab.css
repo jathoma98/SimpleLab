@@ -258,3 +258,14 @@
 .height6{
     height:60%!important;
 }
+
+.width3{
+    width: 46%!important;
+}
+.equipmentheight{
+
+    height: 75%!important;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+}

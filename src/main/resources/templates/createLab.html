@@ -90,78 +90,81 @@
     </ul>
     <div id="equipment_in_lab" class="col s12 margintop10" style="height:800px;">
         <div class="row ">
-            <div class="col s6" >
-                <nav class="white black-text center-align ">Current Equipment</nav>
-                <div class="card-panel">
-                    <div class="row">
-                        <!--nav here -->
-                    </div>
-                    <ul class="row my_white" id="lab_equipment_list"></ul>
-                </div>
-                <script id="labequip_list_template" type="mustache">
-                <div class="row sidebaritem">
-                    <div class="col s2">
-                        <img src="../../img/beaker.png" class="item_img">
-                    </div>
-                    <div class="col s2">
-                        <p>Name: {{name}}</p>
-                        <p>Type: {{type}}</p>
-                    </div>
-                    {{^machine}}
-                    <div class="col s4">
-                    {{#liquid}}
-                        <p>Max Volume: {{properties.max_volume}}</p>
-                    {{/liquid}}
-                    {{#solid}}
-                        <p>Max Weight: {{properties.max_weight}}</p>
-                    {{/solid}}
-                        <p>Temperature: {{properties.min_temperature}} - {{properties.max_temperature}}</p>
-                    </div>
-                    {{/machine}}
-                    {{#machine}}
-                    <div class="col s2"></div>
-                    {{/machine}}
-                    <div class="col s2 ">
-                        <a href="#">remove</a>
-                    </div>
+            <div class="col s6">
+                <div class="col s12 left white">
+                    <div class="col s12 delete_empty center-align"> <h4>Current Equipment</h4></div>
+                    <ul class="row my_white equipmentheight" id="lab_equipment_list"></ul>
+                                <script id="labequip_list_template" type="mustache">
+                                    <div class="row sidebaritem">
+                                        <div class="col s2">
+                                            <img src="../../img/beaker.png" class="item_img">
+                                        </div>
+                                        <div class="col s2">
+                                            <p>Name: {{name}}</p>
+                                            <p>Type: {{type}}</p>
+                                        </div>
+                                        {{^machine}}
+                                        <div class="col s4">
+                                        {{#liquid}}
+                                            <p>Max Volume: {{properties.max_volume}}</p>
+                                        {{/liquid}}
+                                        {{#solid}}
+                                            <p>Max Weight: {{properties.max_weight}}</p>
+                                        {{/solid}}
+                                            <p>Temperature: {{properties.min_temperature}} - {{properties.max_temperature}}</p>
+                                        </div>
+                                        {{/machine}}
+                                        {{#machine}}
+                                        <div class="col s2"></div>
+                                        {{/machine}}
+                                        <div class="col s1 ">
+                                            <a href="#">remove</a>
+                                        </div>
+                                    </div>
+                                </script>
+
                 </div>
 
-                </script>
+
+
+
             </div>
             <div class="col s6">
-                <nav class="white black-text center-align">All Equipments</nav>
-                <div class="card-panel">
-                    <ul class="row my_white" id="all_equipment"></ul>
-                </div>
-                <script id="allequip_list_template" type="mustache">
-                <div class="row sidebaritem">
-                    <div class="col s2">
-                        <img src="../../img/beaker.png" class="item_img">
-                    </div>
-                    <div class="col s3">
-                        <p>Name: {{name}}</p>
-                        <p>Type: {{type}}</p>
-                    </div>
-                    {{^machine}}
-                    <div class="col s2">
-                    {{#liquid}}
-                        <p>Max Volume: {{properties.max_volume}}</p>
-                    {{/liquid}}
-                    {{#solid}}
-                        <p>Max Weight: {{properties.max_weight}}</p>
-                    {{/solid}}
-                        <p>Temperature: {{properties.min_temperature}} - {{properties.max_temperature}}</p>
-                    </div>
-                    {{/machine}}
-                    {{#machine}}
-                    <div class="col s3"></div>
-                    {{/machine}}
-                    <div class="col s2 ">
-                        <a href="#">Add</a>
-                    </div>
+                <div class="col s12 right white">
+                    <div class="col s12 delete_empty center-align"> <h4>All Equipment</h4></div>
+                    <ul class="row my_white equipmentheight" id="all_equipment"></ul>
+
+                    <script id="allequip_list_template" type="mustache">
+                            <div class="row sidebaritem">
+                                <div class="col s2">
+                                    <img src="../../img/beaker.png" class="item_img">
+                                </div>
+                                <div class="col s3">
+                                    <p>Name: {{name}}</p>
+                                    <p>Type: {{type}}</p>
+                                </div>
+                                {{^machine}}
+                                <div class="col s2">
+                                {{#liquid}}
+                                    <p>Max Volume: {{properties.max_volume}}</p>
+                                {{/liquid}}
+                                {{#solid}}
+                                    <p>Max Weight: {{properties.max_weight}}</p>
+                                {{/solid}}
+                                    <p>Temperature: {{properties.min_temperature}} - {{properties.max_temperature}}</p>
+                                </div>
+                                {{/machine}}
+                                {{#machine}}
+                                <div class="col s3"></div>
+                                {{/machine}}
+                                <div class="col s1">
+                                    <a href="#">Add</a>
+                                </div>
+                            </div>
+
+                        </script>
                 </div>
 
-                </script>
             </div>
         </div>
     </div>
