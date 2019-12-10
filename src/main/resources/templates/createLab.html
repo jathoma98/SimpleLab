@@ -122,6 +122,7 @@
                     <div class="col s4"></div>
                     {{/machine}}
                 </div>
+
                 </script>
             </div>
             <div class="col s6">
@@ -156,34 +157,35 @@
                         <a href="#">Add</a>
                     </div>
                 </div>
+
                 </script>
             </div>
         </div>
     </div>
     <div id="recipe" class="row">
         <div class="delete_empty col s12 white recipeheight z-depth-2">
-<!--            <nav class="center-align"><h3>create your recipe</h3></nav>-->
+            <!--            <nav class="center-align"><h3>create your recipe</h3></nav>-->
 
-            <div id="equip1" class="col s4 center margintop ">
-                <div class="center col s10 offset-s1 z-depth-1 padding4">
-                    <p class="fontheader">Equipment 1: name</p>
+            <div id="equip1" class="col s4 center margintop">
+                <div class="center col s10 offset-s1 z-depth-1 padding4 recipe_equips" id="equip_1">
+                    <p class="fontheader">Equipment 1: </p>
                     <img src="../../img/beaker.png" class="recipeimg margintop col s4 offset-s4">
-                    <input type="number" class="col s8 offset-s2 center-align">
+                    <input type="number" class="col s8 offset-s2 center-align click_ignore">
                 </div>
             </div>
 
             <div id="equip2" class="col s4 center margintop">
-                <div class="center col s10 offset-s1 z-depth-1 padding4">
-                    <p class="fontheader">Equipment 2: name</p>
+                <div class="center col s10 offset-s1 z-depth-1 padding4 recipe_equips" id="equip_2">
+                    <p class="fontheader">Equipment 2: </p>
                     <img src="../../img/beaker.png" class="recipeimg margintop col s4 offset-s4">
-                    <input type="number" class="col s8 offset-s2 center-align">
+                    <input type="number" class="col s8 offset-s2 center-align click_ignore">
                 </div>
             </div>
             <div id="equip3" class="col s4 center margintop">
-                <div class="center col s10 offset-s1 z-depth-1 padding4">
-                    <p class="fontheader">Equipment 3: name</p>
+                <div class="center col s10 offset-s1 z-depth-1 padding4 recipe_equips" id="equip_r">
+                    <p class="fontheader">Equipment 3: </p>
                     <img src="../../img/beaker.png" class="recipeimg margintop col s4 offset-s4">
-                    <input type="number" class="col s8 offset-s2 center-align">
+                    <input type="number" class="col s8 offset-s2 center-align click_ignore">
                 </div>
             </div>
         </div>
@@ -191,28 +193,12 @@
         <div class="row"></div>
         <div class="row">
             <div class="width2  white left height6 z-depth-2">
-
+                <h1>chen</h1>
             </div>
             <div class="width2 height6 white right z-depth-2">
-
+                <h1>chen</h1>
+                <ul class="row my_white" id="recipe_equip_list"></ul>
             </div>
-<!--            <div class="row" style="padding-left: 3%; padding-right: 3%; height: 100%">-->
-<!--                <div class="col s6" style="height: 100%">-->
-<!--                    <div class="card-panel" style="overflow-y: auto; overflow-x:hidden; margin-right: 1%; height: 100%">-->
-<!--                        <div class="row">-->
-<!--                            &lt;!&ndash;nav here &ndash;&gt;-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="col s6" style="height: 100%">-->
-<!--                    <div class="card-panel"-->
-<!--                         style=" overflow-y: auto; overflow-x:hidden; margin-left: 1%; height: 100%">-->
-<!--                        <div class="row">-->
-<!--                            &lt;!&ndash;nav here &ndash;&gt;-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
         </div>
     </div>
     <div id="steps" class="col s12" style="height:800px">
