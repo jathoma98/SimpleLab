@@ -166,6 +166,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
     }
 
 
+
     @PatchMapping(UPDATE_MAPPING)
     public RRO<String> updateLab(@RequestBody DTO.LabUpdateDTO dto) {
         long uid = getUserIdFromSession();
@@ -210,9 +211,10 @@ public class LabRESTController extends BaseRESTController<Lab> {
         if (found == null){
             return RRO.sendErrorMessage("Lab Not Found");
         }
+        //TODO: could make better, but for now
         Equipment targetObject = equipmentDB.findById(dto.getTargetEquipmentId());
         DTO.LabAddStepDTO f_step = new DTO.LabAddStepDTO();
-        f_step.setStepNum(dto.getStepNum());
+        f_step.setStepNum(found.getSteps().size()+1);
         f_step.setTargetObject(targetObject);
         f_step.setTargetTemperature(dto.getTargetTemperature());
         f_step.setTargetVolume(dto.getTargetVolume());
