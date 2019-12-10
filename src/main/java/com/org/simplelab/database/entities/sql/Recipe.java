@@ -47,8 +47,6 @@ public class Recipe extends BaseTable implements UserCreated {
                 "EQ2: " + equipmentTwo.getName() + " Properties: " + equipmentTwo.getProperties().toString() + " \n" +
                 "Result: " + result.getName() + " Properties: " + result.getProperties().toString();
     }
-
-
     private static Recipe NO_RECIPE_GEN(){
         Recipe r = new Recipe();
         r.setName("NO RECIPE");

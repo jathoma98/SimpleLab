@@ -1,7 +1,7 @@
 ELEM_NAME = {
     ALL_EQUIPMENT_LIST : "#all_equipment",
     LAB_EQUIPMENT_LIST: "#lab_equipment_list",
-    RECIPE_CARDS:".recipe_card",
+    RECIPE_CARDS:".recipe_equips",
     RECIPE_CARD_ONE:"#equip_1",
     RECIPE_CARD_TWO:"#equip_2",
     RECIPE_CARD_RESULT:"#equip_r",
@@ -85,14 +85,14 @@ RECIPE ={
         rationOne:"",
         rationTwo:"",
     },
-
-
     init(){
         this.setCard = function(eqm){
 
         };
         this.selectCard = function(event){
-            let select_id = "#" + event.target.id;
+            let isClick_ignore = $(event.target).hasClass("click_ignore");
+            if(isClick_ignore) return;
+            let select_id = "#" + event.currentTarget.id;
             RECIPE.selected = select_id;
             let data = {iterable: EQUIPMENT.lab_equipment}
             switch (select_id) {
@@ -101,6 +101,7 @@ RECIPE ={
                         "<li/>", undefined, data, "click",
                         (eqm)=>{
                             RECIPE.recipe.equipmentOne = eqm.id;
+                            $(ELEM_NAME.RECIPE_CARD_ONE).find("p").text("Equipment 1:" + eqm.name);
                         });
                     break;
                 case ELEM_NAME.RECIPE_CARD_TWO:
@@ -108,6 +109,7 @@ RECIPE ={
                         "<li/>", undefined, data, "click",
                         (eqm)=>{
                             RECIPE.recipe.equipmentTwo = eqm.id;
+                            $(ELEM_NAME.RECIPE_CARD_TWO).find("p").text("Equipment 2:" + eqm.name);
                         });
                     break;
                 case ELEM_NAME.RECIPE_CARD_RESULT:
@@ -116,6 +118,7 @@ RECIPE ={
                         "<li/>", undefined, data, "click",
                         (eqm)=>{
                             RECIPE.recipe.result = eqm.id;
+                            $(ELEM_NAME.RECIPE_CARD_RESULT).find("p").text("Result:" + eqm.name);
                         });
                     break;
             }
