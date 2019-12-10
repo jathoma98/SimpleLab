@@ -118,7 +118,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
 
 
     @GetMapping(LOAD_LIST_LAB_MAPPING)
-    public RRO getListOfCourse(HttpSession session) {
+    public RRO getListOfLab(HttpSession session) {
         long userId = getUserIdFromSession();
         RRO rro = new RRO<Projection>();
         //Use TeacherLabInfo projection to only get attributes we want

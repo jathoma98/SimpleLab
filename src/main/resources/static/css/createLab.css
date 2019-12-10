@@ -267,6 +267,11 @@
     height: 75%!important;
     overflow-y: auto;
     overflow-x: hidden;
+}
+
+
+.card_selected{
+    background: rgba(0, 0, 0, 0.10);
 
 }
 
@@ -274,4 +279,5 @@
     margin-top: 10px;
     margin-right: 35px;
     margin-bottom: 10px;
+
 }

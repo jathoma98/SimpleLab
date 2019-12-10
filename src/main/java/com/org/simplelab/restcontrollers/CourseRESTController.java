@@ -119,7 +119,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
 
         User user = userDB.findById(userId);
         List<Course> courses = null;
-        if (user.getRole() == "teacher") {
+        if (user.getRole().equals("teacher")) {
             courses = courseDB.getCoursesForTeacher(userId);
         }
         else if (user.getRole().equals("student")){

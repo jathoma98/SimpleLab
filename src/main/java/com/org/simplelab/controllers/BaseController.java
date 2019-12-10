@@ -28,6 +28,9 @@ public abstract class BaseController {
     protected LabInstanceDB instanceDB;
 
     @Autowired
+    protected RecipeDB recipeDB;
+
+    @Autowired
     protected HttpSession session;
 
     protected long getUserIdFromSession(){

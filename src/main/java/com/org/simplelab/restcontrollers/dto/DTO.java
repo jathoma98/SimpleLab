@@ -141,3 +141,4 @@ public abstract class DTO {
          int ratioTwo;
      }
 }
+

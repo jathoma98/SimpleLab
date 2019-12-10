@@ -90,8 +90,11 @@ RECIPE ={
 
         };
         this.selectCard = function(event){
-            let isClick_ignore = $(event.target).hasClass("click_ignore");
+            let target = $(event.target);
+            let isClick_ignore = target.hasClass("click_ignore");
             if(isClick_ignore) return;
+            $(ELEM_NAME.RECIPE_CARDS).removeClass("card_selected")
+            $(this).addClass("card_selected")
             let select_id = "#" + event.currentTarget.id;
             RECIPE.selected = select_id;
             let data = {iterable: EQUIPMENT.lab_equipment}
