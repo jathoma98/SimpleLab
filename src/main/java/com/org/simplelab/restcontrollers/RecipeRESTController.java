@@ -5,6 +5,7 @@ import com.org.simplelab.database.entities.sql.Recipe;
 import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.services.RecipeDB;
+import com.org.simplelab.database.validators.InvalidFieldException;
 import com.org.simplelab.database.validators.RecipeValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.transform.Result;
 import java.util.List;
 
 @RestController
@@ -28,14 +30,19 @@ public class RecipeRESTController extends BaseRESTController<Recipe> {
     private RecipeDB db;
 
     @PostMapping
-    public RRO<String> addRecipe(@RequestBody DTO.AddRecipeDTO dto){
-        if(recipeDB.isRecipeExist(dto.getEquipmentOne(), dto.getEquipmentTwo()))return RRO.sendErrorMessage("Recipe Exist");
+    public RRO<String> addRecipe(@RequestBody DTO.AddRecipeDTO dto)  {
+        if(recipeDB.isRecipeExist(dto.getEquipmentOne(), dto.getEquipmentTwo(), dto.getResult()))return RRO.sendErrorMessage("Recipe Exist");
         RecipeValidator rv = new RecipeValidator();
         rv.setEquipmentOne(equipmentDB.findById(dto.getEquipmentOne()));
         rv.setEquipmentTwo(equipmentDB.findById(dto.getEquipmentTwo()));
         rv.setResult(equipmentDB.findById(dto.getResult()));
         rv.setRatioOne(dto.getRatioOne());
         rv.setRatioTwo(dto.getRatioTwo());
+        try{
+            rv.validate();
+        }catch (InvalidFieldException e) {
+            return RRO.sendErrorMessage(e.getMessage());
+        }
         return super.addEntity(rv);
     }
 
@@ -44,16 +51,30 @@ public class RecipeRESTController extends BaseRESTController<Recipe> {
         long user_id = getUserIdFromSession();
         RRO rro = new RRO<List<Recipe>>();
         List<Recipe> recipes = recipeDB.getRecipeByCreateId(user_id);
-        if (recipes == null) {
-            rro.setSuccess(false);
-            rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
-            return rro;
-        }
         rro.setData(recipes);
         rro.setSuccess(true);
         rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
+        return rro;
+    }
+    @DeleteMapping(RECIPE_ID_MAPPING)
+    public RRO<String> deleteRecipe(@PathVariable Long recipe_id){
+        RRO<String> rro = new RRO();
+        recipeDB.deleteById(recipe_id);
+        rro.setSuccess(true);
+        rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
+        return rro;
+    }
+    @PatchMapping(RECIPE_ID_MAPPING)
+    public RRO<String> updateRecipe(@PathVariable Long recipe_id, @RequestBody DTO.AddRecipeDTO dto){
+        Recipe recipe = recipeDB.findById(recipe_id);
+        Equipment equipmentOne = dto.getEquipmentOne() == recipe.getEquipmentOne().getId() ?
+                recipe.getEquipmentOne():equipmentDB.findById(dto.getEquipmentOne());
+        Equipment equipmentTwo = dto.getEquipmentTwo() == recipe.getEquipmentTwo().getId() ?
+                recipe.getEquipmentTwo():equipmentDB.findById(dto.getEquipmentTwo());
+        Equipment result = dto.getResult() == recipe.getResult().getId() ?
+                recipe.getResult():equipmentDB.findById(dto.getResult());
+        recipe.setRatioOne(dto.getRatioOne());
+        recipe.setRatioTwo(dto.getRatioTwo());
         return null;
     }
-
-
 }

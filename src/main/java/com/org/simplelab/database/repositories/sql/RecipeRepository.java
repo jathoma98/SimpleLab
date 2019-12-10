@@ -14,13 +14,13 @@ public interface RecipeRepository extends BaseRepository<Recipe> {
 
     List<Recipe> findByCreator_id(long id);
 
-
-
     @Query(value = "SELECT *\n" +
             "FROM #{#entityName}\n" +
-            "WHERE (equipment_one_id = :one\n" +
-            "AND\n" +
-            "equipment_two_id = :two)", nativeQuery = true)
-    List<Recipe> findByEquipment_one_idAndEquipment_two_id(@Param("one")long a, @Param("two")long b);
+            "WHERE " +
+            "(equipment_one_id = :one AND equipment_two_id = :two AND result_id = :three)",
+            nativeQuery = true)
+    List<Recipe> findByEquipment_one_idAndEquipment_two_idAndResult(
+            @Param("one")long a, @Param("two")long b, @Param("three")long c
+    );
 
 }

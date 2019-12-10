@@ -25,9 +25,12 @@ public class RecipeDB extends DBService<Recipe> {
         return repository.findByCreator_id(id);
     }
 
-    public boolean isRecipeExist(long a, long b){
-        List<Recipe> rs = repository.findByEquipment_one_idAndEquipment_two_id(a, b);
+    public boolean isRecipeExist(long a, long b, long c){
+        List<Recipe> rs = repository.findByEquipment_one_idAndEquipment_two_idAndResult(a, b, c);
         return rs.size() == 0 ? false : true;
     }
 
+    public boolean deleteById(long id){
+        return super.deleteById(id);
+    }
 }
