@@ -1,6 +1,7 @@
-package com.org.simplelab.database.entities.sql;
+package com.org.simplelab.database.entities.mongodb;
 
 import com.org.simplelab.database.DBUtils;
+import com.org.simplelab.database.entities.sql.AbstractEquipment;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -8,10 +9,10 @@ import javax.persistence.Table;
 
 /**
  * Represents an Equipment object instantiated within a Do Lab instance.
+ * We're ignoring the SQL annotations of the superclass -- this is just being
+ * serialized and stored in MongoDB.
  */
 @Data
-@Entity(name = DBUtils.INSTANTIATED_EQUIPMENT_TABLE_NAME)
-@Table(name = DBUtils.INSTANTIATED_EQUIPMENT_TABLE_NAME)
 public class InstantiatedEquipment extends AbstractEquipment {
 
     //x and y positions

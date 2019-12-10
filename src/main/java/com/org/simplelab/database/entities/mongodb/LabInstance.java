@@ -30,6 +30,9 @@ public class LabInstance extends BaseDocument{
 
     private List<StepRecord> stepRecords;
 
+    //list of equipment that user has dragged onto the UI
+    private List<InstantiatedEquipment> equipmentInstances;
+
     public LabInstance(){
         super();
         this.stepRecords = new ArrayList<>();

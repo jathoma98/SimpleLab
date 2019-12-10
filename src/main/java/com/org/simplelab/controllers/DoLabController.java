@@ -1,6 +1,7 @@
 package com.org.simplelab.controllers;
 
 import com.org.simplelab.database.DBUtils;
+import com.org.simplelab.database.entities.mongodb.InstantiatedEquipment;
 import com.org.simplelab.database.entities.mongodb.LabInstance;
 import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.Lab;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.org.simplelab.restcontrollers.dto.DTO.EquipmentInteractionDTO;
@@ -34,6 +36,7 @@ public class DoLabController extends BaseController {
     public static final String DO_LAB_BASE_MAPPING = "/student/doLab";
     public static final String LAB_ID_MAPPING = "/{lab_id}";
     public static final String INTERACTION_MAPPING  = "/{instance_id}";
+    public static final String INTERACTION_SAVE_STATE = INTERACTION_MAPPING + "/saveState";
 
     /**
      * Initiates building of a LabInstance document, which will record user actions and state of a lab in progress.
@@ -43,23 +46,29 @@ public class DoLabController extends BaseController {
      *
      * Example:
      * User clicks on lab with id 100 to do the lab ->
-     * @return: {
-     *     instance_id: String -- MongoDB id of the lab instance. This should be saved in HTML
-     *     name: String -- Name of lab
-     *     description : String --  Description of lab
-     *     steps: List -- of Step objects
-     *     equipments: List -- of equipments in the lab
-     *     is_continued: boolean -- whether the lab is new or being continued from a saved instance
-     *     recipes: List of Recipes in the lab
+     * @return:
+     *  RRO with: {
+     *      success: true
+     *      action: LOAD_DATA
+     *      data: {
+         *     instance_id: String -- MongoDB id of the lab instance. This should be saved in HTML
+         *     name: String -- Name of lab
+         *     description : String --  Description of lab
+         *     steps: List -- of Step objects
+         *     equipments: List -- of equipments in the lab
+         *     is_continued: boolean -- whether the lab is new or being continued from a saved instance
+         *     recipes: List of Recipes in the lab
+         *
+         *     ** if is_continued = true , DTO will have 2 additional fields: **
+         *
+         *     starting_step: int -- step of the Lab to start from. This is the stepNum, not the index in the list of steps.
+         *          ex: when starting_step = 1, start from step where stepNum = 1, but this may be at index 0 in the list.
+         *     equipment_instances List -- of Equipment that User had dragged onto the UI before quitting lab,
+         *          these are subclass of Equipment with x and y values to render UI position.
      *
-     *     ** if is_continued = true , DTO will have 2 additional fields: **
+     *      }
      *
-     *     starting_step: int -- step of the Lab to start from. This is the stepNum, not the index in the list of steps.
-     *          ex: when starting_step = 1, start from step where stepNum = 1, but this may be at index 0 in the list.
-     *     equipment_instances List -- of Equipment that User had dragged onto the UI before quitting lab,
-     *          these are subclass of Equipment with x and y values to render UI position.
-     *
-     * }
+     *  }
      */
     @GetMapping(LAB_ID_MAPPING)
     @Transactional
@@ -83,7 +92,7 @@ public class DoLabController extends BaseController {
      * 1. Check if the interaction is valid
      * 2. Check if the result of the interaction fits a Recipe. If it does, perform the Recipe
      * 3. Check if the result of the interaction (or Recipe) matches the targetObject for the step.
-     * DTO format: {
+     * @DTO format: {
      *     object1: Equipment -- The Equipment that the user is dragging. Ex: user drags beaker to another beaker,
      *                                                                        the beaker the User is holding is object1.
      *     object2: Equipment -- Equipment that the user interacts with.
@@ -224,6 +233,38 @@ public class DoLabController extends BaseController {
         rro.setSuccess(true);
         return rro;
     }
+
+    /**
+     * Handles saving the current workspace state to the current LabInstance (all equipment in the UI)
+     * ex: User completes a step -> Client sends all workspace equipment to this endpoint to save objects and their positions.
+     *
+     * Note that we don't need to save equipment in the sidebar -- sidebar equipment is already saved.
+     * This only saves equipment in the actual UI, so that student can come back and finish labs they left before completing.
+     *
+     * @DTO format: list of Equipment with format:
+     * [
+     *   {
+     *        All Equipment info (name, description, properties, etc.) -- send all equipment fields
+     *        x: int -- x position of the Equipment in workspace
+     *        y: int -- y position of the Equipment in workspace
+     *   }
+     * ]
+     *
+     * @Return: RRO with {
+     *     success: true
+     *     action: NOTHING
+     * }
+     */
+    @PostMapping(INTERACTION_SAVE_STATE)
+    public RRO handleSaveWorkspaceState(@RequestBody List<InstantiatedEquipment> workspaceEquipment){
+
+        RRO rro = new RRO();
+        rro.setSuccess(true);
+        rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
+        return rro;
+    }
+
+
 
 
 

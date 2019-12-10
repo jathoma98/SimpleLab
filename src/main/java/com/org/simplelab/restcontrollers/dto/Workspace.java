@@ -1,7 +1,7 @@
 package com.org.simplelab.restcontrollers.dto;
 
 import com.org.simplelab.database.entities.sql.AbstractEquipment;
-import com.org.simplelab.database.entities.sql.InstantiatedEquipment;
+import com.org.simplelab.database.entities.mongodb.InstantiatedEquipment;
 import com.org.simplelab.database.entities.sql.Recipe;
 import com.org.simplelab.database.entities.sql.Step;
 import lombok.Data;
