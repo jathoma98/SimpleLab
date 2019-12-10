@@ -8,6 +8,7 @@ ELEM_NAME = {
     RECIPE_EQUIP_LIST: "#recipe_equip_list",
     RECIPE_LIST: "#recipe_list",
     RECIPE_SAVE_BTN: "#recipe_save_btn",
+    RECIPE_NEW_BTN: "#recipe_new_btn",
 };
 TEMPLATE_ID = {
     ALL_EQUIPMENT_LIST: "#allequip_list_template",
@@ -77,7 +78,6 @@ EQUIPMENT = {
                         rebuildRepeatComponent(ELEM_NAME.LAB_EQUIPMENT_LIST, TEMPLATE_ID.LAB_EQUIPMENT_LIST,
                             "<li/>", undefined, data, "click",
                             (eqm) => {
-                                console.log(eqm);
                             });
                     })
                 }
@@ -135,7 +135,6 @@ RECIPE = {
                         });
                     break;
             }
-            console.log(RECIPE.recipe);
         };
         this.load = function () {
             $.ajax({
@@ -149,7 +148,19 @@ RECIPE = {
                         rebuildRepeatComponent(ELEM_NAME.RECIPE_LIST, TEMPLATE_ID.RECIPE_LIST,
                             "<li/>", "a", data, "click",
                             (recipe) => {
-                                console.log(recipe);
+                                $(ELEM_NAME.RECIPE_CARDS).removeClass("card_selected");
+                                RECIPE.selected = "";
+                                $(ELEM_NAME.RECIPE_EQUIP_LIST).empty();
+                                $(ELEM_NAME.RECIPE_CARD_ONE).find("p")
+                                    .text("Equipment 1:" + recipe.equipmentOne.name);
+                                $(ELEM_NAME.RECIPE_CARD_ONE).find("input")
+                                    .val(recipe.ratioOne);
+                                $(ELEM_NAME.RECIPE_CARD_TWO).find("p")
+                                    .text("Equipment 2:" + recipe.equipmentTwo.name);
+                                $(ELEM_NAME.RECIPE_CARD_TWO).find("input")
+                                    .val(recipe.ratioTwo);
+                                $(ELEM_NAME.RECIPE_CARD_RESULT).find("p")
+                                    .text("Result:" + recipe.result.name);
                             });
                     });
                 }
@@ -170,10 +181,26 @@ RECIPE = {
                 }
             })
         };
+        this.new_recipe = function (){
+            $(ELEM_NAME.RECIPE_CARDS).removeClass("card_selected");
+            RECIPE.selected = "";
+            $(ELEM_NAME.RECIPE_EQUIP_LIST).empty();
+            $(ELEM_NAME.RECIPE_CARD_ONE).find("p")
+                .text("Equipment 1");
+            $(ELEM_NAME.RECIPE_CARD_ONE).find("input")
+                .val("");
+            $(ELEM_NAME.RECIPE_CARD_TWO).find("p")
+                .text("Equipment 2");
+            $(ELEM_NAME.RECIPE_CARD_TWO).find("input")
+                .val("");
+            $(ELEM_NAME.RECIPE_CARD_RESULT).find("p")
+                .text("Result");
+        }
     },
     onclickInit() {
         $(ELEM_NAME.RECIPE_CARDS).on("click", RECIPE.selectCard);
         $(ELEM_NAME.RECIPE_SAVE_BTN).on("click", RECIPE.save);
+        $(ELEM_NAME.RECIPE_NEW_BTN).on("click", RECIPE.new_recipe);
     }
 }
 

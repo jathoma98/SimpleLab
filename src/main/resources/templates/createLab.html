@@ -93,7 +93,7 @@
             <div class="col s6">
                 <div class="col s12 left white">
                     <div class="col s12 delete_empty center-align"> <h4>Current Equipment</h4></div>
-                    <ul class="row my_white equipmentheight " id="lab_equipment_list"></ul>
+                    <ul class="row my_white equipmentheight scrollbar_y" id="lab_equipment_list"></ul>
                     <script id="labequip_list_template" type="mustache">
                             <div class="row sidebaritem">
                                 <div class="col s2">
@@ -127,7 +127,7 @@
             <div class="col s6">
                 <div class="col s12 right white">
                     <div class="col s12 delete_empty center-align"> <h4>All Equipment</h4></div>
-                    <ul class="row my_white equipmentheight" id="all_equipment"></ul>
+                    <ul class="row my_white equipmentheight scrollbar_y" id="all_equipment"></ul>
                     <script id="allequip_list_template" type="mustache">
                         <div class="row sidebaritem">
                             <div class="col s2">
@@ -168,33 +168,36 @@
             <div class="col s12 delete_empty center-align my_red"><h5>Recipe</h5></div>
             <div id="equip1" class="col s4 center margintop">
                 <div class="center col s10 offset-s1 z-depth-1 padding4 recipe_equips" id="equip_1">
-                    <p class="fontheader">Equipment 1: </p>
+                    <p class="fontheader">Equipment 1</p>
                     <img src="../../img/beaker.png" class="recipeimg margintop col s4 offset-s4">
                     <input type="number" class="col s8 offset-s2 center-align click_ignore">
                 </div>
             </div>
             <div id="equip2" class="col s4 center margintop">
                 <div class="center col s10 offset-s1 z-depth-1 padding4 recipe_equips" id="equip_2">
-                    <p class="fontheader">Equipment 2: </p>
+                    <p class="fontheader">Equipment 2</p>
                     <img src="../../img/beaker.png" class="recipeimg margintop col s4 offset-s4">
                     <input type="number" class="col s8 offset-s2 center-align click_ignore">
                 </div>
             </div>
             <div id="equip3" class="col s4 center margintop">
                 <div class="center col s10 offset-s1 z-depth-1 padding4 recipe_equips" id="equip_r">
-                    <p class="fontheader">Equipment 3: </p>
+                    <p class="fontheader">Equipment 3</p>
                     <img src="../../img/beaker.png" class="recipeimg margintop col s4 offset-s4">
                     <input type="number" class="col s8 offset-s2 center-align click_ignore">
                 </div>
             </div>
-            <div class="delete_empty margintop10"><a id ="recipe_save_btn" class="btn my_red  recipesavebtn right">Save</a></div>
+            <div class="row parent_weight">
+                <div class="delete_empty"><a id ="recipe_save_btn" class="btn my_red right">Save</a></div>
+                <div class="delete_empty"><a id ="recipe_new_btn" class="btn my_red right">New</a></div>
+            </div>
         </div>
         <div class="row"></div>
         <div class="row">
             <div class="width2  white left height6 z-depth-2">
                 <div class="col s12 delete_empty center-align my_yellow"> <h5>Current Recipe</h5></div>
                 <div class="row"></div>
-                <ul class="row my_white" id="recipe_list"></ul>
+                <ul class="row my_white scrollbar_y parent_height" id="recipe_list"></ul>
                 <script id="recipe_template" type="mustache">
                     <a><p>{{equipmentOne.name}}({{ratioOne}}) + {{equipmentTwo.name}}({{ratioTwo}}) => {{result.name}}</p></a>
                 </script>
@@ -203,7 +206,7 @@
             <div class="width2 height6 white right z-depth-2">
                 <div class="col s12 delete_empty center-align my_yellow"> <h5>Equipment</h5></div>
                 <div class="row"></div>
-                <ul class="row my_white" id="recipe_equip_list"></ul>
+                <ul class="row my_white scrollbar_y parent_height" id="recipe_equip_list"></ul>
                 <script id="recequip_list_template" type="mustache">
                     <div class="row sidebaritem">
                         <div class="col s2">
