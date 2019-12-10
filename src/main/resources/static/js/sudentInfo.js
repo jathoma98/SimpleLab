@@ -7,6 +7,7 @@ $(document).ready( function () {
     $("#labBackBtn").on("click",labHideAndShow);
     $("#editInfoBtn").on("click",editInfo);
     $("#courseSearchBtn").on("click",searchCourse);
+
     loadCourse();
 })
 
