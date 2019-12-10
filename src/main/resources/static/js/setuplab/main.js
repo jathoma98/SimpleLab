@@ -1,15 +1,17 @@
 ELEM_NAME = {
-    ALL_EQUIPMENT_LIST : "#all_equipment",
-    LAB_EQUIPMENT_LIST: "#lab_equipment_list",
+    ALL_EQUIPMENT_LIST:"#all_equipment",
+    LAB_EQUIPMENT_LIST:"#lab_equipment_list",
     RECIPE_CARDS:".recipe_equips",
     RECIPE_CARD_ONE:"#equip_1",
     RECIPE_CARD_TWO:"#equip_2",
     RECIPE_CARD_RESULT:"#equip_r",
     RECIPE_EQUIP_LIST:"#recipe_equip_list",
+    RECIPE_SAVE_BTN:"#recipe_save_btn",
 };
 TEMPLATE_ID ={
     ALL_EQUIPMENT_LIST: "#allequip_list_template",
     LAB_EQUIPMENT_LIST: "#labequip_list_template",
+    RECIPE_EQUIPMENT_LIST: "#recequip_list_template",
 };
 
 EQUIPMENT = {
@@ -82,8 +84,8 @@ RECIPE ={
         equipmentOne:"",
         equipmentTwo:"",
         result:"",
-        rationOne:"",
-        rationTwo:"",
+        ratioOne:"",
+        ratioTwo:"",
     },
     init(){
         this.setCard = function(eqm){
@@ -100,7 +102,7 @@ RECIPE ={
             let data = {iterable: EQUIPMENT.lab_equipment}
             switch (select_id) {
                 case ELEM_NAME.RECIPE_CARD_ONE:
-                    rebuildRepeatComponent(ELEM_NAME.RECIPE_EQUIP_LIST, TEMPLATE_ID.LAB_EQUIPMENT_LIST,
+                    rebuildRepeatComponent(ELEM_NAME.RECIPE_EQUIP_LIST, TEMPLATE_ID.RECIPE_EQUIPMENT_LIST,
                         "<li/>", undefined, data, "click",
                         (eqm)=>{
                             RECIPE.recipe.equipmentOne = eqm.id;
@@ -108,7 +110,7 @@ RECIPE ={
                         });
                     break;
                 case ELEM_NAME.RECIPE_CARD_TWO:
-                    rebuildRepeatComponent(ELEM_NAME.RECIPE_EQUIP_LIST, TEMPLATE_ID.LAB_EQUIPMENT_LIST,
+                    rebuildRepeatComponent(ELEM_NAME.RECIPE_EQUIP_LIST, TEMPLATE_ID.RECIPE_EQUIPMENT_LIST,
                         "<li/>", undefined, data, "click",
                         (eqm)=>{
                             RECIPE.recipe.equipmentTwo = eqm.id;
@@ -117,7 +119,7 @@ RECIPE ={
                     break;
                 case ELEM_NAME.RECIPE_CARD_RESULT:
                     data.iterable = EQUIPMENT.all_equipment;
-                    rebuildRepeatComponent(ELEM_NAME.RECIPE_EQUIP_LIST, TEMPLATE_ID.LAB_EQUIPMENT_LIST,
+                    rebuildRepeatComponent(ELEM_NAME.RECIPE_EQUIP_LIST, TEMPLATE_ID.RECIPE_EQUIPMENT_LIST,
                         "<li/>", undefined, data, "click",
                         (eqm)=>{
                             RECIPE.recipe.result = eqm.id;
@@ -127,10 +129,21 @@ RECIPE ={
             }
             console.log(RECIPE.recipe);
         };
-        this.add = function (){
+        this.load = function (){
+            $.ajax({
+                url: "/recipe/rest/loadRecipe",
+                type: 'GET',
+                success: function (result) {
+                    retObjHandle(result, null);
+                }
+            })
+        }
+        this.save = function (){
+            RECIPE.recipe.ratioOne = $(ELEM_NAME.RECIPE_CARD_ONE).find("input").val();
+            RECIPE.recipe.ratioTwo = $(ELEM_NAME.RECIPE_CARD_TWO).find("input").val();
             let data_json = JSON.stringify(RECIPE.recipe);
             $.ajax({
-                url: "/lab/rest/" + LAB_INFO.id + "/equipment",
+                url: "/recipe/rest",
                 type: 'POST',
                 dataTye: 'json',
                 contentType: 'application/json; charset=utf-8',
@@ -143,7 +156,8 @@ RECIPE ={
     },
 
     onclickInit(){
-        $(ELEM_NAME.RECIPE_CARDS).on("click", RECIPE.selectCard)
+        $(ELEM_NAME.RECIPE_CARDS).on("click", RECIPE.selectCard);
+        $(ELEM_NAME.RECIPE_SAVE_BTN).on("click", RECIPE.save);
     }
 }
 

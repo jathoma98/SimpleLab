@@ -9,8 +9,8 @@ public class RecipeValidator extends Validator<Recipe> {
     Equipment equipmentOne;
     Equipment equipmentTwo;
     Equipment result;
-    int ratioOne;
-    int ratioTwo;
+    double ratioOne;
+    double ratioTwo;
 
     @Override
     public void validate() throws InvalidFieldException {
@@ -21,6 +21,9 @@ public class RecipeValidator extends Validator<Recipe> {
     @Override
     public Recipe build() {
         Recipe recipe = new Recipe();
+        recipe.setEquipmentOne(equipmentOne);
+        recipe.setEquipmentTwo(equipmentTwo);
+        recipe.setResult(result);
         recipe.setRationOne(this.ratioOne);
         recipe.setRationTwo(this.ratioTwo);
         return recipe;
