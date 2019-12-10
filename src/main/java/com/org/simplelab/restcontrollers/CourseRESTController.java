@@ -123,7 +123,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
             courses = courseDB.getCoursesForTeacher(userId);
         }
         else if (user.getRole().equals("student")){
-            courses = courseDB.getCourseStudentEnrolledIn(userId);
+            courses = courseDB.getCoursesStudentEnrolledIn(userId);
         }
 
 

@@ -63,11 +63,5 @@ public interface CourseRepository extends BaseRepository<Course> {
             "WHERE name = :checkName\n", nativeQuery = true)
     public Course findInviteCodeByName(@Param("checkName") String keyword);
 
-    @Query(value = "SELECT *\n" +
-            "FROM #{#entityName}\n" +
-            "inner join course_students\n" +
-            "on (entityName.id = course_students.course_id)\n" +
-            "WHERE (student_id = :student_id)", nativeQuery = true)
-    public List<Course> getCourseByStudentId (@Param("student_id") long keyword);
 
 }
