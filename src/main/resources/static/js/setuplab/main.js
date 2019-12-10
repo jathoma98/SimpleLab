@@ -212,6 +212,17 @@ RECIPE = {
     }
 }
 
+STEP = {
+    init : function(){
+        this.buildEquipmentList = function(){
+            
+        }
+    }
+
+
+}
+
+
 $(document).ready(() => {
     EQUIPMENT.init();
     EQUIPMENT.loadAll();
