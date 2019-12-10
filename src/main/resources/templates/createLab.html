@@ -84,9 +84,9 @@
 <div class="row"></div>
 <div class="container">
     <ul class="tabs tabs-fixed-width z-depth-1">
-        <li class="tab my_yellow"><a href="#equipment_in_lab" class="active"> Equipment In Lab</a></li>
-        <li class="tab my_yellow"><a href="#recipe">Recipe</a></li>
-        <li class="tab my_yellow"><a href="#steps">Step</a></li>
+        <li class="tab "><a href="#equipment_in_lab" class="active"> Equipment In Lab</a></li>
+        <li class="tab "><a href="#recipe">Recipe</a></li>
+        <li class="tab "><a href="#steps">Step</a></li>
     </ul>
     <div id="equipment_in_lab" class="col s12 margintop10" style="height:800px;">
         <div class="row ">
@@ -171,7 +171,7 @@
     <div id="recipe" class="row">
         <div class="delete_empty col s12 white recipeheight z-depth-2">
             <!--            <nav class="center-align"><h3>create your recipe</h3></nav>-->
-
+            <div class="col s12 delete_empty center-align my_red"><h5>Recipe</h5></div>
             <div id="equip1" class="col s4 center margintop">
                 <div class="center col s10 offset-s1 z-depth-1 padding4 recipe_equips" id="equip_1">
                     <p class="fontheader">Equipment 1: </p>
@@ -179,7 +179,6 @@
                     <input type="number" class="col s8 offset-s2 center-align click_ignore">
                 </div>
             </div>
-
             <div id="equip2" class="col s4 center margintop">
                 <div class="center col s10 offset-s1 z-depth-1 padding4 recipe_equips" id="equip_2">
                     <p class="fontheader">Equipment 2: </p>
@@ -194,13 +193,17 @@
                     <input type="number" class="col s8 offset-s2 center-align click_ignore">
                 </div>
             </div>
+            <div class="delete_empty margintop10"><a class="btn my_red  recipesavebtn right">Save</a></div>
         </div>
 
         <div class="row"></div>
         <div class="row">
             <div class="width2  white left height6 z-depth-2">
+                <div class="col s12 delete_empty center-align my_yellow"> <h5>Current Recipe</h5></div>
+
             </div>
             <div class="width2 height6 white right z-depth-2">
+                <div class="col s12 delete_empty center-align my_yellow"> <h5>Current Equipment</h5></div>
 
                 <ul class="row my_white" id="recipe_equip_list"></ul>
             </div>
