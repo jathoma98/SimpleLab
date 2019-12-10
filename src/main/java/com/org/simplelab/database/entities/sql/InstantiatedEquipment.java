@@ -28,4 +28,7 @@ public class InstantiatedEquipment extends AbstractEquipment {
         return super.hashCode();
     }
 
+    @Override
+    public String toString() {return super.toString(); }
+
 }

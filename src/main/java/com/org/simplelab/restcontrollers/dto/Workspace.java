@@ -1,6 +1,8 @@
 package com.org.simplelab.restcontrollers.dto;
 
 import com.org.simplelab.database.entities.sql.AbstractEquipment;
+import com.org.simplelab.database.entities.sql.InstantiatedEquipment;
+import com.org.simplelab.database.entities.sql.Recipe;
 import com.org.simplelab.database.entities.sql.Step;
 import lombok.Data;
 
@@ -17,6 +19,12 @@ public class Workspace extends DTO {
 
     String name, description, instance_id;
     List<Step> steps;
+    List<Recipe> recipes;
     Set<AbstractEquipment> equipments;
+    boolean is_continued;
+
+    //if is_continued = true:
+    int starting_step;
+    List<InstantiatedEquipment> equipment_instances;
 
 }

@@ -32,7 +32,7 @@ public class DoLabEventHandler {
     LabInstanceDB instanceDB;
 
     @Transactional
-    public Workspace buildWorkspace(Lab l, long user_id){
+    public Workspace buildNewWorkspaceFromLab(Lab l, long user_id){
 
         //build lab record
         LabInstance li = new LabInstance();
@@ -51,6 +51,12 @@ public class DoLabEventHandler {
         Workspace ws = DBUtils.getMapper().map(l, Workspace.class);
         ws.setInstance_id(current.get_id());
         return ws;
+    }
+
+    @Transactional
+    public Workspace buildWorkspaceFromLabInstance(LabInstance li, long user_id){
+        Workspace ws = new Workspace();
+        return null;
     }
 
     public void addInteractionToHistory(LabInstance instance, int stepNum, InteractionObjects interactionInfo){

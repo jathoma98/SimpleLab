@@ -30,7 +30,7 @@ public class DoLabController extends BaseController {
     DoLabEventHandler eventHandler;
 
 
-    public static final String DO_LAB_BASE_MAPPING = "/doLab";
+    public static final String DO_LAB_BASE_MAPPING = "/student/doLab";
     public static final String LAB_ID_MAPPING = "/{lab_id}";
     public static final String INTERACTION_MAPPING  = "/{instance_id}";
 
@@ -43,12 +43,20 @@ public class DoLabController extends BaseController {
      * Example:
      * User clicks on lab with id 100 to do the lab ->
      * @return: {
-     *     instance_id: MongoDB id of the lab instance. This should be saved in HTML
-     *     name: Name of lab
-     *     description : Description of lab
-     *     steps: List of Step objects
-     *     equipments: List of equipments in the lab
+     *     instance_id: String -- MongoDB id of the lab instance. This should be saved in HTML
+     *     name: String -- Name of lab
+     *     description : String --  Description of lab
+     *     steps: List -- of Step objects
+     *     equipments: List -- of equipments in the lab
+     *     is_continued: boolean -- whether the lab is new or being continued from a saved instance
      *     (TODO: add this) recipes: List of Recipes in the lab
+     *
+     *     ** if is_continued = true , DTO will have 2 additional fields: **
+     *
+     *     starting_step: int -- step of the Lab to start from
+     *     equipment_instances List -- of Equipment that User had dragged onto the UI before quitting lab,
+     *          these are subclass of Equipment with x and y values to render UI position.
+     *
      * }
      */
     @GetMapping(LAB_ID_MAPPING)
@@ -58,8 +66,7 @@ public class DoLabController extends BaseController {
         if (found == null){
             return RRO.sendErrorMessage("Lab Not Found");
         }
-        Workspace ws = eventHandler.buildWorkspace(found, getUserIdFromSession());
-
+        Workspace ws = eventHandler.buildNewWorkspaceFromLab(found, getUserIdFromSession());
         RRO<Workspace> rro = new RRO<>();
         rro.setSuccess(true);
         rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
