@@ -129,4 +129,9 @@ public class CourseDB extends DBService<Course> {
         return repository.findInviteCodeByName(name);
     }
 
+    public List<Course> getCoursesForStudent(long id){
+        List<Course> found = repository.getCourseByStudentId(id);
+        return found;
+    }
+
 }

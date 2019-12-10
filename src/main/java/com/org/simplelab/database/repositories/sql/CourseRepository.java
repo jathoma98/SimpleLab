@@ -1,5 +1,4 @@
 package com.org.simplelab.database.repositories.sql;
-
 import com.org.simplelab.database.entities.sql.Course;
 import com.org.simplelab.database.entities.sql.User;
 import org.springframework.data.jpa.repository.Modifying;
@@ -53,4 +52,12 @@ public interface CourseRepository extends BaseRepository<Course> {
             "FROM #{#entityName}\n" +
             "WHERE name = :checkName\n", nativeQuery = true)
     public Course findInviteCodeByName(@Param("checkName") String keyword);
+
+    @Query(value = "SELECT *\n" +
+            "FROM #{#entityName}\n" +
+            "inner join course_students\n" +
+            "on (entityName.id = course_students.course_id)\n" +
+            "WHERE (student_id = :student_id)", nativeQuery = true)
+    public List<Course> getCourseByStudentId (@Param("student_id") long keyword);
+
 }
