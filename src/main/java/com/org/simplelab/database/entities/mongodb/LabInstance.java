@@ -16,8 +16,14 @@ public class LabInstance extends BaseDocument{
     //id of user doing lab
     private long userId;
 
+    //id of lab creator
+    private long creatorId;
+
     //id of lab being done
     private long labId;
+
+    //store names and description without overhead of deserializing
+    private String labName, labDescription;
 
     //whether the lab is finished or not
     private boolean finished = false;

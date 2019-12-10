@@ -10,7 +10,6 @@ import com.org.simplelab.database.entities.sql.Lab;
 import com.org.simplelab.database.services.LabInstanceDB;
 import com.org.simplelab.restcontrollers.dto.Workspace;
 import lombok.Data;
-import org.apache.commons.lang3.SerializationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,7 +35,10 @@ public class DoLabEventHandler {
 
         //build lab record
         LabInstance li = new LabInstance();
+        li.setLabName(l.getName());
+        li.setLabDescription(l.getDescription());
         li.setSerialized_lab(DBUtils.serialize(l));
+        li.setCreatorId(l.getCreator().getId());
         li.setLabId(l.getId());
         li.setUserId(user_id);
 
