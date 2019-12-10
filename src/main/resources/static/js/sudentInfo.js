@@ -41,8 +41,8 @@ function deleteCourse(){
 
 function loadCourse(){
     $.ajax({
-        url: "/course/rest/loadCourseList",
-        type: 'GET',
+            url: "/course/rest/loadCourseList",
+            type: 'GET',
         success: function (result) {
             let courseTable = '';
             for (let f=0;f<result.data.length;f++){
@@ -63,6 +63,9 @@ function loadCourse(){
 
 function jumptoCourseLab() {
     $('#studentCourseModal').modal('open');
+    $.ajax({
+
+    })
 }
 
 function checkInvite() {

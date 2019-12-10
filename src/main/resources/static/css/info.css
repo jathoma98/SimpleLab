@@ -176,7 +176,7 @@
 }
 
 .labdescriptionheight{
-	height: 135px!important;
+	height: 135px;
 	overflow-y: auto;
 	background: #e1e1e1;
 }
