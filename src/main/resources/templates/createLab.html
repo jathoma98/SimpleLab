@@ -191,7 +191,7 @@
         </div>
         <div class="row"></div>
         <div class="row">
-            <div class="width2  white left height6 z-depth-2">
+            <div class="width2  white left height6 z-depth-2 recipebotheight">
                 <div class="col s12 delete_empty center-align my_yellow"> <h5>Current Recipe</h5></div>
                 <div class="row"></div>
                 <ul class="row my_white" id="recipe_list"></ul>
@@ -222,7 +222,7 @@
                 </script>
 
             </div>
-            <div class="width2 height6 white right z-depth-2">
+            <div class="width2 height6 white right z-depth-2 recipebotheight">
                 <div class="col s12 delete_empty center-align my_yellow"> <h5>Equipment</h5></div>
                 <div class="row"></div>
                 <ul class="row my_white" id="recipe_equip_list"></ul>
@@ -254,7 +254,9 @@
             </div>
         </div>
     </div>
-    <div id="steps" class="row" style="height:800px">
+    <div id="steps" class="row">
+        <div class="row"></div>
+        <div class="col s12 delete_empty center-align my_red"><h5>Recipe</h5></div>
         <div class="delete_empty col s12 white recipeheight z-depth-2 valign-wrapper" >
             <div class="col s4">
                 <div class="col s10 offset-s1 z-depth-1 padding4 recipe_equips  height8 center-align" >
@@ -263,40 +265,38 @@
                 </div>
             </div>
             <div class="col s8 ">
-                <div class="col s12">
+                <div class="col s12 margintop10">
                     <div class="col s2 steptopmargin">Volume:</div>
-                    <div class="col s9"> <input type="number" class="center-align click_ignore"></div>
+                    <div class="col s10"> <input type="number" class="center-align "></div>
                 </div>
-                <div class="col s12">
+                <div class="col s12 margintop10">
                     <div class="col s2 steptopmargin">Weight:</div>
-                    <div class="col s9"> <input type="number" class="center-align click_ignore"></div>
+                    <div class="col s10"> <input type="number" class="center-align "></div>
                 </div>
-                <div class="col s12">
+                <div class="col s12 margintop10">
                     <div class="col s2 steptopmargin">Temperature:</div>
-                    <div class="col s9"> <input type="number" class="center-align click_ignore"></div>
+                    <div class="col s10"> <input type="number" class="center-align "></div>
+                </div>
+                <div class="col s12 margintop10">
+                    <a id ="" class="btn my_red  stepsavebtn right">Save</a>
                 </div>
             </div>
 
+
         </div>
         <div class="row"></div>
-        <div class="row" style="height: 60%">
-            <div class="row" style="padding-left: 3%; padding-right: 3%; height: 100%">
-                <div class="col s6" style="height: 100%">
-                    <div class="card-panel"
-                         style="overflow-y: auto; overflow-x:hidden; margin-right: 3%; height: 100%">
-                        <div class="row">
-                            <!--nav here -->
-                        </div>
-                    </div>
-                </div>
-                <div class="col s6" style="height: 100%">
-                    <div class="card-panel"
-                         style="overflow-y: auto; overflow-x:hidden; margin-left: 3%; height: 100%">
-                        <div class="row">
-                            <!--nav here -->
-                        </div>
-                    </div>
-                </div>
+        <div class="row">
+            <div class="width2  white left height6 z-depth-2 recipebotheight">
+                <div class="col s12 delete_empty center-align my_yellow"> <h5>Current Recipe</h5></div>
+                <div class="row"></div>
+
+
+            </div>
+            <div class="width2 height6 white right z-depth-2 recipebotheight">
+                <div class="col s12 delete_empty center-align my_yellow"> <h5>Equipment</h5></div>
+                <div class="row"></div>
+
+
             </div>
         </div>
     </div>

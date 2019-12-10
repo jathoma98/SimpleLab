@@ -279,9 +279,14 @@
     margin-top: 10px;
     margin-right: 35px;
     margin-bottom: 10px;
-
 }
 
+.stepsavebtn{
+    margin-top: 20px;
+    margin-right: 35px;
+    margin-bottom: 10px;
+
+}
 .height8{
     height:80%!important;
 }
@@ -294,4 +299,10 @@
 
 .steptopmargin{
     margin-top:17px;
+}
+
+.recipebotheight{
+    height: 80%!important;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
