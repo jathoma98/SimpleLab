@@ -24,8 +24,8 @@ public class RecipeValidator extends Validator<Recipe> {
         recipe.setEquipmentOne(equipmentOne);
         recipe.setEquipmentTwo(equipmentTwo);
         recipe.setResult(result);
-        recipe.setRationOne(this.ratioOne);
-        recipe.setRationTwo(this.ratioTwo);
+        recipe.setRatioOne(this.ratioOne);
+        recipe.setRatioTwo(this.ratioTwo);
         return recipe;
     }
 }

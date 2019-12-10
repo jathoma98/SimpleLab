@@ -90,6 +90,15 @@ public class CourseDB extends DBService<Course> {
         return students;
     }
 
+    public Set<Lab> getLabsOfCourse(String course_id) throws CourseTransactionException{
+        List<Course> found = findByCourseId(course_id);
+        if (found.size() == 0)
+            throw new CourseTransactionException(CourseTransactionException.NO_COURSE_FOUND);
+        Course c = found.get(0);
+        Set<Lab> labs =c.getLabs();
+        return labs;
+    }
+
 
     public EntitySetManager<Lab, Course> getLabsOfCourseByCourseId(String course_id) throws CourseTransactionException{
         List<Course> found = findByCourseId(course_id);
