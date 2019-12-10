@@ -83,6 +83,19 @@
     {{/students}}
 </script>
 
+<script id="c_load_teacher_lab_tbody" type="mustache">
+    {{#labs}}
+        <tr href="#modal">
+            <td>
+                <a class="left marginright info" href="#"><i class="material-icons">info</i></a>
+                <span>{{name}}</span>
+                {{^search}}<a class="right del_student" href="#"><i class="material-icons">remove_circle_outline</i></a>{{/search}}
+                {{#search}}<a class="right add_student" href="#"><i class="material-icons">add</i></a>{{/search}}
+            </td>
+        </tr>
+    {{/labs}}
+</script>
+
 <!--                second nav bar on the top-->
 <nav>
     <div class="nav-wrapper row" style="background: #00acc1">
