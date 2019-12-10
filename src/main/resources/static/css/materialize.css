@@ -5090,14 +5090,13 @@ small {
 }
 
 .tabs .tab a:focus, .tabs .tab a:focus.active {
-  background-color:  #00acc1;
   outline: none;
 }
 
 .tabs .tab a:hover, .tabs .tab a.active {
-  background-color:  #00acc1;
+  background-color:  rgba(85, 200, 255, 0.34);
   /*background-color: transparent;*/
-  color: #00acc1;
+  color: #000000;
 }
 
 .tabs .tab.disabled a,
@@ -5110,7 +5109,7 @@ small {
   position: absolute;
   bottom: 0;
   height: 2px;
-  background-color: #00acc1;
+  background-color: rgba(85, 200, 255, 0.34);
   will-change: left, right;
 }
 

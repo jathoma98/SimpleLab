@@ -8,7 +8,10 @@ $(document).ready( function () {
     $("#editInfoBtn").on("click",editInfo);
     $("#courseSearchBtn").on("click",searchCourse);
     loadCourse();
+
 })
+
+
 
 function deleteCourse(){
     removeTableBodyRowEvent($("#studentCourse tbody"));
@@ -52,9 +55,15 @@ function loadCourse(){
 
                 }
                 $("#studentCourse tbody").html(courseTable);
+                $("#studentCourse tbody").find("tr").each(function(){
+                $(this).on("click", jumptoCourseLab);
             })
         }
     })
+}
+
+function jumptoCourseLab() {
+    $('#studentCourseModal').modal('open');
 }
 
 function checkInvite() {
