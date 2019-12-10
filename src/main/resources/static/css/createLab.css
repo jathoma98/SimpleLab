@@ -237,6 +237,9 @@
 .margintop{
     margin-top: 2%!important;
 }
+.margintop10{
+    margin-top: 10px;
+}
 
 .recipeheight{
     height: 30%!important;
