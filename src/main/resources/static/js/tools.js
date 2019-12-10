@@ -96,6 +96,9 @@ rebuildRepeatComponent = function (component, template_id, repeatElem, subRepeat
         let html_text = Mustache.render(template, obj);
         let repElem = $(repeatElem)
         repElem.append(html_text);
+
+
+
         if(subRepeatElem != undefined){
             repElem.find(subRepeatElem).on(action, ()=>eventFn(obj));
         }else{

@@ -325,3 +325,13 @@ padding20px{
     overflow-y: auto;
     overflow-x: hidden;
 }
+
+.recipedeletebtn{
+    margin-bottom: 10px;
+}
+.recipewidth{
+    width: 70%;
+}
+.recipefont{
+    font-size: 25px;
+}

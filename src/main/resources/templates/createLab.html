@@ -196,22 +196,34 @@
         </div>
         <div class="row"></div>
         <div class="row">
-            <div class="width2  white left height6 z-depth-2 recipebotheight">
+            <div class="width2  white left height6 z-depth-2 recipebotheight ">
                 <div class="col s12 delete_empty center-align my_yellow"> <h5>Current Recipe</h5></div>
                 <div class="row"></div>
-                <ul class="row my_white scrollbar_y parent_height" id="recipe_list"></ul>
+                <ul class="row my_white scrollbar_y parent_height collection " id="recipe_list"></ul>
                 <script id="recipe_template" type="mustache">
                     <div class="row">
-                        <div class="col s10">
-                            <p>{{equipmentOne.name}}({{equipmentOne.type}})({{ratioOne}}) + {{equipmentTwo.name}}({{equipmentTwo.type}})({{ratioTwo}}) => {{result.name}}</p>
+                        <div class="col s11">
+                            <div class="col s4 center-align">{{equipmentOne.name}}({{equipmentOne.type}})({{ratioOne}})</div>
+                            <div class="col s1 center"><i class="material-icons ">add</i></div>
+                            <div class="col s4 center-align">{{equipmentTwo.name}}({{equipmentTwo.type}})({{ratioTwo}})</div>
+                            <div class="col s1 center"><i class="material-icons ">arrow_forward</i></div>
+                            <div class="col s2 center-align">{{result.name}}</div>
                         </div>
-                        <div class="col s2">
-                            <a class="right">Remove</a>
+                        <div class="col s1">
+                            <a href="#"><i class="material-icons ">delete</i></a>
                         </div>
                     </div>
+
+
+
+
+
+
+
+
                 </script>
             </div>
-            <div class="width2 height6 white right z-depth-2 recipebotheight">
+            <div class="width2 height6 white right z-depth-2 recipebotheight ">
                 <div class="col s12 delete_empty center-align my_yellow"> <h5>Equipment</h5></div>
                 <div class="row"></div>
                 <ul class="row my_white scrollbar_y parent_height" id="recipe_equip_list"></ul>
