@@ -482,6 +482,12 @@ class DBTests extends SpringTestConfig {
 
 	}
 
+	@Test
+	void testEnrolledInSQL(){
+		List<Course> enrolled = courseDB.getRepository().findCoursesEnrolledIn(100);
+		System.out.println(enrolled.toString());
+	}
+
 
 
 
