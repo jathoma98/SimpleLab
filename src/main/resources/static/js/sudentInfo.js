@@ -49,14 +49,15 @@ function loadCourse(){
                     courseTable += '<tr>' +
                         '<td class = "coursecheckcol mycheckbox myhide center"' +
                         '<label> <input type="checkbox"><span></span>' + '</label></td>' +
-                        '<td class="studentIdColumn">' + result.data[f].course_id +'</td>'+
+                        '<td class="studentIdColumn"><a>' + result.data[f].course_id +'</a></td>'+
                         '<td>' + result.data[f].name + '</td>' +
                         '<td>'+ result.data[f].createdDate + '</td></tr>';
 
                 }
                 $("#studentCourse tbody").html(courseTable);
-                $("#studentCourse tbody").find("tr").each(function(){
-                $(this).on("click", jumptoCourseLab);
+                $("#studentCourse tbody").find(".studentIdColumn").each(function() {
+                    $(this).on("click", jumptoCourseLab);
+                })
             })
         }
     })
