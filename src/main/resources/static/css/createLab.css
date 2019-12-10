@@ -267,5 +267,8 @@
     height: 75%!important;
     overflow-y: auto;
     overflow-x: hidden;
+}
 
+.card_selected{
+    background: rgba(0, 0, 0, 0.10);
 }

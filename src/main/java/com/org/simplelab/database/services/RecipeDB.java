@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Getter
 @Component
 @Transactional
@@ -18,4 +20,8 @@ public class RecipeDB extends DBService<Recipe> {
     public boolean insert(Recipe recipe) throws EntityDBModificationException{
         return super.insert(recipe);
     };
+
+    public List<Recipe> getRecipeByCreateId(long id){
+        return repository.findByCreator_id(id);
+    }
 }
