@@ -5090,19 +5090,19 @@ small {
 }
 
 .tabs .tab a:focus, .tabs .tab a:focus.active {
-  background-color: rgba(78, 198, 238, 0.4);
+  background-color:  rgba(230, 218, 111, 0.7);
   outline: none;
 }
 
 .tabs .tab a:hover, .tabs .tab a.active {
-  background-color: rgba(78, 198, 238, 0.4);
+  background-color:  rgba(230, 218, 111, 0.7);
   /*background-color: transparent;*/
   color: #000000;
 }
 
 .tabs .tab.disabled a,
 .tabs .tab.disabled a:hover {
-  color: rgba(78, 198, 238, 0.4);
+  color:  rgba(230, 218, 111, 0.7);
   cursor: default;
 }
 
@@ -5110,7 +5110,7 @@ small {
   position: absolute;
   bottom: 0;
   height: 2px;
-  background-color: #4ec6ee;
+  background-color: rgba(230, 218, 111, 0.7);
   will-change: left, right;
 }
 

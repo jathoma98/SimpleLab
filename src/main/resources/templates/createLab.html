@@ -84,13 +84,12 @@
 <div class="row"></div>
 <div class="container">
     <ul class="tabs tabs-fixed-width z-depth-1">
-        <li class="tab "><a href="#equipment_in_lab" class="active"> Equipment In Lab</a></li>
-        <li class="tab "><a href="#recipe">Recipe</a></li>
-        <li class="tab "><a href="#steps">Step</a></li>
+        <li class="tab my_yellow"><a href="#equipment_in_lab" class="active"> Equipment In Lab</a></li>
+        <li class="tab my_yellow"><a href="#recipe">Recipe</a></li>
+        <li class="tab my_yellow"><a href="#steps">Step</a></li>
     </ul>
-    <div id="equipment_in_lab" class="col s12" style="height:800px;">
-        <div class="row"></div>
-        <div class="row">
+    <div id="equipment_in_lab" class="col s12 margintop10" style="height:800px;">
+        <div class="row ">
             <div class="col s6" >
                 <nav class="white black-text center-align ">Current Equipment</nav>
                 <div class="card-panel">
@@ -120,8 +119,11 @@
                     </div>
                     {{/machine}}
                     {{#machine}}
-                    <div class="col s4"></div>
+                    <div class="col s2"></div>
                     {{/machine}}
+                    <div class="col s2 ">
+                        <a href="#">remove</a>
+                    </div>
                 </div>
 
                 </script>
@@ -136,12 +138,12 @@
                     <div class="col s2">
                         <img src="../../img/beaker.png" class="item_img">
                     </div>
-                    <div class="col s2">
+                    <div class="col s3">
                         <p>Name: {{name}}</p>
                         <p>Type: {{type}}</p>
                     </div>
                     {{^machine}}
-                    <div class="col s4">
+                    <div class="col s2">
                     {{#liquid}}
                         <p>Max Volume: {{properties.max_volume}}</p>
                     {{/liquid}}
@@ -152,9 +154,9 @@
                     </div>
                     {{/machine}}
                     {{#machine}}
-                    <div class="col s4"></div>
+                    <div class="col s3"></div>
                     {{/machine}}
-                    <div class="col s4">
+                    <div class="col s2 ">
                         <a href="#">Add</a>
                     </div>
                 </div>
@@ -194,10 +196,9 @@
         <div class="row"></div>
         <div class="row">
             <div class="width2  white left height6 z-depth-2">
-                <h1>chen</h1>
             </div>
             <div class="width2 height6 white right z-depth-2">
-                <h1>chen</h1>
+
                 <ul class="row my_white" id="recipe_equip_list"></ul>
             </div>
         </div>
