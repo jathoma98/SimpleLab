@@ -8,7 +8,10 @@ $(document).ready( function () {
     $("#editInfoBtn").on("click",editInfo);
     $("#courseSearchBtn").on("click",searchCourse);
     loadCourse();
+
 })
+
+
 
 function deleteCourse(){
     removeTableBodyRowEvent($("#studentCourse tbody"));
@@ -45,12 +48,20 @@ function loadCourse(){
                 courseTable += '<tr>' +
                     '<td class="studentIdColumn">' + result.data[f].course_id +'</td>'+
                     '<td>' + result.data[f].name + '</td>' +
-                    '<td>'+ result.data[f].createdDate + '</td></tr>';
+                    '<td>'+ result.data[f].createdDate + '</td>' +
+                    '</tr>';
 
             }
             $("#studentCourse tbody").html(courseTable);
+            $("#studentCourse tbody").find("tr").each(function(){
+                $(this).on("click", jumptoCourseLab);
+            })
         }
     })
+}
+
+function jumptoCourseLab() {
+    $('#studentCourseModal').modal('open');
 }
 
 function checkInvite() {
