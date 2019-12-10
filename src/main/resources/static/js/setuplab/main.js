@@ -148,19 +148,27 @@ RECIPE = {
                         rebuildRepeatComponent(ELEM_NAME.RECIPE_LIST, TEMPLATE_ID.RECIPE_LIST,
                             "<li/>", "a", data, "click",
                             (recipe) => {
-                                $(ELEM_NAME.RECIPE_CARDS).removeClass("card_selected");
-                                RECIPE.selected = "";
-                                $(ELEM_NAME.RECIPE_EQUIP_LIST).empty();
-                                $(ELEM_NAME.RECIPE_CARD_ONE).find("p")
-                                    .text("Equipment 1:" + recipe.equipmentOne.name);
-                                $(ELEM_NAME.RECIPE_CARD_ONE).find("input")
-                                    .val(recipe.ratioOne);
-                                $(ELEM_NAME.RECIPE_CARD_TWO).find("p")
-                                    .text("Equipment 2:" + recipe.equipmentTwo.name);
-                                $(ELEM_NAME.RECIPE_CARD_TWO).find("input")
-                                    .val(recipe.ratioTwo);
-                                $(ELEM_NAME.RECIPE_CARD_RESULT).find("p")
-                                    .text("Result:" + recipe.result.name);
+                                $.ajax({
+                                    url: "/recipe/rest/"+recipe.id,
+                                    type: 'DELETE',
+                                    success: function (result) {
+                                        retObjHandle(result, RECIPE.load)
+                                    }
+                                })
+
+                                // $(ELEM_NAME.RECIPE_CARDS).removeClass("card_selected");
+                                // RECIPE.selected = "";
+                                // $(ELEM_NAME.RECIPE_EQUIP_LIST).empty();
+                                // $(ELEM_NAME.RECIPE_CARD_ONE).find("p")
+                                //     .text("Equipment 1:" + recipe.equipmentOne.name);
+                                // $(ELEM_NAME.RECIPE_CARD_ONE).find("input")
+                                //     .val(recipe.ratioOne);
+                                // $(ELEM_NAME.RECIPE_CARD_TWO).find("p")
+                                //     .text("Equipment 2:" + recipe.equipmentTwo.name);
+                                // $(ELEM_NAME.RECIPE_CARD_TWO).find("input")
+                                //     .val(recipe.ratioTwo);
+                                // $(ELEM_NAME.RECIPE_CARD_RESULT).find("p")
+                                //     .text("Result:" + recipe.result.name);
                             });
                     });
                 }
