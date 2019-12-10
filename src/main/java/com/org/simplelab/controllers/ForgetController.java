@@ -81,13 +81,22 @@ public class ForgetController extends BaseController {
             return rro;
         }
     }
-//
-//    @PostMapping(FORGOT_PASSWORD_MAPPING)
-//    public void changePassword (@RequestBody DTO.fpUserInput newPassword){
-//        try{
-//            newPassword.getUser().setPassword(newPassword.getUserInput());
-//        }catch (Exception e){
-//
-//        }
-//    }
+
+    @ResponseBody
+    @PostMapping(FORGOT_PASSWORD_MAPPING)
+    public RRO<String> changePassword (@RequestBody DTO.fpUserInput newPassword){
+        RRO<String> rro = new RRO();
+        try{
+            rro.setSuccess(true);
+            User user = userDB.findUser(newPassword.getUser().getUsername());
+            user.setPassword(newPassword.getAnswer());
+            userDB.update(user);
+            rro.setData("true");
+            return rro;
+        }catch (Exception e){
+            rro.setSuccess(false);
+            rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
+            return rro;
+        }
+    }
 }
