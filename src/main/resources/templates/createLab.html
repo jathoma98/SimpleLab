@@ -196,29 +196,7 @@
                 <div class="row"></div>
                 <ul class="row my_white" id="recipe_list"></ul>
                 <script id="recipe_template" type="mustache">
-                    <div class="row sidebaritem">
-                        <div class="col s2">
-                            <img src="../../img/beaker.png" class="item_img">
-                        </div>
-                        <div class="col s4">
-                            <p>Name: {{name}}</p>
-                            <p>Type: {{type}}</p>
-                        </div>
-                        {{^machine}}
-                        <div class="col s4">
-                        {{#liquid}}
-                            <p>Max Volume: {{properties.max_volume}}</p>
-                        {{/liquid}}
-                        {{#solid}}
-                            <p>Max Weight: {{properties.max_weight}}</p>
-                        {{/solid}}
-                            <p>Temperature: {{properties.min_temperature}} - {{properties.max_temperature}}</p>
-                        </div>
-                        {{/machine}}
-                        {{#machine}}
-                        <div class="col s4"></div>
-                        {{/machine}}
-                    </div>
+                    <a><p>{{equipmentOne.name}}({{ratioOne}}) + {{equipmentTwo.name}}({{ratioTwo}}) => {{result.name}}</p></a>
                 </script>
 
             </div>
@@ -308,8 +286,5 @@
             // hover: true
         });
     });
-
-
 </script>
-
 </html>

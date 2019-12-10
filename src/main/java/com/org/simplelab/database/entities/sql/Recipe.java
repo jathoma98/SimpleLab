@@ -37,8 +37,8 @@ public class Recipe extends BaseTable implements UserCreated {
                 optional = false)
     private Equipment result;
 
-    private double rationOne;
-    private double rationTwo;
+    private double ratioOne;
+    private double ratioTwo;
 
     @Override
     public String toString(){

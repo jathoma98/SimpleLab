@@ -44,7 +44,7 @@ public class RecipeRESTController extends BaseRESTController<Recipe> {
         long user_id = getUserIdFromSession();
         RRO rro = new RRO<List<Recipe>>();
         List<Recipe> recipes = recipeDB.getRecipeByCreateId(user_id);
-        if (recipes == null) {
+        if (recipes == null || recipes.size() == 0) {
             rro.setSuccess(false);
             rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
             return rro;
@@ -52,7 +52,7 @@ public class RecipeRESTController extends BaseRESTController<Recipe> {
         rro.setData(recipes);
         rro.setSuccess(true);
         rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
-        return null;
+        return rro;
     }
 
 
