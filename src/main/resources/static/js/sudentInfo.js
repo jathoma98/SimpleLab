@@ -10,6 +10,30 @@ $(document).ready( function () {
 
 })
 
+function deleteCourse(){
+    removeTableBodyRowEvent($("#studentCourse tbody"));
+    let course = [];
+    $("#studentCourse tbody tr").each(function (i, row) {
+        if ($(row).find('input[type="checkbox"]').is(':checked')) {
+            course.push({
+                name: null,
+                course_id: ($(row).find(".studentIdColumn").text()),
+                description: null
+            });
+        }
+    });
+    let course_json = JSON.stringify(course);
+    $.ajax({
+        url: "/course/rest/deleteCourse",
+        type: 'DELETE',
+        dataTye: 'json',
+        contentType: 'application/json; charset=utf-8',
+        data: course_json,
+        success: function (result) {
+            retObjHandle(result, loadCourse)
+        }
+    })
+}
 
 function loadCourse(){
     $.ajax({
@@ -18,7 +42,8 @@ function loadCourse(){
         success: function (result) {
             let courseTable = '';
             for (let f=0;f<result.data.length;f++){
-                courseTable = '<tr><td>' + result.data[f].course_id +'</td>'+
+                courseTable = '<tr>' +
+                    '<td class="studentIdColumn">' + result.data[f].course_id +'</td>'+
                     '<td>' + result.data[f].name + '</td>' +
                     '<td>'+ result.data[f].created_date + '</td></tr>';
 
