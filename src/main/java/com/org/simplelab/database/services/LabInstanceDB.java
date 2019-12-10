@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @Component
 public class LabInstanceDB {
+    //TODO: migrate this to use DBService
 
     @Autowired
     private LabInstanceRepository repository;
@@ -32,6 +33,13 @@ public class LabInstanceDB {
     public List<LabInstance> findByLabIdAndUserId(long lab_id, long user_id){
         List<LabInstance> found = repository.findByLabIdAndUserId(lab_id, user_id);
         return found;
+    }
+
+    public LabInstance findActiveLab(long labId, long userId){
+        List<LabInstance> found = repository.findActiveInstanceOfLab(labId, userId);
+        if (found.size() > 0)
+            return found.get(0);
+        return LabInstance.NO_INSTANCE;
     }
 
 }

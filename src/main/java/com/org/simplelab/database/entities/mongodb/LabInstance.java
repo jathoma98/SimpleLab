@@ -42,6 +42,7 @@ public class LabInstance extends BaseDocument{
     public LabInstance(){
         super();
         this.stepRecords = new ArrayList<>();
+        this.equipmentInstances = new ArrayList<>();
     }
 
     private static LabInstance GEN_NO_INSTANCE(){

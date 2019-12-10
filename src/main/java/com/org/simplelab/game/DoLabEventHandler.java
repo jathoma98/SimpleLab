@@ -58,6 +58,8 @@ public class DoLabEventHandler {
     @Transactional
     public Workspace buildWorkspaceFromLabInstance(LabInstance li, long user_id){
         Workspace ws = new Workspace();
+        ws.setName(li.getLabName());
+        ws.setInstance_id(li.get_id());
         return null;
     }
 

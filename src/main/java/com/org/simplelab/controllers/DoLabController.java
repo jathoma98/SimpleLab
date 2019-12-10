@@ -74,10 +74,18 @@ public class DoLabController extends BaseController {
     @Transactional
     public RRO<Workspace> getLabToDo(@PathVariable("lab_id") long lab_id){
         Lab found = labDB.findById(lab_id);
+        Workspace ws =Workspace.NO_WORKSPACE;
         if (found == null){
             return RRO.sendErrorMessage("Lab Not Found");
         }
-        Workspace ws = eventHandler.buildNewWorkspaceFromLab(found, getUserIdFromSession());
+        //check if there is an unfinished instance of this lab
+        long user_id = getUserIdFromSession();
+        LabInstance activeInstance = instanceDB.findActiveLab(lab_id, user_id);
+        if (activeInstance.exists()) {
+            ws = eventHandler.buildWorkspaceFromLabInstance(activeInstance, user_id);
+        } else {
+            ws = eventHandler.buildNewWorkspaceFromLab(found, getUserIdFromSession());
+        }
         RRO<Workspace> rro = new RRO<>();
         rro.setSuccess(true);
         rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());

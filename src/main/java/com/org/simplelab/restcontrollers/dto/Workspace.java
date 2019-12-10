@@ -1,7 +1,7 @@
 package com.org.simplelab.restcontrollers.dto;
 
-import com.org.simplelab.database.entities.sql.AbstractEquipment;
 import com.org.simplelab.database.entities.mongodb.InstantiatedEquipment;
+import com.org.simplelab.database.entities.sql.AbstractEquipment;
 import com.org.simplelab.database.entities.sql.Recipe;
 import com.org.simplelab.database.entities.sql.Step;
 import lombok.Data;
@@ -16,6 +16,7 @@ import java.util.Set;
 
 @Data
 public class Workspace extends DTO {
+    public static final Workspace NO_WORKSPACE = GEN_NO_WORKSPACE();
 
     String name, description, instance_id;
     List<Step> steps;
@@ -26,5 +27,11 @@ public class Workspace extends DTO {
     //if is_continued = true:
     int starting_step;
     List<InstantiatedEquipment> equipment_instances;
+
+    private static Workspace GEN_NO_WORKSPACE(){
+        Workspace ws = new Workspace();
+        ws.setName("IF YOURE SEEING THIS, THIS IS AN ERROR!");
+        return ws;
+    }
 
 }
