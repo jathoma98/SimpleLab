@@ -263,8 +263,16 @@
     width: 46%!important;
 }
 .equipmentheight{
-
     height: 75%!important;
+
+}
+
+.scrollbar_x{
+    overflow-y: hidden;
+    overflow-x: auto;
+}
+
+.scrollbar_y{
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -279,6 +287,17 @@
     margin-top: 10px;
     margin-right: 35px;
     margin-bottom: 10px;
+}
+.parent_height{
+    height: 100%!important;
+}
+
+.parent_weight{
+    width: 100%!important;
+}
+
+padding20px{
+
 }
 
 .stepsavebtn{

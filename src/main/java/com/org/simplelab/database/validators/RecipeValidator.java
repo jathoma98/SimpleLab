@@ -14,8 +14,24 @@ public class RecipeValidator extends Validator<Recipe> {
 
     @Override
     public void validate() throws InvalidFieldException {
-        //dont need anything here for testing
-        //TODO: validate stuff later
+        StringBuilder sb = new StringBuilder();
+        if (equipmentOne == null) {
+            sb.append("invalid equipment one\n");
+        }
+        if (equipmentTwo == null) {
+            sb.append("invalid equipment two\n");
+        }
+        if (result == null) {
+            sb.append("invalid equipment result\n");
+        }
+        if (ratioOne <= 0){
+            sb.append("ratioOne is equal to or less than 0\n");
+        }
+        if (ratioTwo <= 0){
+            sb.append("ratioTwo is equal to or less than 0\n");
+        }
+        if (sb.length() > 0)
+            throw new InvalidFieldException(sb.toString());
     }
 
     @Override

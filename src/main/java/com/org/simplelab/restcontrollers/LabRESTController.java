@@ -15,6 +15,7 @@ import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.aggregation.ComparisonOperators;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -46,6 +47,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
     public static final String UPDATE_MAPPING = "/updateLab";
     public static final String LAB_ID_STEP_MAPPING = LAB_ID_MAPPING + "/step";
     public static final String LAB_ID_STEP_NUMBER_MAPPING = LAB_ID_MAPPING + "/{step_number}";
+    public static final String LAB_ID_STEP_NUMBER_CHANGE_MAPPING = LAB_ID_MAPPING + "/{step_number}/{move}";
     public static final String SEARCH_LAB_MAPPING = "/searchLab";
 
 
@@ -177,14 +179,45 @@ public class LabRESTController extends BaseRESTController<Lab> {
         return super.updateEntity(toUpdate.getId(), dto.getNewLabInfo());
     }
 
-    @PostMapping(LAB_ID_STEP_MAPPING)
-    public RRO<String> addStepToLab(@PathVariable("lab_id") long lab_id,
-                                    @RequestBody DTO.LabAddStepDTO dto){
+    @PatchMapping(LAB_ID_STEP_NUMBER_CHANGE_MAPPING)
+    public RRO<String> stepChangeNum(@PathVariable("lab_id") long lab_id,
+                                    @PathVariable("step_number") int step_num,
+                                    @PathVariable("move") int move){
         Lab found = labDB.findById(lab_id);
         if (found == null){
             return RRO.sendErrorMessage("Lab Not Found");
         }
-        Step s = DBUtils.getMapper().map(dto, Step.class);
+        List<Step> steps = found.getSteps();
+        int total_steps = steps.size();
+        for(Step s : steps){
+            if(s.getStepNum()==step_num){
+                s.setStepNum(step_num + move);
+            }else if(s.getStepNum() == step_num + move){
+                s.setStepNum(step_num);
+            }
+        }
+        labRepository.save(found);
+        RRO<String> rro = new RRO();
+        rro.setSuccess(true);
+        rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
+        return rro;
+    }
+
+    @PostMapping(LAB_ID_STEP_MAPPING)
+    public RRO<String> addStepToLab(@PathVariable("lab_id") long lab_id,
+                                    @RequestBody DTO.AddStepDTO dto){
+        Lab found = labDB.findById(lab_id);
+        if (found == null){
+            return RRO.sendErrorMessage("Lab Not Found");
+        }
+        Equipment targetObject = equipmentDB.findById(dto.getTargetEquipmentId());
+        DTO.LabAddStepDTO f_step = new DTO.LabAddStepDTO();
+        f_step.setStepNum(dto.getStepNum());
+        f_step.setTargetObject(targetObject);
+        f_step.setTargetTemperature(dto.getTargetTemperature());
+        f_step.setTargetVolume(dto.getTargetVolume());
+        f_step.setTargetWeight(dto.getTargetWeight());
+        Step s = DBUtils.getMapper().map(f_step, Step.class);
         s.setLab(found);
         List<Step> toAdd = new ArrayList<>();
         toAdd.add(s);

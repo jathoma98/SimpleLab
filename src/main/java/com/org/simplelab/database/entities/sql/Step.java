@@ -21,6 +21,10 @@ public class Step extends BaseTable{
     @OneToOne(cascade = {CascadeType.ALL})
     private Equipment targetObject;
 
+    private String targetTemperature;
+    private String targetVolume;
+    private String targetWeight;
+
     @Override
     public String toString(){
         String tar = targetObject == null? "null": targetObject.getName();

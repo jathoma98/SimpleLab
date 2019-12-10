@@ -1,5 +1,6 @@
 package com.org.simplelab.controllers;
 
+import com.org.simplelab.database.entities.sql.Step;
 import com.org.simplelab.database.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -29,6 +30,9 @@ public abstract class BaseController {
 
     @Autowired
     protected RecipeDB recipeDB;
+
+    @Autowired
+    protected StepDB stepDB;
 
     @Autowired
     protected HttpSession session;
