@@ -112,8 +112,6 @@ let COURSES_TABLE = {
                         //load
                         COURSES_TABLE.reLoadStudentsList(course_json)
                     })
-
-
                 }
             })
         };
@@ -277,27 +275,27 @@ let COURSES_TABLE = {
         //**********************************search lab**********************************
         //**********************************search lab**********************************
         //**********************************search lab**********************************
-        // this.searchLab = function () {
-        //     $.ajax({
-        //         url: "/lab/rest/loadLabList",
-        //         type: "GET",
-        //         success: function (result) {
-        //             retObjHandle(result, (labs)=>{
-        //                 let data = {
-        //                     labs: labs.reverse(),
-        //                     search: true
-        //                 }
-        //                 rebuildComponent(ElEM_ID.C_SEARCH_RESULT_LAB_LIST_TBODY, TEMPLATE_ID.C_LAB_TBODY, data);
-        //             setTableBodyRowBtnEvent(ElEM_ID.C_SEARCH_RESULT_LAB_LIST_TBODY,
-        //                 ".add_lab",
-        //                 "click",
-        //                 COURSES_TABLE.addLabBtnEvent)
-        //         })
-        //         }
-        //     })
-        // }
-        // // this.searchLab();
-        // this.btnEvents[ElEM_ID.C_SEARCH_LAB_BTN] = this.searchLab;
+        this.searchLab = function () {
+            $.ajax({
+                url: "/lab/rest/loadLabList",
+                type: "GET",
+                success: function (result) {
+                    retObjHandle(result, (labs)=>{
+                        let data = {
+                            labs: labs.reverse(),
+                            search: true
+                        }
+                        rebuildComponent(ElEM_ID.C_SEARCH_RESULT_LAB_LIST_TBODY, TEMPLATE_ID.C_LAB_TBODY, data);
+                    setTableBodyRowBtnEvent(ElEM_ID.C_SEARCH_RESULT_LAB_LIST_TBODY,
+                        ".add_lab",
+                        "click",
+                        COURSES_TABLE.addLabBtnEvent)
+                })
+                }
+            })
+        }
+        // this.searchLab();
+        this.btnEvents[ElEM_ID.C_SEARCH_LAB_BTN] = this.searchLab;
         //
         //
         // this.addLabBtnEvent = function () {
