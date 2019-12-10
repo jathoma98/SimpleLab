@@ -218,8 +218,8 @@
 
 
 .recipeimg{
-    width: 100px!important;
-    height: 100px!important;
+    width: 100px;
+    height: 100px;
 }
 
 .width_100px{
@@ -280,4 +280,18 @@
     margin-right: 35px;
     margin-bottom: 10px;
 
+}
+
+.height8{
+    height:80%!important;
+}
+
+.step_img {
+    width: 150px!important;
+    height: 150px!important;
+
+}
+
+.steptopmargin{
+    margin-top:17px;
 }
