@@ -18,7 +18,7 @@ public class Step extends BaseTable{
     @JoinColumn(name = "lab_id")
     private Lab lab;
 
-    @OneToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE})
     private Equipment targetObject;
 
     @Override
