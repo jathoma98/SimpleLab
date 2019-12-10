@@ -300,29 +300,29 @@ let COURSES_TABLE = {
         this.btnEvents[ElEM_ID.C_SEARCH_LAB_BTN] = this.searchLab;
 
 
-        // this.addLabBtnEvent = function () {
-        //     let course = {
-        //         course_id: $("#course_code").val(),
-        //         usernameList: new Array()
-        //     }
-        //     course.usernameList.push($(this).parent().find("span").text());
-        //
-        //     let course_json = JSON.stringify(course);
-        //
-        //     $.ajax({
-        //         url: "/course/rest/addLab",
-        //         type: 'POST',
-        //         dataTye: 'json',
-        //         contentType: 'application/json; charset=utf-8',
-        //         data: course_json,
-        //         success: function (result) {
-        //             retObjHandle(result,
-        //                 () => {
-        //                 COURSES_TABLE.reLoadLabList(course_json);
-        //         })
-        //         }
-        //     })
-        // };
+        this.addLabBtnEvent = function () {
+            let course = {
+                course_id: $("#course_code").val(),
+                labnameList: new Array()
+            }
+            course.labnameList.push($(this).parent().find("span").text());
+
+            let course_json = JSON.stringify(course);
+
+            $.ajax({
+                url: "/course/rest/addLab",
+                type: 'POST',
+                dataTye: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: course_json,
+                success: function (result) {
+                    retObjHandle(result,
+                        () => {
+                        COURSES_TABLE.reLoadLabList(course_json);
+                })
+                }
+            })
+        };
 
     }
 }
