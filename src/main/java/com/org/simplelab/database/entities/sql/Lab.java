@@ -25,7 +25,7 @@ public class Lab extends BaseTable implements UserCreated{
     private Set<Equipment> equipments;
 
     @OneToMany(cascade = {CascadeType.ALL},
-                fetch = FetchType.LAZY,
+                fetch = FetchType.EAGER,
                 mappedBy = "lab")
     private List<Step> steps;
 
