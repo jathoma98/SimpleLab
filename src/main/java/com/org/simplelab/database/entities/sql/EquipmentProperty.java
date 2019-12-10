@@ -46,7 +46,7 @@ public class EquipmentProperty extends BaseTable {
 
     @Override
     public String toString(){
-        return "[ id: " + getId() + "| Parent: " + parentEquipment.getName() + "| Key: " + propertyKey + "| Value: " + propertyValue + " ]";
+        return "Key: " + propertyKey + "| Value: " + propertyValue + " ]";
     }
 
     private static EquipmentProperty GEN_NO_PROPERTY(){
