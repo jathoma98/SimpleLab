@@ -112,8 +112,6 @@ let COURSES_TABLE = {
                         //load
                         COURSES_TABLE.reLoadStudentsList(course_json)
                     })
-
-
                 }
             })
         };
