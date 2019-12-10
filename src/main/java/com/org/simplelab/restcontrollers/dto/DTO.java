@@ -117,6 +117,9 @@ public abstract class DTO {
      public static class LabAddStepDTO extends DTO{
          private Equipment targetObject;
          private int stepNum;
+         private String targetTemperature;
+         private String targetVolume;
+         private String targetWeight;
      }
 
      @Getter
@@ -140,5 +143,16 @@ public abstract class DTO {
          int ratioOne;
          int ratioTwo;
      }
+
+    @Getter
+    @Setter
+    public static class AddStepDTO extends DTO{
+        Long labId;
+        Long targetEquipmentId;
+        int stepNum;
+        String targetTemperature;
+        String targetVolume;
+        String targetWeight;
+    }
 }
 
