@@ -2,6 +2,7 @@ package com.org.simplelab.database.entities.sql;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.apache.commons.lang3.SerializationUtils;
 import org.springframework.data.domain.Persistable;
 
 import javax.persistence.*;

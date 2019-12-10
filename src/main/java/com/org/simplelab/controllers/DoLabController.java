@@ -1,5 +1,6 @@
 package com.org.simplelab.controllers;
 
+import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.mongodb.LabInstance;
 import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.Lab;
@@ -49,11 +50,12 @@ public class DoLabController extends BaseController {
      *     steps: List -- of Step objects
      *     equipments: List -- of equipments in the lab
      *     is_continued: boolean -- whether the lab is new or being continued from a saved instance
-     *     (TODO: add this) recipes: List of Recipes in the lab
+     *     recipes: List of Recipes in the lab
      *
      *     ** if is_continued = true , DTO will have 2 additional fields: **
      *
-     *     starting_step: int -- step of the Lab to start from
+     *     starting_step: int -- step of the Lab to start from. This is the stepNum, not the index in the list of steps.
+     *          ex: when starting_step = 1, start from step where stepNum = 1, but this may be at index 0 in the list.
      *     equipment_instances List -- of Equipment that User had dragged onto the UI before quitting lab,
      *          these are subclass of Equipment with x and y values to render UI position.
      *
@@ -183,7 +185,7 @@ public class DoLabController extends BaseController {
         /**
          * Now we load the current step from the Lab that this instance manages.
          */
-        Lab currentLab = SerializationUtils.deserialize(currentInstance.getSerialized_lab());
+        Lab currentLab = DBUtils.deserialize(currentInstance.getSerialized_lab());
         Step currentStep =  currentLab.getSteps()
                              .stream()
                              .filter(step -> step.getStepNum() == dto.getStepNum())

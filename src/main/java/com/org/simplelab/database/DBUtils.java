@@ -1,8 +1,11 @@
 package com.org.simplelab.database;
 
+import com.org.simplelab.database.entities.sql.BaseTable;
+import org.apache.commons.lang3.SerializationUtils;
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 
+import java.io.Serializable;
 import java.security.MessageDigest;
 
 public class DBUtils {
@@ -47,6 +50,23 @@ public class DBUtils {
             MAPPER = mm;
         }
         return MAPPER;
+    }
+
+    /**
+     * We need to define custom Serialize and Deserialize wrapper methods because
+     * serialized objects have isNew = true by default, which is incorrect if they
+     * are being pulled from DB or being saved to DB.
+     */
+
+    public static <T extends BaseTable> byte[] serialize(T o){
+        o.setNew(false);
+        return SerializationUtils.serialize(o);
+    }
+
+    public static <T extends BaseTable> T deserialize(byte[] serial){
+        T built = SerializationUtils.deserialize(serial);
+        built.setNew(false);
+        return built;
     }
 
 

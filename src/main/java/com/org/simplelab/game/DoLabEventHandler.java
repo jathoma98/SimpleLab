@@ -36,7 +36,7 @@ public class DoLabEventHandler {
 
         //build lab record
         LabInstance li = new LabInstance();
-        li.setSerialized_lab(SerializationUtils.serialize(l));
+        li.setSerialized_lab(DBUtils.serialize(l));
         li.setLabId(l.getId());
         li.setUserId(user_id);
 
