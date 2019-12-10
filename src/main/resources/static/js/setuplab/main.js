@@ -9,12 +9,20 @@ ELEM_NAME = {
     RECIPE_LIST: "#recipe_list",
     RECIPE_SAVE_BTN: "#recipe_save_btn",
     RECIPE_NEW_BTN: "#recipe_new_btn",
+    STEP_EQUIP_LIST: "#step_equip_list",
+    STEP_CARD: "#step_card",
+    STEP_I_VOLUME: "#step_volume",
+    STEP_I_WEIGHT: "#step_weight",
+    STEP_I_TEMPERATURE: "#step_temperature",
+    STEP_SAVE_BTN: ".stepsavebtn",
 };
+
 TEMPLATE_ID = {
     ALL_EQUIPMENT_LIST: "#allequip_list_template",
     LAB_EQUIPMENT_LIST: "#labequip_list_template",
     RECIPE_EQUIPMENT_LIST: "#recequip_list_template",
     RECIPE_LIST: "#recipe_template",
+    STEP_EQUIPMENT_LIST: "#step_list_template",
 };
 
 EQUIPMENT = {
@@ -40,6 +48,7 @@ EQUIPMENT = {
                             (eqm) => {
                                 EQUIPMENT.addToLab(eqm);
                             });
+                        STEP.buildEquipmentList();
                     })
                 }
             })
@@ -213,22 +222,61 @@ RECIPE = {
 }
 
 STEP = {
-    init : function(){
-        this.buildEquipmentList = function(){
-            
+    selectFrom:undefined,
+    selected:undefined,
+    init: function () {
+        this.buildEquipmentList = function () {
+            let data = {iterable: EQUIPMENT.all_equipment};
+            rebuildRepeatComponent(ELEM_NAME.STEP_EQUIP_LIST, TEMPLATE_ID.STEP_EQUIPMENT_LIST,
+                "<li/>", undefined, data, "click",
+                (eqm, event) => {
+                    selectFrom = "equipment";
+                    STEP.selected = eqm;
+                    $(ELEM_NAME.STEP_EQUIP_LIST).find("li").removeClass("eqmli_selected");
+                    $(event.currentTarget).addClass("eqmli_selected");
+                    $(ELEM_NAME.STEP_CARD).find("p").text("Target:" + eqm.name);
+                });
         }
+        this.save = function(){
+            if (STEP.selectFrom == "step" || STEP.selected == undefined){
+                return;
+            }
+            data={
+                labId:LAB_INFO.id,
+                targetEquipmentId: STEP.selected.id,
+                targetTemperature: $(ELEM_NAME.STEP_I_TEMPERATURE).val(),
+                targetVolume:$(ELEM_NAME.STEP_I_VOLUME).val(),
+                targetWeight:$(ELEM_NAME.STEP_I_WEIGHT).val(),
+            }
+            let data_json = JSON.stringify(data);
+            $.ajax({
+                url: "/lab/rest/" + LAB_INFO.id + "/step",
+                type: 'POST',
+                dataTye: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: data_json,
+                success: function (result) {
+                    retObjHandle(result, null);
+                }
+            })
+        }
+    },
+    onclickInit() {
+        $(ELEM_NAME.STEP_SAVE_BTN).on("click", STEP.save);
+
     }
 
-
 }
-
-
 $(document).ready(() => {
     EQUIPMENT.init();
+    RECIPE.init();
+    STEP.init();
+
     EQUIPMENT.loadAll();
     EQUIPMENT.loadInLab();
 
-    RECIPE.init();
     RECIPE.load();
     RECIPE.onclickInit()
+
+    STEP.onclickInit();
 })

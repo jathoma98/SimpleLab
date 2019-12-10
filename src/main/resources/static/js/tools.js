@@ -96,10 +96,13 @@ rebuildRepeatComponent = function (component, template_id, repeatElem, subRepeat
         let html_text = Mustache.render(template, obj);
         let repElem = $(repeatElem)
         repElem.append(html_text);
+
+
+
         if(subRepeatElem != undefined){
-            repElem.find(subRepeatElem).on(action, ()=>eventFn(obj));
+            repElem.find(subRepeatElem).on(action, (event)=>eventFn(obj, event));
         }else{
-            repElem.on(action, ()=>eventFn(obj));
+            repElem.on(action, (event)=>eventFn(obj, event));
         }
         repElem.appendTo(component);
 

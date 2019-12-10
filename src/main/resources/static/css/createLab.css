@@ -325,3 +325,17 @@ padding20px{
     overflow-y: auto;
     overflow-x: hidden;
 }
+
+.eqmli_selected{
+    background: rgba(0, 0, 0, 0.10);
+}
+
+.recipedeletebtn{
+    margin-bottom: 10px;
+}
+.recipewidth{
+    width: 70%;
+}
+.recipefont{
+    font-size: 25px;
+}

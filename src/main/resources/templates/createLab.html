@@ -196,22 +196,34 @@
         </div>
         <div class="row"></div>
         <div class="row">
-            <div class="width2  white left height6 z-depth-2 recipebotheight">
+            <div class="width2  white left height6 z-depth-2 recipebotheight ">
                 <div class="col s12 delete_empty center-align my_yellow"> <h5>Current Recipe</h5></div>
                 <div class="row"></div>
-                <ul class="row my_white scrollbar_y parent_height" id="recipe_list"></ul>
+                <ul class="row my_white scrollbar_y parent_height collection " id="recipe_list"></ul>
                 <script id="recipe_template" type="mustache">
                     <div class="row">
-                        <div class="col s10">
-                            <p>{{equipmentOne.name}}({{equipmentOne.type}})({{ratioOne}}) + {{equipmentTwo.name}}({{equipmentTwo.type}})({{ratioTwo}}) => {{result.name}}</p>
+                        <div class="col s11">
+                            <div class="col s4 center-align">{{equipmentOne.name}}({{equipmentOne.type}})({{ratioOne}})</div>
+                            <div class="col s1 center"><i class="material-icons ">add</i></div>
+                            <div class="col s4 center-align">{{equipmentTwo.name}}({{equipmentTwo.type}})({{ratioTwo}})</div>
+                            <div class="col s1 center"><i class="material-icons ">arrow_forward</i></div>
+                            <div class="col s2 center-align">{{result.name}}</div>
                         </div>
-                        <div class="col s2">
-                            <a class="right">Remove</a>
+                        <div class="col s1">
+                            <a href="#"><i class="material-icons ">delete</i></a>
                         </div>
                     </div>
+
+
+
+
+
+
+
+
                 </script>
             </div>
-            <div class="width2 height6 white right z-depth-2 recipebotheight">
+            <div class="width2 height6 white right z-depth-2 recipebotheight ">
                 <div class="col s12 delete_empty center-align my_yellow"> <h5>Equipment</h5></div>
                 <div class="row"></div>
                 <ul class="row my_white scrollbar_y parent_height" id="recipe_equip_list"></ul>
@@ -229,13 +241,13 @@
                         {{#liquid}}
                             <p>Max Volume: {{properties.max_volume}}</p>
                         {{/liquid}}
-                    {{#solid}}
+                        {{#solid}}
                             <p>Max Weight: {{properties.max_weight}}</p>
                         {{/solid}}
                             <p>Temperature: {{properties.min_temperature}} - {{properties.max_temperature}}</p>
                         </div>
                         {{/machine}}
-                    {{#machine}}
+                        {{#machine}}
                         <div class="col s4"></div>
                         {{/machine}}
                     </div>
@@ -247,46 +259,74 @@
     <div id="steps" class="row">
         <div class="row"></div>
         <div class="col s12 delete_empty center-align my_red"><h5>Recipe</h5></div>
-        <div class="delete_empty col s12 white recipeheight z-depth-2 valign-wrapper" >
+        <div id = "step_card" class="delete_empty col s12 white recipeheight z-depth-2 valign-wrapper " >
             <div class="col s4">
                 <div class="col s10 offset-s1 z-depth-1 padding4 height8 center-align " >
-                    <p class="fontheader ">Equipment 1: Name </p>
+                    <p class="fontheader ">Target</p>
                     <img src="../../img/beaker.png" class="recipeimg margintop col s6 offset-s3 step_img">
                 </div>
             </div>
             <div class="col s8 ">
                 <div class="col s12 margintop10">
                     <div class="col s2 steptopmargin">Volume:</div>
-                    <div class="col s10"> <input type="number" class="center-align "></div>
+                    <div class="col s10">
+                        <input id ="step_volume"  type="number" class="center-align ">
+                    </div>
                 </div>
                 <div class="col s12 margintop10">
                     <div class="col s2 steptopmargin">Weight:</div>
-                    <div class="col s10"> <input type="number" class="center-align "></div>
+                    <div class="col s10">
+                        <input id ="step_weight"  type="number" class="center-align ">
+                    </div>
                 </div>
                 <div class="col s12 margintop10">
                     <div class="col s2 steptopmargin">Temperature:</div>
-                    <div class="col s10"> <input type="number" class="center-align "></div>
+                    <div class="col s10">
+                        <input id ="step_temperature" type="number" class="center-align ">
+                    </div>
                 </div>
                 <div class="col s12 margintop10">
                     <a id ="" class="btn my_red  stepsavebtn right">Save<i class="material-icons right">save</i></a>
                 </div>
             </div>
-
-
         </div>
         <div class="row"></div>
         <div class="row">
             <div class="width2  white left height6 z-depth-2 recipebotheight">
-                <div class="col s12 delete_empty center-align my_yellow"> <h5>Current Recipe</h5></div>
+                <div class="col s12 delete_empty center-align my_yellow"> <h5>Step</h5></div>
                 <div class="row"></div>
 
 
             </div>
-            <div class="width2 height6 white right z-depth-2 recipebotheight">
+            <div class="width2 height6 white right z-depth-2 recipebotheight ">
                 <div class="col s12 delete_empty center-align my_yellow"> <h5>Equipment</h5></div>
                 <div class="row"></div>
-
-
+                <ul class="row my_white scrollbar_y" id="step_equip_list"></ul>
+                <script id="step_list_template" type="mustache">
+                    <div class="row sidebaritem">
+                        <div class="col s2">
+                            <img src="../../img/beaker.png" class="item_img">
+                        </div>
+                        <div class="col s4">
+                            <p>Name: {{name}}</p>
+                            <p>Type: {{type}}</p>
+                        </div>
+                        {{^machine}}
+                        <div class="col s4">
+                        {{#liquid}}
+                            <p>Max Volume: {{properties.max_volume}}</p>
+                        {{/liquid}}
+                        {{#solid}}
+                            <p>Max Weight: {{properties.max_weight}}</p>
+                        {{/solid}}
+                            <p>Temperature: {{properties.min_temperature}} - {{properties.max_temperature}}</p>
+                        </div>
+                        {{/machine}}
+                        {{#machine}}
+                        <div class="col s4"></div>
+                        {{/machine}}
+                    </div>
+                </script>
             </div>
         </div>
     </div>
