@@ -1,7 +1,9 @@
 package com.org.simplelab;
 
 import com.org.simplelab.controllers.DoLabController;
+import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.interfaces.Interaction;
+import com.org.simplelab.database.entities.mongodb.InstantiatedEquipment;
 import com.org.simplelab.database.entities.sql.*;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.dto.Workspace;
@@ -9,6 +11,12 @@ import com.org.simplelab.restcontrollers.rro.RRO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -157,7 +165,35 @@ public class DoLabTests extends SpringTestConfig {
     }
 
     @Test
-    void serializationTest(){
+    void testSerializeEquipmentInstance() throws Exception{
+        Set<InstantiatedEquipment> ieq_set = new HashSet<>();
+        for (int i = 0; i < 10; i++){
+            InstantiatedEquipment ieq = new InstantiatedEquipment();
+            Equipment e = TestUtils.createJunkEquipmentWithProperties(3);
+            DBUtils.getMapper().map(e, ieq);
+            ieq.setX(i*10);
+            ieq.setY(i*15);
+            ieq_set.add(ieq);
+        }
+
+        Lab l = TestUtils.createJunkLabWithSteps(5);
+        labDB.insert(l);
+        long lab_id = labDB.searchLabWithKeyword(l.getName()).get(0).getId();
+
+        String lab_instance_id = dlc.getLabToDo(lab_id).getData().getInstance_id();
+        dlc.handleSaveWorkspaceState(ieq_set, lab_instance_id);
+
+        List<byte[]> found_ieq = instanceDB.findById(lab_instance_id).getEquipmentInstances();
+        Collection<InstantiatedEquipment> found =           found_ieq.stream()
+                                                            .map((serial) -> (InstantiatedEquipment)DBUtils.deserialize(serial))
+                                                            .collect(Collectors.toList());
+
+        found.forEach( instance -> {
+            assertTrue(ieq_set.contains(instance));
+        });
+
+
+
 
     }
 

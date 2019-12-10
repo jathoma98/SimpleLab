@@ -1,11 +1,7 @@
 package com.org.simplelab.database.entities.mongodb;
 
-import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.sql.AbstractEquipment;
 import lombok.Data;
-
-import javax.persistence.Entity;
-import javax.persistence.Table;
 
 /**
  * Represents an Equipment object instantiated within a Do Lab instance.
@@ -21,12 +17,15 @@ public class InstantiatedEquipment extends AbstractEquipment {
 
     @Override
     public boolean equals(Object o){
-        return super.equals(o);
+        if (!InstantiatedEquipment.class.isInstance(o))
+            return false;
+        InstantiatedEquipment cast = (InstantiatedEquipment)o;
+        return super.equals(o) && x == cast.getX() && y == cast.getY();
     }
 
     @Override
     public int hashCode(){
-        return super.hashCode();
+        return super.hashCode() + Integer.hashCode(x) + Integer.hashCode(y);
     }
 
     @Override

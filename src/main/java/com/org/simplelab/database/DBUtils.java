@@ -5,27 +5,35 @@ import org.apache.commons.lang3.SerializationUtils;
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 
-import java.io.Serializable;
 import java.security.MessageDigest;
 
 public class DBUtils {
 
+    //SQL table and entity names
     public static final String USER_TABLE_NAME = "user";
     public static final String COURSE_TABLE_NAME = "course";
     public static final String LAB_TABLE_NAME = "lab";
     public static final String EQUIPMENT_TABLE_NAME = "equipment";
-    public static final String INSTANTIATED_EQUIPMENT_TABLE_NAME = "instantiated_equipment";
     public static final String EQUIPMENT_PROPERTY_TABLE_NAME = "equipment_property";
     public static final String STEP_TABLE_NAME = "step";
     public static final String RECIPE_TABLE_NAME = "recipe";
 
+    //MongoDB document names
     public static final String LABINSTANCE_DOCUMENT_NAME = "lab_instance";
 
+    //salt for hashing
     public static final String SALT = "a very salty salt";
 
-    public static final String METADATA_DELETE_QUERY = "DELETE FROM #{#entityName} WHERE _metadata = :metadata";
-
     private static ModelMapper MAPPER = null;
+
+    public static ModelMapper getMapper(){
+        if (MAPPER == null){
+            ModelMapper mm = new ModelMapper();
+            mm.getConfiguration().setPropertyCondition(Conditions.isNotNull());
+            MAPPER = mm;
+        }
+        return MAPPER;
+    }
 
     /**
      * Hashes the given string.
@@ -41,15 +49,6 @@ public class DBUtils {
             System.out.println("Exception occurred while hashing password.");
             return null;
         }
-    }
-
-    public static ModelMapper getMapper(){
-        if (MAPPER == null){
-            ModelMapper mm = new ModelMapper();
-            mm.getConfiguration().setPropertyCondition(Conditions.isNotNull());
-            MAPPER = mm;
-        }
-        return MAPPER;
     }
 
     /**

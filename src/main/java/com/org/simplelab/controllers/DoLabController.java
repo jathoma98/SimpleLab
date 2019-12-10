@@ -11,11 +11,11 @@ import com.org.simplelab.game.DoLabEventHandler;
 import com.org.simplelab.game.RecipeHandler;
 import com.org.simplelab.restcontrollers.dto.Workspace;
 import com.org.simplelab.restcontrollers.rro.RRO;
-import org.apache.commons.lang3.SerializationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -72,7 +72,7 @@ public class DoLabController extends BaseController {
      */
     @GetMapping(LAB_ID_MAPPING)
     @Transactional
-    public RRO getLabToDo(@PathVariable("lab_id") long lab_id){
+    public RRO<Workspace> getLabToDo(@PathVariable("lab_id") long lab_id){
         Lab found = labDB.findById(lab_id);
         if (found == null){
             return RRO.sendErrorMessage("Lab Not Found");
@@ -250,14 +250,26 @@ public class DoLabController extends BaseController {
      *   }
      * ]
      *
-     * @Return: RRO with {
+     * @Return:
+     * On success:
+     * RRO with {
      *     success: true
      *     action: NOTHING
      * }
+     *
      */
     @PostMapping(INTERACTION_SAVE_STATE)
-    public RRO handleSaveWorkspaceState(@RequestBody List<InstantiatedEquipment> workspaceEquipment){
+    public RRO handleSaveWorkspaceState(@RequestBody Collection<InstantiatedEquipment> workspaceEquipment,
+                                        @PathVariable("instance_id") String instance_id){
 
+        List<byte[]> serializedInstances = workspaceEquipment.stream()
+                                                         .map((instance) -> DBUtils.serialize(instance))
+                                                         .collect(Collectors.toList());
+        LabInstance currentInstance = instanceDB.findById(instance_id);
+        if (currentInstance.exists()){
+            currentInstance.setEquipmentInstances(serializedInstances);
+            instanceDB.update(currentInstance);
+        }
         RRO rro = new RRO();
         rro.setSuccess(true);
         rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
