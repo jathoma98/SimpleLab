@@ -75,6 +75,13 @@ public abstract class DTO {
         private List<String> usernameList;
     }
 
+    @Getter
+    @Setter
+    public static class LoadLabListDTO extends DTO {
+        //course need to be update
+        private String course_id;
+    }
+
     /**
      * Contains info to add a lab to a course.
      */

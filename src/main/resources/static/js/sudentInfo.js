@@ -38,34 +38,46 @@ function deleteCourse(){
     })
 }
 
-function loadCourse(){
+function loadCourse() {
     $.ajax({
-            url: "/course/rest/loadCourseList",
-            type: 'GET',
+        url: "/course/rest/loadCourseList",
+        type: 'GET',
         success: function (result) {
-            retObjHandle(result, function(){
+            retObjHandle(result, function () {
                 let courseTable = '';
-                for (let f=0;f<result.data.length;f++){
-                    courseTable += '<tr>' +
+                for (let f = 0; f < result.data.length; f++) {
+                    courseTable += '<tr courseid='+result.data[f].course_id+'>' +
                         '<td class = "coursecheckcol mycheckbox myhide center"' +
                         '<label> <input type="checkbox"><span></span>' + '</label></td>' +
-                        '<td class="studentIdColumn">' + result.data[f].course_id +'</td>'+
+                        '<td class="studentIdColumn">' + result.data[f].course_id + '</td>' +
                         '<td>' + result.data[f].name + '</td>' +
-                        '<td>'+ result.data[f].createdDate + '</td></tr>';
+                        '<td>' + result.data[f].createdDate + '</td></tr>';
 
                 }
                 $("#studentCourse tbody").html(courseTable);
-                $("#studentCourse tbody").find("tr").each(function(){
-                $(this).on("click", jumptoCourseLab);
+                $("#studentCourse tbody").find("tr").each(function () {
+                    $(this).on("click", jumptoCourseLab);
+                })
             })
         }
     })
 }
-
 function jumptoCourseLab() {
     $('#studentCourseModal').modal('open');
+    let toSearch = {
+        course_id: $(this)[0].getAttribute("courseid")
+    };
+    // console.log("courseid "+$(this)[0].getAttribute("courseid"))
+    let toSearch_json = JSON.stringify(toSearch);
     $.ajax({
-
+        url: "/course/rest/getLabs",
+        type: 'POST',
+        dataTye: 'json',
+        contentType: 'application/json; charset=utf-8',
+        data: toSearch_json,
+        success: function (result) {
+            console.log(result);
+        }
     })
 }
 

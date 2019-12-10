@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 //TODO: secure rest endpoints with authentication
 @RestController
@@ -30,13 +31,13 @@ public class CourseRESTController extends BaseRESTController<Course> {
     private CourseDB db;
 
     public static final String BASE_MAPPING = "/course/rest";
-
     public static final String DELETE_MAPPING = "/deleteCourse";
     public static final String UPDATE_MAPPING = "/updateCourse";
     public static final String LOAD_LIST_COURSE_MAPPING = "/loadCourseList";
     public static final String LOAD_COURSE_INFO_MAPPING = "/loadCourseInfo";
     public static final String ADD_STUDENT_MAPPING = "/addStudent";
     public static final String GET_STUDENTS_MAPPING = "/getStudents";
+    public static final String GET_LABS_MAPPING = "/getLabs";
     public static final String DELETE_STUDENTS_MAPPING = "/deleteStudents";
     public static final String ADD_LABS_TO_COURSE_MAPPING = "/addLab";
     public static final String SEARCH_COURSE_MAPPING = "/searchCourse";
@@ -239,6 +240,14 @@ public class CourseRESTController extends BaseRESTController<Course> {
             rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
         }
         return rro;
+    }
+
+    @Transactional
+    @PostMapping(GET_LABS_MAPPING)
+    public List<Lab> getLabList(@RequestBody DTO.LoadLabListDTO course) throws CourseDB.CourseTransactionException {
+        String courseid=course.getCourse_id();
+        List<Lab> labs=courseDB.getLabsOfCourseByCourseId(courseid).getAsList();
+        return labs;
     }
 
 
