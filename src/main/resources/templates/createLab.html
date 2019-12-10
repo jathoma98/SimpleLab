@@ -93,13 +93,13 @@
             <div class="col s6">
                 <div class="col s12 left white">
                     <div class="col s12 delete_empty center-align"> <h4>Current Equipment</h4></div>
-                    <ul class="row my_white equipmentheight" id="lab_equipment_list"></ul>
+                    <ul class="row my_white equipmentheight " id="lab_equipment_list"></ul>
                                 <script id="labequip_list_template" type="mustache">
                                     <div class="row sidebaritem">
                                         <div class="col s2">
                                             <img src="../../img/beaker.png" class="item_img">
                                         </div>
-                                        <div class="col s2">
+                                        <div class="col s4">
                                             <p>Name: {{name}}</p>
                                             <p>Type: {{type}}</p>
                                         </div>
@@ -115,9 +115,9 @@
                                         </div>
                                         {{/machine}}
                                         {{#machine}}
-                                        <div class="col s2"></div>
+                                        <div class="col s4"></div>
                                         {{/machine}}
-                                        <div class="col s1 ">
+                                        <div class="col s2 ">
                                             <a href="#">remove</a>
                                         </div>
                                     </div>
@@ -139,12 +139,12 @@
                                 <div class="col s2">
                                     <img src="../../img/beaker.png" class="item_img">
                                 </div>
-                                <div class="col s3">
+                                <div class="col s4">
                                     <p>Name: {{name}}</p>
                                     <p>Type: {{type}}</p>
                                 </div>
                                 {{^machine}}
-                                <div class="col s2">
+                                <div class="col s4">
                                 {{#liquid}}
                                     <p>Max Volume: {{properties.max_volume}}</p>
                                 {{/liquid}}
@@ -155,9 +155,9 @@
                                 </div>
                                 {{/machine}}
                                 {{#machine}}
-                                <div class="col s3"></div>
+                                <div class="col s4"></div>
                                 {{/machine}}
-                                <div class="col s1">
+                                <div class="col s2">
                                     <a href="#">Add</a>
                                 </div>
                             </div>
