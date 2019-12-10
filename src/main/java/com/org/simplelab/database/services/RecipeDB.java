@@ -15,5 +15,7 @@ public class RecipeDB extends DBService<Recipe> {
     @Autowired
     private RecipeRepository repository;
 
-
+    public boolean insert(Recipe recipe) throws EntityDBModificationException{
+        return super.insert(recipe);
+    };
 }
