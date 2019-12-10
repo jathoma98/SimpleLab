@@ -116,16 +116,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
     public RRO getListOfCourse(HttpSession session) {
 
         long userId = getUserIdFromSession();
-
-        User user = userDB.findById(userId);
-        List<Course> courses = null;
-        if (user.getRole() == "teacher") {
-            courses = courseDB.getCoursesForTeacher(userId);
-        }
-        else if (user.getRole().equals("student")){
-            courses = courseDB.getCoursesStudentEnrolledIn(userId);
-        }
-
+        List<Course> courses = courseDB.getCoursesForTeacher(userId);
 
 
         //we cant use SQL projections on Course because course_id has an underscore in it
