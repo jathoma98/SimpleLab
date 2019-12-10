@@ -277,52 +277,80 @@ let COURSES_TABLE = {
         //**********************************search lab**********************************
         //**********************************search lab**********************************
         //**********************************search lab**********************************
-        this.searchLab = function () {
-            $.ajax({
-                url: "/lab/rest/loadLabList",
-                type: "GET",
-                success: function (result) {
-                    retObjHandle(result, (labs)=>{
-                        let data = {
-                            labs: labs.reverse(),
-                            search: true
-                        }
-                        rebuildComponent(ElEM_ID.C_SEARCH_RESULT_LAB_LIST_TBODY, TEMPLATE_ID.C_LAB_TBODY, data);
-                    setTableBodyRowBtnEvent(ElEM_ID.C_SEARCH_RESULT_LAB_LIST_TBODY,
-                        ".add_lab",
-                        "click",
-                        COURSES_TABLE.addLabBtnEvent)
-                })
-                }
-            })
-        }
-        // this.searchLab();
-        this.btnEvents[ElEM_ID.C_SEARCH_LAB_BTN] = this.searchLab;
-
-
-        this.addLabBtnEvent = function () {
-            let course = {
-                course_id: $("#course_code").val(),
-                labnameList: new Array()
-            }
-            course.labnameList.push($(this).parent().find("span").text());
-
-            let course_json = JSON.stringify(course);
-
-            $.ajax({
-                url: "/course/rest/addLab",
-                type: 'POST',
-                dataTye: 'json',
-                contentType: 'application/json; charset=utf-8',
-                data: course_json,
-                success: function (result) {
-                    retObjHandle(result,
-                        () => {
-                        COURSES_TABLE.reLoadLabList(course_json);
-                })
-                }
-            })
-        };
+        // this.searchLab = function () {
+        //     $.ajax({
+        //         url: "/lab/rest/loadLabList",
+        //         type: "GET",
+        //         success: function (result) {
+        //             retObjHandle(result, (labs)=>{
+        //                 let data = {
+        //                     labs: labs.reverse(),
+        //                     search: true
+        //                 }
+        //                 rebuildComponent(ElEM_ID.C_SEARCH_RESULT_LAB_LIST_TBODY, TEMPLATE_ID.C_LAB_TBODY, data);
+        //             setTableBodyRowBtnEvent(ElEM_ID.C_SEARCH_RESULT_LAB_LIST_TBODY,
+        //                 ".add_lab",
+        //                 "click",
+        //                 COURSES_TABLE.addLabBtnEvent)
+        //         })
+        //         }
+        //     })
+        // }
+        // // this.searchLab();
+        // this.btnEvents[ElEM_ID.C_SEARCH_LAB_BTN] = this.searchLab;
+        //
+        //
+        // this.addLabBtnEvent = function () {
+        //     let course = {
+        //         course_id: $("#course_code").val(),
+        //         labnameList: new Array()
+        //     }
+        //     course.labnameList.push($(this).parent().find("span").text());
+        //
+        //     let course_json = JSON.stringify(course);
+        //
+        //     $.ajax({
+        //         url: "/course/rest/addLab",
+        //         type: 'POST',
+        //         dataTye: 'json',
+        //         contentType: 'application/json; charset=utf-8',
+        //         data: course_json,
+        //         success: function (result) {
+        //             retObjHandle(result,
+        //                 () => {
+        //                 COURSES_TABLE.reLoadLabsList(course_json)
+        //         })
+        //         }
+        //     })
+        // };
+        //
+        //
+        // this.reLoadLabsList = function (course_json) {
+        //     $.ajax({
+        //         url: "/course/rest/getLabs",
+        //         type: 'POST',
+        //         dataTye: 'json',
+        //         contentType: 'application/json; charset=utf-8',
+        //         data: course_json,
+        //         success: function (result){
+        //             console.log(result);
+        //         //     retObjHandle(result, (students) => {
+        //         //         let data = {
+        //         //             students: students,
+        //         //             search: false,
+        //         //         }
+        //         //         rebuildComponent(
+        //         //             ElEM_ID.STUDENT_LIST_TBODY,
+        //         //         TEMPLATE_ID.STUDENTS_TBODY,
+        //         //         data)
+        //         //     setTableBodyRowBtnEvent(ElEM_ID.STUDENT_LIST_TBODY,
+        //         //         ".del_student",
+        //         //         "click",
+        //         //         COURSES_TABLE.removeStendtBtnEvent)
+        //         // })
+        //         }
+        //     })
+        // };
 
     }
 }
