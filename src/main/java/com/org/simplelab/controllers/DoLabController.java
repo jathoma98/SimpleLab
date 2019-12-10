@@ -74,7 +74,7 @@ public class DoLabController extends BaseController {
     @Transactional
     public RRO<Workspace> getLabToDo(@PathVariable("lab_id") long lab_id){
         Lab found = labDB.findById(lab_id);
-        Workspace ws =Workspace.NO_WORKSPACE;
+        Workspace ws = Workspace.NO_WORKSPACE;
         if (found == null){
             return RRO.sendErrorMessage("Lab Not Found");
         }
