@@ -7,7 +7,6 @@ $(document).ready( function () {
     $("#labBackBtn").on("click",labHideAndShow);
     $("#editInfoBtn").on("click",editInfo);
     $("#courseSearchBtn").on("click",searchCourse);
-
     loadCourse();
 })
 
@@ -41,15 +40,19 @@ function loadCourse(){
         url: "/course/rest/loadCourseList",
         type: 'GET',
         success: function (result) {
-            let courseTable = '';
-            for (let f=0;f<result.data.length;f++){
-                courseTable += '<tr>' +
-                    '<td class="studentIdColumn">' + result.data[f].course_id +'</td>'+
-                    '<td>' + result.data[f].name + '</td>' +
-                    '<td>'+ result.data[f].createdDate + '</td></tr>';
+            retObjHandle(result, function(){
+                let courseTable = '';
+                for (let f=0;f<result.data.length;f++){
+                    courseTable += '<tr>' +
+                        '<td class = "coursecheckcol mycheckbox myhide center"' +
+                        '<label> <input type="checkbox"><span></span>' + '</label></td>' +
+                        '<td class="studentIdColumn">' + result.data[f].course_id +'</td>'+
+                        '<td>' + result.data[f].name + '</td>' +
+                        '<td>'+ result.data[f].createdDate + '</td></tr>';
 
-            }
-            $("#studentCourse tbody").html(courseTable);
+                }
+                $("#studentCourse tbody").html(courseTable);
+            })
         }
     })
 }
