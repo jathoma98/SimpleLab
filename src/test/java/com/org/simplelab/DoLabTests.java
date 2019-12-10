@@ -91,6 +91,42 @@ public class DoLabTests extends SpringTestConfig {
     }
 
     @Test
+    void testLoadInstance() throws Exception{
+        String target_type = "container";
+        int numSteps = 3;
+
+        Lab l = TestUtils.createJunkLab();
+
+        for (int i = 0; i < numSteps; i++) {
+            Equipment target1 = TestUtils.createJunkEquipment();
+            target1.setType(target_type);
+            EquipmentProperty target1prop = new EquipmentProperty();
+            target1prop.setParentEquipment(target1);
+            target1prop.setPropertyKey("temperature");
+            target1prop.setPropertyValue(Integer.toString((i+1) * 100));
+            target1.getProperties().add(target1prop);
+
+            //now make a step and add to lab
+            Step s = new Step();
+            s.setLab(l);
+            s.setTargetObject(target1);
+            s.setStepNum(i+1);
+            l.getSteps().add(s);
+        }
+
+        //save the lab
+        labDB.insert(l);
+        l = labDB.searchLabWithKeyword(l.getName()).get(0);
+
+        Workspace ws1 = dlc.getLabToDo(l.getId()).getData();
+        assertFalse(ws1.is_continued());
+
+        Workspace ws2 = dlc.getLabToDo(l.getId()).getData();
+        assertTrue(ws2.is_continued());
+        assertEquals(1, ws2.getStarting_step());
+    }
+
+    @Test
     void getWorkspaceTest() throws Exception{
         Lab l = TestUtils.createJunkLabWithSteps(10);
         labDB.insert(l);
