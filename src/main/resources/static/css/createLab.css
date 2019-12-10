@@ -285,7 +285,7 @@
 
 .recipesavebtn{
     margin-top: 10px;
-    margin-right: 35px;
+    margin-right: 20px;
     margin-bottom: 10px;
 }
 .parent_height{
@@ -327,5 +327,15 @@ padding20px{
 }
 
 .eqmli_selected{
-    background: rgba(0, 0, 0, 0.10);;
+    background: rgba(0, 0, 0, 0.10);
+}
+
+.recipedeletebtn{
+    margin-bottom: 10px;
+}
+.recipewidth{
+    width: 70%;
+}
+.recipefont{
+    font-size: 25px;
 }
