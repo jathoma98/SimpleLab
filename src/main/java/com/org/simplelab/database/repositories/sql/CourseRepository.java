@@ -17,6 +17,16 @@ public interface CourseRepository extends BaseRepository<Course> {
 
     public List<Course> findByCreator_id(long id);
 
+    /**
+     * Find all courses that a certain student is enrolled in.
+     */
+    @Query(value =
+            "SELECT * from #{#entityName} \n" +
+            "INNER JOIN course_students \n" +
+            "ON course.id = course_students.course_id \n" +
+            "WHERE course_students.students_id = :student_id", nativeQuery = true)
+    public List<Course> findCoursesEnrolledIn(@Param("student_id") long student_id);
+
     @Modifying
     @Transactional
     @Query(value =
