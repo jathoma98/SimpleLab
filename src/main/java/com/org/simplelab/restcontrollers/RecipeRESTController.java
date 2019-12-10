@@ -29,6 +29,7 @@ public class RecipeRESTController extends BaseRESTController<Recipe> {
 
     @PostMapping
     public RRO<String> addRecipe(@RequestBody DTO.AddRecipeDTO dto){
+        if(recipeDB.isRecipeExist(dto.getEquipmentOne(), dto.getEquipmentTwo()))return RRO.sendErrorMessage("Recipe Exist");
         RecipeValidator rv = new RecipeValidator();
         rv.setEquipmentOne(equipmentDB.findById(dto.getEquipmentOne()));
         rv.setEquipmentTwo(equipmentDB.findById(dto.getEquipmentTwo()));
