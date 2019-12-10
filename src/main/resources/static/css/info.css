@@ -169,3 +169,14 @@
 .tags_field{
 	min-height: 50px;
 }
+
+.labheight{
+	height: 300px!important;
+	overflow-y: auto;
+}
+
+.labdescriptionheight{
+	height: 135px!important;
+	overflow-y: auto;
+	background: #e1e1e1;
+}

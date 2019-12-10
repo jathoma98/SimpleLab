@@ -116,7 +116,16 @@ public class CourseRESTController extends BaseRESTController<Course> {
     public RRO getListOfCourse(HttpSession session) {
 
         long userId = getUserIdFromSession();
-        List<Course> courses = courseDB.getCoursesForTeacher(userId);
+
+        User user = userDB.findById(userId);
+        List<Course> courses = null;
+        if (user.getRole().equals("teacher")) {
+            courses = courseDB.getCoursesForTeacher(userId);
+        }
+        else if (user.getRole().equals("student")){
+            courses = courseDB.getCoursesStudentEnrolledIn(userId);
+        }
+
 
 
         //we cant use SQL projections on Course because course_id has an underscore in it
@@ -137,6 +146,8 @@ public class CourseRESTController extends BaseRESTController<Course> {
         rro.setData(returnInfo);
         return rro;
     }
+
+
 
     @PostMapping(LOAD_COURSE_INFO_MAPPING)
     public RRO<Course> getCourseInfo(@RequestBody Course course,
@@ -262,7 +273,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
     }
 
     @PostMapping(CHECK_INVITE_MAPPING)
-    public RRO<Course> searchCourse(@RequestBody DTO.CourseSearchDTO toMatch){
+    public RRO<Course> checkCourse(@RequestBody DTO.CourseSearchDTO toMatch){
         RRO<Course> rro = new RRO();
         String matchRegex = toMatch.getRegex();
         //dont allow empty searches

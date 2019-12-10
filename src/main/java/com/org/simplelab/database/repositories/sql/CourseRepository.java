@@ -1,5 +1,4 @@
 package com.org.simplelab.database.repositories.sql;
-
 import com.org.simplelab.database.entities.sql.Course;
 import com.org.simplelab.database.entities.sql.User;
 import org.springframework.data.jpa.repository.Modifying;
@@ -16,6 +15,16 @@ public interface CourseRepository extends BaseRepository<Course> {
     public List<Course> findByName(String name);
 
     public List<Course> findByCreator_id(long id);
+
+    /**
+     * Find all courses that a certain student is enrolled in.
+     */
+    @Query(value =
+            "SELECT * from #{#entityName} \n" +
+            "INNER JOIN course_students \n" +
+            "ON course.id = course_students.course_id \n" +
+            "WHERE course_students.students_id = :student_id", nativeQuery = true)
+    public List<Course> findCoursesEnrolledIn(@Param("student_id") long student_id);
 
     @Modifying
     @Transactional
@@ -53,4 +62,6 @@ public interface CourseRepository extends BaseRepository<Course> {
             "FROM #{#entityName}\n" +
             "WHERE name = :checkName\n", nativeQuery = true)
     public Course findInviteCodeByName(@Param("checkName") String keyword);
+
+
 }
