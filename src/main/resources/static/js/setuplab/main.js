@@ -123,8 +123,22 @@ RECIPE ={
                     break;
             }
             console.log(RECIPE.recipe);
-        }
+        };
+        this.add = function (){
+            let data_json = JSON.stringify(RECIPE.recipe);
+            $.ajax({
+                url: "/lab/rest/" + LAB_INFO.id + "/equipment",
+                type: 'POST',
+                dataTye: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: data_json,
+                success: function (result) {
+                    retObjHandle(result, null);
+                }
+            })
+        };
     },
+
     onclickInit(){
         $(ELEM_NAME.RECIPE_CARDS).on("click", RECIPE.selectCard)
     }

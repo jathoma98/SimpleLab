@@ -134,6 +134,10 @@ public abstract class DTO {
      @Getter
      @Setter
      public static class AddRecipeDTO extends DTO{
-        //add fields
+         Long equipmentOne;
+         Long equipmentTwo;
+         Long result;
+         int ratioOne;
+         int ratioTwo;
      }
 }
