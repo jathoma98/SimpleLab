@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 //TODO: secure rest endpoints with authentication
 @RestController
@@ -30,16 +31,18 @@ public class CourseRESTController extends BaseRESTController<Course> {
     private CourseDB db;
 
     public static final String BASE_MAPPING = "/course/rest";
-
     public static final String DELETE_MAPPING = "/deleteCourse";
     public static final String UPDATE_MAPPING = "/updateCourse";
     public static final String LOAD_LIST_COURSE_MAPPING = "/loadCourseList";
     public static final String LOAD_COURSE_INFO_MAPPING = "/loadCourseInfo";
     public static final String ADD_STUDENT_MAPPING = "/addStudent";
     public static final String GET_STUDENTS_MAPPING = "/getStudents";
+    public static final String GET_LABS_MAPPING = "/getLabs";
     public static final String DELETE_STUDENTS_MAPPING = "/deleteStudents";
+    public static final String DELETE_LABS_MAPPING = "/deleteLab";
     public static final String ADD_LABS_TO_COURSE_MAPPING = "/addLab";
     public static final String SEARCH_COURSE_MAPPING = "/searchCourse";
+    public static final String CHECK_INVITE_MAPPING = "/checkInviteCode";
 
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     public RRO<String> addCourse(@RequestBody CourseValidator courseValidator,
@@ -115,7 +118,16 @@ public class CourseRESTController extends BaseRESTController<Course> {
     public RRO getListOfCourse(HttpSession session) {
 
         long userId = getUserIdFromSession();
-        List<Course> courses = courseDB.getCoursesForTeacher(userId);
+
+        User user = userDB.findById(userId);
+        List<Course> courses = null;
+        if (user.getRole().equals("teacher")) {
+            courses = courseDB.getCoursesForTeacher(userId);
+        }
+        else if (user.getRole().equals("student")){
+            courses = courseDB.getCoursesStudentEnrolledIn(userId);
+        }
+
 
 
         //we cant use SQL projections on Course because course_id has an underscore in it
@@ -136,6 +148,8 @@ public class CourseRESTController extends BaseRESTController<Course> {
         rro.setData(returnInfo);
         return rro;
     }
+
+
 
     @PostMapping(LOAD_COURSE_INFO_MAPPING)
     public RRO<Course> getCourseInfo(@RequestBody Course course,
@@ -181,7 +195,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
             }
             DBService.EntitySetManager<User, Course> toUpdate = courseDB.getStudentsOfCourseByCourseId(course_id);
             return super.addEntitiesToEntityList(toUpdate, toAdd);
-        }else if(course.getInvite_code().equals(c.get(0).getInvite_code())){
+        }else if(c.get(0).getInvite_code() == null || course.getInvite_code().equals(c.get(0).getInvite_code())){
             toAdd.add(userDB.findUser((String)session.getAttribute("username")));
             DBService.EntitySetManager<User, Course> toUpdate = courseDB.getStudentsOfCourseByCourseId(course_id);
             return super.addEntitiesToEntityList(toUpdate, toAdd);
@@ -212,6 +226,29 @@ public class CourseRESTController extends BaseRESTController<Course> {
     }
 
     @Transactional
+    @PostMapping(DELETE_LABS_MAPPING)
+    public RRO<String> deleteLabList(@RequestBody DTO.CourseUpdateLabListDTO course) throws CourseDB.CourseTransactionException {
+        long[] labidList = course.getLab_ids();
+        List<Lab> toDelete = new ArrayList<>();
+        for (Long labid: labidList){
+            Lab u = labDB.findById(labid);
+            if (u != null){
+                toDelete.add(u);
+            }
+        }
+        DBService.EntitySetManager<Lab, Course> toUpdate;
+        try {
+            toUpdate = courseDB.getLabsOfCourseByCourseId(course.getCourse_id());
+        } catch (CourseDB.CourseTransactionException e){
+            RRO<String> rro = new RRO();
+            rro.setMsg(e.getMessage());
+            return rro;
+        }
+//        DBService.EntitySetManager<Lab, Course> toUpdate = courseDB.getLabsOfCourseByCourseId(course.getCourse_id());
+        return super.removeEntitiesFromEntityList(toUpdate, toDelete);
+    }
+
+    @Transactional
     @PostMapping(GET_STUDENTS_MAPPING)
     public RRO<List<User>> getStudentList(@RequestBody DTO.CourseUpdateStudentListDTO course) {
         String course_id = course.getCourse_id();
@@ -226,6 +263,18 @@ public class CourseRESTController extends BaseRESTController<Course> {
             rro.setSuccess(false);
             rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
         }
+        return rro;
+    }
+
+    @Transactional
+    @PostMapping(GET_LABS_MAPPING)
+    public  RRO<List<Lab>> getLabList(@RequestBody DTO.LoadLabListDTO course) throws CourseDB.CourseTransactionException {
+        String courseid=course.getCourse_id();
+        List<Lab> labs=courseDB.getLabsOfCourseByCourseId(courseid).getAsList();
+        RRO<List<Lab>> rro = new RRO();
+        rro.setSuccess(true);
+        rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
+        rro.setData(labs);
         return rro;
     }
 
@@ -244,6 +293,8 @@ public class CourseRESTController extends BaseRESTController<Course> {
         return super.removeEntitiesFromEntityList(toUpdate, toDelete);
     }
 
+
+
     @PostMapping(SEARCH_COURSE_MAPPING)
     public RRO<List<Course>> searchCourse(@RequestBody DTO.UserSearchDTO toSearch){
         RRO<List<Course>> rro = new RRO();
@@ -257,6 +308,22 @@ public class CourseRESTController extends BaseRESTController<Course> {
         rro.setSuccess(true);
         rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
         rro.setData(courseDB.searchCourseWithKeyword(courseRegex));
+        return rro;
+    }
+
+    @PostMapping(CHECK_INVITE_MAPPING)
+    public RRO<Course> checkCourse(@RequestBody DTO.CourseSearchDTO toMatch){
+        RRO<Course> rro = new RRO();
+        String matchRegex = toMatch.getRegex();
+        //dont allow empty searches
+        if (matchRegex == null || matchRegex.equals("")){
+            rro.setSuccess(false);
+            rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
+            return rro;
+        }
+        rro.setSuccess(true);
+        rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
+        rro.setData(courseDB.findInviteCodeByName(matchRegex));
         return rro;
     }
 }

@@ -1,8 +1,10 @@
 package com.org.simplelab.controllers;
 
 import com.org.simplelab.database.entities.sql.Course;
+import com.org.simplelab.database.entities.sql.Lab;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
@@ -13,6 +15,7 @@ import java.util.List;
 @RequestMapping(StudentController.BASE_MAPPING)
 public class StudentController extends BaseController{
 
+    public static final String DO_LAB="/dolab/{lab_id}";
     public static final String BASE_MAPPING = "/student";
 
     @RequestMapping("")
@@ -38,5 +41,15 @@ public class StudentController extends BaseController{
     @RequestMapping("/search")
     public String search(){
         return "search";
+    }
+
+    @RequestMapping(DO_LAB)
+    public String dolab(@PathVariable("lab_id") long lab_id, HttpSession session, Model model){
+        Lab lab = labDB.findById(lab_id);
+        String home_navig = ((String)session.getAttribute("username")) + "'s Home";
+        model.addAttribute("home_navig", home_navig);
+        model.addAttribute("lab_id", lab.getId());
+        model.addAttribute("lab_name", lab.getName());
+        return "dolab";
     }
 }

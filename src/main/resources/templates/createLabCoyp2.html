@@ -1,0 +1,335 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--Import Google Icon Font-->
+    <link th:href="@{https://fonts.googleapis.com/icon?family=Material+Icons}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{../../css/info.css}">
+    <link rel="stylesheet" th:href="@{../../css/createLab.css}">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" th:href="@{../../css/materialize.min.css}" media="screen,projection"/>
+    <script type="text/javascript" th:src="@{../../libs/jquery-1.9.1.js}"></script>
+    <script type="text/javascript" th:src="@{../../libs/jquery-ui.js}"></script>
+    <script type="text/javascript" th:src="@{../../libs/mustache.js}"></script>
+    <script type="text/javascript" th:src="@{../../js/tools.js}"></script>
+    <script type="text/javascript" th:src="@{../../js/accountInfo/accountInfo.js}"></script>
+    <script type="text/javascript" th:src="@{../../js/lab.js}"></script>
+    <script type="text/javascript" th:src="@{../../js/setuplab/main.js}"></script>
+
+
+
+    <!--Template-->
+    <script id="modalAccTpl" type="x-tmpl-mustache" th:src="@{../../js/accountInfo/modalAccount.html}"></script>
+    <script id="modalEquip" type="x-tmpl-mustache" th:src="@{../../js/template/modalEquip.html}"></script>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    LAB_INFO = {
+        id:  /*[[${lab_id}]]*/ "",
+        name:  /*[[${lab_name}]]*/ ""
+    }
+    /*]]>*/
+</script>
+
+<body class="body delete_empty">
+
+<div id="equipmentModal" class="modal eq_modal">
+</div>
+
+<nav class="delete_empty">
+    <div class="nav-wrapper row" style="background: #00acc1;">
+        <a href="#" class="brand-logo offset-s1" style="padding-top: 10px; padding-left: 10px;">Simple Lab</a>
+        <a class='dropdown-trigger right' href='#' data-target='dropdown1'><img class="account_img"
+                                                                                src="../../img/name.png"></a>
+    </div>
+</nav>
+<!-- Dropdown Structure -->
+<ul id='dropdown1' class='dropdown-content dropdownoffset'>
+    <li><a href="../../teacher">Home</a></li>
+    <li class="accountDia"><a class=" modal-trigger" href="#modalAccount">Account</a></li>
+    <li><a href="/logout">Logout</a></li>
+</ul>
+
+
+<nav class="delete_empty">
+    <div class="nav-wrapper row" style="background: #00acc1">
+        <div class="col s12 valign-wrapper" style="background: #00b8ce; height: 30px; margin-top: 20px;">
+            <a href="../../" class="breadcrumb" th:text="${home_navig}">Home</a>
+            <!--            <a href="#!" class="breadcrumb" th:text="lab-${lab_name}}">Lab</a>-->
+            <!--      <a href="#!" class="breadcrumb"></a>-->
+        </div>
+    </div>
+</nav>
+
+
+<!--**********************************************************************main body*********************************************************************************************************-->
+<!--**********************************************************************main body*********************************************************************************************************-->
+<!--**********************************************************************main body*********************************************************************************************************-->
+<!--sidebar {sidebar item set}-->
+<!--        {sidebar step set}-->
+<!--        {sidebar current itemset}-->
+
+<!--operation area-->
+
+<!--infobar-->
+
+
+<!--    this operation area at the middle-->
+<div id="operation_area" class="operation_area delete_empty ">
+    <!--    side bar-->
+    <div id="sidebar" class="sidebar sidebarhover row">
+        <div id="sidebarone" class="sidebar_info delete_empty">
+            <nav class="delete_empty">
+                <div class="nav-wrapper my_yellow">
+                    <a href="#" class="brand-logo"><i class="material-icons">view_list</i>item sets</a>
+                    <a id="sidebar_add" class="right sidebar_add modal-trigger" href="#equipmentModal"><i
+                            class="material-icons">add</i></a>
+                </div>
+            </nav>
+            <!--        equipment modal-->
+
+
+            <!--                sidebar item set-->
+            <script id="all_equipment_template" type="mustache">
+                    <div class="row sidebaritem">
+                        <div class="col s6">
+                            <img src="../img/beaker.png" class="item_img">
+                        </div>
+                        <div class="col s6">
+                         <p>name: {{name}}</p>
+                         <p>type: {{type}}</p>
+                         </div>
+                    </div>
+            </script>
+            <ul class="collapsible row my_white" id="all_equipment"></ul>
+        </div>
+        <!--            side bar step set-->
+        <div id="sidebartwo" class="sidebar_info">
+            <nav class="delete_empty">
+                <div class="nav-wrapper my_red">
+                    <a href="#" class="brand-logo"><i class="material-icons">view_list</i>Steps</a>
+                    <!--                        <a id="sidebar_stepadd" class="right sidebar_add modal-trigger" href="#equipmentModal"><i class="material-icons">add</i></a>-->
+                </div>
+            </nav>
+            <ul id="selectable" class="sortable selectable collection row my_white sidebar_step_collection">
+
+            </ul>
+            <div class="center">
+                <button id="addstep" class="btn center waves-effect waves-light modal-trigger my_red">
+                    Add Step
+                </button>
+            </div>
+
+        </div>
+        <!--            side bar current item set-->
+        <div id="sidebarthree" class="sidebar_info ">
+            <nav class="delete_empty">
+                <div class="nav-wrapper my_gray">
+                    <a href="#" class="brand-logo"><i class="material-icons">view_list</i>Current Items</a>
+                </div>
+            </nav>
+
+            <ul class="row my_white current_item_set collection">
+                <!--                    keep this as a sample for future edit-->
+                <!--                    <li class="collection-item">-->
+                <!--                        <div class="row sidebaritem">-->
+                <!--                            <div class="col s6">-->
+                <!--                                <img src="../img/beaker.png" class="item_img">-->
+                <!--                            </div>-->
+                <!--                            <div class="col s6">-->
+                <!--                                <p>500ml beaker</p>-->
+                <!--                                <p>0.01L</p>-->
+
+                <!--                            </div>-->
+                <!--                        </div>-->
+                <!--                    </li>-->
+
+            </ul>
+
+
+        </div>
+
+        <div class="sidebar_trigger delete_empty">
+            <ul class=" tabs delete_empty">
+                <li class="tab tab_content my_yellow delete_empty"><a class="active delete_empty" href="#sidebarone"><p
+                        class="vtext1">Item</p></a></li>
+                <li class="tab tab_content my_red delete_empty"><a class="delete_empty" href="#sidebartwo"><p
+                        class="vtext1">Steps</p></a></li>
+                <li class="tab tab_content my_gray delete_empty"><a class="delete_empty" href="#sidebarthree"><p
+                        class="vtext2">Current Item</p></a></li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!--sample for the item created in the operation area-->
+    <!--        <div id="item_one" class="ui-widget-content draggable_item center">-->
+    <!--            <img src="../img/beaker.png" class="item_img">-->
+    <!--            <p >draggable block</p>-->
+    <!--        </div>-->
+
+
+    <!--        item information bar-->
+    <div id="infobar" class="infobar my_white">
+        <nav>
+            <div class="nav-wrapper" style="background: #f1cc36">
+                <a href="#!" class="brand-logo"><i class="material-icons">view_list</i>Item Info</a>
+            </div>
+        </nav>
+        <ul class="collection">
+            <li class="collection-item row">
+                <div class="col s6">
+                    Name:
+                </div>
+                <div class="col s6">
+                    vitriol
+                </div>
+            </li>
+            <li class="collection-item row">
+                <div class="col s6">
+                    chemistry exp:
+                </div>
+                <div class="col s6">
+                    H2SO4
+                </div>
+            </li>
+            <li class="collection-item row">
+                <div class="col s6">
+                    Color:
+                </div>
+                <div class="col s6">
+                    Blue
+                </div>
+            </li>
+            <li class="collection-item row">
+                <div class="col s6">
+                    PH:
+                </div>
+                <div class="col s6">
+                    7
+                </div>
+            </li>
+            <li class="collection-item row">
+                <div class="col s12 ">
+                    <button id="addcompound" class="btn waves-effect waves-light modal-trigger"
+                            data-target="#compoundmodal" style="background:#dd0052;">
+                        Add Compound
+                    </button>
+                    <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+                </div>
+            </li>
+
+            <div id="compoundmodal" class="modal">
+                <div class="modal-content">
+                    <nav>
+                        <div class="nav-wrapper my_cran">
+                            <a href="#!" class="brand-logo"><i class="material-icons">view_list</i>Compounds</a>
+                        </div>
+                    </nav>
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input id="compound_name" type="text" class="validate">
+                                <label for="compound_name">Compound Name</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="compound_chemistry_expression" type="email" class="validate">
+                                <label for="compound_chemistry_expression">Chemistry Expression</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input id="compound_volume" type="text" class="validate">
+                                <label for="compound_volume">Compound Volume</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="compound_concentration" type="password" class="validate">
+                                <label for="compound_concentration">Compound Concentration</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input id="compound_color" type="email" class="validate">
+                                <label for="compound_color">Compound Color</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="compound_ph" type="text" class="validate">
+                                <label for="compound_ph">PH</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id="" class="btn waves-effect waves-light modal-close my_cran" style="background:#dd0052;">
+                        Save
+                    </button>
+                </div>
+            </div>
+
+
+        </ul>
+    </div>
+
+
+    <!--pop up model to enter number of liquid -->
+    <div id="modal1" class="modal popup_dialog">
+        <nav class="my_yellow">
+            <div class="popup_dialog_header">Enter number of liquid</div>
+        </nav>
+        <div class="modal-content row">
+            <p class="range-field col s8 zeromargin ">
+                <input type="range" id="test5" min="0" max="200" value="100" oninput="showVal(this.value)"
+                       onchange="showVal(this.value)"/>
+            </p>
+            <div class="col s4 zeromargin">
+                <input class="number_picker" type="number" name="quantity" min="1" max="100" value="100">
+            </div>
+
+            <div class="center col s12">
+                <a href="#!" class="modal-close btn my_red">Pour</a>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+<!--JavaScript at end of body for optimized loading-->
+<script type="text/javascript" th:src="@{../../libs/materialize.min.js}"></script>
+</body>
+
+<script>
+    $(document).ready(function () {
+        M.updateTextFields();
+        M.AutoInit();
+        $(".sortable").sortable({
+            placeholder: "sortable-highlight"
+        });
+        $("#selectable").selectable();
+        $('.modal').modal();
+        $('.dropdown-trigger').dropdown();
+        $('.tabs').tabs();
+
+    });
+</script>
+<script type="text/javascript">
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.collapsible');
+        var instances = M.Collapsible.init(elems, {
+            accordion: false
+        });
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.dropdown-trigger');
+        var instances = M.Dropdown.init(elems, {
+            // hover: true
+        });
+    });
+
+
+</script>
+
+</html>

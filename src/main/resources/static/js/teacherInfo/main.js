@@ -13,10 +13,14 @@ ElEM_ID = {
     LAB_EDIT_BTN: "#labEditBtn",
     EQUIPMENT_SAVE_BTN: "#equipmentSaveBtn",
     EQUIPMENT_EDIT_BTN: "#equipmentEditBtn",
+    C_SEARCH_LAB_BTN: "#c_search_lab_btn",
+    COURSE_SEARCH_LAB_LIST_TBODY: "#c_search_result_lab_list tbody",
+    COURSE_LAB_LIST_TBODY:"#course_lab_list tbody",
 
 }
 
 TEMPLATE_ID = {
+    COURSE_LAB_TBODY:"#course_lab_list_tbody",
     STUDENTS_TBODY: "#student_list_tbody",
     LAB_TBODY: "#lab_tbody",
     COURSE_TBODY: "#course_tbody",

@@ -63,6 +63,13 @@ public class CourseDB extends DBService<Course> {
     }
 
     /**
+     * Returns courses that the student is enrolled in.
+     */
+    public List<Course> getCoursesStudentEnrolledIn(long student_id){
+        return repository.findCoursesEnrolledIn(student_id);
+    }
+
+    /**
      * Returns list of student usernames in a course.
      * @param course_id - course_id of the course to be found
      * @return - List of Users corresponding to the course -- empty list if no users exist
@@ -81,6 +88,15 @@ public class CourseDB extends DBService<Course> {
             students.add(proj);
         });
         return students;
+    }
+
+    public Set<Lab> getLabsOfCourse(String course_id) throws CourseTransactionException{
+        List<Course> found = findByCourseId(course_id);
+        if (found.size() == 0)
+            throw new CourseTransactionException(CourseTransactionException.NO_COURSE_FOUND);
+        Course c = found.get(0);
+        Set<Lab> labs =c.getLabs();
+        return labs;
     }
 
 
@@ -105,9 +121,9 @@ public class CourseDB extends DBService<Course> {
 
     @Transactional
     public void deleteCourseByCourseId(String course_id){
-       List<Course> found = findByCourseId(course_id);
-       if (found != null && found.size() > 0)
-           deleteById(found.get(0).getId());
+        List<Course> found = findByCourseId(course_id);
+        if (found != null && found.size() > 0)
+            deleteById(found.get(0).getId());
     }
 
     public List<Course> getCoursesForTeacher(long id){
@@ -124,5 +140,10 @@ public class CourseDB extends DBService<Course> {
     public List<Course> searchCourseWithKeyword(String keyword) {
         return repository.searchCourseWithKeyword(keyword);
     }
+
+    public Course findInviteCodeByName(String name){
+        return repository.findInviteCodeByName(name);
+    }
+
 
 }

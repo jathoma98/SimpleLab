@@ -10,16 +10,17 @@ $(document).ready(function(){
     // add item to operation area when click sidebar item
     $(".sidebaritem").click(function (event) {
         var item_id="item_"+itemcount;
+
         if(this.id=="500mlbeaker"){
             var c = $('<div id='+item_id+' class="ui-widget-content fixed draggable_item center '+item_id+'">' +
-                '<img src="../img/beaker.png" class="item_img">' +
+                '<img src="../../img/beaker.png" class="item_img">' +
                 '<p >500ml beaker</p>' +
                 '</div>');
 
             var cur_item= $('<li id='+item_id+' class="collection-item">\n' +
                 '                        <div class="row sidebaritem">\n' +
                 '                            <div class="col s6">\n' +
-                '                                <img src="../img/beaker.png" class="item_img">\n' +
+                '                                <img src="../../img/beaker.png" class="item_img">\n' +
                 '                            </div>\n' +
                 '                            <div class="col s6">\n' +
                 '                                <p>500ml beaker</p>\n' +
@@ -30,14 +31,14 @@ $(document).ready(function(){
                 '                    </li>');
         }else{
             var c = $('<div id='+item_id+' class="ui-widget-content fixed draggable_item center '+item_id+'">' +
-                '<img src="../img/cylinder.png" class="item_img">' +
+                '<img src="../../img/cylinder.png" class="item_img">' +
                 '<p >200ml cylinder</p>' +
                 '</div>');
 
             var cur_item= $('<li id='+item_id+'  class="collection-item">\n' +
                 '                        <div class="row sidebaritem">\n' +
                 '                            <div class="col s6">\n' +
-                '                                <img src="../img/cylinder.png" class="item_img">\n' +
+                '                                <img src="../../img/cylinder.png" class="item_img">\n' +
                 '                            </div>\n' +
                 '                            <div class="col s6">\n' +
                 '                                <p>200ml cylinder</p>\n' +

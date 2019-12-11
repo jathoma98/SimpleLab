@@ -2,15 +2,18 @@ package com.org.simplelab.database.entities.sql;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.apache.commons.lang3.SerializationUtils;
 import org.springframework.data.domain.Persistable;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Data
 @MappedSuperclass
-public abstract class BaseTable implements Persistable<Long>, Comparable<BaseTable> {
+public abstract class BaseTable
+        implements Persistable<Long>, Comparable<BaseTable>, Serializable {
 
     /**
      * Fields inherited by all entities in the database

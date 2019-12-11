@@ -1,5 +1,7 @@
 package com.org.simplelab.database;
 
+import com.org.simplelab.database.entities.sql.BaseTable;
+import org.apache.commons.lang3.SerializationUtils;
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 
@@ -7,6 +9,7 @@ import java.security.MessageDigest;
 
 public class DBUtils {
 
+    //SQL table and entity names
     public static final String USER_TABLE_NAME = "user";
     public static final String COURSE_TABLE_NAME = "course";
     public static final String LAB_TABLE_NAME = "lab";
@@ -15,11 +18,23 @@ public class DBUtils {
     public static final String STEP_TABLE_NAME = "step";
     public static final String RECIPE_TABLE_NAME = "recipe";
 
+    //MongoDB document names
+    public static final String LABINSTANCE_DOCUMENT_NAME = "lab_instance";
+    public static final String STUDENT_LAB_RECORD_DOCUMENT_NAME = "student_lab_record";
+
+    //salt for hashing
     public static final String SALT = "a very salty salt";
 
-    public static final String METADATA_DELETE_QUERY = "DELETE FROM #{#entityName} WHERE _metadata = :metadata";
-
     private static ModelMapper MAPPER = null;
+
+    public static ModelMapper getMapper(){
+        if (MAPPER == null){
+            ModelMapper mm = new ModelMapper();
+            mm.getConfiguration().setPropertyCondition(Conditions.isNotNull());
+            MAPPER = mm;
+        }
+        return MAPPER;
+    }
 
     /**
      * Hashes the given string.
@@ -37,13 +52,21 @@ public class DBUtils {
         }
     }
 
-    public static ModelMapper getMapper(){
-        if (MAPPER == null){
-            ModelMapper mm = new ModelMapper();
-            mm.getConfiguration().setPropertyCondition(Conditions.isNotNull());
-            MAPPER = mm;
-        }
-        return MAPPER;
+    /**
+     * We need to define custom Serialize and Deserialize wrapper methods because
+     * serialized objects have isNew = true by default, which is incorrect if they
+     * are being pulled from DB or being saved to DB.
+     */
+
+    public static <T extends BaseTable> byte[] serialize(T o){
+        o.setNew(false);
+        return SerializationUtils.serialize(o);
+    }
+
+    public static <T extends BaseTable> T deserialize(byte[] serial){
+        T built = SerializationUtils.deserialize(serial);
+        built.setNew(false);
+        return built;
     }
 
 

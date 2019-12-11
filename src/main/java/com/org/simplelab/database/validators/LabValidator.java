@@ -21,7 +21,6 @@ public class LabValidator extends Validator<Lab> {
     @Override
     public void validate() throws InvalidFieldException {
         StringBuilder sb = new StringBuilder();
-        System.out.println(name);
 
         if (name == null || name.equals(""))
             sb.append(NO_NAME_ERROR);

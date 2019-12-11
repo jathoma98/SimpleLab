@@ -43,6 +43,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
     public static final String UPDATE_MAPPING = "/updateLab";
     public static final String LAB_ID_STEP_MAPPING = LAB_ID_MAPPING + "/step";
     public static final String LAB_ID_STEP_NUMBER_MAPPING = LAB_ID_MAPPING + "/{step_number}";
+    public static final String LAB_ID_STEP_NUMBER_CHANGE_MAPPING = LAB_ID_MAPPING + "/{step_number}/{move}";
     public static final String SEARCH_LAB_MAPPING = "/searchLab";
 
 
@@ -66,7 +67,6 @@ public class LabRESTController extends BaseRESTController<Lab> {
     @DeleteMapping(DELETE_MAPPING)
     public RRO<String> deleteCourse(@RequestBody DTO.UserLabsDTO toDelete) {
         RRO<String> rro = new RRO();
-        long userId =  getUserIdFromSession();
         for (long lid : toDelete.getLids()) {
             labDB.deleteById(lid);
         }
@@ -80,6 +80,25 @@ public class LabRESTController extends BaseRESTController<Lab> {
         return super.getEntityById(lab_id);
     }
 
+    @GetMapping(LAB_ID_EQUIPMENT_MAPPING)
+    public RRO<List<Equipment>> labGetEquipment(@PathVariable("lab_id") long lab_id){
+        List<Equipment> equipments;
+        RRO<List<Equipment>> rro = new RRO();
+        rro.setSuccess(true);
+        rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
+        try {
+            equipments = labDB.getEquipmentOfLabById(lab_id).getAsList();
+            rro.setData(equipments);
+        } catch (Exception e) {
+            rro.setSuccess(false);
+            rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
+        }
+        return rro;
+    }
+
+
+    //TODO: clean this up
+    @Transactional
     @DeleteMapping(LAB_ID_MAPPING)
     public RRO<String> labDelete(@PathVariable("lab_id") long lab_id){
         return super.deleteEntity(lab_id);
@@ -98,7 +117,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
 
 
     @GetMapping(LOAD_LIST_LAB_MAPPING)
-    public RRO getListOfCourse(HttpSession session) {
+    public RRO getListOfLab(HttpSession session) {
         long userId = getUserIdFromSession();
         RRO rro = new RRO<Projection>();
         //Use TeacherLabInfo projection to only get attributes we want
@@ -125,17 +144,24 @@ public class LabRESTController extends BaseRESTController<Lab> {
     @Transactional
     @PostMapping(LAB_ID_EQUIPMENT_MAPPING)
     public RRO<String> addEquipmentToLab(@PathVariable("lab_id") long lab_id,
-                                 @RequestBody List<Equipment> equipmentToAdd){
-        RRO<String> rro = new RRO();
-        DBService.EntitySetManager<Equipment, Lab> found = labDB.getEquipmentOfLabById(lab_id);
-        if (found == null){
-            rro.setMsg("Lab not found.");
-            rro.setSuccess(false);
-            rro.setAction(RRO.ACTION_TYPE.PRINT_MSG.name());
+                                 @RequestBody long[] ids){
+        List<Equipment> toAdd = new ArrayList<>();
+        for (long id: ids){
+            Equipment found = equipmentDB.findById(id);
+            if (found != null)
+                toAdd.add(found);
+        }
+        DBService.EntitySetManager<Equipment, Lab> toUpdate;
+        try {
+            toUpdate = labDB.getEquipmentOfLabById(lab_id);
+        } catch (Exception e){
+            RRO<String> rro = new RRO();
+            rro.setMsg("form LAB_ID_EQUIPMENT_MAPPING");
             return rro;
         }
-        return super.addEntitiesToEntityList(found, equipmentToAdd);
+        return super.addEntitiesToEntityList(toUpdate, toAdd);
     }
+
 
 
     @PatchMapping(UPDATE_MAPPING)
@@ -151,18 +177,102 @@ public class LabRESTController extends BaseRESTController<Lab> {
         return super.updateEntity(toUpdate.getId(), dto.getNewLabInfo());
     }
 
-    @PostMapping(LAB_ID_STEP_MAPPING)
-    public RRO<String> addStepToLab(@PathVariable("lab_id") long lab_id,
-                                    @RequestBody DTO.LabAddStepDTO dto){
+    @GetMapping(LAB_ID_STEP_NUMBER_CHANGE_MAPPING)
+    public RRO<String> stepChangeNum(@PathVariable("lab_id") long lab_id,
+                                    @PathVariable("step_number") int step_num,
+                                    @PathVariable("move") int move){
         Lab found = labDB.findById(lab_id);
         if (found == null){
             return RRO.sendErrorMessage("Lab Not Found");
         }
-        Step s = DBUtils.getMapper().map(dto, Step.class);
+
+        List<Step> steps = found.getSteps();
+        if((step_num + move) >= steps.size()+1){
+            return RRO.sendErrorMessage("This is already last step!");
+        }else if ((step_num + move) < 1) {
+            return RRO.sendErrorMessage("This is already first step!");
+        }
+
+        int total_steps = steps.size();
+        for(Step s : steps){
+            if(s.getStepNum()==step_num){
+                s.setStepNum(step_num + move);
+            }else if(s.getStepNum() == step_num + move){
+                s.setStepNum(step_num);
+            }
+        }
+        labRepository.save(found);
+        RRO<String> rro = new RRO();
+        rro.setSuccess(true);
+        rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
+        return rro;
+    }
+
+
+    @GetMapping(LAB_ID_STEP_MAPPING)
+    public RRO<List<Step>> getLabStep(@PathVariable("lab_id") long lab_id){
+        RRO<List<Step>> rro = new RRO();
+        Lab found = labDB.findById(lab_id);
+        if (found == null){
+            rro.setSuccess(false);
+            rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
+        }
+        List<Step> step = found.getSteps();
+        rro.setSuccess(true);
+        rro.setData(step);
+        rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
+        rro.setMsg("there must be have list of steps in return of rro");
+        return rro;
+    }
+
+    @PostMapping(LAB_ID_STEP_MAPPING)
+    public RRO<String> addStepToLab(@PathVariable("lab_id") long lab_id,
+                                    @RequestBody DTO.AddStepDTO dto){
+        Lab found = labDB.findById(lab_id);
+        if (found == null){
+            return RRO.sendErrorMessage("Lab Not Found");
+        }
+        //TODO: could make better, but for now
+        Equipment targetObject = equipmentDB.findById(dto.getTargetEquipmentId());
+        DTO.LabAddStepDTO f_step = new DTO.LabAddStepDTO();
+        f_step.setStepNum(found.getSteps().size()+1);
+        f_step.setTargetObject(targetObject);
+        f_step.setTargetTemperature(dto.getTargetTemperature());
+        f_step.setTargetVolume(dto.getTargetVolume());
+        f_step.setTargetWeight(dto.getTargetWeight());
+        Step s = DBUtils.getMapper().map(f_step, Step.class);
         s.setLab(found);
         List<Step> toAdd = new ArrayList<>();
         toAdd.add(s);
         return super.addEntitiesToEntityList(labDB.getStepManager(found), toAdd);
+    }
+
+    @DeleteMapping(LAB_ID_STEP_NUMBER_MAPPING)
+    public RRO DeleteStepFromLab(@PathVariable("lab_id") long lab_id, @PathVariable("step_number") int stepNun){
+            RRO<List<Step>> rro = new RRO();
+        Lab found = labDB.findById(lab_id);
+        if (found == null){
+            return RRO.sendErrorMessage("Lab Not Found");
+        }
+        List<Step> steps = found.getSteps();
+        for(int i = 0; i < steps.size(); i++){
+            Step step = steps.get(i);
+            if(step.getStepNum() > stepNun){
+                step.setStepNum(step.getStepNum()-1);
+            }else if(step.getStepNum() == stepNun){
+                steps.remove(step);
+                --i;
+            }
+        }
+        found.setSteps(steps);
+        try {
+            labDB.update(found);
+        } catch (DBService.EntityDBModificationException e){
+            RRO.sendErrorMessage(e.getMessage());
+        }
+        rro.setSuccess(true);
+        rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
+        return rro;
     }
 
     //TODO: implement delete step mapping later, we should get a prototype lab working first
@@ -170,15 +280,20 @@ public class LabRESTController extends BaseRESTController<Lab> {
      * THIS IS A TESTING METHOD - deletes all steps in the lab
      * @return RRO with data field containing the updated lab
      */
+    @Transactional
     @DeleteMapping(LAB_ID_STEP_MAPPING)
     public RRO deleteAllStepsFromLab(@PathVariable("lab_id") long lab_id){
         Lab found = labDB.findById(lab_id);
-        found.setSteps(new ArrayList<>());
+        List<Step> steps = found.getSteps();
+        for (Step s: steps)
+            s.setLab(null);
+        steps.clear();
         try {
             labDB.update(found);
         } catch (DBService.EntityDBModificationException e){
             RRO.sendErrorMessage(e.getMessage());
         }
+        Lab found_after_delete = labDB.findById(lab_id);
         RRO<Lab> rro = new RRO<>();
         rro.setSuccess(true);
         rro.setAction(RRO.ACTION_TYPE.NOTHING.name());

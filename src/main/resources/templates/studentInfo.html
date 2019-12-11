@@ -8,12 +8,12 @@
     <script type="text/javascript" th:src="@{/libs/mustache.js}"></script>
     <script src="/libs/jquery-1.9.1.js"></script>
     <script src="/js/sudentInfo.js"></script>
-    <script type="text/javascript" th:src="@{/js/teacherInfo/main.js}"></script>
-    <script type="text/javascript" th:src="@{/js/teacherInfo/course.js}"></script>
+<!--    <script type="text/javascript" th:src="@{/js/teacherInfo/main.js}"></script>-->
+<!--    <script type="text/javascript" th:src="@{/js/teacherInfo/course.js}"></script>-->
     <script type="text/javascript" th:src="@{/js/accountInfo/accountInfo.js}"></script>
     <script type="text/javascript" th:src="@{/js/tools.js}"></script>
 
-    <script id="modalTpl" type="x-tmpl-mustache" th:src="@{/js/template/modal.html}"></script>
+<!--    <script id="modalTpl" type="x-tmpl-mustache" th:src="@{/js/template/modal.html}"></script>-->
     <script id="modalAccTpl" type="x-tmpl-mustache" th:src="@{/js/accountInfo/modalAccount.html}"></script>
     <script type="text/javascript"> templatePreLoad()</script>
     <!--Let browser know website is optimized for mobile-->
@@ -68,7 +68,7 @@
                     <li class="coursecheckcol myhide"><a id="courseBackBtn" ><i class="material-icons">arrow_back</i></a></li>
                     <li class="coursecheckcol myhide"><a id="courseDeleteBtn"  ><i class="material-icons">delete</i></a></li>
                     <li class="coursecheckcol myshow"><a class="modal-trigger" href="#courseModal"><i class="material-icons">add</i></a></li>
-                    <li class="coursecheckcol myshow"><a id="courseEditBtn" ><i class="material-icons">edit</i></a></li>
+<!--                    <li class="coursecheckcol myshow"><a id="courseEditBtn" ><i class="material-icons">edit</i></a></li>-->
                 </ul>
             </div>
         </nav>
@@ -106,27 +106,47 @@
         </div>
 
 
-        <table class="striped centered responsive-table">
+        <table id="studentCourse" class="striped centered responsive-table">
 
             <thead>
             <tr>
+                <th class="coursecheckcol myhide mycheckbox"></th>
                 <th>Course ID</th>
                 <th>Course Name</th>
                 <th>Create Date</th>
             </tr>
             </thead>
 
-            <tbody th:remove = "all-but-first">
-            <tr th:each="course : ${list_of_course}">
-                <td th:text="${course.ucid}">id</td>
-                <td th:text="${course.name}">name</td>
-                <td th:text="${course.create_day}">2018-02-20</td>
-            </tr>
+            <tbody>
+<!--            <tr th:each="course : ${list_of_course}">-->
+<!--                <td th:text="${course.ucid}">id</td>-->
+<!--                <td th:text="${course.name}">name</td>-->
+<!--                <td th:text="${course.create_day}">2018-02-20</td>-->
+<!--            </tr>-->
             </tbody>
         </table>
     </div>
 
 
+    <div id="studentCourseModal" class="modal">
+        <div class="modal-content">
+            <ul class="collapsible">
+<!--                <li>-->
+<!--                    <div class="collapsible-header"><i class="material-icons">whatshot</i>Lab One</div>-->
+<!--                    <div class="collapsible-body labheight">-->
+<!--                        <div>-->
+<!--                            <div class="">-->
+<!--                                <p>Lab Name</p>-->
+<!--                            </div>-->
+<!--                            <p class="labdescriptionheight"> this is lab discription</p>-->
+<!--                            <a class="waves-effect waves-light btn right my_red">Start<i class="material-icons right">send</i></a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </li>-->
+
+            </ul>
+        </div>
+    </div>
 <!--    &lt;!&ndash; ****************************************************************Lab Block************************************************************************************************************&ndash;&gt;-->
 <!--    &lt;!&ndash; ****************************************************************Lab Block************************************************************************************************************&ndash;&gt;-->
 <!--    &lt;!&ndash; ****************************************************************Lab Block************************************************************************************************************&ndash;&gt;-->
@@ -254,9 +274,19 @@
     $(document).ready(function(){
         $('.modal').modal();
         $('.dropdown-trigger').dropdown();
+
     });
 </script>
 <script type="text/javascript">
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.modal');
+        var instances = M.Modal.init(elems, {
+            // inDuration:"50",
+            // ourDuration:"50"
+        });
+    });
 
     document.addEventListener('DOMContentLoaded', function() {
         var elems = document.querySelectorAll('.fixed-action-btn');
@@ -266,7 +296,9 @@
     document.addEventListener('DOMContentLoaded', function() {
         var elems = document.querySelectorAll('.collapsible');
         var instances = M.Collapsible.init(elems, {
-            accordion: true
+            accordion: true,
+            // inDuration:"1000",
+            // outDuration:"1000"
         });
 
         document.addEventListener('DOMContentLoaded', function() {

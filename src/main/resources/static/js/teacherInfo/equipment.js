@@ -24,9 +24,7 @@ let EQUIPMENT_TABLE = {
                 type: 'GET',
                 success: function (result) {
                     retObjHandle(result, (equipment)=>{
-                        let props = equipment.properties;
-                        equipment.properties = [];
-                        props.forEach(p=>equipment.properties[p.propertyKey] = p.propertyValue);
+                        equipmentPropsToKeyValue(equipment)
                         let data = {
                             equipmentModal: {
                                 active: "active",
@@ -36,7 +34,7 @@ let EQUIPMENT_TABLE = {
                         }
                         data.equipmentModal[equipment.type] = " checked";
                         EQUIPMENT_TABLE.modal_info = equipment;
-                        rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL_EQUIP, data, EQUIPMENT_TABLE.btnEvents);
+                        rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL_EQUIP, data, 'click', EQUIPMENT_TABLE.btnEvents);
                     })
                 }
             })
@@ -126,7 +124,6 @@ let EQUIPMENT_TABLE = {
         };
         this.btnEvents[ElEM_ID.EQUIPMENT_SAVE_BTN] = EQUIPMENT_TABLE.save;
 
-
         /**
          * Delete LAB.
          **/
@@ -150,7 +147,6 @@ let EQUIPMENT_TABLE = {
             })
         };
 
-
         /**
          * Clean data in modal. when user click on
          * add lab button.
@@ -164,8 +160,7 @@ let EQUIPMENT_TABLE = {
                 }
             }
             rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL_EQUIP, data, "click", EQUIPMENT_TABLE.btnEvents);
-    };
-
+        };
 
         this.btnSwitch = function () {
             $(".equipcheckcol").toggle();

@@ -1,5 +1,4 @@
 package com.org.simplelab.database.repositories.sql;
-
 import com.org.simplelab.database.entities.sql.Course;
 import com.org.simplelab.database.entities.sql.User;
 import org.springframework.data.jpa.repository.Modifying;
@@ -16,6 +15,16 @@ public interface CourseRepository extends BaseRepository<Course> {
     public List<Course> findByName(String name);
 
     public List<Course> findByCreator_id(long id);
+
+    /**
+     * Find all courses that a certain student is enrolled in.
+     */
+    @Query(value =
+            "SELECT * from #{#entityName} \n" +
+            "INNER JOIN course_students \n" +
+            "ON course.id = course_students.course_id \n" +
+            "WHERE course_students.students_id = :student_id", nativeQuery = true)
+    public List<Course> findCoursesEnrolledIn(@Param("student_id") long student_id);
 
     @Modifying
     @Transactional
@@ -46,7 +55,13 @@ public interface CourseRepository extends BaseRepository<Course> {
     public List<User> findUserInCourse(@Param("uid") long uid,
                                         @Param("cid") long cid);
 
-    @Query(nativeQuery = true, value = "SELECT * FROM #{#entityName} WHERE  name " +
-            " LIKE %:keyword% OR course_id LIKE %:keyword%")
+    @Query(nativeQuery = true, value = "SELECT * FROM #{#entityName} WHERE course_id LIKE %:keyword%")
     public List<Course> searchCourseWithKeyword(@Param("keyword") String keyword);
+
+    @Query(value = "SELECT *\n" +
+            "FROM #{#entityName}\n" +
+            "WHERE name = :checkName\n", nativeQuery = true)
+    public Course findInviteCodeByName(@Param("checkName") String keyword);
+
+
 }

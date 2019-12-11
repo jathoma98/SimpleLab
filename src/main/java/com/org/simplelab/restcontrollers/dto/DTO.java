@@ -42,7 +42,7 @@ public abstract class DTO {
     @Getter
     @Setter
     public static class CourseSearchDTO extends DTO {
-        private String courseRegex;
+        private String regex;
     }
 
     /**
@@ -75,6 +75,23 @@ public abstract class DTO {
         private List<String> usernameList;
     }
 
+    @Getter
+    @Setter
+    public static class CourseUpdateLabListDTO extends DTO {
+
+        //list of username need to add or delete
+        private long[] lab_ids;
+        //course need to be update
+        private String course_id;
+    }
+
+    @Getter
+    @Setter
+    public static class LoadLabListDTO extends DTO {
+        //course need to be update
+        private String course_id;
+    }
+
     /**
      * Contains info to add a lab to a course.
      */
@@ -89,6 +106,15 @@ public abstract class DTO {
 
     @Getter
     @Setter
+    public static class LabAddEquipmentDTO extends DTO {
+        //ids of labs to add
+        private long[] equipments;
+        //course_id of course to add labs to
+        private long lab_id;
+    }
+
+    @Getter
+    @Setter
     public static class UserLabsDTO extends DTO{
         private long[] uid;
         private String username;
@@ -99,7 +125,7 @@ public abstract class DTO {
     @Getter
     @Setter
     public static class fpUserInput extends DTO{
-        private String userInput;
+        private String answer;
         private User user;
     }
 
@@ -108,17 +134,42 @@ public abstract class DTO {
      public static class LabAddStepDTO extends DTO{
          private Equipment targetObject;
          private int stepNum;
+         private String targetTemperature;
+         private String targetVolume;
+         private String targetWeight;
      }
 
      @Getter
      @Setter
      public static class EquipmentInteractionDTO extends DTO{
         private Equipment object1, object2;
+        private String parameter;
+        private int stepNum;
+
+        public EquipmentInteractionDTO(){
+            parameter = "0";
+        }
      }
 
      @Getter
      @Setter
      public static class AddRecipeDTO extends DTO{
-        //add fields
+         Long equipmentOne;
+         Long equipmentTwo;
+         Long result;
+         int ratioOne;
+         int ratioTwo;
      }
+
+    @Getter
+    @Setter
+    public static class AddStepDTO extends DTO{
+        Long labId;
+        Long targetEquipmentId;
+        int stepNum;
+        String targetTemperature;
+        String targetVolume;
+        String targetWeight;
+    }
 }
+

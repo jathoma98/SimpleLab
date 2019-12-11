@@ -25,11 +25,13 @@ public class Recipe extends BaseTable implements UserCreated {
     @ManyToOne(fetch = FetchType.EAGER,
                cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE},
                optional = false)
+    @JoinColumn(name = "equipmentOne")
     private Equipment equipmentOne;
 
     @ManyToOne(fetch = FetchType.EAGER,
                cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE},
                optional = false)
+    @JoinColumn(name = "equipmentTwo")
     private Equipment equipmentTwo;
 
     //TODO: change this back to lazy evaluation after testing
@@ -38,6 +40,24 @@ public class Recipe extends BaseTable implements UserCreated {
                 optional = false)
     private Equipment result;
 
+    private double ratioOne;
+    private double ratioTwo;
+
+    @Override
+    public boolean equals(Object o){
+        if (o == this)
+            return true;
+        if (!Recipe.class.isInstance(o))
+            return false;
+        Recipe cast = (Recipe)o;
+        return  cast.getName().equals(this.getName()) &&
+                cast.getEquipmentOne().equals(this.getEquipmentOne()) &&
+                cast.getEquipmentTwo().equals(this.getEquipmentTwo()) &&
+                cast.getResult().equals(this.getResult()) &&
+                cast.getRatioOne() == ratioOne &&
+                cast.getRatioTwo() == ratioTwo;
+    }
+
     @Override
     public String toString(){
         return  "Name: " + getName() + " \n" +
@@ -45,14 +65,10 @@ public class Recipe extends BaseTable implements UserCreated {
                 "EQ2: " + equipmentTwo.getName() + " Properties: " + equipmentTwo.getProperties().toString() + " \n" +
                 "Result: " + result.getName() + " Properties: " + result.getProperties().toString();
     }
-
-
     private static Recipe NO_RECIPE_GEN(){
         Recipe r = new Recipe();
         r.setName("NO RECIPE");
         r.setId(-1);
         return r;
     }
-
-
 }

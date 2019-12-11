@@ -108,12 +108,12 @@ let COURSES_TABLE = {
                             }
                         }
                         COURSES_TABLE.course_info = result.data;
-                        rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL, data, "click",COURSES_TABLE.btnEvents);
+                        rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL, data, "click", COURSES_TABLE.btnEvents);
                         //load
                         COURSES_TABLE.reLoadStudentsList(course_json)
+                        COURSES_TABLE.reLoadLabsList(course_json);
+                        COURSES_TABLE.searchLab();
                     })
-
-
                 }
             })
         };
@@ -162,6 +162,7 @@ let COURSES_TABLE = {
                         rebuildComponent(ElEM_ID.COURSE_TABLE_TBODY, TEMPLATE_ID.COURSE_TBODY, data);
                         if (COURSES_TABLE.toggle) {
                             setTableBodyRowEvent(ElEM_ID.COURSE_TABLE_TBODY, COURSES_TABLE.tableRowEvent);
+
                         }
                     })
                 }
@@ -178,7 +179,7 @@ let COURSES_TABLE = {
             let course = {
                 name: $("#course_name").val(),
                 course_id: $("#course_code").val(),
-                invite_code:$("#course_invitecode").val(),
+                invite_code: $("#course_invitecode").val(),
                 description: $("#course_description").val()
             }
             let course_json = JSON.stringify(course);
@@ -273,6 +274,99 @@ let COURSES_TABLE = {
                 removeTableBodyRowEvent($("#course_list tbody"))
             }
         }
+
+        //**********************************search lab**********************************
+        //**********************************search lab**********************************
+        //**********************************search lab**********************************
+        this.searchLab = function () {
+            $.ajax({
+                url: "/lab/rest/loadLabList",
+                type: "GET",
+                success: function (result) {
+                    retObjHandle(result, (labs) => {
+                        let data = {
+                            iterable: labs.reverse(),
+                        }
+                        labs.forEach(e=>e["search"]=true);
+                        rebuildRepeatComponent(ElEM_ID.COURSE_SEARCH_LAB_LIST_TBODY, TEMPLATE_ID.COURSE_LAB_TBODY,
+                            "<tr/>", ".add", data, "click", (lab)=>{
+                                COURSES_TABLE.addLabBtnEvent(lab)
+                            });
+                    })
+                }
+            })
+        }
+
+
+        this.addLabBtnEvent = function (lab) {
+            let course = {
+                course_id: $("#course_code").val(),
+                lab_ids: new Array()
+            }
+            course.lab_ids.push(lab.id);
+            let course_json = JSON.stringify(course);
+            $.ajax({
+                url: "/course/rest/addLab",
+                type: 'POST',
+                dataTye: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: course_json,
+                success: function (result) {
+                    retObjHandle(result,
+                        () => {
+                            COURSES_TABLE.reLoadLabsList(course_json)
+                        })
+                }
+            })
+        };
+
+
+        this.reLoadLabsList = function (course_json) {
+            $.ajax({
+                url: "/course/rest/getLabs",
+                type: 'POST',
+                dataTye: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: course_json,
+                success: function (result) {
+                    retObjHandle(result, (labs) => {
+                        let data = {
+                            iterable: labs,
+                        }
+                        data.iterable.forEach(e=>e["search"]=false);
+                        rebuildRepeatComponent(ElEM_ID.COURSE_LAB_LIST_TBODY, TEMPLATE_ID.COURSE_LAB_TBODY,
+                            "<tr/>", ".del", data, "click", (lab)=>{
+                            COURSES_TABLE.delLabBtnEvent(lab)
+                            });
+                    })
+                }
+            })
+        };
+
+
+        this.delLabBtnEvent = function (lab) {
+            let course = {
+                course_id: $("#course_code").val(),
+                lab_ids: new Array()
+            }
+            course.lab_ids.push(lab.id);
+            console.log(course)
+            let course_json = JSON.stringify(course);
+            $.ajax({
+                url: "/course/rest/deleteLab",
+                type: 'POST',
+                dataTye: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: course_json,
+                success: function (result) {
+                    retObjHandle(result,
+                        () => {
+                        COURSES_TABLE.reLoadLabsList(course_json)
+                    })
+                }
+            })
+        };
+
     }
 }
 

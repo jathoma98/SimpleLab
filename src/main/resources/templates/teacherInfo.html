@@ -48,7 +48,11 @@
 
 <!-- Modal Structure -->
 <div id="modalAccount" class="modal modalheight">
-    <!--template -->
+    <div class="modal-content">
+        <ul class="collapsible">
+
+        </ul>
+    </div>
 </div>
 
 
@@ -68,7 +72,7 @@
 
 <script id="student_list_tbody" type="mustache">
     {{#students}}
-        <tr href="#modal">
+        <tr>
             <td>
                 <a class="left marginright info" href="#"><i class="material-icons">info</i></a>
                 <span>{{username}}</span>
@@ -77,6 +81,15 @@
             </td>
         </tr>
     {{/students}}
+</script>
+
+<script id="course_lab_list_tbody" type="mustache">
+            <td>
+                <a class="left marginright info" href="#"><i class="material-icons">info</i></a>
+                <span>{{name}}</span>
+                {{^search}}<a class="right del" href="#"><i class="material-icons">remove_circle_outline</i></a>{{/search}}
+                {{#search}}<a class="right add" href="#"><i class="material-icons">add</i></a>{{/search}}
+            </td>
 </script>
 
 <!--                second nav bar on the top-->
@@ -257,7 +270,6 @@
                 <td>{{createdDate}}</td>
             </tr>
             {{/equip}}
-
             </script>
             <tbody>
             </tbody>

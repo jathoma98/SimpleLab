@@ -1,12 +1,10 @@
 package com.org.simplelab;
 
+import com.org.simplelab.database.repositories.mongodb.LabInstanceRepository;
 import com.org.simplelab.database.repositories.sql.CourseRepository;
 import com.org.simplelab.database.repositories.sql.EquipmentRepository;
 import com.org.simplelab.database.repositories.sql.LabRepository;
-import com.org.simplelab.database.services.CourseDB;
-import com.org.simplelab.database.services.EquipmentDB;
-import com.org.simplelab.database.services.LabDB;
-import com.org.simplelab.database.services.UserDB;
+import com.org.simplelab.database.services.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -46,6 +44,11 @@ public abstract class SpringTestConfig {
     LabDB labDB;
     @Autowired
     EquipmentDB equipmentDB;
+    @Autowired
+    LabInstanceRepository lir;
+    @Autowired
+    LabInstanceDB instanceDB;
+
 
     protected static final long user_id = 90;
     protected static final String username = "12345";
@@ -62,6 +65,7 @@ public abstract class SpringTestConfig {
         cr.deleteBy_metadata(metadata);
         er.deleteBy_metadata(metadata);
         lr.deleteBy_metadata(metadata);
+        lir.deleteBy_metadata(metadata);
     }
 
     @BeforeAll
