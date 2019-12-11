@@ -335,9 +335,33 @@ let COURSES_TABLE = {
                         }
                         data.iterable.forEach(e=>e["search"]=false);
                         rebuildRepeatComponent(ElEM_ID.COURSE_LAB_LIST_TBODY, TEMPLATE_ID.COURSE_LAB_TBODY,
-                            "<tr/>", ".add", data, "click", (lab)=>{
-                                console.log(lab);
+                            "<tr/>", ".del", data, "click", (lab)=>{
+                            COURSES_TABLE.delLabBtnEvent(lab)
                             });
+                    })
+                }
+            })
+        };
+
+
+        this.delLabBtnEvent = function (lab) {
+            let course = {
+                course_id: $("#course_code").val(),
+                lab_ids: new Array()
+            }
+            course.lab_ids.push(lab.id);
+            console.log(course)
+            let course_json = JSON.stringify(course);
+            $.ajax({
+                url: "/course/rest/deleteLab",
+                type: 'POST',
+                dataTye: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: course_json,
+                success: function (result) {
+                    retObjHandle(result,
+                        () => {
+                        COURSES_TABLE.reLoadLabsList(course_json)
                     })
                 }
             })

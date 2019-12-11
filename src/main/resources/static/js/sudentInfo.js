@@ -65,10 +65,11 @@ function loadCourse() {
 }
 function jumptoCourseLab() {
     $('#studentCourseModal').modal('open');
+
     let toSearch = {
         course_id: $(this)[0].getAttribute("courseid")
     };
-    // console.log("courseid "+$(this)[0].getAttribute("courseid"))
+    console.log(toSearch)
     let toSearch_json = JSON.stringify(toSearch);
     $.ajax({
         url: "/course/rest/getLabs",
@@ -78,6 +79,29 @@ function jumptoCourseLab() {
         data: toSearch_json,
         success: function (result) {
             console.log(result);
+            retObjHandle(result, function () {
+                result.data.sort();
+                let courseTable = '';
+                for (let f = 0; f < result.data.length; f++) {
+                    courseTable +='<li>\n' +
+                        '                    <div class="collapsible-header"><i class="material-icons">whatshot</i>'+result.data[f].name+'</div>\n' +
+                        '                    <div class="collapsible-body labheight">\n' +
+                        '                        <div>\n' +
+                        '                            <div class="">\n' +
+                        '                                <p>Lab Name:  '+result.data[f].name+'</p>\n' +
+                        '                            </div>\n' +
+                        '                            <p class="labdescriptionheight"> '+result.data[f].description+'</p>\n' +
+                        '                            <a class="waves-effect waves-light btn right my_red">Start<i class="material-icons right">send</i></a>\n' +
+                        '                        </div>\n' +
+                        '                    </div>\n' +
+                        '                </li>'
+
+                }
+                $("#studentCourseModal ul").html(courseTable);
+                // $("#studentCourse tbody").find("tr").each(function () {
+                //     $(this).on("click", jumptoCourseLab);
+                // })
+            })
         }
     })
 }
