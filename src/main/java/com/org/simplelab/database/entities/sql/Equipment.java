@@ -30,8 +30,9 @@ public class Equipment extends AbstractEquipment implements UserCreated {
                 mappedBy = "equipments")
     private Set<Lab> lab;
 
+    @JsonIgnore
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE}
-            ,fetch = FetchType.LAZY)
+            ,fetch = FetchType.EAGER)
     @JoinColumn(name = "creator_id")
     private User creator;
 

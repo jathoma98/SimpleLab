@@ -3,6 +3,8 @@ package com.org.simplelab.database.entities.interfaces;
 import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.EquipmentProperty;
 
+import java.io.Serializable;
+
 /**
  * Base class for Equipment interactions with other equipment.
  */
@@ -38,7 +40,9 @@ public interface Interaction {
          return "undefined";
      }
 
-    class DoNothing implements Interaction{
+    class SerialInterface implements Serializable{}
+
+    class DoNothing extends SerialInterface implements Interaction{
         @Override
         public Equipment interactWith(Equipment target, String parameter) {
             return Equipment.NO_EQUIPMENT;
@@ -52,7 +56,7 @@ public interface Interaction {
     /**
      * Heating interaction -- heats objects that interact with this object.
      */
-    class Heat implements Interaction{
+    class Heat extends SerialInterface implements Interaction{
         @Override
         public Equipment interactWith(Equipment target, String parameter) {
             EquipmentProperty temperatureProperty = target.findProperty("temperature");

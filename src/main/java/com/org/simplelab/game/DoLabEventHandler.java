@@ -69,7 +69,7 @@ public class DoLabEventHandler {
         ws.setDescription(li.getLabDescription());
         ws.setSteps(originalLab.getSteps());
         ws.setEquipments(originalLab.getEquipments());
-        ws.set_continued(true);
+        ws.setContinued(true);
         //TODO: set recipes
 
         ws.setStarting_step(li.getStepRecords().stream()
