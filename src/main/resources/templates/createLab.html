@@ -302,6 +302,7 @@
                             <img src="../../img/beaker.png" class="item_img">
                         </div>
                         <div class="col s4">
+                            <p>Step - {{stepNum}}</p>
                             <p>Name: {{targetObject.name}}</p>
                             <p>Type: {{targetObject.type}}</p>
                         </div>
@@ -319,6 +320,11 @@
                         {{#targetObject.machine}}
                         <div class="col s4"></div>
                         {{/targetObject.machine}}
+                        <div class="col s2">
+                            <a class="step_move_up">Up</a>
+                            <a class="step_move_down">Down</a>
+                            <a class="step_remove">Remove</a>
+                        </div>
                     </div>
                 </script>
 

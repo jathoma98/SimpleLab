@@ -268,8 +268,8 @@ STEP = {
                 type: 'GET',
                 success: function (result) {
                     retObjHandle(result, () => {
-                        if(result.data == undefined) return;
-                        result.data.sort((a, b) => a.stepNum < b.stepNum);
+                        if (result.data == undefined) return;
+                        result.data = result.data.sort((a, b) => a.stepNum - b.stepNum);
                         result.data.forEach((step) => {
                             step.targetObject[step.targetObject.type] = true;
                             equipmentPropsToKeyValue(step.targetObject);
@@ -278,8 +278,27 @@ STEP = {
                         rebuildRepeatComponent(ELEM_NAME.STEP_LIST, TEMPLATE_ID.STEP_LIST,
                             "<li/>", "a", data, "click",
                             (step, event) => {
-                                console.log(step);
-                            });
+                                let changeStepNum = () => {
+                                }
+                                if ($(event.target).hasClass("step_move_up") || $(event.target).hasClass("step_move_down")) {
+                                    $.ajax({
+                                        url: "/lab/rest/" + LAB_INFO.id + "/" + step.stepNum + "/" + ($(event.target).hasClass("step_move_up") ? -1 : 1),
+                                        type: 'GET',
+                                        success: (result) => {
+                                            retObjHandle(result, STEP.load())
+                                        }
+                                    });
+                                }
+                                else if($(event.target).hasClass("step_remove")){
+                                    $.ajax({
+                                        url: "/lab/rest/" + LAB_INFO.id + "/" + step.stepNum,
+                                        type: 'DELETE',
+                                        success:(result)=>{
+                                            retObjHandle(result, STEP.load)
+                                        }
+                                    })
+                                }
+                        });
                     })
                 }
             })
