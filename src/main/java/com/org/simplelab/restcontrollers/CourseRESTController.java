@@ -244,7 +244,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
 
     @Transactional
     @PostMapping(GET_LABS_MAPPING)
-    public List<Lab> getLabList(@RequestBody DTO.LoadLabListDTO course) throws CourseDB.CourseTransactionException {
+    public  List<Lab> getLabList(@RequestBody DTO.LoadLabListDTO course) throws CourseDB.CourseTransactionException {
         String courseid=course.getCourse_id();
         List<Lab> labs=courseDB.getLabsOfCourseByCourseId(courseid).getAsList();
         return labs;
