@@ -283,10 +283,13 @@ public class LabRESTController extends BaseRESTController<Lab> {
      * THIS IS A TESTING METHOD - deletes all steps in the lab
      * @return RRO with data field containing the updated lab
      */
+    @Transactional
     @DeleteMapping(LAB_ID_STEP_MAPPING)
     public RRO deleteAllStepsFromLab(@PathVariable("lab_id") long lab_id){
         Lab found = labDB.findById(lab_id);
         List<Step> steps = found.getSteps();
+        for (Step s: steps)
+            s.setLab(null);
         steps.clear();
         try {
             labDB.update(found);
