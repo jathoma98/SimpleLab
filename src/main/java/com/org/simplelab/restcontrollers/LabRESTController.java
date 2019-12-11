@@ -293,6 +293,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
         } catch (DBService.EntityDBModificationException e){
             RRO.sendErrorMessage(e.getMessage());
         }
+        Lab found_after_delete = labDB.findById(lab_id);
         RRO<Lab> rro = new RRO<>();
         rro.setSuccess(true);
         rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
