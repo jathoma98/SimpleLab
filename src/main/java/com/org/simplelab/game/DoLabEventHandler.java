@@ -2,6 +2,7 @@ package com.org.simplelab.game;
 
 import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.interfaces.Interaction;
+import com.org.simplelab.database.entities.mongodb.InstantiatedEquipment;
 import com.org.simplelab.database.entities.mongodb.LabInstance;
 import com.org.simplelab.database.entities.mongodb.StepAction;
 import com.org.simplelab.database.entities.mongodb.StepRecord;
@@ -10,10 +11,13 @@ import com.org.simplelab.database.entities.sql.Lab;
 import com.org.simplelab.database.services.LabInstanceDB;
 import com.org.simplelab.restcontrollers.dto.Workspace;
 import lombok.Data;
-import org.apache.commons.lang3.SerializationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Handles transformations and events in doLab.
@@ -32,11 +36,14 @@ public class DoLabEventHandler {
     LabInstanceDB instanceDB;
 
     @Transactional
-    public Workspace buildWorkspace(Lab l, long user_id){
+    public Workspace buildNewWorkspaceFromLab(Lab l, long user_id){
 
         //build lab record
         LabInstance li = new LabInstance();
-        li.setSerialized_lab(SerializationUtils.serialize(l));
+        li.setLabName(l.getName());
+        li.setLabDescription(l.getDescription());
+        li.setSerialized_lab(DBUtils.serialize(l));
+        li.setCreatorId(l.getCreator().getId());
         li.setLabId(l.getId());
         li.setUserId(user_id);
 
@@ -50,6 +57,30 @@ public class DoLabEventHandler {
 
         Workspace ws = DBUtils.getMapper().map(l, Workspace.class);
         ws.setInstance_id(current.get_id());
+        return ws;
+    }
+
+    @Transactional
+    public Workspace buildWorkspaceFromLabInstance(LabInstance li, long user_id){
+        Workspace ws = new Workspace();
+        Lab originalLab = DBUtils.deserialize(li.getSerialized_lab());
+        ws.setInstance_id(li.get_id());
+        ws.setName(li.getLabName());
+        ws.setDescription(li.getLabDescription());
+        ws.setSteps(originalLab.getSteps());
+        ws.setEquipments(originalLab.getEquipments());
+        ws.set_continued(true);
+        //TODO: set recipes
+
+        ws.setStarting_step(li.getStepRecords().stream()
+                        .max(Comparator.comparing(StepRecord::getStepNum))
+                        .get().getStepNum());
+
+        List<InstantiatedEquipment> restoredEquipment = li.getEquipmentInstances()
+                                                        .stream()
+                                                        .map(serial -> (InstantiatedEquipment)DBUtils.deserialize(serial))
+                                                        .collect(Collectors.toList());
+        ws.setEquipment_instances(restoredEquipment);
         return ws;
     }
 

@@ -180,7 +180,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
         return super.updateEntity(toUpdate.getId(), dto.getNewLabInfo());
     }
 
-    @PatchMapping(LAB_ID_STEP_NUMBER_CHANGE_MAPPING)
+    @GetMapping(LAB_ID_STEP_NUMBER_CHANGE_MAPPING)
     public RRO<String> stepChangeNum(@PathVariable("lab_id") long lab_id,
                                     @PathVariable("step_number") int step_num,
                                     @PathVariable("move") int move){
@@ -188,7 +188,14 @@ public class LabRESTController extends BaseRESTController<Lab> {
         if (found == null){
             return RRO.sendErrorMessage("Lab Not Found");
         }
+
         List<Step> steps = found.getSteps();
+        if((step_num + move) >= steps.size()+1){
+            return RRO.sendErrorMessage("This is already last step!");
+        }else if ((step_num + move) < 1) {
+            return RRO.sendErrorMessage("This is already first step!");
+        }
+
         int total_steps = steps.size();
         for(Step s : steps){
             if(s.getStepNum()==step_num){
@@ -201,6 +208,23 @@ public class LabRESTController extends BaseRESTController<Lab> {
         RRO<String> rro = new RRO();
         rro.setSuccess(true);
         rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
+        return rro;
+    }
+
+
+    @GetMapping(LAB_ID_STEP_MAPPING)
+    public RRO<List<Step>> getLabStep(@PathVariable("lab_id") long lab_id){
+        RRO<List<Step>> rro = new RRO();
+        Lab found = labDB.findById(lab_id);
+        if (found == null){
+            rro.setSuccess(false);
+            rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
+        }
+        List<Step> step = found.getSteps();
+        rro.setSuccess(true);
+        rro.setData(step);
+        rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
+        rro.setMsg("there must be have list of steps in return of rro");
         return rro;
     }
 
@@ -224,6 +248,34 @@ public class LabRESTController extends BaseRESTController<Lab> {
         List<Step> toAdd = new ArrayList<>();
         toAdd.add(s);
         return super.addEntitiesToEntityList(labDB.getStepManager(found), toAdd);
+    }
+
+    @DeleteMapping(LAB_ID_STEP_NUMBER_MAPPING)
+    public RRO DeleteStepFromLab(@PathVariable("lab_id") long lab_id, @PathVariable("step_number") int stepNun){
+        RRO<List<Step>> rro = new RRO();
+        Lab found = labDB.findById(lab_id);
+        if (found == null){
+            return RRO.sendErrorMessage("Lab Not Found");
+        }
+        List<Step> steps = found.getSteps();
+        for(int i = 0; i < steps.size(); i++){
+            Step step = steps.get(i);
+            if(step.getStepNum() > stepNun){
+                step.setStepNum(step.getStepNum()-1);
+            }else if(step.getStepNum() == stepNun){
+                steps.remove(step);
+                --i;
+            }
+        }
+        found.setSteps(steps);
+        try {
+            labDB.update(found);
+        } catch (DBService.EntityDBModificationException e){
+            RRO.sendErrorMessage(e.getMessage());
+        }
+        rro.setSuccess(true);
+        rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
+        return rro;
     }
 
     //TODO: implement delete step mapping later, we should get a prototype lab working first

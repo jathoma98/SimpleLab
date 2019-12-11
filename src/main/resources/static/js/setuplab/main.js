@@ -10,6 +10,7 @@ ELEM_NAME = {
     RECIPE_SAVE_BTN: "#recipe_save_btn",
     RECIPE_NEW_BTN: "#recipe_new_btn",
     STEP_EQUIP_LIST: "#step_equip_list",
+    STEP_LIST: "#step_list",
     STEP_CARD: "#step_card",
     STEP_I_VOLUME: "#step_volume",
     STEP_I_WEIGHT: "#step_weight",
@@ -22,7 +23,8 @@ TEMPLATE_ID = {
     LAB_EQUIPMENT_LIST: "#labequip_list_template",
     RECIPE_EQUIPMENT_LIST: "#recequip_list_template",
     RECIPE_LIST: "#recipe_template",
-    STEP_EQUIPMENT_LIST: "#step_list_template",
+    STEP_EQUIPMENT_LIST: "#stepequip_list_template",
+    STEP_LIST: "#step_list_template",
 };
 
 EQUIPMENT = {
@@ -158,7 +160,7 @@ RECIPE = {
                             "<li/>", "a", data, "click",
                             (recipe) => {
                                 $.ajax({
-                                    url: "/recipe/rest/"+recipe.id,
+                                    url: "/recipe/rest/" + recipe.id,
                                     type: 'DELETE',
                                     success: function (result) {
                                         retObjHandle(result, RECIPE.load)
@@ -198,7 +200,7 @@ RECIPE = {
                 }
             })
         };
-        this.new_recipe = function (){
+        this.new_recipe = function () {
             $(ELEM_NAME.RECIPE_CARDS).removeClass("card_selected");
             RECIPE.selected = "";
             $(ELEM_NAME.RECIPE_EQUIP_LIST).empty();
@@ -222,8 +224,8 @@ RECIPE = {
 }
 
 STEP = {
-    selectFrom:undefined,
-    selected:undefined,
+    selectFrom: undefined,
+    selected: undefined,
     init: function () {
         this.buildEquipmentList = function () {
             let data = {iterable: EQUIPMENT.all_equipment};
@@ -237,16 +239,16 @@ STEP = {
                     $(ELEM_NAME.STEP_CARD).find("p").text("Target:" + eqm.name);
                 });
         }
-        this.save = function(){
-            if (STEP.selectFrom == "step" || STEP.selected == undefined){
+        this.save = function () {
+            if (STEP.selectFrom == "step" || STEP.selected == undefined) {
                 return;
             }
-            data={
-                labId:LAB_INFO.id,
+            data = {
+                labId: LAB_INFO.id,
                 targetEquipmentId: STEP.selected.id,
                 targetTemperature: $(ELEM_NAME.STEP_I_TEMPERATURE).val(),
-                targetVolume:$(ELEM_NAME.STEP_I_VOLUME).val(),
-                targetWeight:$(ELEM_NAME.STEP_I_WEIGHT).val(),
+                targetVolume: $(ELEM_NAME.STEP_I_VOLUME).val(),
+                targetWeight: $(ELEM_NAME.STEP_I_WEIGHT).val(),
             }
             let data_json = JSON.stringify(data);
             $.ajax({
@@ -257,6 +259,47 @@ STEP = {
                 data: data_json,
                 success: function (result) {
                     retObjHandle(result, null);
+                }
+            })
+        }
+        this.load = function () {
+            $.ajax({
+                url: "/lab/rest/" + LAB_INFO.id + "/step",
+                type: 'GET',
+                success: function (result) {
+                    retObjHandle(result, () => {
+                        if (result.data == undefined) return;
+                        result.data = result.data.sort((a, b) => a.stepNum - b.stepNum);
+                        result.data.forEach((step) => {
+                            step.targetObject[step.targetObject.type] = true;
+                            equipmentPropsToKeyValue(step.targetObject);
+                        });
+                        let data = {iterable: result.data};
+                        rebuildRepeatComponent(ELEM_NAME.STEP_LIST, TEMPLATE_ID.STEP_LIST,
+                            "<li/>", "a", data, "click",
+                            (step, event) => {
+                                let changeStepNum = () => {
+                                }
+                                if ($(event.target).hasClass("step_move_up") || $(event.target).hasClass("step_move_down")) {
+                                    $.ajax({
+                                        url: "/lab/rest/" + LAB_INFO.id + "/" + step.stepNum + "/" + ($(event.target).hasClass("step_move_up") ? -1 : 1),
+                                        type: 'GET',
+                                        success: (result) => {
+                                            retObjHandle(result, STEP.load())
+                                        }
+                                    });
+                                }
+                                else if($(event.target).hasClass("step_remove")){
+                                    $.ajax({
+                                        url: "/lab/rest/" + LAB_INFO.id + "/" + step.stepNum,
+                                        type: 'DELETE',
+                                        success:(result)=>{
+                                            retObjHandle(result, STEP.load)
+                                        }
+                                    })
+                                }
+                        });
+                    })
                 }
             })
         }
@@ -278,5 +321,7 @@ $(document).ready(() => {
     RECIPE.load();
     RECIPE.onclickInit()
 
+    STEP.load();
     STEP.onclickInit();
+
 })

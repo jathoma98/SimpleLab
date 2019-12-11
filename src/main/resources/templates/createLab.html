@@ -295,14 +295,45 @@
             <div class="width2  white left height6 z-depth-2 recipebotheight">
                 <div class="col s12 delete_empty center-align my_yellow"> <h5>Step</h5></div>
                 <div class="row"></div>
-
+                <ul class="row my_white scrollbar_y" id="step_list"></ul>
+                <script id="step_list_template" type="mustache">
+                    <div class="row sidebaritem">
+                        <div class="col s2">
+                            <img src="../../img/beaker.png" class="item_img">
+                        </div>
+                        <div class="col s4">
+                            <p>Step - {{stepNum}}</p>
+                            <p>Name: {{targetObject.name}}</p>
+                            <p>Type: {{targetObject.type}}</p>
+                        </div>
+                        {{^targetObject.machine}}
+                        <div class="col s4">
+                        {{#targetObject.liquid}}
+                            <p>Require Volume: {{targetVolume}}</p>
+                        {{/targetObject.liquid}}
+                        {{#targetObject.solid}}
+                            <p>Require Weight: {{targetWeight}}</p>
+                        {{/targetObject.solid}}
+                            <p>Require Temperature: {{targetTemperature}}</p>
+                        </div>
+                        {{/targetObject.machine}}
+                        {{#targetObject.machine}}
+                        <div class="col s4"></div>
+                        {{/targetObject.machine}}
+                        <div class="col s2">
+                            <a class="step_move_up">Up</a>
+                            <a class="step_move_down">Down</a>
+                            <a class="step_remove">Remove</a>
+                        </div>
+                    </div>
+                </script>
 
             </div>
             <div class="width2 height6 white right z-depth-2 recipebotheight ">
                 <div class="col s12 delete_empty center-align my_yellow"> <h5>Equipment</h5></div>
                 <div class="row"></div>
                 <ul class="row my_white scrollbar_y" id="step_equip_list"></ul>
-                <script id="step_list_template" type="mustache">
+                <script id="stepequip_list_template" type="mustache">
                     <div class="row sidebaritem">
                         <div class="col s2">
                             <img src="../../img/beaker.png" class="item_img">

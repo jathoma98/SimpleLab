@@ -31,6 +31,8 @@ public class EquipmentProperty extends BaseTable {
 
     @Override
     public int hashCode(){
+        if (propertyKey == null)
+            return 0;
         return propertyKey.hashCode();
     }
 
