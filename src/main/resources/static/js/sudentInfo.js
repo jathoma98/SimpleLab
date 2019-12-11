@@ -57,6 +57,7 @@ function loadCourse() {
                 $("#studentCourse tbody").html(courseTable);
                 $("#studentCourse tbody").find("tr").each(function () {
                     $(this).on("click", jumptoCourseLab);
+                    $(this).find(".coursecheckcol").off("click");
                 })
             })
         }

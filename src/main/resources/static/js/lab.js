@@ -10,6 +10,7 @@ $(document).ready(function(){
     // add item to operation area when click sidebar item
     $(".sidebaritem").click(function (event) {
         var item_id="item_"+itemcount;
+
         if(this.id=="500mlbeaker"){
             var c = $('<div id='+item_id+' class="ui-widget-content fixed draggable_item center '+item_id+'">' +
                 '<img src="../img/beaker.png" class="item_img">' +
