@@ -56,6 +56,7 @@ public class RecipeRESTController extends BaseRESTController<Recipe> {
         rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
         return rro;
     }
+
     @DeleteMapping(RECIPE_ID_MAPPING)
     public RRO<String> deleteRecipe(@PathVariable Long recipe_id){
         RRO<String> rro = new RRO();
@@ -64,6 +65,7 @@ public class RecipeRESTController extends BaseRESTController<Recipe> {
         rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
         return rro;
     }
+
     @PatchMapping(RECIPE_ID_MAPPING)
     public RRO<String> updateRecipe(@PathVariable Long recipe_id, @RequestBody DTO.AddRecipeDTO dto){
         Recipe recipe = recipeDB.findById(recipe_id);
