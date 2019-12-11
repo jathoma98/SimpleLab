@@ -64,6 +64,7 @@ function loadCourse() {
 }
 function jumptoCourseLab() {
     $('#studentCourseModal').modal('open');
+
     let toSearch = {
         course_id: $(this)[0].getAttribute("courseid")
     };

@@ -68,7 +68,7 @@
                     <li class="coursecheckcol myhide"><a id="courseBackBtn" ><i class="material-icons">arrow_back</i></a></li>
                     <li class="coursecheckcol myhide"><a id="courseDeleteBtn"  ><i class="material-icons">delete</i></a></li>
                     <li class="coursecheckcol myshow"><a class="modal-trigger" href="#courseModal"><i class="material-icons">add</i></a></li>
-                    <li class="coursecheckcol myshow"><a id="courseEditBtn" ><i class="material-icons">edit</i></a></li>
+<!--                    <li class="coursecheckcol myshow"><a id="courseEditBtn" ><i class="material-icons">edit</i></a></li>-->
                 </ul>
             </div>
         </nav>
@@ -131,30 +131,19 @@
     <div id="studentCourseModal" class="modal">
         <div class="modal-content">
             <ul class="collapsible">
-                <li>
-                    <div class="collapsible-header"><i class="material-icons">whatshot</i>Lab One</div>
-                    <div class="collapsible-body labheight">
-                        <div>
-                            <div class="">
-                                <p>Lab Name</p>
-                            </div>
-                            <p class="labdescriptionheight"> this is lab discription</p>
-                            <a class="waves-effect waves-light btn right my_red">Start<i class="material-icons right">send</i></a>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="collapsible-header"><i class="material-icons">whatshot</i>Lab Two</div>
-                    <div class="collapsible-body labheight">
-                        <div>
-                            <div class="">
-                                <p>Lab Name</p>
-                            </div>
-                            <p class="labdescriptionheight"> this is lab discription</p>
-                            <a class="waves-effect waves-light btn right my_red">Start<i class="material-icons right">send</i></a>
-                        </div>
-                    </div>
-                </li>
+<!--                <li>-->
+<!--                    <div class="collapsible-header"><i class="material-icons">whatshot</i>Lab One</div>-->
+<!--                    <div class="collapsible-body labheight">-->
+<!--                        <div>-->
+<!--                            <div class="">-->
+<!--                                <p>Lab Name</p>-->
+<!--                            </div>-->
+<!--                            <p class="labdescriptionheight"> this is lab discription</p>-->
+<!--                            <a class="waves-effect waves-light btn right my_red">Start<i class="material-icons right">send</i></a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </li>-->
+
             </ul>
         </div>
     </div>
@@ -290,6 +279,14 @@
 <script type="text/javascript">
 
     document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.modal');
+        var instances = M.Modal.init(elems, {
+            // inDuration:"50",
+            // ourDuration:"50"
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
         var elems = document.querySelectorAll('.fixed-action-btn');
         var instances = M.FloatingActionButton.init(elems, {direction: 'right'});
     });
@@ -297,7 +294,9 @@
     document.addEventListener('DOMContentLoaded', function() {
         var elems = document.querySelectorAll('.collapsible');
         var instances = M.Collapsible.init(elems, {
-            accordion: true
+            accordion: true,
+            // inDuration:"1000",
+            // outDuration:"1000"
         });
 
         document.addEventListener('DOMContentLoaded', function() {
