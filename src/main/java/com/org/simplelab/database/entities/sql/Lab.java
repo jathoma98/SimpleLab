@@ -43,7 +43,8 @@ public class Lab extends BaseTable implements UserCreated{
     public void removeFromParents(){
         Collection<Course> parents = this.getCourse();
         parents.forEach( (parent) -> {
-            parent.getLabs().remove(this);
+            if (parent.getLabs() != null)
+                parent.getLabs().remove(this);
         });
     }
 
@@ -62,6 +63,7 @@ public class Lab extends BaseTable implements UserCreated{
     public Lab(){
         this.equipments = new HashSet<>();
         this.steps = new ArrayList<>();
+        this.course = new HashSet<>();
     }
 
     public int returnLastStepNumber(){

@@ -8,10 +8,7 @@ import lombok.Data;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -42,6 +39,13 @@ public class Equipment extends AbstractEquipment implements UserCreated {
     @Transient
     private Interaction interaction;
 
+    public Equipment(){
+        super();
+        this.lab = new HashSet<>();
+        this.equipmentOne = new ArrayList<>();
+        this.equipmentTwo = new ArrayList<>();
+    }
+
     @PreRemove
     @Transactional
     public void removeFromParents(){
@@ -49,7 +53,8 @@ public class Equipment extends AbstractEquipment implements UserCreated {
         //are recipes/labs that use this equipment.
         Collection<Lab> parents = this.getLab();
         parents.forEach( (parent) -> {
-            parent.getEquipments().remove(this);
+            if (parent.getEquipments() != null)
+                parent.getEquipments().remove(this);
         });
 
         System.out.println("E1 parents: " +  getEquipmentOne().toString() );
