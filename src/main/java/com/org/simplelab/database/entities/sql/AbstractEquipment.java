@@ -39,9 +39,9 @@ public abstract class AbstractEquipment extends BaseTable{
 
     @Override
     public boolean equals(Object o){
-        if (!Equipment.class.isInstance(o))
+        if (!AbstractEquipment.class.isInstance(o))
             return false;
-        Equipment cast = (Equipment)o;
+        AbstractEquipment cast = (AbstractEquipment)o;
         return  this.getType().equals(cast.getType()) &&
                 this.getProperties().equals(cast.getProperties());
     }

@@ -16,8 +16,14 @@ public class LabInstance extends BaseDocument{
     //id of user doing lab
     private long userId;
 
+    //id of lab creator
+    private long creatorId;
+
     //id of lab being done
     private long labId;
+
+    //store names and description without overhead of deserializing
+    private String labName, labDescription;
 
     //whether the lab is finished or not
     private boolean finished = false;
@@ -30,9 +36,13 @@ public class LabInstance extends BaseDocument{
 
     private List<StepRecord> stepRecords;
 
+    //list of equipment that user has dragged onto the UI
+    private List<byte[]> equipmentInstances;
+
     public LabInstance(){
         super();
         this.stepRecords = new ArrayList<>();
+        this.equipmentInstances = new ArrayList<>();
     }
 
     private static LabInstance GEN_NO_INSTANCE(){
