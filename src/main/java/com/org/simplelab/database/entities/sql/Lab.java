@@ -26,7 +26,8 @@ public class Lab extends BaseTable implements UserCreated{
 
     @OneToMany(cascade = {CascadeType.ALL},
                 fetch = FetchType.EAGER,
-                mappedBy = "lab")
+                mappedBy = "lab",
+                orphanRemoval = true)
     private List<Step> steps;
 
     public Lab(){
