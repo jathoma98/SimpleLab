@@ -10,6 +10,7 @@ import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.Lab;
 import com.org.simplelab.database.services.LabDB;
 import com.org.simplelab.database.services.LabInstanceDB;
+import com.org.simplelab.database.services.RecipeDB;
 import com.org.simplelab.restcontrollers.dto.Workspace;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,9 @@ public class DoLabEventHandler {
     @Autowired
     LabDB labDB;
 
+    @Autowired
+    RecipeDB recipeDB;
+
     @Transactional
     public Workspace buildNewWorkspaceFromLab(Lab l, long user_id){
 
@@ -61,6 +65,7 @@ public class DoLabEventHandler {
 
         Workspace ws = DBUtils.getMapper().map(l, Workspace.class);
         ws.setInstance_id(current.get_id());
+        ws.setRecipes(recipeDB.getRecipeByCreateId(l.getCreator().getId()));
         return ws;
     }
 
@@ -86,6 +91,7 @@ public class DoLabEventHandler {
                                                         .map(serial -> (InstantiatedEquipment)DBUtils.deserialize(serial))
                                                         .collect(Collectors.toList());
         ws.setEquipment_instances(restoredEquipment);
+        ws.setRecipes(recipeDB.getRecipeByCreateId(li.getCreatorId()));
         return ws;
     }
 

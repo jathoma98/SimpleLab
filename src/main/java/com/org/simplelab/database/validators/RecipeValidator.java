@@ -42,6 +42,8 @@ public class RecipeValidator extends Validator<Recipe> {
         recipe.setResult(result);
         recipe.setRatioOne(this.ratioOne);
         recipe.setRatioTwo(this.ratioTwo);
+        equipmentOne.getEquipmentOne().add(recipe);
+        equipmentTwo.getEquipmentTwo().add(recipe);
         return recipe;
     }
 }
