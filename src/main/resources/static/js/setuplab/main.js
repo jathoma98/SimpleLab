@@ -279,8 +279,6 @@ STEP = {
                         rebuildRepeatComponent(ELEM_NAME.STEP_LIST, TEMPLATE_ID.STEP_LIST,
                             "<li/>", "a", data, "click",
                             (step, event) => {
-                                let changeStepNum = () => {
-                                }
                                 if ($(event.target).hasClass("step_move_up") || $(event.target).hasClass("step_move_down")) {
                                     $.ajax({
                                         url: "/lab/rest/" + LAB_INFO.id + "/" + step.stepNum + "/" + ($(event.target).hasClass("step_move_up") ? -1 : 1),
