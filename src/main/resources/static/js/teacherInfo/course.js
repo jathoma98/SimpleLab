@@ -108,9 +108,10 @@ let COURSES_TABLE = {
                             }
                         }
                         COURSES_TABLE.course_info = result.data;
-                        rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL, data, "click",COURSES_TABLE.btnEvents);
+                        rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL, data, "click", COURSES_TABLE.btnEvents);
                         //load
                         COURSES_TABLE.reLoadStudentsList(course_json)
+                        COURSES_TABLE.reLoadLabsList(course_json);
                         COURSES_TABLE.searchLab();
                     })
                 }
@@ -178,7 +179,7 @@ let COURSES_TABLE = {
             let course = {
                 name: $("#course_name").val(),
                 course_id: $("#course_code").val(),
-                invite_code:$("#course_invitecode").val(),
+                invite_code: $("#course_invitecode").val(),
                 description: $("#course_description").val()
             }
             let course_json = JSON.stringify(course);
@@ -282,32 +283,28 @@ let COURSES_TABLE = {
                 url: "/lab/rest/loadLabList",
                 type: "GET",
                 success: function (result) {
-                    retObjHandle(result, (labs)=>{
+                    retObjHandle(result, (labs) => {
                         let data = {
-                            labs: labs.reverse(),
-                            search: true
+                            iterable: labs.reverse(),
                         }
-                        rebuildComponent(ElEM_ID.C_SEARCH_RESULT_LAB_LIST_TBODY, TEMPLATE_ID.C_LAB_TBODY, data);
-                    setTableBodyRowBtnEvent(ElEM_ID.C_SEARCH_RESULT_LAB_LIST_TBODY,
-                        ".add_lab",
-                        "click",
-                        COURSES_TABLE.addLabBtnEvent)
-                })
+                        labs.forEach(e=>e["search"]=true);
+                        rebuildRepeatComponent(ElEM_ID.COURSE_SEARCH_LAB_LIST_TBODY, TEMPLATE_ID.COURSE_LAB_TBODY,
+                            "<tr/>", ".add", data, "click", (lab)=>{
+                                COURSES_TABLE.addLabBtnEvent(lab)
+                            });
+                    })
                 }
             })
         }
 
 
-        this.addLabBtnEvent = function () {
+        this.addLabBtnEvent = function (lab) {
             let course = {
                 course_id: $("#course_code").val(),
                 lab_ids: new Array()
             }
-            // console.log($(this).parent().find("span"))
-            course.lab_ids.push($(this).parent().find("span")[0].getAttribute("labid"));
-
+            course.lab_ids.push(lab.id);
             let course_json = JSON.stringify(course);
-
             $.ajax({
                 url: "/course/rest/addLab",
                 type: 'POST',
@@ -317,8 +314,8 @@ let COURSES_TABLE = {
                 success: function (result) {
                     retObjHandle(result,
                         () => {
-                        COURSES_TABLE.reLoadLabsList(course_json)
-                })
+                            COURSES_TABLE.reLoadLabsList(course_json)
+                        })
                 }
             })
         };
@@ -331,21 +328,17 @@ let COURSES_TABLE = {
                 dataTye: 'json',
                 contentType: 'application/json; charset=utf-8',
                 data: course_json,
-                success: function (result){
-                    retObjHandle(result, (result) => {
+                success: function (result) {
+                    retObjHandle(result, (labs) => {
                         let data = {
-                            labs: result,
-                            search: false,
+                            iterable: labs,
                         }
-                        rebuildComponent(
-                            ElEM_ID.C_CURRENT_LAB_LIST_TBODY,
-                        TEMPLATE_ID.C_LAB_TBODY,
-                        data)
-                    // setTableBodyRowBtnEvent(ElEM_ID.STUDENT_LIST_TBODY,
-                    //     ".del_student",
-                    //     "click",
-                    //     COURSES_TABLE.removeStendtBtnEvent)
-                })
+                        data.iterable.forEach(e=>e["search"]=false);
+                        rebuildRepeatComponent(ElEM_ID.COURSE_LAB_LIST_TBODY, TEMPLATE_ID.COURSE_LAB_TBODY,
+                            "<tr/>", ".add", data, "click", (lab)=>{
+                                console.log(lab);
+                            });
+                    })
                 }
             })
         };
