@@ -36,6 +36,7 @@ public class Course extends BaseTable implements UserCreated{
 
     @ManyToMany(cascade = {CascadeType.PERSIST},
             fetch = FetchType.LAZY)
+    @JoinColumn(name = "labs")
     private Set<Lab> labs;
 
     public Course() {

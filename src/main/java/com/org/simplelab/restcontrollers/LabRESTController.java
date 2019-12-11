@@ -1,12 +1,10 @@
 package com.org.simplelab.restcontrollers;
 
 import com.org.simplelab.database.DBUtils;
-import com.org.simplelab.database.entities.sql.Course;
 import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.Lab;
 import com.org.simplelab.database.entities.sql.Step;
 import com.org.simplelab.database.repositories.sql.LabRepository;
-import com.org.simplelab.database.services.CourseDB;
 import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.services.LabDB;
 import com.org.simplelab.database.services.projections.Projection;
@@ -15,7 +13,6 @@ import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.aggregation.ComparisonOperators;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import static com.org.simplelab.restcontrollers.LabRESTController.BASE_MAPPING;
 
@@ -71,7 +67,6 @@ public class LabRESTController extends BaseRESTController<Lab> {
     @DeleteMapping(DELETE_MAPPING)
     public RRO<String> deleteCourse(@RequestBody DTO.UserLabsDTO toDelete) {
         RRO<String> rro = new RRO();
-        long userId =  getUserIdFromSession();
         for (long lid : toDelete.getLids()) {
             labDB.deleteById(lid);
         }
@@ -102,6 +97,8 @@ public class LabRESTController extends BaseRESTController<Lab> {
     }
 
 
+    //TODO: clean this up
+    @Transactional
     @DeleteMapping(LAB_ID_MAPPING)
     public RRO<String> labDelete(@PathVariable("lab_id") long lab_id){
         return super.deleteEntity(lab_id);
