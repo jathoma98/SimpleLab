@@ -12,7 +12,6 @@ import com.org.simplelab.game.RecipeHandler;
 import com.org.simplelab.restcontrollers.dto.Workspace;
 import com.org.simplelab.restcontrollers.rro.RRO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -71,7 +70,6 @@ public class DoLabController extends BaseController {
      *  }
      */
     @GetMapping(LAB_ID_MAPPING)
-    @Transactional
     public RRO<Workspace> getLabToDo(@PathVariable("lab_id") long lab_id){
         Lab found = labDB.findById(lab_id);
         Workspace ws = Workspace.NO_WORKSPACE;

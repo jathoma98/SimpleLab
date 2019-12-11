@@ -8,6 +8,7 @@ import com.org.simplelab.database.entities.mongodb.StepAction;
 import com.org.simplelab.database.entities.mongodb.StepRecord;
 import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.Lab;
+import com.org.simplelab.database.services.LabDB;
 import com.org.simplelab.database.services.LabInstanceDB;
 import com.org.simplelab.restcontrollers.dto.Workspace;
 import lombok.Data;
@@ -34,6 +35,9 @@ public class DoLabEventHandler {
 
     @Autowired
     LabInstanceDB instanceDB;
+
+    @Autowired
+    LabDB labDB;
 
     @Transactional
     public Workspace buildNewWorkspaceFromLab(Lab l, long user_id){
@@ -63,7 +67,8 @@ public class DoLabEventHandler {
     @Transactional
     public Workspace buildWorkspaceFromLabInstance(LabInstance li, long user_id){
         Workspace ws = new Workspace();
-        Lab originalLab = DBUtils.deserialize(li.getSerialized_lab());
+        //Lab originalLab = DBUtils.deserialize(li.getSerialized_lab()
+        Lab originalLab = labDB.findById(li.getLabId());
         ws.setInstance_id(li.get_id());
         ws.setName(li.getLabName());
         ws.setDescription(li.getLabDescription());

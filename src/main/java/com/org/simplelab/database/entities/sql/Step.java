@@ -18,7 +18,8 @@ public class Step extends BaseTable{
     @JoinColumn(name = "lab_id")
     private Lab lab;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE},
+    fetch = FetchType.EAGER)
     private Equipment targetObject;
 
     private String targetTemperature;
