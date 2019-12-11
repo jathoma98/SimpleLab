@@ -14,6 +14,7 @@ import java.util.List;
 @RequestMapping(TeacherController.BASE_MAPPING)
 public class TeacherController extends BaseController {
 
+    public static final String DO_LAB="/dolab/{lab_id}";
     public static final String BASE_MAPPING = "/teacher";
 
     @RequestMapping("")
@@ -34,5 +35,15 @@ public class TeacherController extends BaseController {
         model.addAttribute("lab_id", lab.getId());
         model.addAttribute("lab_name", lab.getName());
         return "createLab";
+    }
+
+    @RequestMapping(DO_LAB)
+    public String dolab(@PathVariable("lab_id") long lab_id, HttpSession session, Model model){
+        Lab lab = labDB.findById(lab_id);
+        String home_navig = ((String)session.getAttribute("username")) + "'s Home";
+        model.addAttribute("home_navig", home_navig);
+        model.addAttribute("lab_id", lab.getId());
+        model.addAttribute("lab_name", lab.getName());
+        return "dolab";
     }
 }

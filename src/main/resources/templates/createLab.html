@@ -88,84 +88,92 @@
         <li class="tab "><a href="#recipe">Recipe</a></li>
         <li class="tab "><a href="#steps">Step</a></li>
     </ul>
-    <div id="equipment_in_lab" class="col s12 margintop10" style="height:800px;">
-        <div class="row ">
-            <div class="col s6">
-                <div class="col s12 left white">
-                    <div class="col s12 delete_empty center-align deep-orange lighten-4"><h4>Lab Equipment</h4></div>
-                    <ul class="row my_white equipmentheight scrollbar_y" id="lab_equipment_list"></ul>
-                    <script id="labequip_list_template" type="mustache">
-                            <div class="row sidebaritem">
-                                <div class="col s2">
-                                    <img src="../../img/beaker.png" class="item_img">
-                                </div>
-                                <div class="col s4">
-                                    <p>Name: {{name}}</p>
-                                    <p>Type: {{type}}</p>
-                                </div>
-                                {{^machine}}
-                                <div class="col s4">
-                                {{#liquid}}
-                                    <p>Max Volume: {{properties.max_volume}}</p>
-                                {{/liquid}}
-                                {{#solid}}
-                                    <p>Max Weight: {{properties.max_weight}}</p>
-                                {{/solid}}
-                                    <p>Temperature: {{properties.min_temperature}} - {{properties.max_temperature}}</p>
-                                </div>
-                                {{/machine}}
-                                {{#machine}}
-                                <div class="col s4"></div>
-                                {{/machine}}
-                                <div class="col s2">
-                                    <a href="#">remove</a>
-                                </div>
-                            </div>
-
-                    </script>
-                </div>
+    <div class="row"></div>
+    <div id="equipment_in_lab" class="row" style="height:1000px;">
+        <div class="col s6 delete_empty center">
+            <div class="col s11 center-align delete_empty  deep-orange lighten-4">
+                <h4>Lab Equipment</h4>
+                <ul class="my_white equipmentheight scrollbar_y height80 delete_empty" id="lab_equipment_list"></ul>
             </div>
-            <div class="col s6">
-                <div class="col s12 right white">
-                    <div class="col s12 delete_empty center-align deep-orange lighten-4"><h4>All Equipment</h4></div>
-                    <ul class="row my_white equipmentheight scrollbar_y" id="all_equipment"></ul>
-                    <script id="allequip_list_template" type="mustache">
-                        <div class="row sidebaritem">
-                            <div class="col s2">
-                                <img src="../../img/beaker.png" class="item_img">
-                            </div>
-                            <div class="col s4">
-                                <p>Name: {{name}}</p>
-                                <p>Type: {{type}}</p>
-                            </div>
-                            {{^machine}}
-                            <div class="col s4">
-                            {{#liquid}}
-                                <p>Max Volume: {{properties.max_volume}}</p>
-                            {{/liquid}}
-                        {{#solid}}
-                                <p>Max Weight: {{properties.max_weight}}</p>
-                            {{/solid}}
-                                <p>Temperature: {{properties.min_temperature}} - {{properties.max_temperature}}</p>
-                            </div>
-                            {{/machine}}
-                        {{#machine}}
-                            <div class="col s4"></div>
-                            {{/machine}}
-                            <div class="col s2">
-                                <a href="#">Add</a>
-                            </div>
-                        </div>
-
-                    </script>
+            <script id="labequip_list_template" type="mustache">
+                <div class="row sidebaritem">
+                    <div class="col s2">
+                        <img src="../../img/beaker.png" class="item_img">
+                    </div>
+                    <div class="col s4">
+                        <p>Name: {{name}}</p>
+                        <p>Type: {{type}}</p>
+                    </div>
+                    {{^machine}}
+                    <div class="col s4">
+                    {{#liquid}}
+                        <p>Max Volume: {{properties.max_volume}}</p>
+                    {{/liquid}}
+                    {{#solid}}
+                        <p>Max Weight: {{properties.max_weight}}</p>
+                    {{/solid}}
+                        <p>Temperature: {{properties.min_temperature}} - {{properties.max_temperature}}</p>
+                    </div>
+                    {{/machine}}
+                    {{#machine}}
+                    <div class="col s4"></div>
+                    {{/machine}}
+                    <div class="col s2 margintop4">
+                        <a href="# " class="my_red btn center"><i class="material-icons">delete</i></a>
+                    </div>
                 </div>
 
-            </div>
+
+
+
+
+            </script>
+
         </div>
+        <div class="col s6 delete_empty">
+            <div class="col s11 right center-align delete_empty deep-orange lighten-4"><h4>All Equipment</h4>
+                <ul class="my_white equipmentheight scrollbar_y height80 delete_empty" id="all_equipment"></ul>
+            </div>
+            <script id="allequip_list_template" type="mustache">
+                <div class="row sidebaritem">
+                    <div class="col s2">
+                        <img src="../../img/beaker.png" class="item_img">
+                    </div>
+                    <div class="col s4">
+                        <p>Name: {{name}}</p>
+                        <p>Type: {{type}}</p>
+                    </div>
+                    {{^machine}}
+                    <div class="col s4">
+                    {{#liquid}}
+                        <p>Max Volume: {{properties.max_volume}}</p>
+                    {{/liquid}}
+                {{#solid}}
+                        <p>Max Weight: {{properties.max_weight}}</p>
+                    {{/solid}}
+                        <p>Temperature: {{properties.min_temperature}} - {{properties.max_temperature}}</p>
+                    </div>
+                    {{/machine}}
+                {{#machine}}
+                    <div class="col s4"></div>
+                    {{/machine}}
+                    <div class="col s2 margintop4">
+                         <a href="# " class="my_red btn center"><i class="material-icons">add</i></a>
+                    </div>
+                </div>
+
+
+
+
+
+            </script>
+
+        </div>
+
     </div>
     <div id="recipe" class="row">
-        <div class="row"></div>
-        <div class="delete_empty col s12 white recipeheight z-depth-2">
+
+        <div class="delete_empty col s12 white recipeheight z-depth-2 ">
             <!--            <nav class="center-align"><h3>create your recipe</h3></nav>-->
             <div class="col s12 delete_empty center-align deep-orange lighten-4"><h5>Recipe</h5></div>
             <div id="equip1" class="col s4 center margintop">
@@ -190,14 +198,16 @@
                 </div>
             </div>
             <div class="row parent_weight">
-                <div class="delete_empty"><a id="recipe_save_btn" class="btn my_red right recipesavebtn">Save<i class="material-icons right">save</i></a></div>
-                <div class="delete_empty"><a id="recipe_new_btn" class="btn my_red right recipesavebtn">New <i class="material-icons right">create</i></a></div>
+                <div class="delete_empty"><a id="recipe_save_btn" class="btn my_red right recipesavebtn">Save<i
+                        class="material-icons right">save</i></a></div>
+                <div class="delete_empty"><a id="recipe_new_btn" class="btn my_red right recipesavebtn">New <i
+                        class="material-icons right">create</i></a></div>
             </div>
         </div>
         <div class="row"></div>
         <div class="row">
             <div class="width2  white left height6 z-depth-2 recipebotheight ">
-                <div class="col s12 delete_empty center-align my_rice_yellow"> <h5>Current Recipe</h5></div>
+                <div class="col s12 delete_empty center-align my_rice_yellow"><h5>Current Recipe</h5></div>
                 <div class="row"></div>
                 <ul class="row my_white scrollbar_y parent_height collection " id="recipe_list"></ul>
                 <script id="recipe_template" type="mustache">
@@ -221,10 +231,14 @@
 
 
 
+
+
+
+
                 </script>
             </div>
             <div class="width2 height6 white right z-depth-2 recipebotheight ">
-                <div class="col s12 delete_empty center-align my_rice_yellow"> <h5>Equipment</h5></div>
+                <div class="col s12 delete_empty center-align my_rice_yellow"><h5>Equipment</h5></div>
                 <div class="row"></div>
                 <ul class="row my_white scrollbar_y parent_height" id="recipe_equip_list"></ul>
                 <script id="recequip_list_template" type="mustache">
@@ -252,16 +266,20 @@
                         {{/machine}}
                     </div>
 
+
+
+
+
                 </script>
             </div>
         </div>
     </div>
     <div id="steps" class="row">
-        <div class="row"></div>
+
         <div class="col s12 delete_empty center-align deep-orange lighten-4"><h5>Step</h5></div>
-        <div id = "step_card" class="delete_empty col s12 white recipeheight z-depth-2 valign-wrapper " >
+        <div id="step_card" class="delete_empty col s12 white recipeheight z-depth-2 valign-wrapper ">
             <div class="col s4">
-                <div class="col s10 offset-s1 z-depth-1 padding4 height8 center-align " >
+                <div class="col s10 offset-s1 z-depth-1 padding4 height8 center-align ">
                     <p class="fontheader ">Target</p>
                     <img src="../../img/beaker.png" class="recipeimg margintop col s6 offset-s3 step_img">
                 </div>
@@ -270,30 +288,30 @@
                 <div class="col s12 margintop10">
                     <div class="col s2 steptopmargin">Volume:</div>
                     <div class="col s10">
-                        <input id ="step_volume"  type="number" class="center-align ">
+                        <input id="step_volume" type="number" class="center-align ">
                     </div>
                 </div>
                 <div class="col s12 margintop10">
                     <div class="col s2 steptopmargin">Weight:</div>
                     <div class="col s10">
-                        <input id ="step_weight"  type="number" class="center-align ">
+                        <input id="step_weight" type="number" class="center-align ">
                     </div>
                 </div>
                 <div class="col s12 margintop10">
                     <div class="col s2 steptopmargin">Temperature:</div>
                     <div class="col s10">
-                        <input id ="step_temperature" type="number" class="center-align ">
+                        <input id="step_temperature" type="number" class="center-align ">
                     </div>
                 </div>
                 <div class="col s12 margintop10">
-                    <a id ="" class="btn my_red  stepsavebtn right">Save<i class="material-icons right">save</i></a>
+                    <a id="" class="btn my_red  stepsavebtn right">Save<i class="material-icons right">save</i></a>
                 </div>
             </div>
         </div>
         <div class="row"></div>
         <div class="row">
             <div class="width2  white left height6 z-depth-2 recipebotheight">
-                <div class="col s12 delete_empty center-align my_rice_yellow"> <h5>Step</h5></div>
+                <div class="col s12 delete_empty center-align my_rice_yellow"><h5>Step</h5></div>
                 <div class="row"></div>
                 <ul class="row my_white scrollbar_y" id="step_list"></ul>
                 <script id="step_list_template" type="mustache">
@@ -321,16 +339,20 @@
                         <div class="col s4"></div>
                         {{/targetObject.machine}}
                         <div class="col s2">
-                            <a class="step_move_up">Up</a>
-                            <a class="step_move_down">Down</a>
-                            <a class="step_remove">Remove</a>
+                            <a class="step_move_up btn my_red"><i class="material-icons">keyboard_arrow_up</i></a>
+                            <a class="step_move_down btn my_red"><i class="material-icons">keyboard_arrow_down</i></a>
+                            <a class="step_remove btn my_red"><i class=" material-icons">delete</i></a>
                         </div>
                     </div>
+
+
+
+
                 </script>
 
             </div>
             <div class="width2 height6 white right z-depth-2 recipebotheight ">
-                <div class="col s12 delete_empty center-align my_rice_yellow"> <h5>Equipment</h5></div>
+                <div class="col s12 delete_empty center-align my_rice_yellow"><h5>Equipment</h5></div>
                 <div class="row"></div>
                 <ul class="row my_white scrollbar_y" id="step_equip_list"></ul>
                 <script id="stepequip_list_template" type="mustache">
@@ -357,11 +379,18 @@
                         <div class="col s4"></div>
                         {{/machine}}
                     </div>
+
+
+
+
                 </script>
             </div>
         </div>
     </div>
 </div>
+    <div class="right-button">
+        <a th:href="@{'../dolab/'+ ${lab_id}}" class="btn-floating btn-large waves-effect waves-light my_red"><i class="material-icons">play_arrow</i></a>
+    </div>
 <!--JavaScript at end of body for optimized loading-->
 <script type="text/javascript" th:src="@{../../libs/materialize.min.js}"></script>
 </body>
@@ -370,6 +399,7 @@
     $(document).ready(function () {
         M.updateTextFields();
         M.AutoInit();
+        $('.fixed-action-btn').floatingActionButton();
         $(".sortable").sortable({
             placeholder: "sortable-highlight"
         });

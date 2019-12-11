@@ -264,8 +264,8 @@ td, th {
 
 
 .recipeimg{
-    width: 100px;
-    height: 100px;
+    width: 20%;
+    height: 20%;
 }
 
 .width_100px{
@@ -281,10 +281,14 @@ td, th {
 }
 
 .margintop{
-    margin-top: 2%!important;
+    margin-top: 3%!important;
 }
 .margintop10{
     margin-top: 10px!important;
+}
+
+.margintop4{
+    margin-top:4%!important;
 }
 
 .recipeheight{
@@ -330,7 +334,7 @@ td, th {
 }
 
 .recipesavebtn{
-    margin-top: 10px;
+    margin-top: 20px!important;
     margin-right: 20px;
     margin-bottom: 10px;
 }
@@ -384,4 +388,13 @@ padding20px{
 }
 .recipefont{
     font-size: 25px;
+}
+
+.height80{
+    height: 80%!important;
+}
+.right-button{
+    position: fixed;
+    left: 95%;
+    top: 90%;
 }

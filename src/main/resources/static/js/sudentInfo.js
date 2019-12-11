@@ -91,16 +91,13 @@ function jumptoCourseLab() {
                         '                                <p>Lab Name:  '+result.data[f].name+'</p>\n' +
                         '                            </div>\n' +
                         '                            <p class="labdescriptionheight"> '+result.data[f].description+'</p>\n' +
-                        '                            <a class="waves-effect waves-light btn right my_red">Start<i class="material-icons right">send</i></a>\n' +
+                        '                            <a href="student/dolab/'+result.data[f].id+'"  class="waves-effect waves-light btn right startlab my_red">Start<i class="material-icons right">send</i></a>\n' +
                         '                        </div>\n' +
                         '                    </div>\n' +
                         '                </li>'
 
                 }
                 $("#studentCourseModal ul").html(courseTable);
-                // $("#studentCourse tbody").find("tr").each(function () {
-                //     $(this).on("click", jumptoCourseLab);
-                // })
             })
         }
     })
