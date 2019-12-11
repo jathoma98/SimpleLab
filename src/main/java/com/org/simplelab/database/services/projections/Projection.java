@@ -20,6 +20,11 @@ public abstract class Projection {
         long id;
     }
 
+    public static class AllLabInfo extends Projection{
+        String name, description;
+        long id;
+    }
+
     /** For showing list of courses for teacher info page.
      * We can't use course_id in projection, because JPA doesnt like underscores
      * so we have to manually copy fields. */
