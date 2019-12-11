@@ -28,7 +28,8 @@ public class Lab extends BaseTable implements UserCreated{
     private User creator;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE},
-               fetch = FetchType.LAZY)
+                fetch = FetchType.LAZY)
+    @JoinColumn(name = "lab")
     private Set<Equipment> equipments;
 
     @OneToMany(cascade = {CascadeType.ALL},

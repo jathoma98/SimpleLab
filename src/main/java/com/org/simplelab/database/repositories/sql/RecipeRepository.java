@@ -17,7 +17,7 @@ public interface RecipeRepository extends BaseRepository<Recipe> {
     @Query(value = "SELECT *\n" +
             "FROM #{#entityName}\n" +
             "WHERE " +
-            "(equipment_one_id = :one AND equipment_two_id = :two AND result_id = :three)",
+            "(equipment_one = :one AND equipment_two = :two AND result_id = :three)",
             nativeQuery = true)
     List<Recipe> findByEquipment_one_idAndEquipment_two_idAndResult(
             @Param("one")long a, @Param("two")long b, @Param("three")long c
