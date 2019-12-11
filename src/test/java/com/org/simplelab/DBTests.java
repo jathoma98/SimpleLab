@@ -481,7 +481,6 @@ class DBTests extends SpringTestConfig {
 		lir.findAll().forEach( (found) -> {
 			System.out.println(found.toString());
 		});
-
 	}
 
 

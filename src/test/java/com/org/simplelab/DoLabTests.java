@@ -119,10 +119,10 @@ public class DoLabTests extends SpringTestConfig {
         l = labDB.searchLabWithKeyword(l.getName()).get(0);
 
         Workspace ws1 = dlc.getLabToDo(l.getId()).getData();
-        assertFalse(ws1.is_continued());
+        assertFalse(ws1.isContinued());
 
         Workspace ws2 = dlc.getLabToDo(l.getId()).getData();
-        assertTrue(ws2.is_continued());
+        assertTrue(ws2.isContinued());
         assertEquals(1, ws2.getStarting_step());
     }
 

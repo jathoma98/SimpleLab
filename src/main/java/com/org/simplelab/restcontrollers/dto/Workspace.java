@@ -22,9 +22,9 @@ public class Workspace extends DTO {
     List<Step> steps;
     List<Recipe> recipes;
     Set<Equipment> equipments;
-    boolean is_continued = false;
+    boolean isContinued = false;
 
-    //if is_continued = true:
+    //if isContinued = true:
     int starting_step;
     List<InstantiatedEquipment> equipment_instances;
 

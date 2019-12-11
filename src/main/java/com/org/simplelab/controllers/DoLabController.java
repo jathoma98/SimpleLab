@@ -56,10 +56,10 @@ public class DoLabController extends BaseController {
          *     description : String --  Description of lab
          *     steps: List -- of Step objects
          *     equipments: List -- of equipments in the lab
-         *     is_continued: boolean -- whether the lab is new or being continued from a saved instance
+         *     continued: boolean -- whether the lab is new or being continued from a saved instance
          *     recipes: List of Recipes in the lab
          *
-         *     ** if is_continued = true , DTO will have 2 additional fields: **
+         *     ** if continued = true , DTO will have 2 additional fields: **
          *
          *     starting_step: int -- step of the Lab to start from. This is the stepNum, not the index in the list of steps.
          *          ex: when starting_step = 1, start from step where stepNum = 1, but this may be at index 0 in the list.
