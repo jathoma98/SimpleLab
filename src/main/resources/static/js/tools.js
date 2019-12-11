@@ -34,7 +34,7 @@ function retObjHandle(retObj, callback){
 function setTableBodyRowEvent(tbody, eventFn){
     $(tbody).find("tr").each(function(){
         $(this).on("click", eventFn);
-        // $(this).addClass("modal-trigger");
+        $(this).addClass("modal-trigger");
     })
 }
 
