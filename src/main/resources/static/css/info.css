@@ -29,6 +29,14 @@
 	background: #bdbdbd !important;
 }
 
+.my_rice_yellow{
+	background: rgba(241, 204, 54, 0.28) !important;
+}
+
+.my_pink{
+	background: rgba(221, 86, 131, 0.28) !important;
+}
+
 .upload_pic{
 	height:300px ;
 	width: 300px;

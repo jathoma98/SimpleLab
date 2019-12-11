@@ -237,6 +237,7 @@ STEP = {
                     $(ELEM_NAME.STEP_EQUIP_LIST).find("li").removeClass("eqmli_selected");
                     $(event.currentTarget).addClass("eqmli_selected");
                     $(ELEM_NAME.STEP_CARD).find("p").text("Target:" + eqm.name);
+                    $(ELEM_NAME.STEP_CARD).find("input").val("");
                 });
         }
         this.save = function () {
@@ -258,7 +259,7 @@ STEP = {
                 contentType: 'application/json; charset=utf-8',
                 data: data_json,
                 success: function (result) {
-                    retObjHandle(result, null);
+                    retObjHandle(result, STEP.load);
                 }
             })
         }

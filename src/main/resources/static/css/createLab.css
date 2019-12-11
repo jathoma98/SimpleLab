@@ -1,3 +1,49 @@
+/*remove table css from materialize*/
+
+table, th, td {
+}
+
+table {
+
+}
+
+table.striped tr {
+}
+
+
+
+table.striped > tbody > tr:nth-child(odd) {
+}
+
+table.striped > tbody > tr > td {
+}
+
+table.highlight > tbody > tr {
+
+}
+
+table.highlight > tbody > tr:hover {
+
+}
+
+table.centered thead tr th, table.centered tbody tr td {
+
+}
+
+tr {
+
+}
+
+td, th {
+
+}
+
+
+
+
+/*-----------------------------------*/
+
+
 
 
 .body{
@@ -289,11 +335,11 @@
     margin-bottom: 10px;
 }
 .parent_height{
-    height: 100%!important;
+    height: 100%;
 }
 
 .parent_weight{
-    width: 100%!important;
+    width: 100%;
 }
 
 padding20px{

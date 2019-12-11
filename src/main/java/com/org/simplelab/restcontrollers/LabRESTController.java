@@ -252,7 +252,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
 
     @DeleteMapping(LAB_ID_STEP_NUMBER_MAPPING)
     public RRO DeleteStepFromLab(@PathVariable("lab_id") long lab_id, @PathVariable("step_number") int stepNun){
-        RRO<List<Step>> rro = new RRO();
+            RRO<List<Step>> rro = new RRO();
         Lab found = labDB.findById(lab_id);
         if (found == null){
             return RRO.sendErrorMessage("Lab Not Found");
