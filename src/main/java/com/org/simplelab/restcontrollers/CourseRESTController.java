@@ -39,6 +39,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
     public static final String GET_STUDENTS_MAPPING = "/getStudents";
     public static final String GET_LABS_MAPPING = "/getLabs";
     public static final String DELETE_STUDENTS_MAPPING = "/deleteStudents";
+    public static final String DELETE_LABS_MAPPING = "/deleteLab";
     public static final String ADD_LABS_TO_COURSE_MAPPING = "/addLab";
     public static final String SEARCH_COURSE_MAPPING = "/searchCourse";
     public static final String CHECK_INVITE_MAPPING = "/checkInviteCode";
@@ -225,6 +226,29 @@ public class CourseRESTController extends BaseRESTController<Course> {
     }
 
     @Transactional
+    @PostMapping(DELETE_LABS_MAPPING)
+    public RRO<String> deleteLabList(@RequestBody DTO.CourseUpdateLabListDTO course) throws CourseDB.CourseTransactionException {
+        long[] labidList = course.getLab_ids();
+        List<Lab> toDelete = new ArrayList<>();
+        for (Long labid: labidList){
+            Lab u = labDB.findById(labid);
+            if (u != null){
+                toDelete.add(u);
+            }
+        }
+        DBService.EntitySetManager<Lab, Course> toUpdate;
+        try {
+            toUpdate = courseDB.getLabsOfCourseByCourseId(course.getCourse_id());
+        } catch (CourseDB.CourseTransactionException e){
+            RRO<String> rro = new RRO();
+            rro.setMsg(e.getMessage());
+            return rro;
+        }
+//        DBService.EntitySetManager<Lab, Course> toUpdate = courseDB.getLabsOfCourseByCourseId(course.getCourse_id());
+        return super.removeEntitiesFromEntityList(toUpdate, toDelete);
+    }
+
+    @Transactional
     @PostMapping(GET_STUDENTS_MAPPING)
     public RRO<List<User>> getStudentList(@RequestBody DTO.CourseUpdateStudentListDTO course) {
         String course_id = course.getCourse_id();
@@ -268,6 +292,8 @@ public class CourseRESTController extends BaseRESTController<Course> {
         DBService.EntitySetManager<User, Course> toUpdate = courseDB.getStudentsOfCourseByCourseId(course.getCourse_id());
         return super.removeEntitiesFromEntityList(toUpdate, toDelete);
     }
+
+
 
     @PostMapping(SEARCH_COURSE_MAPPING)
     public RRO<List<Course>> searchCourse(@RequestBody DTO.UserSearchDTO toSearch){
