@@ -52,6 +52,8 @@ function checkAnswer(){
                 $(".fpSend1").css('display','none');
                 $("#fpQuestion").css('display','none');
                 $("#fpAnswer").css('display','none');
+                $(".fpSave").css('display','');
+                alert("Please Set Your New Password");
             }
             else {
                 alert("Wrong answer for the question");
@@ -65,21 +67,20 @@ function checkAnswer(){
 
 function changepassword(){
     let userNewPassword = {
-        newPassword : $("#password").val(),
+        answer : $("#newPassword").val(),
+        user : current_user
     }
-
+    let user_json =  JSON.stringify(userNewPassword);
     $.ajax({
         url: "/forgetPage/fpChangePassword",
         type: "POST",
         dataTye: 'json',
         contentType: 'application/json; charset=utf-8',
-        data: course_json,
+        data: user_json,
         success: function(user){
-            if (user.success === "true") {
-
-                console.log("You have changed your password")
-            } else {
-                console.log("User Not Exist");
+            if (user.success) {
+                window.location.href= "/";
+                alert("You have changed your password");
             }
         }
     })

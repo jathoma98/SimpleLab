@@ -1,7 +1,9 @@
 package com.org.simplelab;
 
 import com.org.simplelab.controllers.DoLabController;
+import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.interfaces.Interaction;
+import com.org.simplelab.database.entities.mongodb.InstantiatedEquipment;
 import com.org.simplelab.database.entities.sql.*;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.dto.Workspace;
@@ -9,6 +11,12 @@ import com.org.simplelab.restcontrollers.rro.RRO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -80,6 +88,42 @@ public class DoLabTests extends SpringTestConfig {
         }
 
 
+    }
+
+    @Test
+    void testLoadInstance() throws Exception{
+        String target_type = "container";
+        int numSteps = 3;
+
+        Lab l = TestUtils.createJunkLab();
+
+        for (int i = 0; i < numSteps; i++) {
+            Equipment target1 = TestUtils.createJunkEquipment();
+            target1.setType(target_type);
+            EquipmentProperty target1prop = new EquipmentProperty();
+            target1prop.setParentEquipment(target1);
+            target1prop.setPropertyKey("temperature");
+            target1prop.setPropertyValue(Integer.toString((i+1) * 100));
+            target1.getProperties().add(target1prop);
+
+            //now make a step and add to lab
+            Step s = new Step();
+            s.setLab(l);
+            s.setTargetObject(target1);
+            s.setStepNum(i+1);
+            l.getSteps().add(s);
+        }
+
+        //save the lab
+        labDB.insert(l);
+        l = labDB.searchLabWithKeyword(l.getName()).get(0);
+
+        Workspace ws1 = dlc.getLabToDo(l.getId()).getData();
+        assertFalse(ws1.is_continued());
+
+        Workspace ws2 = dlc.getLabToDo(l.getId()).getData();
+        assertTrue(ws2.is_continued());
+        assertEquals(1, ws2.getStarting_step());
     }
 
     @Test
@@ -157,7 +201,35 @@ public class DoLabTests extends SpringTestConfig {
     }
 
     @Test
-    void serializationTest(){
+    void testSerializeEquipmentInstance() throws Exception{
+        Set<InstantiatedEquipment> ieq_set = new HashSet<>();
+        for (int i = 0; i < 10; i++){
+            InstantiatedEquipment ieq = new InstantiatedEquipment();
+            Equipment e = TestUtils.createJunkEquipmentWithProperties(3);
+            DBUtils.getMapper().map(e, ieq);
+            ieq.setX(i*10);
+            ieq.setY(i*15);
+            ieq_set.add(ieq);
+        }
+
+        Lab l = TestUtils.createJunkLabWithSteps(5);
+        labDB.insert(l);
+        long lab_id = labDB.searchLabWithKeyword(l.getName()).get(0).getId();
+
+        String lab_instance_id = dlc.getLabToDo(lab_id).getData().getInstance_id();
+        dlc.handleSaveWorkspaceState(ieq_set, lab_instance_id);
+
+        List<byte[]> found_ieq = instanceDB.findById(lab_instance_id).getEquipmentInstances();
+        Collection<InstantiatedEquipment> found =           found_ieq.stream()
+                                                            .map((serial) -> (InstantiatedEquipment)DBUtils.deserialize(serial))
+                                                            .collect(Collectors.toList());
+
+        found.forEach( instance -> {
+            assertTrue(ieq_set.contains(instance));
+        });
+
+
+
 
     }
 
