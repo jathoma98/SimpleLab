@@ -20,4 +20,18 @@ public class DBTestUtils extends TestUtils {
         return found.get(0).getId();
     }
 
+    public static <T extends BaseTable> T find(T toFind, SQLService<T> db) throws Exception{
+        if (toFind.get_metadata() == null){
+            throw new Exception("***TEST***: Can only call find() with defined metadata");
+        }
+        List<T> found = db.getRepository().findBy_metadata(toFind.get_metadata());
+        if (found.size() == 0){
+            throw new Exception("***TEST*** Entity could not be found in DB.");
+        }
+        if (found.size() > 1){
+            throw new Exception("***TEST*** Multiple copies found in DB.");
+        }
+        return found.get(0);
+    }
+
 }

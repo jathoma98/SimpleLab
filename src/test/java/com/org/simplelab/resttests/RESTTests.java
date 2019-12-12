@@ -1,5 +1,6 @@
-package com.org.simplelab;
+package com.org.simplelab.resttests;
 
+import com.org.simplelab.SpringMockMVCTestConfig;
 import com.org.simplelab.controllers.BaseController;
 import com.org.simplelab.database.entities.sql.Course;
 import com.org.simplelab.database.entities.sql.Lab;
@@ -295,12 +296,6 @@ public class RESTTests extends SpringMockMVCTestConfig {
         Lab found_lab = labDB.findById(lab_id);
         assertNull(found_lab);
 
-
-    }
-
-    @Test
-    @WithMockUser(username = username, password = username)
-    void testNewClass() throws Exception{
 
     }
 
