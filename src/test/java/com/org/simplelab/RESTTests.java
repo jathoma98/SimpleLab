@@ -8,6 +8,7 @@ import com.org.simplelab.database.services.CourseDB;
 import com.org.simplelab.database.services.LabDB;
 import com.org.simplelab.restcontrollers.CourseRESTController;
 import com.org.simplelab.restcontrollers.LabRESTController;
+import com.org.simplelab.restrequest.RESTRequest;
 import com.org.simplelab.utils.TestUtils;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.org.simplelab.restrequest.RESTRequest.RequestType;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -296,6 +298,14 @@ public class RESTTests extends SpringMockMVCTestConfig {
         assertNull(found_lab);
 
 
+    }
+
+    @Test
+    @WithMockUser(username = username, password = username)
+    void testNewClass() throws Exception{
+        RESTRequest req = new RESTRequest(mockMvc, "");
+        req.send(RequestType.GET, "/testRRO")
+                .andExpectStatus(true);
     }
 
 

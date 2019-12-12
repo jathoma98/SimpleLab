@@ -1,5 +1,6 @@
 package com.org.simplelab.controllers;
 
+import com.org.simplelab.restcontrollers.rro.RRO;
 import com.org.simplelab.security.SecurityUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +19,14 @@ public class IndexController extends BaseController {
     @GetMapping
     public String toHome(){
         return "redirect:/role";
+    }
+
+    @GetMapping("/testRRO")
+    @ResponseBody
+    public RRO rro_test() {
+        RRO rro = new RRO();
+        rro.setSuccess(true);
+        return rro;
     }
 
 

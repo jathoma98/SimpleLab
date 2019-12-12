@@ -1,32 +1,30 @@
 package com.org.simplelab.restrequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import static com.org.simplelab.RESTTests.session_atr;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Component
 public class RESTRequest {
-    public static final String NO_BODY = "no_body";
 
-    public class RESTRequestResultActionWrapper{
-        private ResultActions ra;
-        public RESTRequestResultActionWrapper(ResultActions ra){
-            this.ra = ra;
-        }
+    private MockMvc mvc;
+    private String baseURL;
+    private boolean enablePrintouts;
 
+    public RESTRequest(MockMvc mvc,String baseURL){
+        this.baseURL = baseURL;
+        this.mvc = mvc;
+        this.enablePrintouts = true;
     }
 
-    @Autowired
-    private MockMvc mvc;
-
-    private String baseURL;
-
-    public RESTRequest(String baseURL){
-        this.baseURL = baseURL;
+    public RESTRequest(MockMvc mvc, String baseURL, boolean enable){
+       this(mvc, baseURL);
+       this.enablePrintouts = enable;
     }
 
     public enum RequestType{
@@ -35,9 +33,6 @@ public class RESTRequest {
         DELETE,
         PATCH
     }
-
-
-
 
     public RESTRequestResultActionWrapper send(RequestType type, String endpointURL) throws Exception{
         String fullUrl = baseURL + endpointURL;
@@ -62,11 +57,74 @@ public class RESTRequest {
             default:
                 throw new Exception("BAD TEST");
         }
-        return new RESTRequestResultActionWrapper(baseRequest);
+        return new RESTRequestResultActionWrapper(baseRequest, this.enablePrintouts);
     }
 
     public RESTRequestResultActionWrapper sendData(RequestType type, String endpointURL, String body) throws Exception{
-        return null;
+        String fullUrl = baseURL + endpointURL;
+        ResultActions baseRequest = null;
+        switch (type){
+            case GET:
+                baseRequest = mvc.perform(get(fullUrl)
+                        .sessionAttrs(session_atr));
+                break;
+            case POST:
+                baseRequest = mvc.perform(post(fullUrl)
+                        .sessionAttrs(session_atr)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(body));
+                break;
+            case PATCH:
+                baseRequest = mvc.perform(patch(fullUrl)
+                        .sessionAttrs(session_atr)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(body));
+                break;
+            case DELETE:
+                baseRequest = mvc.perform(delete(fullUrl)
+                        .sessionAttrs(session_atr)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(body));
+                break;
+            default:
+                throw new Exception("BAD TEST");
+        }
+        return new RESTRequestResultActionWrapper(baseRequest, this.enablePrintouts);
+    }
+
+    public class RESTRequestResultActionWrapper{
+        private ResultActions ra;
+        private boolean enable;
+
+        public RESTRequestResultActionWrapper(ResultActions ra, boolean printOut) throws Exception{
+            this.ra = ra;
+            this.ra = init();
+            this.enable = printOut;
+        }
+
+        private ResultActions init() throws Exception{
+            return ra.andExpect(status().isOk());
+        }
+
+        public RESTRequestResultActionWrapper andExpectStatus(Boolean status) throws Exception{
+            String bool = status.toString();
+            String content = "{\"success\":" + bool + "}";
+            ra = ra.andExpect(content().json(content));
+            if (enable){
+                ra = ra.andDo(print());
+            }
+            return this;
+        }
+
+        public RESTRequestResultActionWrapper andExpectData(String jsonData) throws Exception{
+            String content = "{\"success\":true, \"data\":" + jsonData + "}";
+            ra = ra.andExpect(content().json(content));
+            if (enable){
+                ra = ra.andDo(print());
+            }
+            return this;
+        }
+
     }
 
 }
