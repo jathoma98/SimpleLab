@@ -50,8 +50,8 @@ public abstract class SpringTestConfig {
     LabInstanceDB instanceDB;
 
 
-    protected static final long user_id = 90;
-    protected static final String username = "12345";
+    protected static final long user_id = 26667;
+    protected static final String username = "UNITTEST_TEACHER";
 
     /**
      * Notes on metadata:

@@ -7,6 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @NoRepositoryBean
@@ -18,4 +19,6 @@ public interface BaseRepository<T extends BaseTable> extends CrudRepository<T, L
     void deleteBy_metadata(String metadata);
 
     <U extends Projection> Optional<U> findById(Long id, Class<U> projection);
+
+    List<T> findBy_metadata(String metadata);
 }

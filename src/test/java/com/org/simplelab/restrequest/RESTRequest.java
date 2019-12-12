@@ -106,7 +106,7 @@ public class RESTRequest {
             return ra.andExpect(status().isOk());
         }
 
-        public RESTRequestResultActionWrapper andExpectStatus(Boolean status) throws Exception{
+        public RESTRequestResultActionWrapper andExpectSuccess(Boolean status) throws Exception{
             String bool = status.toString();
             String content = "{\"success\":" + bool + "}";
             ra = ra.andExpect(content().json(content));
