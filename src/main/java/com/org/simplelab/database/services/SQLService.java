@@ -75,6 +75,7 @@ public abstract class SQLService<T extends BaseTable> extends DBService<T, Long>
         }
     }
 
+    @Override
     public abstract BaseRepository<T> getRepository();
 
     @Override

@@ -11,7 +11,6 @@ import java.util.List;
 @Component
 @Getter
 public class LabInstanceDB extends MongoDBService<LabInstance> {
-    //TODO: migrate this to use SQLService
 
     @Autowired
     private LabInstanceRepository repository;

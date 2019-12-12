@@ -7,6 +7,7 @@ import com.org.simplelab.database.services.CourseDB;
 import com.org.simplelab.database.services.LabDB;
 import com.org.simplelab.restcontrollers.CourseRESTController;
 import com.org.simplelab.restcontrollers.LabRESTController;
+import com.org.simplelab.utils.TestUtils;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -292,6 +293,7 @@ public class RESTTests extends SpringMockMVCTestConfig {
 
 
     }
+
 
 
 }

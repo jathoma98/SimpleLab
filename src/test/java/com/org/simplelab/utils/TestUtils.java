@@ -1,4 +1,4 @@
-package com.org.simplelab;
+package com.org.simplelab.utils;
 
 import com.org.simplelab.database.entities.sql.*;
 import org.springframework.stereotype.Component;

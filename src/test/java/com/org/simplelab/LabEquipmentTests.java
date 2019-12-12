@@ -5,6 +5,7 @@ import com.org.simplelab.database.repositories.sql.LabRepository;
 import com.org.simplelab.database.services.SQLService;
 import com.org.simplelab.database.services.projections.Projection;
 import com.org.simplelab.restcontrollers.LabRESTController;
+import com.org.simplelab.utils.TestUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;

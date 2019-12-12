@@ -58,7 +58,7 @@ public abstract class SpringTestConfig {
      * This metadata field is used to identify entities created during a specific test instance
      * You should modify the zzzzz_cleanup method if you are inserting new entries into different DBs during tests.
      */
-    static String metadata;
+    public static String metadata;
 
     @AfterEach
     void clear(){
