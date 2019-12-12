@@ -18,6 +18,8 @@ public abstract class BaseDocument{
 
     private long lastUpdated;
 
+    private String _metadata;
+
     BaseDocument(){
         this.timestamp = java.time.Instant.now().toEpochMilli();
         this.lastUpdated = timestamp;
@@ -27,8 +29,8 @@ public abstract class BaseDocument{
         return !(get_id().equals(NOT_FOUND_KEY));
     }
 
-    public void setTimestamp(long timestamp){ }
+    public abstract BaseDocument getNonexistent();
 
-    private String _metadata;
+    public void setTimestamp(long timestamp){ }
 
 }

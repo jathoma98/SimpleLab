@@ -45,6 +45,11 @@ public class LabInstance extends BaseDocument{
         this.equipmentInstances = new ArrayList<>();
     }
 
+    @Override
+    public LabInstance getNonexistent() {
+        return LabInstance.GEN_NO_INSTANCE();
+    }
+
     private static LabInstance GEN_NO_INSTANCE(){
         LabInstance none = new LabInstance();
         none.set_id(NOT_FOUND_KEY);

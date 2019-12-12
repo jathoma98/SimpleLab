@@ -60,7 +60,9 @@ public class DoLabEventHandler {
         sr.setStepNum(1);
         li.getStepRecords().add(sr);
 
-        instanceDB.insert(li);
+        try {
+            instanceDB.insert(li);
+        } catch (Exception e){}
         LabInstance current = instanceDB.findByLabIdAndUserId(l.getId(), user_id).get(0);
 
         Workspace ws = DBUtils.getMapper().map(l, Workspace.class);
