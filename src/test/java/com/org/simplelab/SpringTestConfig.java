@@ -31,23 +31,23 @@ import org.springframework.transaction.annotation.Transactional;
 public abstract class SpringTestConfig {
 
     @Autowired
-    UserDB userDB;
+    protected UserDB userDB;
     @Autowired
-    CourseRepository cr;
+    protected CourseRepository cr;
     @Autowired
-    EquipmentRepository er;
+    protected EquipmentRepository er;
     @Autowired
-    LabRepository lr;
+    protected LabRepository lr;
     @Autowired
-    CourseDB courseDB;
+    protected CourseDB courseDB;
     @Autowired
-    LabDB labDB;
+    protected LabDB labDB;
     @Autowired
-    EquipmentDB equipmentDB;
+    protected EquipmentDB equipmentDB;
     @Autowired
-    LabInstanceRepository lir;
+    protected  LabInstanceRepository lir;
     @Autowired
-    LabInstanceDB instanceDB;
+    protected LabInstanceDB instanceDB;
 
 
     protected static final long user_id = 26667;

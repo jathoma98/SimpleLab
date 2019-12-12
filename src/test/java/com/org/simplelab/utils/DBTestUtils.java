@@ -34,4 +34,12 @@ public class DBTestUtils extends TestUtils {
         return found.get(0);
     }
 
+    public static <T extends BaseTable> boolean testEquals(T a, T b){
+        a.setNew(false);
+        a.set_metadata("");
+        b.setNew(false);
+        b.set_metadata("");
+        return a.equals(b);
+    }
+
 }
