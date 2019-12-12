@@ -1,5 +1,6 @@
 package com.org.simplelab;
 
+import com.org.simplelab.controllers.BaseController;
 import com.org.simplelab.database.entities.sql.Course;
 import com.org.simplelab.database.entities.sql.Lab;
 import com.org.simplelab.database.entities.sql.User;
@@ -28,7 +29,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class RESTTests extends SpringMockMVCTestConfig {
 
 
-    private static Map<String, Object> session_atr = new HashMap<>();
+    public static final Map<String, Object> session_atr = initSessionAttr();
+
+    private static Map initSessionAttr(){
+        Map<String, Object> attr = new HashMap<>();
+        attr.put(BaseController.USER_ID_KEY, user_id);
+        attr.put("username", username);
+        return attr;
+    }
 
     @Autowired
     MockMvc mockMvc;
@@ -62,10 +70,6 @@ public class RESTTests extends SpringMockMVCTestConfig {
     @Test
     @WithMockUser(username = username, password = username)
     void testCreateGetCourseTeacher() throws Exception{
-
-
-        session_atr.put("user_id", user_id);
-        session_atr.put("username", username);
         Map<String, String> rawJson = new HashMap<>();
         rawJson.put("name", metadata);
         rawJson.put("description", metadata);

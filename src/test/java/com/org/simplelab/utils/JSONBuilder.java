@@ -22,13 +22,16 @@ public class JSONBuilder {
         this.map = new HashMap<>();
     }
 
-    public JSONBuilder put(String key, Object value) throws Exception{
+    public JSONBuilder put(String key, Object value){
         map.put(key, value);
         return this;
     }
 
-    public static String asJson(Object obj) throws Exception{
-        return o.writeValueAsString(obj);
+    public static String asJson(Object obj){
+        try {
+            return o.writeValueAsString(obj);
+        } catch (Exception e) { System.out.println("Exception while processing JSON: " + e.getMessage() + " " + e.getStackTrace().toString());}
+        return null;
     }
 
     @Override
