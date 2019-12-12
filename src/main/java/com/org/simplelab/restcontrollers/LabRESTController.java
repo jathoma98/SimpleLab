@@ -5,8 +5,8 @@ import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.Lab;
 import com.org.simplelab.database.entities.sql.Step;
 import com.org.simplelab.database.repositories.sql.LabRepository;
-import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.services.LabDB;
+import com.org.simplelab.database.services.SQLService;
 import com.org.simplelab.database.services.projections.Projection;
 import com.org.simplelab.database.validators.LabValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
@@ -151,7 +151,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
             if (found != null)
                 toAdd.add(found);
         }
-        DBService.EntitySetManager<Equipment, Lab> toUpdate;
+        SQLService.EntitySetManager<Equipment, Lab> toUpdate;
         try {
             toUpdate = labDB.getEquipmentOfLabById(lab_id);
         } catch (Exception e){
@@ -267,7 +267,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
         found.setSteps(steps);
         try {
             labDB.update(found);
-        } catch (DBService.EntityDBModificationException e){
+        } catch (SQLService.EntityDBModificationException e){
             RRO.sendErrorMessage(e.getMessage());
         }
         rro.setSuccess(true);
@@ -290,7 +290,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
         steps.clear();
         try {
             labDB.update(found);
-        } catch (DBService.EntityDBModificationException e){
+        } catch (SQLService.EntityDBModificationException e){
             RRO.sendErrorMessage(e.getMessage());
         }
         Lab found_after_delete = labDB.findById(lab_id);

@@ -2,10 +2,9 @@ package com.org.simplelab;
 
 import com.org.simplelab.database.entities.sql.*;
 import com.org.simplelab.database.repositories.sql.LabRepository;
-import com.org.simplelab.database.services.DBService;
+import com.org.simplelab.database.services.SQLService;
 import com.org.simplelab.database.services.projections.Projection;
 import com.org.simplelab.restcontrollers.LabRESTController;
-import com.org.simplelab.restcontrollers.dto.DTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,7 +43,7 @@ public class LabEquipmentTests extends SpringTestConfig {
         List<Equipment> foundList = equipmentDB.getRepository().findByName(e.getName());
         Equipment found = foundList.get(0);
 
-        DBService.EntitySetManager<EquipmentProperty, Equipment> set = equipmentDB.getPropertiesOfEquipment(found.getId());
+        SQLService.EntitySetManager<EquipmentProperty, Equipment> set = equipmentDB.getPropertiesOfEquipment(found.getId());
         System.out.println("Set properties: " + set.getEntitySet().toString());
         assertEquals(NUM_PROPERTIES, set.getEntitySet().size());
     }
@@ -75,7 +74,7 @@ public class LabEquipmentTests extends SpringTestConfig {
 
         String UPDATED_NAME = found.getName() + "UPDATED";
         String UPDATED_VAL = "UPDATED_VAL";
-        DBService.EntitySetManager<EquipmentProperty, Equipment> set = equipmentDB.getPropertiesOfEquipment(found.getId());
+        SQLService.EntitySetManager<EquipmentProperty, Equipment> set = equipmentDB.getPropertiesOfEquipment(found.getId());
         for (EquipmentProperty ep: set.getEntitySet()){
             ep.setPropertyValue(UPDATED_VAL);
         }
@@ -172,7 +171,7 @@ public class LabEquipmentTests extends SpringTestConfig {
 //
 //        lrc.addStepToLab(lab_id, dto);
 //
-//        DBService.EntitySetManager<Step, Lab> set = labDB.getStepsOfLabById(lab_id);
+//        SQLService.EntitySetManager<Step, Lab> set = labDB.getStepsOfLabById(lab_id);
 //
 //        assertEquals(1, set.getEntitySet().size());
 //        for (Step s: set.getEntitySet()){

@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Component
 public class LabInstanceDB {
-    //TODO: migrate this to use DBService
+    //TODO: migrate this to use SQLService
 
     @Autowired
     private LabInstanceRepository repository;

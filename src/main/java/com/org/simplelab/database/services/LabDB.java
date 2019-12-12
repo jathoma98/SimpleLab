@@ -18,7 +18,7 @@ import java.util.List;
 @Transactional
 @Component
 @Getter
-public class LabDB extends DBService<Lab> {
+public class LabDB extends SQLService<Lab> {
 
     @Autowired
     private LabRepository repository;
@@ -56,7 +56,7 @@ public class LabDB extends DBService<Lab> {
         return new StepSetManager(l.getSteps(), l);
     }
 
-    public boolean update(Lab toUpdate) throws DBService.EntityDBModificationException {
+    public boolean update(Lab toUpdate) throws SQLService.EntityDBModificationException {
         return super.update(toUpdate);
     }
 

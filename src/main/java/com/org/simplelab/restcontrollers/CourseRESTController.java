@@ -4,7 +4,7 @@ import com.org.simplelab.database.entities.sql.Course;
 import com.org.simplelab.database.entities.sql.Lab;
 import com.org.simplelab.database.entities.sql.User;
 import com.org.simplelab.database.services.CourseDB;
-import com.org.simplelab.database.services.DBService;
+import com.org.simplelab.database.services.SQLService;
 import com.org.simplelab.database.services.projections.Projection;
 import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 //TODO: secure rest endpoints with authentication
 @RestController
@@ -193,11 +192,11 @@ public class CourseRESTController extends BaseRESTController<Course> {
                     toAdd.add(userDB.findUser(username));
                 }
             }
-            DBService.EntitySetManager<User, Course> toUpdate = courseDB.getStudentsOfCourseByCourseId(course_id);
+            SQLService.EntitySetManager<User, Course> toUpdate = courseDB.getStudentsOfCourseByCourseId(course_id);
             return super.addEntitiesToEntityList(toUpdate, toAdd);
         }else if(c.get(0).getInvite_code() == null || course.getInvite_code().equals(c.get(0).getInvite_code())){
             toAdd.add(userDB.findUser((String)session.getAttribute("username")));
-            DBService.EntitySetManager<User, Course> toUpdate = courseDB.getStudentsOfCourseByCourseId(course_id);
+            SQLService.EntitySetManager<User, Course> toUpdate = courseDB.getStudentsOfCourseByCourseId(course_id);
             return super.addEntitiesToEntityList(toUpdate, toAdd);
         }
 
@@ -214,7 +213,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
             if (found != null)
                 toAdd.add(found);
         }
-        DBService.EntitySetManager<Lab, Course> toUpdate;
+        SQLService.EntitySetManager<Lab, Course> toUpdate;
         try {
             toUpdate = courseDB.getLabsOfCourseByCourseId(dto.getCourse_id());
         } catch (CourseDB.CourseTransactionException e){
@@ -236,7 +235,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
                 toDelete.add(u);
             }
         }
-        DBService.EntitySetManager<Lab, Course> toUpdate;
+        SQLService.EntitySetManager<Lab, Course> toUpdate;
         try {
             toUpdate = courseDB.getLabsOfCourseByCourseId(course.getCourse_id());
         } catch (CourseDB.CourseTransactionException e){
@@ -244,7 +243,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
             rro.setMsg(e.getMessage());
             return rro;
         }
-//        DBService.EntitySetManager<Lab, Course> toUpdate = courseDB.getLabsOfCourseByCourseId(course.getCourse_id());
+//        SQLService.EntitySetManager<Lab, Course> toUpdate = courseDB.getLabsOfCourseByCourseId(course.getCourse_id());
         return super.removeEntitiesFromEntityList(toUpdate, toDelete);
     }
 
@@ -289,7 +288,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
                 toDelete.add(u);
             }
         }
-        DBService.EntitySetManager<User, Course> toUpdate = courseDB.getStudentsOfCourseByCourseId(course.getCourse_id());
+        SQLService.EntitySetManager<User, Course> toUpdate = courseDB.getStudentsOfCourseByCourseId(course.getCourse_id());
         return super.removeEntitiesFromEntityList(toUpdate, toDelete);
     }
 

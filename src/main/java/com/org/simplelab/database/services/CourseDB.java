@@ -17,7 +17,7 @@ import java.util.Set;
 @Transactional
 @Component
 @Getter
-public class CourseDB extends DBService<Course> {
+public class CourseDB extends SQLService<Course> {
 
     @Autowired
     private CourseRepository repository;

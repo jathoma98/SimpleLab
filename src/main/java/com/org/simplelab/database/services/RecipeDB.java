@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 @Component
 @Transactional
-public class RecipeDB extends DBService<Recipe> {
+public class RecipeDB extends SQLService<Recipe> {
 
     @Autowired
     private RecipeRepository repository;

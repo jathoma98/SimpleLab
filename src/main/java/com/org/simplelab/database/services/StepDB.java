@@ -1,6 +1,5 @@
 package com.org.simplelab.database.services;
 
-import com.org.simplelab.database.entities.sql.Recipe;
 import com.org.simplelab.database.entities.sql.Step;
 import com.org.simplelab.database.repositories.sql.StepRepository;
 import lombok.Getter;
@@ -13,7 +12,7 @@ import java.util.List;
 @Getter
 @Component
 @Transactional
-public class StepDB extends DBService<Step>{
+public class StepDB extends SQLService<Step> {
 
     @Autowired
     private StepRepository repository;

@@ -14,7 +14,7 @@ import java.util.List;
 @Transactional
 @Component
 @Getter
-public class UserDB extends DBService<User>{
+public class UserDB extends SQLService<User> {
 
     @Autowired
     private UserRepository repository;

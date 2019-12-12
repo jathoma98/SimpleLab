@@ -14,7 +14,7 @@ import java.util.List;
 @Transactional
 @Component
 @Getter
-public class EquipmentDB extends DBService<Equipment> {
+public class EquipmentDB extends SQLService<Equipment> {
 
     private class EquipmentPropertySetManager extends
             EntitySetManager<EquipmentProperty, Equipment>{
@@ -50,7 +50,7 @@ public class EquipmentDB extends DBService<Equipment> {
         return super.deleteById(id);
     }
 
-    public boolean update(Equipment toUpdate) throws DBService.EntityDBModificationException {
+    public boolean update(Equipment toUpdate) throws SQLService.EntityDBModificationException {
         return super.update(toUpdate);
     }
 

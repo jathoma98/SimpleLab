@@ -4,9 +4,9 @@ import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.mongodb.LabInstance;
 import com.org.simplelab.database.entities.sql.*;
 import com.org.simplelab.database.repositories.sql.UserRepository;
-import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.services.LabDB;
 import com.org.simplelab.database.services.RecipeDB;
+import com.org.simplelab.database.services.SQLService;
 import com.org.simplelab.database.services.UserDB;
 import com.org.simplelab.database.validators.LabValidator;
 import com.org.simplelab.restcontrollers.CourseRESTController;
@@ -189,7 +189,7 @@ class DBTests extends SpringTestConfig {
 		cr.save(c);
 		lr.save(l);
 
-		DBService.EntitySetManager<Lab, Course> manager = courseDB.getLabsOfCourseByCourseId(c.getCourse_id());
+		SQLService.EntitySetManager<Lab, Course> manager = courseDB.getLabsOfCourseByCourseId(c.getCourse_id());
 		manager.insert(l);
 		courseDB.update(manager.getFullEntity());
 
@@ -199,7 +199,7 @@ class DBTests extends SpringTestConfig {
 		dto.setCourse_id(c.getCourse_id());
 		crc.addLabsToCourse(dto);
 
-		DBService.EntitySetManager setManager = courseDB.getLabsOfCourseByCourseId(c.getCourse_id());
+		SQLService.EntitySetManager setManager = courseDB.getLabsOfCourseByCourseId(c.getCourse_id());
 		assertEquals(1, setManager.getEntitySet().size());
 		assertEquals(metadata, l.getName());
 	}
@@ -233,7 +233,7 @@ class DBTests extends SpringTestConfig {
 		dto.setCourse_id(metadata);
 		crc.addStudentToCourse(dto);
 
-		DBService.EntitySetManager<User, Course> set = courseDB.getStudentsOfCourseByCourseId(metadata);
+		SQLService.EntitySetManager<User, Course> set = courseDB.getStudentsOfCourseByCourseId(metadata);
 		assertEquals(3, set.getEntitySet().size());
 		assertEquals(metadata, ((User)set.getEntitySet().toArray()[0]).get_metadata());
 
@@ -256,7 +256,7 @@ class DBTests extends SpringTestConfig {
 		}
 		c.setStudents(users);
 		cr.save(c);
-		DBService.EntitySetManager<User, Course> original = courseDB.getStudentsOfCourseByCourseId(c.getCourse_id());
+		SQLService.EntitySetManager<User, Course> original = courseDB.getStudentsOfCourseByCourseId(c.getCourse_id());
 		assertEquals(3, original.getEntitySet().size());
 
 		DTO.CourseUpdateStudentListDTO dto = new DTO.CourseUpdateStudentListDTO();
@@ -264,7 +264,7 @@ class DBTests extends SpringTestConfig {
 		dto.setUsernameList(usernames);
 		crc.deleteStudentList(dto);
 
-		DBService.EntitySetManager<User, Course> newUsers = courseDB.getStudentsOfCourseByCourseId(c.getCourse_id());
+		SQLService.EntitySetManager<User, Course> newUsers = courseDB.getStudentsOfCourseByCourseId(c.getCourse_id());
 		assertEquals(0, newUsers.getEntitySet().size());
 
 	}
@@ -351,7 +351,7 @@ class DBTests extends SpringTestConfig {
 		c.setStudents(new HashSet<User>(students));
 		courseDB.insert(c);
 
-		DBService.EntitySetManager<User, Course> found = courseDB.getStudentsOfCourseByCourseId(metadata);
+		SQLService.EntitySetManager<User, Course> found = courseDB.getStudentsOfCourseByCourseId(metadata);
 		assertEquals(3, found.getEntitySet().size());
 
 		courseDB.deleteById(found.getFullEntity().getId());
