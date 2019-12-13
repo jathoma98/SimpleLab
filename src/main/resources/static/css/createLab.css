@@ -309,6 +309,10 @@ td, th {
     height:60%!important;
 }
 
+.height100{
+    height:100%!important;
+}
+
 .width3{
     width: 46%!important;
 }
@@ -339,7 +343,7 @@ td, th {
     margin-bottom: 10px;
 }
 .parent_height{
-
+    height: 100%!important;
 }
 
 .parent_weight{
