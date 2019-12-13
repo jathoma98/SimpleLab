@@ -202,7 +202,8 @@ let COURSES_TABLE = {
                 newCourseInfo: {
                     name: $("#course_name").val(),
                     course_id: $("#course_code").val(),
-                    description: $("#course_description").val()
+                    description: $("#course_description").val(),
+                    invite_code: $("#course_invitecode").val()
                 }
 
             }
