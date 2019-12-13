@@ -59,7 +59,7 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
         try{
             getDb().insert(created);
         } catch (SQLService.EntityDBModificationException e){
-            rro.setSuccess(true);
+            rro.setSuccess(false);
             rro.setMsg(e.getMessage());
             rro.setAction(RRO.ACTION_TYPE.PRINT_MSG.name());
             return rro;

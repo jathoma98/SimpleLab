@@ -22,7 +22,7 @@ import static com.org.simplelab.restrequest.RESTRequest.RequestType.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-public class LabRESTTest extends RESTTestBaseConfig {
+public class LabRESTTests extends RESTTestBaseConfig {
 
     private RESTRequest labRequest;
 
@@ -242,5 +242,7 @@ public class LabRESTTest extends RESTTestBaseConfig {
         IntStream.range(1, steps2.size()+1)
                  .forEach((i) -> assertEquals(i, steps2.get(i-1).getStepNum()));
     }
+
+    //TODO: add stepChangeNum() test
 
 }

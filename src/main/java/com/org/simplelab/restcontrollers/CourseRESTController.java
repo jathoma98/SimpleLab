@@ -44,8 +44,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
     public static final String CHECK_INVITE_MAPPING = "/checkInviteCode";
 
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public RRO<String> addCourse(@RequestBody CourseValidator courseValidator,
-                                 HttpSession session) {
+    public RRO<String> addCourse(@RequestBody CourseValidator courseValidator) {
         return super.addEntity(courseValidator);
     }
 
