@@ -2,6 +2,7 @@ package com.org.simplelab.resttests;
 
 import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.Lab;
+import com.org.simplelab.database.entities.sql.Step;
 import com.org.simplelab.database.validators.LabValidator;
 import com.org.simplelab.restcontrollers.LabRESTController;
 import com.org.simplelab.restcontrollers.dto.DTO;
@@ -17,8 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static com.org.simplelab.restrequest.RESTRequest.RequestType.GET;
-import static com.org.simplelab.restrequest.RESTRequest.RequestType.POST;
+import static com.org.simplelab.restrequest.RESTRequest.RequestType.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LabRESTTest extends RESTTestBaseConfig {
@@ -101,7 +101,7 @@ public class LabRESTTest extends RESTTestBaseConfig {
             } catch (Exception e) {} });
         DTO.UserLabsDTO dto = new DTO.UserLabsDTO();
         dto.setLids(ids);
-        labRequest.sendData(RESTRequest.RequestType.DELETE, LabRESTController.DELETE_MAPPING, JSONBuilder.asJson(dto))
+        labRequest.sendData(DELETE, LabRESTController.DELETE_MAPPING, JSONBuilder.asJson(dto))
                   .andExpectSuccess(true);
 
         IntStream.range(0, numLabs)
@@ -110,7 +110,7 @@ public class LabRESTTest extends RESTTestBaseConfig {
                 });
 
         //make sure sending another delete request doesnt cause exception
-        labRequest.sendData(RESTRequest.RequestType.DELETE, LabRESTController.DELETE_MAPPING, JSONBuilder.asJson(dto))
+        labRequest.sendData(DELETE, LabRESTController.DELETE_MAPPING, JSONBuilder.asJson(dto))
                 .andExpectSuccess(true);
     }
 
@@ -156,6 +156,32 @@ public class LabRESTTest extends RESTTestBaseConfig {
                  });
         labRequest.send(GET, LabRESTController.LOAD_LIST_LAB_MAPPING)
                   .andExpectData(JSONBuilder.asJson(testInfos));
+
+    }
+
+    @Test
+    @WithMockUser(username = username, password = username)
+    void testAddStep() throws Exception{
+        DTO.AddStepDTO dto = new DTO.AddStepDTO();
+        //need to insert equipment to get its id -- not clear in original code
+        Equipment e = TestUtils.createJunkEquipment();
+        long equip_id = DBTestUtils.insertAndGetId(e, equipmentDB);
+        dto.setTargetEquipmentId(equip_id);
+        dto.setStepNum(1);
+        dto.setTargetTemperature("15");
+        dto.setTargetVolume("15");
+        dto.setTargetWeight("15");
+        long id = DBTestUtils.insertAndGetId(TestUtils.createJunkLab(), labDB);
+        String mapping = "/" + Long.toString(id) + "/step";
+        labRequest.sendData(POST, mapping, JSONBuilder.asJson(dto))
+                  .andExpectSuccess(true);
+
+        List<Step> steps = labDB.getStepsOfLabById(id).getAsList();
+        assertEquals(1, steps.size());
+        assertEquals(e, steps.get(0).getTargetObject());
+
+        //ensure that inserting a step out of order throws error
+
 
     }
 
