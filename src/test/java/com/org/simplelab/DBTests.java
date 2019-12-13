@@ -410,7 +410,7 @@ class DBTests extends SpringTestConfig {
 		}
 		System.out.println(idsToDelete.toString());
 		dto.setLids(idsToDelete);
-		lrc.deleteCourse(dto);
+		lrc.deleteLab(dto);
 
 		for (String name: labsToFind){
 			assertEquals(0, lr.findByName(name).size());

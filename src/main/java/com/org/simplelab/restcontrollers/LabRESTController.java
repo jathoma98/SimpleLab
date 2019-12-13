@@ -65,7 +65,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
 
     //Todo need change later, it not safe, anyone change delete others lab here, because we haven't check create_id
     @DeleteMapping(DELETE_MAPPING)
-    public RRO<String> deleteCourse(@RequestBody DTO.UserLabsDTO toDelete) {
+    public RRO<String> deleteLab(@RequestBody DTO.UserLabsDTO toDelete) {
         RRO<String> rro = new RRO();
         for (long lid : toDelete.getLids()) {
             labDB.deleteById(lid);

@@ -1,5 +1,6 @@
 package com.org.simplelab.database.services;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +29,11 @@ public abstract class DBService<BaseEntityType, IDType> {
      */
     @Transactional
     public boolean deleteById(IDType id){
-        getRepository().deleteById(id);
+        try {
+            getRepository().deleteById(id);
+        } catch (EmptyResultDataAccessException e){
+            //no issue if we try to delete same object, should just do nothing.
+        }
         return true;
     }
 

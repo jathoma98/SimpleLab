@@ -14,7 +14,6 @@ public class DBTestUtils extends TestUtils {
         Random rand = new Random();
         String save_data = metadata + Double.toString(rand.nextDouble());
         toInsert.set_metadata(save_data);
-        System.out.println(toInsert.get_metadata());
         db.insert(toInsert);
         List<T> found = db.getRepository().findBy_metadata(save_data);
         return found.get(0).getId();
