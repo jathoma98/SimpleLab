@@ -2,6 +2,7 @@ package com.org.simplelab.controllers;
 
 import com.org.simplelab.database.entities.sql.Course;
 import com.org.simplelab.database.entities.sql.Lab;
+import com.org.simplelab.database.entities.sql.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,8 +41,11 @@ public class TeacherController extends BaseController {
     @RequestMapping(DO_LAB)
     public String dolab(@PathVariable("lab_id") long lab_id, HttpSession session, Model model){
         Lab lab = labDB.findById(lab_id);
+        String username = (String)session.getAttribute("username");
+        User user = userDB.findUser(username);
         String home_navig = ((String)session.getAttribute("username")) + "'s Home";
         model.addAttribute("home_navig", home_navig);
+        model.addAttribute("user_role",user.getRole());
         model.addAttribute("lab_id", lab.getId());
         model.addAttribute("lab_name", lab.getName());
         return "dolab";
