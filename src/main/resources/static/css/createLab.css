@@ -406,3 +406,20 @@ padding20px{
     left: 95%;
     top: 90%;
 }
+
+.ulstyle{
+
+    /*border: black 1px solid;*/
+}
+
+.ulstyle li{
+    /*border-top: black 1px dotted;*/
+    margin-top: 10px;
+    /*padding-bottom: 1px!important;*/
+    box-shadow: 0 10px 6px -6px #eee1db;
+}
+
+.ulstyle li:first-child{
+    border-top: none;
+    margin-top: 15px!important;
+}
