@@ -339,7 +339,7 @@ td, th {
     margin-bottom: 10px;
 }
 .parent_height{
-    height: 100%;
+
 }
 
 .parent_weight{
@@ -372,8 +372,8 @@ padding20px{
 
 .recipebotheight{
     height: 80%!important;
-    overflow-y: auto;
-    overflow-x: hidden;
+    /*overflow-y: auto;*/
+    /*overflow-x: hidden;*/
 }
 
 .eqmli_selected{
