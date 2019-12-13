@@ -72,6 +72,23 @@ EQUIPMENT = {
             })
         }
 
+        this.delFromLab = function(eqm){
+            let data = [];
+            data.push(eqm.id);
+            let data_json = JSON.stringify(data);
+            $.ajax({
+                url: "/lab/rest/" + LAB_INFO.id + "/equipment",
+                type: 'DELETE',
+                dataTye: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: data_json,
+                success: function (result) {
+                    retObjHandle(result, EQUIPMENT.loadInLab);
+                }
+            })
+
+        }
+
         this.loadInLab = function () {
             $.ajax({
                 url: "/lab/rest/" + LAB_INFO.id + "/equipment",
@@ -87,9 +104,10 @@ EQUIPMENT = {
                             equipmentPropsToKeyValue(eqm);
                         });
                         rebuildRepeatComponent(ELEM_NAME.LAB_EQUIPMENT_LIST, TEMPLATE_ID.LAB_EQUIPMENT_LIST,
-                            "<li/>", undefined, data, "click",
+                            "<li/>", "a", data, "click",
                             (eqm) => {
-                            });
+                                EQUIPMENT.delFromLab(eqm);
+                        });
                     })
                 }
             })
@@ -166,20 +184,6 @@ RECIPE = {
                                         retObjHandle(result, RECIPE.load)
                                     }
                                 })
-
-                                // $(ELEM_NAME.RECIPE_CARDS).removeClass("card_selected");
-                                // RECIPE.selected = "";
-                                // $(ELEM_NAME.RECIPE_EQUIP_LIST).empty();
-                                // $(ELEM_NAME.RECIPE_CARD_ONE).find("p")
-                                //     .text("Equipment 1:" + recipe.equipmentOne.name);
-                                // $(ELEM_NAME.RECIPE_CARD_ONE).find("input")
-                                //     .val(recipe.ratioOne);
-                                // $(ELEM_NAME.RECIPE_CARD_TWO).find("p")
-                                //     .text("Equipment 2:" + recipe.equipmentTwo.name);
-                                // $(ELEM_NAME.RECIPE_CARD_TWO).find("input")
-                                //     .val(recipe.ratioTwo);
-                                // $(ELEM_NAME.RECIPE_CARD_RESULT).find("p")
-                                //     .text("Result:" + recipe.result.name);
                             });
                     });
                 }
@@ -305,10 +309,9 @@ STEP = {
     },
     onclickInit() {
         $(ELEM_NAME.STEP_SAVE_BTN).on("click", STEP.save);
-
     }
-
 }
+
 $(document).ready(() => {
     EQUIPMENT.init();
     RECIPE.init();
@@ -322,5 +325,4 @@ $(document).ready(() => {
 
     STEP.load();
     STEP.onclickInit();
-
 })

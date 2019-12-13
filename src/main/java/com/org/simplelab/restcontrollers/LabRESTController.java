@@ -45,11 +45,11 @@ public class LabRESTController extends BaseRESTController<Lab> {
     public static final String LAB_ID_STEP_NUMBER_MAPPING = LAB_ID_MAPPING + "/{step_number}";
     public static final String LAB_ID_STEP_NUMBER_CHANGE_MAPPING = LAB_ID_MAPPING + "/{step_number}/{move}";
     public static final String SEARCH_LAB_MAPPING = "/searchLab";
+    public static final String LAB_ID_EQUIPMENT_MAPPING = LAB_ID_MAPPING + "/equipment";
 
 
     @Autowired
     LabRepository labRepository;
-    public static final String LAB_ID_EQUIPMENT_MAPPING = LAB_ID_MAPPING + "/equipment";
 
 
     /**
@@ -160,6 +160,27 @@ public class LabRESTController extends BaseRESTController<Lab> {
             return rro;
         }
         return super.addEntitiesToEntityList(toUpdate, toAdd);
+    }
+
+    @Transactional
+    @DeleteMapping(LAB_ID_EQUIPMENT_MAPPING)
+    public RRO<String> delEquipmentFromLab(@PathVariable("lab_id") long lab_id,
+                                         @RequestBody long[] ids){
+        List<Equipment> toDel = new ArrayList<>();
+        for (long id: ids){
+            Equipment found = equipmentDB.findById(id);
+            if (found != null)
+                toDel.add(found);
+        }
+        SQLService.EntitySetManager<Equipment, Lab> toUpdate;
+        try {
+            toUpdate = labDB.getEquipmentOfLabById(lab_id);
+        } catch (Exception e){
+            RRO<String> rro = new RRO();
+            rro.setMsg("form LAB_ID_EQUIPMENT_MAPPING");
+            return rro;
+        }
+        return super.removeEntitiesFromEntityList(toUpdate, toDel);
     }
 
 
