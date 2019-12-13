@@ -5,8 +5,6 @@ import com.org.simplelab.database.entities.sql.Course;
 import com.org.simplelab.database.entities.sql.Lab;
 import com.org.simplelab.database.entities.sql.User;
 import com.org.simplelab.database.repositories.sql.CourseRepository;
-import com.org.simplelab.database.validators.CourseValidator;
-import com.org.simplelab.security.SecurityUtils;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -42,13 +40,6 @@ public class CourseDB extends SQLService<Course> {
         return true;
     }
 
-    //TODO: probably change how user is checked
-    @Override
-    protected void checkUpdateCondition(Course toUpdate) throws CourseTransactionException{
-        List<Course> found = findByCourseId(toUpdate.getCourse_id());
-        if (found != null && found.size() > 0 && !found.get(0).getCreator().getUsername().equals(SecurityUtils.getAuthenticatedUsername()))
-            throw new CourseTransactionException(CourseValidator.DUPLICATE_ID);
-    }
 
     public boolean deleteById(long id) {
         return super.deleteById(id);

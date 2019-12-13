@@ -4,7 +4,10 @@ import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.mongodb.LabInstance;
 import com.org.simplelab.database.entities.sql.*;
 import com.org.simplelab.database.repositories.sql.UserRepository;
-import com.org.simplelab.database.services.*;
+import com.org.simplelab.database.services.LabDB;
+import com.org.simplelab.database.services.RecipeDB;
+import com.org.simplelab.database.services.SQLService;
+import com.org.simplelab.database.services.UserDB;
 import com.org.simplelab.database.validators.LabValidator;
 import com.org.simplelab.restcontrollers.CourseRESTController;
 import com.org.simplelab.restcontrollers.LabRESTController;
@@ -481,31 +484,8 @@ class DBTests extends SpringTestConfig {
 		});
 	}
 
-	@Test
-	void courseDuplicateIdTest() throws Exception{
-		Course c = new Course();
-		c.setName(metadata);
-		c.setDescription(metadata);
-		c.setCourse_id(metadata);
-		c.setInvite_code(metadata);
-		courseDB.insert(c);
-
-		Course c2 = new Course();
-		c2.setName(metadata);
-		c2.setCourse_id(metadata);
-		assertThrows(CourseDB.CourseTransactionException.class,() -> {
-			courseDB.insert(c2);
-		});
-
 
 
 	}
 
 
-
-
-
-
-
-
-}
