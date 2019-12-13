@@ -376,9 +376,8 @@ padding20px{
 
 .recipebotheight{
     height: 80%!important;
-    /*overflow-y: auto;*/
-    /*overflow-x: hidden;*/
 }
+
 
 .eqmli_selected{
     background: rgba(0, 0, 0, 0.10);
@@ -397,6 +396,11 @@ padding20px{
 .height80{
     height: 80%!important;
 }
+
+.height90{
+    height: 80%!important;
+}
+
 .right-button{
     position: fixed;
     left: 95%;
