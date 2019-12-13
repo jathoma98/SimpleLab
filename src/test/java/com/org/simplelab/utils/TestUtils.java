@@ -45,8 +45,8 @@ public class TestUtils {
         u.setEmail(metadata);
         u.setQuestion(metadata);
         u.setAnswer(metadata);
-        u.setFirstname("UNIT_TEST");
-        u.setLastname("UNIT_TEST");
+        u.setFirstname("UNIT_TEST1");
+        u.setLastname("UNIT_TEST1");
         return u;
     }
 

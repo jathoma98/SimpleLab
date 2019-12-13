@@ -85,6 +85,7 @@ public abstract class SQLService<T extends BaseTable> extends DBService<T, Long>
             throw new EntityDBModificationException
                     (EntityDBModificationException.GENERIC_INVALID_UPDATE_ERROR);
         }
+        checkUpdateCondition(toUpdate);
         getRepository().save(toUpdate);
         return true;
     }
@@ -95,6 +96,10 @@ public abstract class SQLService<T extends BaseTable> extends DBService<T, Long>
             return found.get();
         }
         return null;
+
+    }
+
+    protected void checkUpdateCondition(T toUpdate) throws EntityDBModificationException{
 
     }
 
