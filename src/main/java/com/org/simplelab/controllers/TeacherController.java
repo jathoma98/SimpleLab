@@ -43,7 +43,6 @@ public class TeacherController extends BaseController {
         Lab lab = labDB.findById(lab_id);
         String username = (String)session.getAttribute("username");
         User user = userDB.findUser(username);
-
         String home_navig = ((String)session.getAttribute("username")) + "'s Home";
         model.addAttribute("home_navig", home_navig);
         model.addAttribute("user_role",user.getRole());
