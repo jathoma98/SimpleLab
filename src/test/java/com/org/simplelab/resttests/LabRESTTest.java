@@ -61,6 +61,10 @@ public class LabRESTTest extends RESTTestBaseConfig {
         List<Equipment> saved = labDB.getEquipmentOfLabById(lab_id).getAsList();
         assertEquals(num_eq, saved.size());
 
+        //adding the same equipment should not increase size of the list
+        labRequest.sendData(RESTRequest.RequestType.POST, id_path+"/equipment", JSONBuilder.asJson(eq_ids))
+                  .andExpectSuccess(true);
+
     }
 
 }
