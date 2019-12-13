@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import static com.org.simplelab.restrequest.RESTRequest.RequestType.GET;
+import static com.org.simplelab.restrequest.RESTRequest.RequestType.POST;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LabRESTTest extends RESTTestBaseConfig {
@@ -36,11 +38,17 @@ public class LabRESTTest extends RESTTestBaseConfig {
         lv.setName("TEST");
         lv.setDescription("TEST");
         lv.set_metadata(metadata);
-        labRequest.sendData(RESTRequest.RequestType.POST, "", JSONBuilder.asJson(lv))
+        labRequest.sendData(POST, "", JSONBuilder.asJson(lv))
                   .andExpectSuccess(true);
         Lab found = labDB.getRepository().findBy_metadata(metadata).get(0);
         assertEquals(found.getName(), lv.getName());
         assertEquals(found.getDescription(), lv.getDescription());
+
+        //make sure adding invalid lab sends error
+        lv.setName(null);
+        labRequest.sendData(POST, "", JSONBuilder.asJson(lv))
+                  .andExpectError(LabValidator.NO_NAME_ERROR);
+
 
     }
 
@@ -109,6 +117,45 @@ public class LabRESTTest extends RESTTestBaseConfig {
     @Test
     @WithMockUser(username = username, password = username)
     void testUpdateLab() throws Exception{
+        Lab junkLab = TestUtils.createJunkLab();
+        LabValidator lv = new LabValidator();
+        long lab_id = DBTestUtils.insertAndGetId(junkLab, labDB);
+        String mapping = "/" + Long.toString(lab_id);
+
+        lv.setName("Updated name");
+        labRequest.sendData(POST, mapping, JSONBuilder.asJson(lv))
+                  .andExpectSuccess(true);
+        assertEquals(lv.getName(), labDB.findById(lab_id).getName());
+
+        //make sure invalid updates dont work
+        lv.setName("");
+        labRequest.sendData(POST, mapping, JSONBuilder.asJson(lv))
+                 .andExpectError(LabValidator.NO_NAME_ERROR);
+
+    }
+
+    class TestInfo {
+       public String name, createdDate;
+    }
+    @Test
+    @WithMockUser(username = username, password = username)
+    void testGetLabList() throws Exception{
+        int numLabs = 4;
+        TestInfo[] testInfos = new TestInfo[numLabs];
+        IntStream.range(0, numLabs)
+                 .forEach((i) -> {
+                    Lab toInsert = DBTestUtils.createJunkLab();
+                    TestInfo info = new TestInfo();
+                    info.name = toInsert.getName();
+                    info.createdDate = toInsert.getCreatedDate();
+                    testInfos[i] = info;
+                    try {
+                        labRequest.sendData(POST, "", JSONBuilder.asJson(toInsert))
+                                .andExpectSuccess(true);
+                    } catch (Exception e) {System.out.println("EXCEPTION: " + e.getStackTrace().toString());}
+                 });
+        labRequest.send(GET, LabRESTController.LOAD_LIST_LAB_MAPPING)
+                  .andExpectData(JSONBuilder.asJson(testInfos));
 
     }
 

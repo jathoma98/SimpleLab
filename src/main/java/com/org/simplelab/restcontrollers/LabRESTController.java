@@ -17,7 +17,6 @@ import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,7 +116,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
 
 
     @GetMapping(LOAD_LIST_LAB_MAPPING)
-    public RRO getListOfLab(HttpSession session) {
+    public RRO getListOfLab() {
         long userId = getUserIdFromSession();
         RRO rro = new RRO<Projection>();
         //Use TeacherLabInfo projection to only get attributes we want

@@ -91,6 +91,15 @@ public class RESTRequest {
             return this;
         }
 
+        public RESTRequestResultActionWrapper andExpectError(String errormsg) throws Exception{
+            String content = "{\"success\":false, \"msg\":\"" + errormsg  + "\"}";
+            ra = ra.andExpect(content().json(content));
+            if (enable){
+                ra = ra.andDo(print());
+            }
+            return this;
+        }
+
         public RESTRequestResultActionWrapper andExpectData(String jsonData) throws Exception{
             String content = "{\"success\":true, \"data\":" + jsonData + "}";
             ra = ra.andExpect(content().json(content));
