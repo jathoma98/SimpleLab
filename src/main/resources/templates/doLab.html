@@ -12,6 +12,7 @@
     <script type="text/javascript" th:src="@{../../js/tools.js}"></script>
     <script type="text/javascript" th:src="@{../../js/accountInfo/accountInfo.js}"></script>
     <script type="text/javascript" th:src="@{../../js/lab.js}"></script>
+    <script type="text/javascript" th:src="@{../../js/doLab/main.js}"></script>
     <script id="modalAccTpl" type="x-tmpl-mustache" th:src="@{../../js/accountInfo/modalAccount.html}"></script>
     <script id="modalEquip" type="x-tmpl-mustache" th:src="@{../../js/template/modalEquip.html}"></script>
     <!--Let browser know website is optimized for mobile-->
@@ -114,7 +115,26 @@
         </button>
     </div>
 </div>
+<!--pop up model to enter number of liquid -->
 
+<div id="set_value_modal" class="modal popup_dialog">
+    <nav class="my_yellow">
+        <div class="popup_dialog_header">Enter number of liquid</div>
+    </nav>
+    <div class="modal-content row">
+        <p class="range-field col s8 zeromargin ">
+            <input type="range" id="test5" min="0" max="200" value="100" oninput="showVal(this.value)"
+                   onchange="showVal(this.value)"/>
+        </p>
+        <div class="col s4 zeromargin">
+            <input class="number_picker" type="number" name="quantity" min="1" max="100" value="100">
+        </div>
+
+        <div class="center col s12">
+            <a href="#!" class="modal-close btn my_red">Pour</a>
+        </div>
+    </div>
+</div>
 <nav class="delete_empty">
     <div class="nav-wrapper row" style="background: #00acc1">
         <div class="col s12 valign-wrapper" style="background: #00b8ce; height: 30px; margin-top: 20px;">
@@ -125,23 +145,14 @@
     </div>
 </nav>
 
-
 <!--**********************************************************************main body*********************************************************************************************************-->
 <!--**********************************************************************main body*********************************************************************************************************-->
 <!--**********************************************************************main body*********************************************************************************************************-->
-<!--sidebar {sidebar item set}-->
-<!--        {sidebar step set}-->
-<!--        {sidebar current itemset}-->
-
-<!--operation area-->
-
-<!--infobar-->
-
-
 <!--    this operation area at the middle-->
 <div id="operation_area" class="operation_area delete_empty ">
     <!--    side bar-->
     <div id="sidebar" class="sidebar sidebarhover row">
+        <!--Equipment List-->
         <div id="sidebarone" class="sidebar_info delete_empty">
             <nav class="delete_empty">
                 <div class="nav-wrapper my_yellow">
@@ -150,74 +161,38 @@
                             class="material-icons">add</i></a>
                 </div>
             </nav>
-            <!--        equipment modal-->
-
-
-            <!--                sidebar item set-->
-            <ul class="collapsible row my_white itemset">
-                <li class="active">
-                    <div class="collapsible-header ">
-                        often use
+            <!-- Lab Equipment List-->
+            <script id="labequip_list_template" type="mustache">
+                <a href="#set_value_modal" class="modal-trigger">
+                    <div class="row sidebaritem">
+                        <div class="col s2">
+                            <img src="../../img/beaker.png" class="item_img">
+                        </div>
+                        <div class="col s4">
+                            <p>Name: {{name}}</p>
+                            <p>Type: {{type}}</p>
+                        </div>
+                        {{^machine}}
+                        <div class="col s4">
+                        {{#liquid}}
+                            <p>Max Volume: {{properties.max_volume}}</p>
+                        {{/liquid}}
+                        {{#solid}}
+                            <p>Max Weight: {{properties.max_weight}}</p>
+                        {{/solid}}
+                            <p>Temperature: {{properties.min_temperature}} - {{properties.max_temperature}}</p>
+                        </div>
+                        {{/machine}}
+                        {{#machine}}
+                        <div class="col s4"></div>
+                        {{/machine}}
                     </div>
-                    <div class="collapsible-body">
-                        <ul class="collection">
-                            <li>
-                                <div id="500mlbeaker" class="row sidebaritem">
-                                    <div class="col s6">
-                                        <img src="../../../img/beaker.png" class="item_img">
-                                    </div>
-                                    <div class="col s6">
-                                        <p>500ml beaker</p>
-                                        <p>0.01L</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div id="200mlcylinder" class="row sidebaritem">
-                                    <div class="col s6">
-                                        <img src="../../img/cylinder.png" class="item_img">
-                                    </div>
-                                    <div class="col s6">
-                                        <p>200ml cylinder</p>
-                                        <p>0.025L</p>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-
-                    </div>
-                </li>
-                <li>
-                    <div class="collapsible-header ">
-                        beaker
-                    </div>
-                    <div class="collapsible-body">
-                        <ul class="collection">
-                            <li>
-                                <div id="500mlbeaker" class="row sidebaritem">
-                                    <div class="col s6">
-                                        <img src="../../img/beaker.png" class="item_img">
-                                    </div>
-                                    <div class="col s6">
-                                        <p>500ml beaker</p>
-                                        <p>0.01L</p>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li>
-                    <div class="collapsible-header  ">
-                        pip
-                    </div>
-                    <div class="collapsible-body">
-                        <span>put items here</span>
-                    </div>
-                </li>
+                </a>
+            </script>
+            <ul id = "lab_equipment_list" class="collapsible row my_white itemset">
             </ul>
         </div>
-        <!--            side bar step set-->
+        <!-- Step List -->
         <div id="sidebartwo" class="sidebar_info">
             <nav class="delete_empty">
                 <div class="nav-wrapper my_red">
@@ -225,40 +200,68 @@
                     <!--                        <a id="sidebar_stepadd" class="right sidebar_add modal-trigger" href="#equipmentModal"><i class="material-icons">add</i></a>-->
                 </div>
             </nav>
-            <ul id="selectable" class="sortable selectable collection row my_white sidebar_step_collection">
-
+            <script id="step_list_template" type="mustache">
+                    <div class="row sidebaritem">
+                        <div class="col s2">
+                            <img src="../../img/beaker.png" class="item_img">
+                        </div>
+                        <div class="col s4">
+                            <p>Step - {{stepNum}}</p>
+                            <p>Name: {{targetObject.name}}</p>
+                            <p>Type: {{targetObject.type}}</p>
+                        </div>
+                        {{^targetObject.machine}}
+                        <div class="col s4">
+                        {{#targetObject.liquid}}
+                            <p>Require Volume: {{targetVolume}}</p>
+                        {{/targetObject.liquid}}
+                        {{#targetObject.solid}}
+                            <p>Require Weight: {{targetWeight}}</p>
+                        {{/targetObject.solid}}
+                            <p>Require Temperature: {{targetTemperature}}</p>
+                        </div>
+                        {{/targetObject.machine}}
+                        {{#targetObject.machine}}
+                        <div class="col s4"></div>
+                        {{/targetObject.machine}}
+                    </div>
+                </script>
+            <ul id="step_list" class="sortable selectable collection row my_white sidebar_step_collection">
             </ul>
-            <div class="center">
-                <button id="addstep" class="btn center waves-effect waves-light modal-trigger my_red">
-                    Add Step
-                </button>
-            </div>
-
         </div>
-        <!--            side bar current item set-->
+        <!-- WorkSpace Item List -->
         <div id="sidebarthree" class="sidebar_info ">
             <nav class="delete_empty">
                 <div class="nav-wrapper my_gray">
                     <a href="#" class="brand-logo"><i class="material-icons">view_list</i>Current Items</a>
                 </div>
             </nav>
-
-            <ul class="row my_white current_item_set collection">
-                <!--                    keep this as a sample for future edit-->
-                <!--                    <li class="collection-item">-->
-                <!--                        <div class="row sidebaritem">-->
-                <!--                            <div class="col s6">-->
-                <!--                                <img src="../../img/beaker.png" class="item_img">-->
-                <!--                            </div>-->
-                <!--                            <div class="col s6">-->
-                <!--                                <p>500ml beaker</p>-->
-                <!--                                <p>0.01L</p>-->
-
-                <!--                            </div>-->
-                <!--                        </div>-->
-                <!--                    </li>-->
-
-            </ul>
+            <script id="labequip_list_template" type="mustache">
+                <div class="row sidebaritem">
+                    <div class="col s2">
+                        <img src="../../img/beaker.png" class="item_img">
+                    </div>
+                    <div class="col s4">
+                        <p>Name: {{name}}</p>
+                        <p>Type: {{type}}</p>
+                    </div>
+                    {{^machine}}
+                    <div class="col s4">
+                    {{#liquid}}
+                        <p>Max Volume: {{properties.max_volume}}</p>
+                    {{/liquid}}
+                {{#solid}}
+                        <p>Max Weight: {{properties.max_weight}}</p>
+                    {{/solid}}
+                        <p>Temperature: {{properties.min_temperature}} - {{properties.max_temperature}}</p>
+                    </div>
+                    {{/machine}}
+                {{#machine}}
+                    <div class="col s4"></div>
+                    {{/machine}}
+                </div>
+            </script>
+            <ul class="row my_white current_item_set collection"></ul>
 
 
         </div>
@@ -383,29 +386,6 @@
 
         </ul>
     </div>
-
-
-    <!--pop up model to enter number of liquid -->
-    <div id="modal1" class="modal popup_dialog">
-        <nav class="my_yellow">
-            <div class="popup_dialog_header">Enter number of liquid</div>
-        </nav>
-        <div class="modal-content row">
-            <p class="range-field col s8 zeromargin ">
-                <input type="range" id="test5" min="0" max="200" value="100" oninput="showVal(this.value)"
-                       onchange="showVal(this.value)"/>
-            </p>
-            <div class="col s4 zeromargin">
-                <input class="number_picker" type="number" name="quantity" min="1" max="100" value="100">
-            </div>
-
-            <div class="center col s12">
-                <a href="#!" class="modal-close btn my_red">Pour</a>
-            </div>
-        </div>
-    </div>
-
-
 </div>
 
 

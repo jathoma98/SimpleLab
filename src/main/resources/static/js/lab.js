@@ -76,8 +76,6 @@ $(document).ready(function(){
                 $("."+current_drag).css({"transform": "rotate(0deg)"});
             }
         })
-
-
     })
 
     // to avoid propagation
