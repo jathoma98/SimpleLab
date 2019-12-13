@@ -33,4 +33,9 @@ public class Step extends BaseTable{
         return "[id: " + getId() + "| lab: " + labinfo + "| step: " + stepNum + "| target: " + tar + "]";
     }
 
+    @Override
+    public int compareTo(BaseTable s){
+        return this.getStepNum() - ((Step)s).getStepNum();
+    }
+
 }

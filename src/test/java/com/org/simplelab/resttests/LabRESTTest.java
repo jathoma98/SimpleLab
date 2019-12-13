@@ -20,6 +20,7 @@ import java.util.stream.IntStream;
 
 import static com.org.simplelab.restrequest.RESTRequest.RequestType.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class LabRESTTest extends RESTTestBaseConfig {
 
@@ -180,9 +181,66 @@ public class LabRESTTest extends RESTTestBaseConfig {
         assertEquals(1, steps.size());
         assertEquals(e, steps.get(0).getTargetObject());
 
-        //ensure that inserting a step out of order throws error
+        //ensure that inserting a step w/ duplicate stepnum still works
+        labRequest.sendData(POST, mapping, JSONBuilder.asJson(dto))
+                .andExpectSuccess(true);
 
+        //ensure target equipment is saved too
+        steps = labDB.getStepsOfLabById(id).getAsList();
+        assertEquals(2, steps.size());
+        assertEquals(2, steps.get(steps.size()-1).getStepNum());
 
+        //ensure that inserting a step out of order still works
+        dto.setStepNum(500);
+        labRequest.sendData(POST, mapping, JSONBuilder.asJson(dto))
+                .andExpectSuccess(true);
+
+        steps = labDB.getStepsOfLabById(id).getAsList();
+        assertEquals(3, steps.size());
+        assertEquals(3, steps.get(steps.size()-1).getStepNum());
+        steps.forEach( step -> assertFalse(step.getTargetObject().getId() == 0));
+
+        //ensure that inserting a step into another lab doesnt cause foreign key exception
+        long id2 = DBTestUtils.insertAndGetId(TestUtils.createJunkLabWithSteps(2), labDB);
+        String mapping2 = "/" + Long.toString(id2) + "/step";
+        labRequest.sendData(POST, mapping2, JSONBuilder.asJson(dto))
+                .andExpectSuccess(true);
+
+        Step foundStep = labDB.getStepsOfLabById(id2).getAsList().get(0);
+        assertEquals(1, foundStep.getStepNum());
+        assertFalse(foundStep.getTargetObject().getId() == 0);
+
+        //delete all steps
+        labRequest.send(DELETE, mapping)
+                .andExpectSuccess(true);
+
+        steps = labDB.getStepsOfLabById(id).getAsList();
+        assertEquals(0, steps.size());
+    }
+
+    @Test
+    @WithMockUser(username = username, password = username)
+    void testDeleteStep() throws Exception{
+        Lab l = TestUtils.createJunkLabWithSteps(5);
+        long lab_id = DBTestUtils.insertAndGetId(l, labDB);
+        int stepNumToDelete = 5;
+        String mapping = "/" + Long.toString(lab_id) + "/" + Long.toString(stepNumToDelete);
+        labRequest.send(DELETE, mapping)
+                  .andExpectSuccess(true);
+        List<Step> steps = labDB.getStepsOfLabById(lab_id).getAsList();
+        steps.sort(Step::compareTo);
+        IntStream.range(1, steps.size()+1)
+                 .forEach((i) -> assertEquals(i, steps.get(i-1).getStepNum()));
+
+        //ensure deleting an out of order step properly changes other stepnums
+        stepNumToDelete = 2;
+        mapping = "/" + Long.toString(lab_id) + "/" + Long.toString(stepNumToDelete);
+        labRequest.send(DELETE, mapping)
+                 .andExpectSuccess(true);
+        List<Step> steps2 = labDB.getStepsOfLabById(lab_id).getAsList();
+        steps.sort(Step::compareTo);
+        IntStream.range(1, steps2.size()+1)
+                 .forEach((i) -> assertEquals(i, steps2.get(i-1).getStepNum()));
     }
 
 }

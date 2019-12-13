@@ -49,7 +49,7 @@ public class LabDB extends SQLService<Lab> {
             long countPredecessor = this.getEntitySet().stream()
                     .filter(step -> step.getStepNum() == toInsert.getStepNum()-1)
                     .count();
-            if (countPredecessor != 1){
+            if (toInsert.getStepNum() != 1 && countPredecessor != 1){
                 throw new EntitySetModificationException(ERRORS.E_WRONGSTEPORDER.getMsg());
             }
 
