@@ -3,7 +3,6 @@ package com.org.simplelab.resttests;
 import com.org.simplelab.database.entities.sql.Course;
 import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.restcontrollers.CourseRESTController;
-import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restrequest.RESTRequest;
 import com.org.simplelab.utils.JSONBuilder;
 import com.org.simplelab.utils.TestUtils;
@@ -11,9 +10,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.test.context.support.WithMockUser;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 
-import static com.org.simplelab.restrequest.RESTRequest.RequestType.PATCH;
+import static com.org.simplelab.restrequest.RESTRequest.RequestType.DELETE;
 import static com.org.simplelab.restrequest.RESTRequest.RequestType.POST;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -58,42 +59,22 @@ public class CourseRESTTests extends RESTTestBaseConfig {
 
     @Test
     @WithMockUser(username = username, password = username)
-    void testUpdateCourse() throws Exception{
-        CourseValidator cv = new CourseValidator();
-        cv.setName(metadata);
-        cv.setDescription(metadata);
-        cv.setCourse_id(metadata);
-        cv.setInvite_code(metadata);
-        courseRequest.sendData(POST, "", JSONBuilder.asJson(cv))
+    void testDelete() throws Exception{
+        int numCourses = 5;
+        Course[] created = new Course[numCourses];
+        CourseValidator[] toDelete = new CourseValidator[numCourses];
+        IntStream.range(0, numCourses)
+                .forEach(i -> {
+                    try {
+                        created[i] = TestUtils.createJunkCourse(userDB.findById(user_id));
+                        courseDB.insert(created[i]);
+                        CourseValidator cv = new CourseValidator();
+                        cv.setCourse_id(created[i].getCourse_id());
+                        toDelete[i] = cv;
+                    } catch (Exception e) {}
+                });
+        courseRequest.sendData(DELETE, CourseRESTController.DELETE_MAPPING, JSONBuilder.asJson(toDelete))
                 .andExpectSuccess(true);
-
-        DTO.CourseUpdateDTO dto = new DTO.CourseUpdateDTO();
-        dto.setCourse_id_old(metadata);
-        CourseValidator update = new CourseValidator();
-        update.setName("new");
-        update.setCourse_id("NEWNEWNEWNEWNEWNEWNEWNE");
-        update.setDescription("new");
-        dto.setNewCourseInfo(update);
-        courseRequest.sendData(PATCH, CourseRESTController.UPDATE_MAPPING, JSONBuilder.asJson(dto))
-                .andExpectSuccess(true);
-
-        Course updated = courseDB.findByCourseId(update.getCourse_id()).get(0);
-        assertEquals(updated.getName(), update.getName());
-        assertEquals(updated.getDescription(), update.getDescription());
-
-        //TODO: figure out why update doesnt detect duplicate
-        //ensure that updating with duplicate courseID throws exception
-        CourseValidator cv_duplicate = new CourseValidator();
-        cv_duplicate.setName("DUP");
-        cv_duplicate.setCourse_id("DUP");
-        cv_duplicate.setDescription("DUP");
-        Course c = cv.build();
-        c.setCreator(TestUtils.createJunkUser());
-        courseDB.insert(c);
-
-        dto.setCourse_id_old(update.getCourse_id());
-        update.setCourse_id("DUP");
-        courseRequest.sendData(PATCH, CourseRESTController.UPDATE_MAPPING, JSONBuilder.asJson(dto))
-                .andExpectError(CourseValidator.DUPLICATE_ID);
+        Arrays.stream(created).forEach( c -> assertEquals(0, courseDB.findByCourseId(c.getCourse_id()).size()));
     }
 }

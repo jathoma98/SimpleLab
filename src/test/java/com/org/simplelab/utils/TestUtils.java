@@ -78,6 +78,17 @@ public class TestUtils {
         return e;
     }
 
+    public static Course createJunkCourse(User u){
+        Course c = new Course();
+        Random r = new Random();
+        c.setName(metadata + Double.toString(r.nextDouble()));
+        c.setDescription(metadata + Double.toString(r.nextDouble()));
+        c.setCourse_id(metadata + Double.toString(r.nextDouble()));
+        c.setInvite_code(metadata + Double.toString(r.nextDouble()));
+        c.setCreator(u);
+        return c;
+    }
+
     public static Lab createJunkLab(){
         Lab l = new Lab();
         Random r = new Random();
