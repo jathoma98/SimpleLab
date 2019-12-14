@@ -5,6 +5,7 @@ import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.Lab;
 import com.org.simplelab.database.entities.sql.Step;
 import com.org.simplelab.database.repositories.sql.LabRepository;
+import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.services.LabDB;
 import com.org.simplelab.database.services.SQLService;
 import com.org.simplelab.database.services.StepDB;
@@ -20,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.org.simplelab.restcontrollers.LabRESTController.BASE_MAPPING;
 
@@ -293,7 +293,6 @@ public class LabRESTController extends BaseRESTController<Lab> {
             } catch (DBService.EntityDBModificationException e){
                 return RRO.sendErrorMessage(e.getMessage());
             }
-            List<Step> toAdd = new ArrayList<>();
             toAdd.add(s);
         }
 //        else{

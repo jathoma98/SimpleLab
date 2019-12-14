@@ -170,7 +170,7 @@ public class LabRESTTests extends RESTTestBaseConfig {
         Equipment e = TestUtils.createJunkEquipment();
         long equip_id = DBTestUtils.insertAndGetId(e, equipmentDB);
         dto.setTargetEquipmentId(equip_id);
-        dto.setStepNum(1);
+        dto.setStepNum(0);
         dto.setTargetTemperature("15");
         dto.setTargetVolume("15");
         dto.setTargetWeight("15");
@@ -194,20 +194,21 @@ public class LabRESTTests extends RESTTestBaseConfig {
         assertEquals(2, steps.get(steps.size()-1).getStepNum());
         steps.forEach(step -> assertTrue(step.getId() > 0));
 
-        //ensure that inserting a step out of order still works
+        //ensure that inserting a step out of order doesnt work
         dto.setStepNum(500);
         labRequest.sendData(POST, mapping, JSONBuilder.asJson(dto))
                 .andExpectSuccess(true);
 
         steps = labDB.getStepsOfLabById(id).getAsList();
-        assertEquals(3, steps.size());
-        assertEquals(3, steps.get(steps.size()-1).getStepNum());
+        assertEquals(2, steps.size());
+        assertEquals(2, steps.get(steps.size()-1).getStepNum());
         steps.forEach( step -> assertFalse(step.getTargetObject().getId() == 0));
         steps.forEach(step -> assertTrue(step.getId() > 0));
 
         //ensure that inserting a step into another lab doesnt cause foreign key exception
         long id2 = DBTestUtils.insertAndGetId(TestUtils.createJunkLabWithSteps(2), labDB);
         String mapping2 = "/" + Long.toString(id2) + "/step";
+        dto.setStepNum(0);
         labRequest.sendData(POST, mapping2, JSONBuilder.asJson(dto))
                 .andExpectSuccess(true);
 
