@@ -294,14 +294,14 @@
             <div class="width2  white left height6 z-depth-2">
                 <nav class="col s12 delete_empty center-align my_rice_yellow"><h5>Step</h5></nav>
                 <div class="row"></div>
-                <ul class="row my_white height100 scrollbar_y ulstyle" id="step_list"></ul>
+                <ul class="row my_white height100 scrollbar_y ulstyle selectable" id="step_list"></ul>
                 <script id="step_list_template" type="mustache">
                     <div class="row sidebaritem">
                         <div class="col s2">
                             <img src="../../img/beaker.png" class="item_img">
                         </div>
                         <div class="col s4">
-                            <p>Step - {{stepNum}}</p>
+                            <p id="stepNum" stepNum={{stepNum}}>Step - {{stepNum}}</p>
                             <p>Name: {{targetObject.name}}</p>
                             <p>Type: {{targetObject.type}}</p>
                         </div>
@@ -330,7 +330,7 @@
             <div class="width2 height6 white right z-depth-2 ">
                 <nav class="col s12 delete_empty center-align my_rice_yellow"><h5>Equipment</h5></nav>
                 <div class="row"></div>
-                <ul class="row my_white height100 scrollbar_y ulstyle" id="step_equip_list"></ul>
+                <ul class="row my_white height100 scrollbar_y ulstyle selectable" id="step_equip_list"></ul>
                 <script id="stepequip_list_template" type="mustache">
                     <div class="row sidebaritem">
                         <div class="col s2">
@@ -356,9 +356,6 @@
                         {{/machine}}
                     </div>
 
-
-
-
                 </script>
             </div>
         </div>
@@ -379,6 +376,7 @@
         $(".sortable").sortable({
             placeholder: "sortable-highlight"
         });
+        $(".selectable").selectable();
         $("#selectable").selectable();
         $('.modal').modal();
         $('.dropdown-trigger').dropdown();

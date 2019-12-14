@@ -168,7 +168,7 @@ public abstract class DTO {
     public static class AddStepDTO extends DTO{
         Long labId;
         Long targetEquipmentId;
-        int stepNum;
+        int stepNum = 0;
         String targetTemperature;
         String targetName;
         String targetTips;

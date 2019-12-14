@@ -232,6 +232,7 @@ RECIPE = {
 STEP = {
     selectFrom: undefined,
     selected: undefined,
+    globalStepNum:undefined,
     init: function () {
         this.buildEquipmentList = function () {
             let data = {iterable: EQUIPMENT.all_equipment};
@@ -247,11 +248,12 @@ STEP = {
                 });
         }
         this.save = function () {
-            if (STEP.selectFrom == "step" || STEP.selected == undefined) {
+            if ( STEP.selected == undefined) {
                 return;
             }
             data = {
                 labId: LAB_INFO.id,
+                stepNum: STEP.globalStepNum,
                 targetEquipmentId: STEP.selected.id,
                 targetName: $(ELEM_NAME.STEP_I_NAME).val(),
                 targetTips: $(ELEM_NAME.STEP_I_TIPS).val(),
@@ -259,6 +261,7 @@ STEP = {
                 targetVolume: $(ELEM_NAME.STEP_I_VOLUME).val(),
                 targetWeight: $(ELEM_NAME.STEP_I_WEIGHT).val(),
             }
+            STEP.globalStepNum=undefined;
             let data_json = JSON.stringify(data);
             $.ajax({
                 url: "/lab/rest/" + LAB_INFO.id + "/step",
@@ -285,7 +288,7 @@ STEP = {
                         });
                         let data = {iterable: result.data};
                         rebuildRepeatComponent(ELEM_NAME.STEP_LIST, TEMPLATE_ID.STEP_LIST,
-                            "<li/>", "a", data, "click",
+                            "<li/>", undefined, data, "click",
                             (step, event) => {
                                 if ($(event.target).hasClass("step_move_up") || $(event.target).hasClass("step_move_down")) {
                                     $.ajax({
@@ -304,7 +307,25 @@ STEP = {
                                             retObjHandle(result, STEP.load)
                                         }
                                     })
+                                }else{
+                                    console.log(step);
+                                        // labId: LAB_INFO.id,
+                                        // targetEquipmentId: STEP.selected.id,
+                                        $(ELEM_NAME.STEP_I_NAME).val(step.targetName);
+                                        $(ELEM_NAME.STEP_I_TIPS).val(step.targetTips);
+                                        $(ELEM_NAME.STEP_I_TEMPERATURE).val(step.targetTemperature);
+                                        $(ELEM_NAME.STEP_I_VOLUME).val(step.targetVolume);
+                                        $(ELEM_NAME.STEP_I_WEIGHT).val(step.targetWeight);
+                                        var equipid=step.targetObject.name;
+                                        $(ELEM_NAME.STEP_CARD).find("p").text("Target:" + equipid);
+                                        selectFrom = "equipment";
+                                        STEP.selected=step.targetObject;
+                                        STEP.globalStepNum=step.stepNum;
                                 }
+
+
+
+
                         });
                     })
                 }
@@ -315,6 +336,7 @@ STEP = {
         $(ELEM_NAME.STEP_SAVE_BTN).on("click", STEP.save);
     }
 }
+
 
 $(document).ready(() => {
     EQUIPMENT.init();
@@ -329,4 +351,15 @@ $(document).ready(() => {
 
     STEP.load();
     STEP.onclickInit();
+
+    // $("#step_list").find("li").addClass("ui-widget-content");
+    // console.log( $("#step_list").find(".ui-selectee"))
+    // $("#step_list").selectable({
+    //     selected: function( event, ui ) {
+    //         console.log($("#step_list .ui-selected"));
+    //         // $("step_list .ui-selected").getAttribute("stepNum")
+    //         console.log($("#step_list .ui-selected")[0].getAttribute("stepNum"))
+    //
+    //     }
+    // });
 })
