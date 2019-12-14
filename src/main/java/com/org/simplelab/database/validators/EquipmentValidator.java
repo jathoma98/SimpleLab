@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.List;
+import java.util.Collection;
 
 @Getter
 @Setter
@@ -16,7 +16,9 @@ public class EquipmentValidator extends Validator<Equipment> {
 
     private String name;
     private String type;
-    private List<EquipmentProperty> properties;
+    private Collection<EquipmentProperty> properties;
+    private ImageFileValidator img;
+    private String _metadata;
 
     @Override
     public void validate() throws InvalidFieldException {
@@ -25,6 +27,15 @@ public class EquipmentValidator extends Validator<Equipment> {
         if (name == null || name.equals(""))
             sb.append(EMPTY_FIELD);
 
+        //validate image if it exists
+        if (img != null) {
+            try {
+                img.validate();
+            } catch (InvalidFieldException e) {
+                sb.append(e.getMessage());
+            }
+        }
+
         if (sb.length() > 0)
             throw new InvalidFieldException(sb.toString());
     }
@@ -32,6 +43,9 @@ public class EquipmentValidator extends Validator<Equipment> {
     @Override
     public Equipment build() {
         Equipment e = DBUtils.getMapper().map(this, Equipment.class);
+        if (img != null) {
+            e.setImg(img.build());
+        }
         e.getProperties().forEach((p)->p.setParentEquipment(e));
         return e;
     }

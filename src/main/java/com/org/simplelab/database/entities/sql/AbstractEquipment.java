@@ -1,11 +1,9 @@
 package com.org.simplelab.database.entities.sql;
 
+import com.org.simplelab.database.entities.sql.files.ImageFile;
 import lombok.Data;
 
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,6 +14,11 @@ public abstract class AbstractEquipment extends BaseTable{
 
     protected String name;
     protected String type;
+
+    @OneToOne(cascade = {CascadeType.ALL},
+              fetch = FetchType.EAGER)
+    @JoinColumn(name = "source")
+    protected ImageFile img;
 
     @OneToMany(cascade = {CascadeType.ALL},
             fetch = FetchType.EAGER,

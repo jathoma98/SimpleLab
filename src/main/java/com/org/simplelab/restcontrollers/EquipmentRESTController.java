@@ -36,6 +36,7 @@ public class EquipmentRESTController extends BaseRESTController<Equipment> {
     public static final String DELETE_MAPPING = "/deleteEquipment";
     public static final String EQUIPMENT_LIST_MAPPING = "/loadEquipmentList";
     public static final String EQUIPMENT_OBJ_LIST_MAPPING = "/loadEquipmentObjList";
+    public static final String ADD_IMG_MAPPING = EQUIPMENT_ID_MAPPING + "/img";
 
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     public RRO<String> saveEquipment(@RequestBody EquipmentValidator validator){
