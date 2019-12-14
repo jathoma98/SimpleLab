@@ -17,7 +17,7 @@ public abstract class AbstractEquipment extends BaseTable{
 
     @OneToOne(cascade = {CascadeType.ALL},
               fetch = FetchType.EAGER)
-    @JoinColumn(name = "source")
+    @JoinColumn(name = "img")
     protected ImageFile img;
 
     @OneToMany(cascade = {CascadeType.ALL},
