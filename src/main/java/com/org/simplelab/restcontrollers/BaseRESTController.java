@@ -148,12 +148,6 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
             }
         }
         T toSave = set.getFullEntity();
-        /*
-        try {
-            getDb().update(toSave);
-        } catch (SQLService.EntityDBModificationException e){
-            RRO.sendErrorMessage(e.getMessage());
-        }*/
         return rro;
     }
 
@@ -179,12 +173,6 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
             }
         }
         T toSave = set.getFullEntity();
-        /*
-        try {
-            getDb().update(toSave);
-        } catch (SQLService.EntityDBModificationException e){
-            RRO.sendErrorMessage(e.getMessage());
-        }*/
         return rro;
     }
 
