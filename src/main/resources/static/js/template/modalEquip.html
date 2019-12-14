@@ -11,7 +11,7 @@
         <div class="file-field input-field col s6 offset-s3">
             <div class="btn">
                 <span>File</span>
-                <input type="file" class="my_cran">
+                <input id="euqip_image" type="file" class="my_cran">
             </div>
             <div class="file-path-wrapper">
                 <input class="file-path validate" type="text">
@@ -47,13 +47,13 @@
             <div class="row">
                 <div class="input-field col s6">
                     <input id="max_volume" type="text" class="validate"
-                           value="{{equipment.properties.max_volume}}">
+                           value="{{equipment.properties.max_volume}}"><span class="unitmargin">L</span>
                     <label for="max_volume" {{#equipment.properties.max_volume}}
                            class="active" {{/equipment.properties.max_volume}}>Max Volume</label>
                 </div>
                 <div class="input-field col s6">
                     <input id="max_weight" type="text" class="validate"
-                           value="{{equipment.properties.max_weight}}">
+                           value="{{equipment.properties.max_weight}}"><span class="unitmargin">Kg</span>
                     <label for="max_weight" {{#equipment.properties.max_weight}}
                            class="active" {{/equipment.properties.max_weight}}>Max Weight</label>
                 </div>
@@ -63,13 +63,13 @@
             <div class="row">
                 <div class="input-field col s6">
                     <input id="min_temperature" type="text" class="validate"
-                           value="{{equipment.properties.min_temperature}}">
+                           value="{{equipment.properties.min_temperature}}"><span class="unitmargin">°C</span>
                     <label for="min_temperature" {{#equipment.properties.min_temperature}}
                            class="active" {{/equipment.properties.min_temperature}}>Min Temperature</label>
                 </div>
                 <div class="input-field col s6">
                     <input id="max_temperature" type="text" class="validate"
-                           value="{{equipment.properties.max_temperature}}">
+                           value="{{equipment.properties.max_temperature}}"><span class="unitmargin">°C</span>
                     <label for="max_temperature" {{#equipment.properties.max_temperature}}
                            class="active" {{/equipment.properties.max_temperature}}>Max Temperature</label>
                 </div>

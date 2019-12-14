@@ -337,7 +337,7 @@ class DBTests extends SpringTestConfig {
 	}
 
 	@Test
-	void foreign_key_test(){
+	void foreign_key_test() throws Exception{
 		List<User> students = new ArrayList<>();
 		for (int i = 0; i < 3; i++){
 			User u = new User();
@@ -410,7 +410,7 @@ class DBTests extends SpringTestConfig {
 		}
 		System.out.println(idsToDelete.toString());
 		dto.setLids(idsToDelete);
-		lrc.deleteCourse(dto);
+		lrc.deleteLab(dto);
 
 		for (String name: labsToFind){
 			assertEquals(0, lr.findByName(name).size());
@@ -486,9 +486,6 @@ class DBTests extends SpringTestConfig {
 
 
 
+	}
 
 
-
-
-
-}

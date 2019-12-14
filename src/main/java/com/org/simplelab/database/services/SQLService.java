@@ -17,20 +17,6 @@ import java.util.Optional;
 public abstract class SQLService<T extends BaseTable> extends DBService<T, Long> {
 
     /**
-     * Exception to be thrown when modification of a DB violates some constraint.
-     * The message should include the contraint being violated.
-     */
-    public static class EntityDBModificationException extends Exception{
-        protected static String GENERIC_INVALID_UPDATE_ERROR = "Attempted to call update() on a new entity. " +
-                "update() should only be called on entities which already exist in the DB.";
-        protected static String GENERIC_MODIFICATION_ERROR = "An error occurred while modifying this collection";
-        EntityDBModificationException(){super(GENERIC_MODIFICATION_ERROR);}
-        EntityDBModificationException(String msg){
-            super(msg);
-        }
-    }
-
-    /**
      * Manager class for handling insertion and deletion of inner lists in entities
      *
      * ex: If you want to add a User to a Course, you would call courseDB.getStudents, which would return
@@ -78,23 +64,23 @@ public abstract class SQLService<T extends BaseTable> extends DBService<T, Long>
     @Override
     public abstract BaseRepository<T> getRepository();
 
-    @Override
-    public boolean update(T toUpdate) throws EntityDBModificationException{
-        //cannot call update() on new entities
-        if (toUpdate.isNew()){
-            throw new EntityDBModificationException
-                    (EntityDBModificationException.GENERIC_INVALID_UPDATE_ERROR);
-        }
-        getRepository().save(toUpdate);
-        return true;
-    }
-
     public <U extends Projection> U findById(long id, Class<U> projection){
         Optional<U> found = getRepository().findById(id, projection);
         if (found.isPresent()){
             return found.get();
         }
         return null;
+
+    }
+
+
+    protected void checkUpdateCondition(T toUpdate) throws EntityDBModificationException{
+        if (toUpdate.isNew()){
+            throw new EntityDBModificationException(EntityDBModificationException.GENERIC_INVALID_UPDATE_ERROR);
+        }
+    }
+
+    protected void checkInsertionCondition(T toInsert) throws EntityDBModificationException{
 
     }
 

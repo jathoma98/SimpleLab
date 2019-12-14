@@ -31,5 +31,4 @@ public class LabInstanceDB extends MongoDBService<LabInstance> {
             return found.get(0);
         return LabInstance.NO_INSTANCE;
     }
-
 }

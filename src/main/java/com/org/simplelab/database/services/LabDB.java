@@ -19,19 +19,47 @@ import java.util.List;
 @Component
 @Getter
 public class LabDB extends SQLService<Lab> {
+    public enum ERRORS{
+        E_WRONGSTEPORDER("Invalid ordering of steps. Make sure steps are ordered sequentially from 1,2,..."),
+        E_DUPSTEP("Attempted to insert step with duplicate step number.");
+
+        private final String msg;
+        ERRORS(String s){
+            this.msg = s;
+        }
+        public String getMsg(){
+            return this.msg;
+        }
+    }
 
     @Autowired
     private LabRepository repository;
 
     private class StepSetManager extends EntitySetManager<Step, Lab>{
 
+
         public StepSetManager(Collection<Step> set, Lab fullEntity) {
             super(set, fullEntity);
         }
 
         @Override
-        public void checkLegalInsertion(Step toInsert){
-            //TODO: make sure steps are in order when inserted
+        public void checkLegalInsertion(Step toInsert) throws EntitySetModificationException{
+            //make sure there is a step with where stepnum = toInsert.stepnum -1
+            //to ensure sequential ordering
+            long countPredecessor = this.getEntitySet().stream()
+                    .filter(step -> step.getStepNum() == toInsert.getStepNum()-1)
+                    .count();
+            if (toInsert.getStepNum() != 1 && countPredecessor != 1){
+                throw new EntitySetModificationException(ERRORS.E_WRONGSTEPORDER.getMsg());
+            }
+
+            //then, ensure there isnt a duplicate step with this stepnum
+            long countDuplicates = this.getEntitySet().stream()
+                    .filter(step -> step.getStepNum() == toInsert.getStepNum())
+                    .count();
+            if (countDuplicates > 0){
+                throw new EntitySetModificationException(ERRORS.E_DUPSTEP.getMsg());
+            }
         }
 
     }

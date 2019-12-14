@@ -67,6 +67,7 @@
     <div class="nav-wrapper row" style="background: #00acc1">
         <div class="col s12 valign-wrapper" style="background: #00b8ce; height: 30px; margin-top: 20px;">
             <a href="../../" class="breadcrumb" th:text="${home_navig}">Home</a>
+            <a href="#" class="breadcrumb" th:text="${lab_id}">lab</a>
             <!--            <a href="#!" class="breadcrumb" th:text="lab-${lab_name}}">Lab</a>-->
             <!--      <a href="#!" class="breadcrumb"></a>-->
         </div>
@@ -87,8 +88,8 @@
     <div id="equipment_in_lab" class="row" style="height:1000px;">
         <div class="col s6 delete_empty center">
             <nav class="deep-orange lighten-4 col s11 z-depth-2"><h5>Lab Equipment</h5></nav>
-            <div class="col s11 center-align delete_empty">
-                <ul class="my_white equipmentheight scrollbar_y height80 delete_empty" id="lab_equipment_list"></ul>
+            <div class="col s11 center-align delete_empty z-depth-5">
+                <ul class="my_white equipmentheight scrollbar_y height80 delete_empty ulstyle" id="lab_equipment_list"></ul>
             </div>
             <script id="labequip_list_template" type="mustache">
                 <div class="row sidebaritem">
@@ -122,8 +123,8 @@
         </div>
         <div class="col s6 delete_empty center">
             <nav class="deep-orange lighten-4 col s11 right z-depth-2"><h5>Lab Equipment</h5></nav>
-            <div class="col s11 right center-align delete_empty ">
-                <ul class="my_white equipmentheight scrollbar_y height80 delete_empty" id="all_equipment"></ul>
+            <div class="col s11 right center-align delete_empty z-depth-5">
+                <ul class="my_white equipmentheight scrollbar_y height80 delete_empty ulstyle" id="all_equipment"></ul>
             </div>
             <script id="allequip_list_template" type="mustache">
                 <div class="row sidebaritem">
@@ -159,26 +160,26 @@
 
         <div class="delete_empty col s12 white recipeheight z-depth-2 ">
             <!--            <nav class="center-align"><h3>create your recipe</h3></nav>-->
-            <nav class="col s12 delete_empty center-align deep-orange lighten-4"><h5>Recipe</h5></nav>
+            <nav class="col s12 delete_empty center-align deep-orange lighten-4"><h5>Proportion Of Recipe</h5></nav>
             <div id="equip1" class="col s4 center margintop">
                 <div class="center col s10 offset-s1 z-depth-1 padding4 recipe_equips" id="equip_1">
                     <p class="fontheader">Equipment 1</p>
                     <img src="../../img/beaker.png" class="recipeimg margintop col s4 offset-s4">
-                    <input type="number" class="col s8 offset-s2 center-align click_ignore">
+                    <input type="number" placeholder="proportion for item one" class="col s8 offset-s2 center-align click_ignore">
                 </div>
             </div>
             <div id="equip2" class="col s4 center margintop">
                 <div class="center col s10 offset-s1 z-depth-1 padding4 recipe_equips" id="equip_2">
                     <p class="fontheader">Equipment 2</p>
                     <img src="../../img/beaker.png" class="recipeimg margintop col s4 offset-s4">
-                    <input type="number" class="col s8 offset-s2 center-align click_ignore">
+                    <input type="number" placeholder="proportion for item two" class="col s8 offset-s2 center-align click_ignore">
                 </div>
             </div>
             <div id="equip3" class="col s4 center margintop">
                 <div class="center col s10 offset-s1 z-depth-1 padding4 recipe_equips" id="equip_r">
                     <p class="fontheader">Equipment 3</p>
                     <img src="../../img/beaker.png" class="recipeimg margintop col s4 offset-s4">
-                    <input type="number" class="col s8 offset-s2 center-align click_ignore">
+                    <input type="number" placeholder="proportion for item three" class="col s8 offset-s2 center-align click_ignore">
                 </div>
             </div>
             <div class="row parent_weight">
@@ -190,9 +191,10 @@
         </div>
         <div class="row"></div>
         <div class="row">
-            <div class="width2  white left  z-depth-2 recipebotheight ">
-                <nav class="col s12 delete_empty center-align my_rice_yellow"><h5>Current Recipe</h5></nav>
-                <ul class="row my_white scrollbar_y height6 collection " id="recipe_list"></ul>
+            <div class="width2  white left height8 z-depth-2">
+                <nav class="col s12 delete_empty center-align my_rice_yellow"><h5>Recipe</h5></nav>
+                <div class="row"></div>
+                <ul class="row my_white height100 scrollbar_y ulstyle" id="recipe_list"></ul>
                 <script id="recipe_template" type="mustache">
                     <div class="row">
                         <div class="col s11">
@@ -209,9 +211,10 @@
 
                 </script>
             </div>
-            <div class="width2  white right z-depth-2 recipebotheight ">
-                <nav class="col s12 delete_empty center-align my_rice_yellow"><h5>Equipment</h5></nav>
-                <ul class="row my_white scrollbar_y height6" id="recipe_equip_list"></ul>
+            <div class="width2  white right height8 z-depth-2">
+                <nav class="col s12 delete_empty center-align my_rice_yellow"><h5>Current Equipments</h5></nav>
+                <div class="row"></div>
+                <ul class="row my_white height100 scrollbar_y ulstyle" id="recipe_equip_list"></ul>
                 <script id="recequip_list_template" type="mustache">
                     <div class="row sidebaritem">
                         <div class="col s2">
@@ -252,21 +255,33 @@
             </div>
             <div class="col s8 ">
                 <div class="col s12 margintop10">
+                    <div class="col s2 steptopmargin">Step Name:</div>
+                    <div class="col s10">
+                        <input id="step_name" type="text" class="center-align ">
+                    </div>
+                </div>
+                <div class="col s12 margintop10">
                     <div class="col s2 steptopmargin">Volume:</div>
                     <div class="col s10">
-                        <input id="step_volume" type="number" class="center-align ">
+                        <input id="step_volume" type="number" class="center-align "><span class="unitmargin">L</span>
                     </div>
                 </div>
                 <div class="col s12 margintop10">
                     <div class="col s2 steptopmargin">Weight:</div>
                     <div class="col s10">
-                        <input id="step_weight" type="number" class="center-align ">
+                        <input id="step_weight" type="number" class="center-align"><span class="unitmargin">Kg</span>
                     </div>
                 </div>
                 <div class="col s12 margintop10">
                     <div class="col s2 steptopmargin">Temperature:</div>
                     <div class="col s10">
-                        <input id="step_temperature" type="number" class="center-align ">
+                        <input id="step_temperature" type="number" class="center-align "><span class="unitmargin">°C</span>
+                    </div>
+                </div>
+                <div class="col s12 margintop10">
+                    <div class="col s2 steptopmargin">TIPS:</div>
+                    <div class="col s10">
+                        <input id="step_tips" placeholder="tips for this step" type="text" class="center-align ">
                     </div>
                 </div>
                 <div class="col s12 margintop10">
@@ -277,9 +292,9 @@
         <div class="row"></div>
         <div class="row">
             <div class="width2  white left height6 z-depth-2">
-                <div class="col s12 delete_empty center-align my_rice_yellow"><h5>Step</h5></div>
+                <nav class="col s12 delete_empty center-align my_rice_yellow"><h5>Step</h5></nav>
                 <div class="row"></div>
-                <ul class="row my_white scrollbar_y" id="step_list"></ul>
+                <ul class="row my_white height100 scrollbar_y ulstyle" id="step_list"></ul>
                 <script id="step_list_template" type="mustache">
                     <div class="row sidebaritem">
                         <div class="col s2">
@@ -313,9 +328,9 @@
                 </script>
             </div>
             <div class="width2 height6 white right z-depth-2 ">
-                <div class="col s12 delete_empty center-align my_rice_yellow"><h5>Equipment</h5></div>
+                <nav class="col s12 delete_empty center-align my_rice_yellow"><h5>Equipment</h5></nav>
                 <div class="row"></div>
-                <ul class="row my_white scrollbar_y" id="step_equip_list"></ul>
+                <ul class="row my_white height100 scrollbar_y ulstyle" id="step_equip_list"></ul>
                 <script id="stepequip_list_template" type="mustache">
                     <div class="row sidebaritem">
                         <div class="col s2">

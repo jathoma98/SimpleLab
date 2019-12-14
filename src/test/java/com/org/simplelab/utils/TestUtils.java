@@ -45,8 +45,8 @@ public class TestUtils {
         u.setEmail(metadata);
         u.setQuestion(metadata);
         u.setAnswer(metadata);
-        u.setFirstname("UNIT_TEST");
-        u.setLastname("UNIT_TEST");
+        u.setFirstname("UNIT_TEST1");
+        u.setLastname("UNIT_TEST1");
         return u;
     }
 
@@ -76,6 +76,17 @@ public class TestUtils {
             e.getProperties().add(createJunkEquipmentProperty(e));
         }
         return e;
+    }
+
+    public static Course createJunkCourse(User u){
+        Course c = new Course();
+        Random r = new Random();
+        c.setName(metadata + Double.toString(r.nextDouble()));
+        c.setDescription(metadata + Double.toString(r.nextDouble()));
+        c.setCourse_id(metadata + Double.toString(r.nextDouble()));
+        c.setInvite_code(metadata + Double.toString(r.nextDouble()));
+        c.setCreator(u);
+        return c;
     }
 
     public static Lab createJunkLab(){

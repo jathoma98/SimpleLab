@@ -3,9 +3,10 @@ package com.org.simplelab.restrequest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static com.org.simplelab.resttests.RESTTests.session_atr;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -27,68 +28,42 @@ public class RESTRequest {
        this.enablePrintouts = enable;
     }
 
-    public enum RequestType{
-        GET,
-        POST,
-        DELETE,
-        PATCH
+    @FunctionalInterface
+    interface MVCMethodType{
+        MockHttpServletRequestBuilder sendRequest(String url);
     }
+
+    public enum RequestType{
+        GET(MockMvcRequestBuilders::get),
+        POST(MockMvcRequestBuilders::post),
+        DELETE(MockMvcRequestBuilders::delete),
+        PATCH(MockMvcRequestBuilders::patch);
+
+        private final MVCMethodType method;
+        RequestType(MVCMethodType method){
+            this.method = method;
+        }
+    }
+
 
     public RESTRequestResultActionWrapper send(RequestType type, String endpointURL) throws Exception{
         String fullUrl = baseURL + endpointURL;
-        ResultActions baseRequest = null;
-        switch (type){
-            case GET:
-                baseRequest = mvc.perform(get(fullUrl)
-                                          .sessionAttrs(session_atr));
-                break;
-            case POST:
-                baseRequest = mvc.perform(post(fullUrl)
-                                          .sessionAttrs(session_atr));
-                break;
-            case PATCH:
-                baseRequest = mvc.perform(patch(fullUrl)
-                                         .sessionAttrs(session_atr));
-                break;
-            case DELETE:
-                baseRequest = mvc.perform(delete(fullUrl)
-                                          .sessionAttrs(session_atr));
-                break;
-            default:
-                throw new Exception("BAD TEST");
-        }
+        MVCMethodType requestMethod = type.method;
+        ResultActions baseRequest;
+
+        baseRequest =  mvc.perform(requestMethod.sendRequest(fullUrl)
+                                                .sessionAttrs(session_atr));
         return new RESTRequestResultActionWrapper(baseRequest, this.enablePrintouts);
     }
 
     public RESTRequestResultActionWrapper sendData(RequestType type, String endpointURL, String body) throws Exception{
         String fullUrl = baseURL + endpointURL;
-        ResultActions baseRequest = null;
-        switch (type){
-            case GET:
-                baseRequest = mvc.perform(get(fullUrl)
-                        .sessionAttrs(session_atr));
-                break;
-            case POST:
-                baseRequest = mvc.perform(post(fullUrl)
-                        .sessionAttrs(session_atr)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(body));
-                break;
-            case PATCH:
-                baseRequest = mvc.perform(patch(fullUrl)
-                        .sessionAttrs(session_atr)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(body));
-                break;
-            case DELETE:
-                baseRequest = mvc.perform(delete(fullUrl)
-                        .sessionAttrs(session_atr)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(body));
-                break;
-            default:
-                throw new Exception("BAD TEST");
-        }
+        MVCMethodType requestMethod = type.method;
+        ResultActions baseRequest;
+        baseRequest = mvc.perform(requestMethod.sendRequest(fullUrl)
+                                                .sessionAttrs(session_atr)
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .content(body));
         return new RESTRequestResultActionWrapper(baseRequest, this.enablePrintouts);
     }
 
@@ -109,6 +84,15 @@ public class RESTRequest {
         public RESTRequestResultActionWrapper andExpectSuccess(Boolean status) throws Exception{
             String bool = status.toString();
             String content = "{\"success\":" + bool + "}";
+            ra = ra.andExpect(content().json(content));
+            if (enable){
+                ra = ra.andDo(print());
+            }
+            return this;
+        }
+
+        public RESTRequestResultActionWrapper andExpectError(String errormsg) throws Exception{
+            String content = "{\"success\":false, \"msg\":\"" + errormsg  + "\"}";
             ra = ra.andExpect(content().json(content));
             if (enable){
                 ra = ra.andDo(print());

@@ -6,7 +6,8 @@ let EQUIPMENT_TABLE = {
         MAX_VOLUME: "#max_volume",
         MAX_WEIGHT: "#max_weight",
         MIN_TEMPERATURE: "#min_temperature",
-        MAX_TEMPERATURE: "#max_temperature"
+        MAX_TEMPERATURE: "#max_temperature",
+        EQUIPMENT_IMAGE: "#euqip_image"
     },
 
     init() {
@@ -103,6 +104,7 @@ let EQUIPMENT_TABLE = {
             let validator = {
                 name: $(EQUIPMENT_TABLE.MODAL_ID.EQUIPMENT_NAME).val(),
                 type: $(EQUIPMENT_TABLE.MODAL_ID.EQUIPMENT_TYPE).val(),
+                // image: $(EQUIPMENT_TABLE.MODAL_ID.EQUIPMENT_IMAGE).files[0],
                 properties: [
                     {propertyKey: "max_temperature", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MAX_TEMPERATURE).val()},
                     {propertyKey: "min_temperature", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MIN_TEMPERATURE).val()},
