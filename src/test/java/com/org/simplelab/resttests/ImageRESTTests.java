@@ -1,12 +1,14 @@
 package com.org.simplelab.resttests;
 
 
+import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.files.ImageFile;
 import com.org.simplelab.database.validators.ImageFileValidator;
 import com.org.simplelab.restcontrollers.ImageFileRESTController;
 import com.org.simplelab.restrequest.RESTRequest;
 import com.org.simplelab.utils.DBTestUtils;
 import com.org.simplelab.utils.JSONBuilder;
+import com.org.simplelab.utils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -58,6 +60,25 @@ public class ImageRESTTests extends RESTTestBaseConfig {
         imageRequest.send(GET, "/" + Long.toString(file_id))
             .andExpectData(JSONBuilder.asJson(file));
 
+    }
+
+    @Test
+    @WithMockUser(username = username, password = username)
+    void testEquipmentWithFile() throws Exception{
+        Equipment e = TestUtils.createJunkEquipment();
+        e.set_metadata(metadata);
+        ImageFile img = new ImageFile();
+        img.setFileName("name");
+        img.setFileType("type");
+        img.setData("data".getBytes());
+        e.setImg(img);
+
+        equipmentDB.insert(e);
+        Equipment found = equipmentDB.getRepository().findBy_metadata(metadata).get(0);
+        assertTrue(found.getImg().getId() > 0);
+        assertTrue(found.getImg().getFileName().equals(img.getFileName()));
+        assertTrue(found.getImg().getFileType().equals(img.getFileType()));
+        assertTrue(Arrays.equals(found.getImg().getData(), img.getData()));
     }
 
 
