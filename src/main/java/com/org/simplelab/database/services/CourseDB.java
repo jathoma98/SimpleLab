@@ -5,6 +5,7 @@ import com.org.simplelab.database.entities.sql.Course;
 import com.org.simplelab.database.entities.sql.Lab;
 import com.org.simplelab.database.entities.sql.User;
 import com.org.simplelab.database.repositories.sql.CourseRepository;
+import com.org.simplelab.database.validators.CourseValidator;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -35,9 +36,16 @@ public class CourseDB extends SQLService<Course> {
 
     @Override
     public boolean insert(Course c) throws EntityDBModificationException{
-        checkUpdateCondition(c);
-        repository.save(c);
-        return true;
+        return super.insert(c);
+    }
+
+    //Course has additional insertion condition -- needs unique CourseId
+    @Override
+    protected void checkInsertionCondition(Course c) throws EntityDBModificationException{
+        super.checkInsertionCondition(c);
+        List<Course> found = findByCourseId(c.getCourse_id());
+        if (found != null && found.size() > 0)
+            throw new EntityDBModificationException(CourseValidator.DUPLICATE_ID);
     }
 
 

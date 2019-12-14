@@ -9,6 +9,13 @@ import java.util.Optional;
 @Transactional
 public abstract class MongoDBService<T extends BaseDocument> extends DBService<T, String> {
 
+    public static class MongoModificationException extends EntityDBModificationException{
+        public static final String UPDATE_ERROR = "Error occured while trying to modify this document.";
+        MongoModificationException(String msg){
+            super(msg);
+        }
+    }
+
     public abstract BaseMongoRepository<T> getRepository();
 
     abstract T getNonexistent();
@@ -22,9 +29,15 @@ public abstract class MongoDBService<T extends BaseDocument> extends DBService<T
     }
 
     @Override
-    public boolean update(T toUpdate){
-        getRepository().save(toUpdate);
-        return true;
+    protected void checkInsertionCondition(T toInsert) throws EntityDBModificationException{
+
     }
+
+    @Override
+    protected void checkUpdateCondition(T toUpdate) throws EntityDBModificationException{
+
+    }
+
+
 
 }
