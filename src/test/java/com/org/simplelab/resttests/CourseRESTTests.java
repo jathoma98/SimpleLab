@@ -1,6 +1,7 @@
 package com.org.simplelab.resttests;
 
 import com.org.simplelab.database.entities.sql.Course;
+import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.Lab;
 import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.restcontrollers.CourseRESTController;
@@ -13,9 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.test.context.support.WithMockUser;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.IntStream;
 
 import static com.org.simplelab.restrequest.RESTRequest.RequestType.DELETE;
@@ -87,6 +86,96 @@ public class CourseRESTTests extends RESTTestBaseConfig {
 
     @Test
     @WithMockUser(username = username, password = username)
+    void testDeleteWithLabs() throws Exception{
+        int numLabs = 4;
+        Course c = new Course();
+        c.setCreator(userDB.findById(user_id));
+        c.setCourse_id(metadata);
+        c.setName(metadata);
+        c.setDescription(metadata);
+        c.setInvite_code(metadata);
+        courseDB.insert(c);
+
+        List<Lab> labs = new ArrayList<>();
+        long[] idsToAdd = new long[numLabs];
+        IntStream.range(0, numLabs).forEach( i -> {
+            Lab junkLab = TestUtils.createJunkLab();
+            labs.add(junkLab);
+            try {
+                idsToAdd[i] = DBTestUtils.insertAndGetId(junkLab, labDB);
+            }  catch (Exception e) {}
+        });
+        DTO.CourseAddLabsDTO dto = new DTO.CourseAddLabsDTO();
+        dto.setLab_ids(idsToAdd);
+        dto.setCourse_id(c.getCourse_id());
+        courseRequest.sendData(POST, CourseRESTController.ADD_LABS_TO_COURSE_MAPPING, JSONBuilder.asJson(dto))
+                .andExpectSuccess(true);
+
+        CourseValidator cv = new CourseValidator();
+        cv.setCourse_id(c.getCourse_id());
+        courseRequest.sendData(DELETE, CourseRESTController.DELETE_MAPPING, JSONBuilder.asJson(new CourseValidator[]{cv}))
+                .andExpectSuccess(true);
+
+        assertEquals(0, courseDB.findByCourseId(c.getCourse_id()).size());
+
+        //make sure labs arent deleted
+        labs.forEach( lab -> assertEquals(1, labDB.getRepository().findByName(lab.getName()).size()));
+    }
+
+    @Test
+    @WithMockUser(username = username, password = username)
+    void testDeleteWithLabsAndEquipmentAndSteps() throws Exception{
+        Course c = new Course();
+        c.setInvite_code(metadata);
+        c.setDescription(metadata);
+        c.setName(metadata);
+        c.setCourse_id(metadata);
+        c.setCreator(userDB.findById(user_id));
+        courseDB.insert(c);
+
+        int num = 5;
+        List<Lab> labs = new ArrayList<>();
+        long[] ids = new long[num];
+        IntStream.range(0, num).forEach( i -> {
+            Lab junkLab = TestUtils.createJunkLabWithSteps(num);
+            Set<Equipment> junkEquipment = new HashSet<>();
+            IntStream.range(0, num).forEach( j -> {
+                junkEquipment.add(TestUtils.createJunkEquipmentWithProperties(2));
+            });
+            junkLab.setEquipments(junkEquipment);
+            labs.add(junkLab);
+            try {
+                ids[i] = DBTestUtils.insertAndGetId(junkLab, labDB);
+            } catch(Exception e) {System.out.println(e.getStackTrace()); }
+        });
+
+        DTO.CourseAddLabsDTO dto = new DTO.CourseAddLabsDTO();
+        dto.setCourse_id(c.getCourse_id());
+        dto.setLab_ids(ids);
+        courseRequest.sendData(POST, CourseRESTController.ADD_LABS_TO_COURSE_MAPPING, JSONBuilder.asJson(dto))
+                .andExpectSuccess(true);
+
+        CourseValidator cv = new CourseValidator();
+        cv.setCourse_id(c.getCourse_id());
+        courseRequest.sendData(DELETE, CourseRESTController.DELETE_MAPPING, JSONBuilder.asJson(new CourseValidator[]{cv}))
+                .andExpectSuccess(true);
+
+        //make sure labs are still there
+        labs.forEach(lab -> {
+            List<Lab> foundLabs = labDB.getRepository().findByName(lab.getName());
+            assertEquals(1, foundLabs.size());
+            Lab referenceLab = foundLabs.get(0);
+            assertEquals(5, referenceLab.getEquipments().size());
+            assertEquals(lab.getEquipments(), referenceLab.getEquipments());
+            //make sure properties are still there
+            assertEquals(2, referenceLab.getEquipments().iterator().next().getProperties().size());
+            //make sure steps are still there
+            assertEquals(5, referenceLab.getSteps().size());
+        });
+    }
+
+    @Test
+    @WithMockUser(username = username, password = username)
     void testAddLabs() throws Exception{
         Course c = new Course();
         c.setCourse_id(metadata);
@@ -140,10 +229,6 @@ public class CourseRESTTests extends RESTTestBaseConfig {
         assertEquals(2, found.size());
         assertTrue(found.contains(junkLab));
         assertTrue(found.contains(junkLabTwo));
-
-
-
-
 
     }
 }
