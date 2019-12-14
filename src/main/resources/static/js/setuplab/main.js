@@ -12,8 +12,10 @@ ELEM_NAME = {
     STEP_EQUIP_LIST: "#step_equip_list",
     STEP_LIST: "#step_list",
     STEP_CARD: "#step_card",
+    STEP_I_NAME: "#step_name",
     STEP_I_VOLUME: "#step_volume",
     STEP_I_WEIGHT: "#step_weight",
+    STEP_I_TIPS: "#step_tips",
     STEP_I_TEMPERATURE: "#step_temperature",
     STEP_SAVE_BTN: ".stepsavebtn",
 };
@@ -251,6 +253,8 @@ STEP = {
             data = {
                 labId: LAB_INFO.id,
                 targetEquipmentId: STEP.selected.id,
+                targetName: $(ELEM_NAME.STEP_I_NAME).val(),
+                targetTips: $(ELEM_NAME.STEP_I_TIPS).val(),
                 targetTemperature: $(ELEM_NAME.STEP_I_TEMPERATURE).val(),
                 targetVolume: $(ELEM_NAME.STEP_I_VOLUME).val(),
                 targetWeight: $(ELEM_NAME.STEP_I_WEIGHT).val(),

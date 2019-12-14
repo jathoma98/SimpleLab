@@ -135,6 +135,8 @@ public abstract class DTO {
          private Equipment targetObject;
          private int stepNum;
          private String targetTemperature;
+         private String targetName;
+         private String targetTips;
          private String targetVolume;
          private String targetWeight;
      }
@@ -168,6 +170,8 @@ public abstract class DTO {
         Long targetEquipmentId;
         int stepNum;
         String targetTemperature;
+        String targetName;
+        String targetTips;
         String targetVolume;
         String targetWeight;
     }
