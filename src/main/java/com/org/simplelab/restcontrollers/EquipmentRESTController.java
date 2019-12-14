@@ -106,7 +106,7 @@ public class EquipmentRESTController extends BaseRESTController<Equipment> {
     }
 
     @PatchMapping(UPDATE_MAPPING)
-    public RRO<String> updateLab(@RequestBody DTO.EquipmentUpdateDTO dto) {
+    public RRO<String> updateEquipment(@RequestBody DTO.EquipmentUpdateDTO dto) {
         long uid = getUserIdFromSession();
         Equipment toUpdate = equipmentDB.findById(dto.getEquipment_id_old());
         if (toUpdate == null){

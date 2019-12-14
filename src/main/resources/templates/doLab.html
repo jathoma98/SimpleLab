@@ -11,8 +11,9 @@
     <script type="text/javascript" th:src="@{../../libs/mustache.js}"></script>
     <script type="text/javascript" th:src="@{../../js/tools.js}"></script>
     <script type="text/javascript" th:src="@{../../js/accountInfo/accountInfo.js}"></script>
-    <script type="text/javascript" th:src="@{../../js/lab.js}"></script>
+<!--    <script type="text/javascript" th:src="@{../../js/lab.js}"></script>-->
     <script type="text/javascript" th:src="@{../../js/doLab/main.js}"></script>
+    <script type="text/javascript" th:src="@{../../js/template/dolab_template.js}"></script>
     <script id="modalAccTpl" type="x-tmpl-mustache" th:src="@{../../js/accountInfo/modalAccount.html}"></script>
     <script id="modalEquip" type="x-tmpl-mustache" th:src="@{../../js/template/modalEquip.html}"></script>
     <!--Let browser know website is optimized for mobile-->
@@ -117,21 +118,16 @@
 </div>
 <!--pop up model to enter number of liquid -->
 
-<div id="set_value_modal" class="modal popup_dialog">
+<div id="add_modal" class="modal popup_dialog">
     <nav class="my_yellow">
         <div class="popup_dialog_header">Enter number of liquid</div>
     </nav>
     <div class="modal-content row">
         <p class="range-field col s8 zeromargin ">
-            <input type="range" id="test5" min="0" max="200" value="100" oninput="showVal(this.value)"
-                   onchange="showVal(this.value)"/>
+            <input type="range" min="0" max="0" value="0"/>
         </p>
-        <div class="col s4 zeromargin">
-            <input class="number_picker" type="number" name="quantity" min="1" max="100" value="100">
-        </div>
-
         <div class="center col s12">
-            <a href="#!" class="modal-close btn my_red">Pour</a>
+            <a id="add_to_wksp" href="#!" class="modal-close btn my_red">Add</a>
         </div>
     </div>
 </div>
@@ -149,6 +145,7 @@
 <!--**********************************************************************main body*********************************************************************************************************-->
 <!--**********************************************************************main body*********************************************************************************************************-->
 <!--    this operation area at the middle-->
+
 <div id="operation_area" class="operation_area delete_empty ">
     <!--    side bar-->
     <div id="sidebar" class="sidebar sidebarhover row">
@@ -163,7 +160,7 @@
             </nav>
             <!-- Lab Equipment List-->
             <script id="labequip_list_template" type="mustache">
-                <a href="#set_value_modal" class="modal-trigger">
+                <a href="#add_modal" class="modal-trigger">
                     <div class="row sidebaritem">
                         <div class="col s4">
                             <img src="../../img/beaker.png" class="item_img">
@@ -236,32 +233,7 @@
                     <a href="#" class="brand-logo"><i class="material-icons">view_list</i>Current Items</a>
                 </div>
             </nav>
-            <script id="labequip_list_template" type="mustache">
-                <div class="row sidebaritem">
-                    <div class="col s2">
-                        <img src="../../img/beaker.png" class="item_img">
-                    </div>
-                    <div class="col s4">
-                        <p>Name: {{name}}</p>
-                        <p>Type: {{type}}</p>
-                    </div>
-                    {{^machine}}
-                    <div class="col s4">
-                    {{#liquid}}
-                        <p>Max Volume: {{properties.max_volume}}</p>
-                    {{/liquid}}
-                {{#solid}}
-                        <p>Max Weight: {{properties.max_weight}}</p>
-                    {{/solid}}
-                        <p>Temperature: {{properties.min_temperature}} - {{properties.max_temperature}}</p>
-                    </div>
-                    {{/machine}}
-                {{#machine}}
-                    <div class="col s4"></div>
-                    {{/machine}}
-                </div>
-            </script>
-            <ul class="row my_white current_item_set collection"></ul>
+            <ul id="wksp_eqm_list" class="row my_white current_item_set collection"></ul>
 
 
         </div>
@@ -404,7 +376,6 @@
         $('.modal').modal();
         $('.dropdown-trigger').dropdown();
         $('.tabs').tabs();
-
     });
 </script>
 <script type="text/javascript">
