@@ -1,6 +1,6 @@
 package com.org.simplelab.security;
 
-import com.org.simplelab.controllers.LoginController;
+import com.org.simplelab.controllers.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -38,7 +38,6 @@ public class OAuth2LoginConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        /**
         http
 
                 .authorizeRequests()
@@ -71,7 +70,7 @@ public class OAuth2LoginConfig extends WebSecurityConfigurerAdapter {
                 //are not authorized to access.
                 .and()
                 .exceptionHandling()
-                .accessDeniedHandler(accessDeniedHandler());**/
+                .accessDeniedHandler(accessDeniedHandler());
     }
 
     //this isnt used yet -- just for google login
