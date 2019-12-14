@@ -8,6 +8,7 @@ import com.org.simplelab.database.repositories.sql.LabRepository;
 import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.services.LabDB;
 import com.org.simplelab.database.services.SQLService;
+import com.org.simplelab.database.services.StepDB;
 import com.org.simplelab.database.services.projections.Projection;
 import com.org.simplelab.database.validators.LabValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
@@ -246,6 +247,9 @@ public class LabRESTController extends BaseRESTController<Lab> {
         return rro;
     }
 
+    @Autowired
+    StepDB stepDB;
+
     @PostMapping(LAB_ID_STEP_MAPPING)
     public RRO<String> addStepToLab(@PathVariable("lab_id") long lab_id,
                                     @RequestBody DTO.AddStepDTO dto){
@@ -265,25 +269,14 @@ public class LabRESTController extends BaseRESTController<Lab> {
         f_step.setTargetWeight(dto.getTargetWeight());
         Step s = DBUtils.getMapper().map(f_step, Step.class);
         s.setLab(found);
-        List<Step> toAdd = new ArrayList<>();
-        toAdd.add(s);
-
-
-        //Fix for addEntitiesToEntityList not working,
-        RRO rro = new RRO<String>();
-        rro.setSuccess(true);
-        rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
-        toAdd.forEach((e)->{
-            found.getSteps().add(e);
-        });
-        try{
-            getDb().update(found);
-        } catch (SQLService.EntityDBModificationException e) {
-            e.printStackTrace();
+        try {
+            stepDB.insert(s);
+        } catch (DBService.EntityDBModificationException e){
             return RRO.sendErrorMessage(e.getMessage());
         }
-        return rro;
-//        return super.addEntitiesToEntityList(labDB.getStepManager(found), toAdd);
+        List<Step> toAdd = new ArrayList<>();
+        toAdd.add(s);
+        return super.addEntitiesToEntityList(labDB.getStepManager(found), toAdd);
     }
 
     @DeleteMapping(LAB_ID_STEP_NUMBER_MAPPING)

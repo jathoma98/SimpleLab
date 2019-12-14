@@ -36,9 +36,20 @@ public class TestUtils {
         };
     }
 
+    public static Course createJunkCourse(){
+        Random rand = new Random();
+        Course c = new Course();
+        c.setName(metadata);
+        c.setDescription(metadata);
+        c.setInvite_code(metadata);
+        c.setCourse_id(metadata + Double.toString(rand.nextDouble()));
+        return c;
+    }
+
     public static User createJunkUser(){
         User u = new User();
-        u.setUsername(metadata);
+        Random rand = new Random();
+        u.setUsername(metadata + Double.toString(rand.nextDouble()));
         u.setPassword(metadata);
         u.setInstitution(metadata);
         u.setRole("teacher");

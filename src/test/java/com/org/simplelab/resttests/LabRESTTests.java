@@ -19,8 +19,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import static com.org.simplelab.restrequest.RESTRequest.RequestType.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class LabRESTTests extends RESTTestBaseConfig {
 
@@ -182,6 +181,7 @@ public class LabRESTTests extends RESTTestBaseConfig {
 
         List<Step> steps = labDB.getStepsOfLabById(id).getAsList();
         assertEquals(1, steps.size());
+        assertTrue(steps.get(0).getId() > 0);
         assertEquals(e, steps.get(0).getTargetObject());
 
         //ensure that inserting a step w/ duplicate stepnum still works
@@ -192,6 +192,7 @@ public class LabRESTTests extends RESTTestBaseConfig {
         steps = labDB.getStepsOfLabById(id).getAsList();
         assertEquals(2, steps.size());
         assertEquals(2, steps.get(steps.size()-1).getStepNum());
+        steps.forEach(step -> assertTrue(step.getId() > 0));
 
         //ensure that inserting a step out of order still works
         dto.setStepNum(500);
@@ -202,6 +203,7 @@ public class LabRESTTests extends RESTTestBaseConfig {
         assertEquals(3, steps.size());
         assertEquals(3, steps.get(steps.size()-1).getStepNum());
         steps.forEach( step -> assertFalse(step.getTargetObject().getId() == 0));
+        steps.forEach(step -> assertTrue(step.getId() > 0));
 
         //ensure that inserting a step into another lab doesnt cause foreign key exception
         long id2 = DBTestUtils.insertAndGetId(TestUtils.createJunkLabWithSteps(2), labDB);
@@ -212,6 +214,7 @@ public class LabRESTTests extends RESTTestBaseConfig {
         Step foundStep = labDB.getStepsOfLabById(id2).getAsList().get(0);
         assertEquals(1, foundStep.getStepNum());
         assertFalse(foundStep.getTargetObject().getId() == 0);
+        assertTrue(foundStep.getId() > 0);
 
         //delete all steps
         labRequest.send(DELETE, mapping)
