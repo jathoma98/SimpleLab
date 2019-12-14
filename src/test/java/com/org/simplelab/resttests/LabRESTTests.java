@@ -26,10 +26,13 @@ public class LabRESTTests extends RESTTestBaseConfig {
 
     private RESTRequest labRequest;
 
+    private static final boolean ENABLE_PRINTOUTS = false;
+
     @Override
     @BeforeEach
     void loadRestRequest () {
-        labRequest = new RESTRequest(mvc, LabRESTController.BASE_MAPPING);
+
+        labRequest = new RESTRequest(mvc, LabRESTController.BASE_MAPPING, ENABLE_PRINTOUTS);
     }
 
     @Test

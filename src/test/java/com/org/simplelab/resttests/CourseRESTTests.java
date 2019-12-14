@@ -1,9 +1,12 @@
 package com.org.simplelab.resttests;
 
 import com.org.simplelab.database.entities.sql.Course;
+import com.org.simplelab.database.entities.sql.Lab;
 import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.restcontrollers.CourseRESTController;
+import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restrequest.RESTRequest;
+import com.org.simplelab.utils.DBTestUtils;
 import com.org.simplelab.utils.JSONBuilder;
 import com.org.simplelab.utils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,11 +15,13 @@ import org.springframework.security.test.context.support.WithMockUser;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.IntStream;
 
 import static com.org.simplelab.restrequest.RESTRequest.RequestType.DELETE;
 import static com.org.simplelab.restrequest.RESTRequest.RequestType.POST;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CourseRESTTests extends RESTTestBaseConfig {
 
@@ -76,5 +81,69 @@ public class CourseRESTTests extends RESTTestBaseConfig {
         courseRequest.sendData(DELETE, CourseRESTController.DELETE_MAPPING, JSONBuilder.asJson(toDelete))
                 .andExpectSuccess(true);
         Arrays.stream(created).forEach( c -> assertEquals(0, courseDB.findByCourseId(c.getCourse_id()).size()));
+
+        //TODO: test deleting with labs, recipes, equipment in lab
+    }
+
+    @Test
+    @WithMockUser(username = username, password = username)
+    void testAddLabs() throws Exception{
+        Course c = new Course();
+        c.setCourse_id(metadata);
+        c.setName(metadata);
+        c.setInvite_code(metadata);
+        c.setDescription(metadata);
+        c.setCreator(userDB.findById(user_id));
+        courseDB.insert(c);
+
+        //test adding 1 lab to course
+        Lab junkLab = TestUtils.createJunkLab();
+        long toAdd = DBTestUtils.insertAndGetId(junkLab, labDB);
+        DTO.CourseAddLabsDTO dto = new DTO.CourseAddLabsDTO();
+        dto.setCourse_id(c.getCourse_id());
+        dto.setLab_ids(new long[]{toAdd});
+        courseRequest.sendData(POST, CourseRESTController.ADD_LABS_TO_COURSE_MAPPING, JSONBuilder.asJson(dto))
+                .andExpectSuccess(true);
+
+        Set<Lab> found = courseDB.getLabsOfCourse(c.getCourse_id());
+        assertEquals(1, found.size());
+        assertEquals(junkLab.getName(), found.iterator().next().getName());
+
+        //add another lab to the course
+        Lab junkLabTwo = TestUtils.createJunkLab();
+        long toAddTwo = DBTestUtils.insertAndGetId(junkLabTwo, labDB);
+        dto.setLab_ids(new long[]{toAddTwo});
+        courseRequest.sendData(POST, CourseRESTController.ADD_LABS_TO_COURSE_MAPPING, JSONBuilder.asJson(dto))
+                .andExpectSuccess(true);
+
+        found = courseDB.getLabsOfCourse(c.getCourse_id());
+        assertEquals(2, found.size());
+        assertTrue(found.contains(junkLab));
+        assertTrue(found.contains(junkLabTwo));
+
+        //test foreign key -- add the same labs to different course
+        String newMetadata = metadata+"NEW";
+        Course foreignkey = new Course();
+        foreignkey.setName(newMetadata);
+        foreignkey.setDescription(newMetadata);
+        foreignkey.setInvite_code(newMetadata);
+        foreignkey.setCourse_id(newMetadata);
+        foreignkey.setCreator(userDB.findById(user_id));
+        courseDB.insert(foreignkey);
+
+        DTO.CourseAddLabsDTO newDto = new DTO.CourseAddLabsDTO();
+        newDto.setCourse_id(foreignkey.getCourse_id());
+        newDto.setLab_ids(new long[]{toAdd, toAddTwo});
+        courseRequest.sendData(POST, CourseRESTController.ADD_LABS_TO_COURSE_MAPPING, JSONBuilder.asJson(newDto))
+                .andExpectSuccess(true);
+        found = courseDB.getLabsOfCourse(foreignkey.getCourse_id());
+        assertEquals(2, found.size());
+        assertTrue(found.contains(junkLab));
+        assertTrue(found.contains(junkLabTwo));
+
+
+
+
+
     }
 }
