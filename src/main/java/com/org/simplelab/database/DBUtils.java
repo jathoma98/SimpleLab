@@ -20,7 +20,6 @@ public class DBUtils {
 
     //MongoDB document names
     public static final String LABINSTANCE_DOCUMENT_NAME = "lab_instance";
-    public static final String STUDENT_LAB_RECORD_DOCUMENT_NAME = "student_lab_record";
 
     //salt for hashing
     public static final String SALT = "a very salty salt";
