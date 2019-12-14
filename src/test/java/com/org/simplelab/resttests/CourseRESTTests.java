@@ -30,7 +30,7 @@ public class CourseRESTTests extends RESTTestBaseConfig {
 
     @BeforeEach
     void loadRestRequest() {
-        this.courseRequest = new RESTRequest(mvc, CourseRESTController.BASE_MAPPING);
+        this.courseRequest = new RESTRequest(mvc, CourseRESTController.BASE_MAPPING, false);
     }
 
     @Test
@@ -285,10 +285,6 @@ public class CourseRESTTests extends RESTTestBaseConfig {
             assertTrue(student.getUsername().equals(student1.getUsername())
                     || student.getUsername().equals(student2.getUsername()));
         });
-
-
-
-
-
     }
+
 }
