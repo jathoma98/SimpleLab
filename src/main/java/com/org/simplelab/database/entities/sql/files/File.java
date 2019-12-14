@@ -13,6 +13,8 @@ public abstract class File extends BaseTable {
     private String fileName;
     private String fileType;
 
+    //TODO: add uploader field
+
     @Lob
     private byte[] data;
 
