@@ -17,7 +17,6 @@ import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,7 +64,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
 
     //Todo need change later, it not safe, anyone change delete others lab here, because we haven't check create_id
     @DeleteMapping(DELETE_MAPPING)
-    public RRO<String> deleteCourse(@RequestBody DTO.UserLabsDTO toDelete) {
+    public RRO<String> deleteLab(@RequestBody DTO.UserLabsDTO toDelete) {
         RRO<String> rro = new RRO();
         for (long lid : toDelete.getLids()) {
             labDB.deleteById(lid);
@@ -117,7 +116,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
 
 
     @GetMapping(LOAD_LIST_LAB_MAPPING)
-    public RRO getListOfLab(HttpSession session) {
+    public RRO getListOfLab() {
         long userId = getUserIdFromSession();
         RRO rro = new RRO<Projection>();
         //Use TeacherLabInfo projection to only get attributes we want

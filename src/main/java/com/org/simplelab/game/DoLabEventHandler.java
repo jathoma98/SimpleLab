@@ -108,7 +108,9 @@ public class DoLabEventHandler {
 
         StepRecord currentStep = instance.getStepRecords().get(stepNum-1);
         currentStep.getUserActions().add(action);
-        instanceDB.update(instance);
+        try {
+            instanceDB.update(instance);
+        } catch (Exception e) { /* dont update history on exception */ }
 
     }
 
@@ -117,13 +119,17 @@ public class DoLabEventHandler {
         StepRecord newStep = new StepRecord();
         newStep.setStepNum(lastStep.getStepNum()+1);
         instance.getStepRecords().add(newStep);
-        instanceDB.update(instance);
+        try {
+            instanceDB.update(instance);
+        } catch (Exception e) { /* dont update history on exception */ }
     }
 
     public void finalizeInstance(LabInstance instance){
         instance.setGrade("complete");
         instance.setFinished(true);
-        instanceDB.update(instance);
+        try {
+            instanceDB.update(instance);
+        } catch (Exception e) { /* dont update history on exception */ }
     }
 
 }

@@ -16,6 +16,7 @@ public class Course extends BaseTable implements UserCreated{
 
     @Column(unique = true)
     private String course_id;
+
     private String name;
     private String description;
     private String invite_code;

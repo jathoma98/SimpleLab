@@ -23,12 +23,16 @@ public class CourseValidator extends Validator<Course>{
     public void validate() throws InvalidFieldException {
         StringBuilder sb = new StringBuilder();
 
-        int[] lengths = {name.length(), course_id.length(), description.length()};
-        for (int length: lengths){
-            if (length == 0){
-                sb.append(EMPTY_FIELD);
-                break;
+        try {
+            int[] lengths = {name.length(), course_id.length(), description.length()};
+            for (int length : lengths) {
+                if (length == 0) {
+                    sb.append(EMPTY_FIELD);
+                    break;
+                }
             }
+        } catch (NullPointerException e) {
+            sb.append(EMPTY_FIELD);
         }
 
         if (sb.length() > 0)
