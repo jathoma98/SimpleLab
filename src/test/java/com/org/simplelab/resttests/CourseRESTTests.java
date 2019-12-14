@@ -3,6 +3,7 @@ package com.org.simplelab.resttests;
 import com.org.simplelab.database.entities.sql.Course;
 import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.Lab;
+import com.org.simplelab.database.entities.sql.User;
 import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.restcontrollers.CourseRESTController;
 import com.org.simplelab.restcontrollers.dto.DTO;
@@ -13,6 +14,7 @@ import com.org.simplelab.utils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.IntStream;
@@ -229,6 +231,64 @@ public class CourseRESTTests extends RESTTestBaseConfig {
         assertEquals(2, found.size());
         assertTrue(found.contains(junkLab));
         assertTrue(found.contains(junkLabTwo));
+
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser(username = username, password = username)
+    void testAddStudent() throws Exception{
+        User student1 = TestUtils.createJunkUser();
+        User student2 = TestUtils.createJunkUser();
+        Course c = TestUtils.createJunkCourse();
+        c.setCreator(userDB.findById(user_id));
+        courseDB.insert(c);
+        userDB.insert(student1);
+        userDB.insert(student2);
+
+        DTO.CourseUpdateStudentListDTO dto = new DTO.CourseUpdateStudentListDTO();
+        dto.setCourse_id(c.getCourse_id());
+        dto.setUsernameList(Arrays.asList(new String[]{student1.getUsername()}));
+
+        courseRequest.sendData(POST, CourseRESTController.ADD_STUDENT_MAPPING, JSONBuilder.asJson(dto))
+                .andExpectSuccess(true);
+
+        List<User> foundStudents = courseDB.getStudentsOfCourse(c.getCourse_id());
+        assertEquals(1, foundStudents.size());
+        assertEquals(student1.getUsername(), foundStudents.iterator().next().getUsername());
+
+        //add second student
+        dto.setUsernameList(Arrays.asList(new String[]{student2.getUsername()}));
+        courseRequest.sendData(POST, CourseRESTController.ADD_STUDENT_MAPPING, JSONBuilder.asJson(dto))
+                .andExpectSuccess(true);
+        foundStudents = courseDB.getStudentsOfCourse(c.getCourse_id());
+        //foundStudents = found.get(0).getStudents();
+        assertEquals(2, foundStudents.size());
+        foundStudents.forEach( student -> {
+            assertTrue(student.getUsername().equals(student1.getUsername())
+                                || student.getUsername().equals(student2.getUsername()));
+        });
+
+        //test adding students to another course for foreign key
+        Course second_c = TestUtils.createJunkCourse();
+        second_c.setCreator(userDB.findById(user_id));
+        courseDB.insert(second_c);
+
+        dto.setCourse_id(second_c.getCourse_id());
+        dto.setUsernameList(Arrays.asList(new String[]{student1.getUsername(), student2.getUsername()}));
+        courseRequest.sendData(POST, CourseRESTController.ADD_STUDENT_MAPPING, JSONBuilder.asJson(dto))
+                .andExpectSuccess(true);
+
+        foundStudents = courseDB.getStudentsOfCourse(c.getCourse_id());
+        assertEquals(2, foundStudents.size());
+        foundStudents.forEach( student -> {
+            assertTrue(student.getUsername().equals(student1.getUsername())
+                    || student.getUsername().equals(student2.getUsername()));
+        });
+
+
+
+
 
     }
 }
