@@ -232,7 +232,7 @@ RECIPE = {
 STEP = {
     selectFrom: undefined,
     selected: undefined,
-    globalStepNum:undefined,
+    globalStepNum:-1,
     init: function () {
         this.buildEquipmentList = function () {
             let data = {iterable: EQUIPMENT.all_equipment};
@@ -261,7 +261,7 @@ STEP = {
                 targetVolume: $(ELEM_NAME.STEP_I_VOLUME).val(),
                 targetWeight: $(ELEM_NAME.STEP_I_WEIGHT).val(),
             }
-            STEP.globalStepNum=undefined;
+            STEP.globalStepNum=-1;
             let data_json = JSON.stringify(data);
             $.ajax({
                 url: "/lab/rest/" + LAB_INFO.id + "/step",
