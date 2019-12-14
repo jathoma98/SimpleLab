@@ -7,6 +7,7 @@ import com.org.simplelab.database.entities.sql.Step;
 import com.org.simplelab.database.repositories.sql.LabRepository;
 import com.org.simplelab.database.services.LabDB;
 import com.org.simplelab.database.services.SQLService;
+import com.org.simplelab.database.services.StepDB;
 import com.org.simplelab.database.services.projections.Projection;
 import com.org.simplelab.database.validators.LabValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
@@ -245,6 +246,9 @@ public class LabRESTController extends BaseRESTController<Lab> {
         return rro;
     }
 
+    @Autowired
+    StepDB stepDB;
+
     @PostMapping(LAB_ID_STEP_MAPPING)
     public RRO<String> addStepToLab(@PathVariable("lab_id") long lab_id,
                                     @RequestBody DTO.AddStepDTO dto){
@@ -263,6 +267,9 @@ public class LabRESTController extends BaseRESTController<Lab> {
         Step s = DBUtils.getMapper().map(f_step, Step.class);
         s.setLab(found);
         List<Step> toAdd = new ArrayList<>();
+        try {
+            stepDB.insert(s);
+        } catch (Exception e){}
         toAdd.add(s);
         return super.addEntitiesToEntityList(labDB.getStepManager(found), toAdd);
     }
