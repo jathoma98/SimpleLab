@@ -244,6 +244,8 @@ let EQUIPMENT_TABLE = {
             }
             data.equipmentModal[EQUIPMENT_TABLE.modal_info.type] = " checked";
             rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL_EQUIP, data, "click", EQUIPMENT_TABLE.btnEvents);
+            EQUIPMENT_TABLE.checkRadio(EQUIPMENT_TABLE.modal_info.type);
+            EQUIPMENT_TABLE.hideAndShowInput();
 
         };
         /**
