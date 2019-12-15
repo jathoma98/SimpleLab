@@ -40,7 +40,7 @@ public class EquipmentRESTTests extends RESTTestBaseConfig {
         ImageFileValidator file = new ImageFileValidator();
         file.setFileName("name");
         file.setFileType("type");
-        file.setData("data".getBytes());
+        file.setData("data");
 
         ev.setImg(file);
         equipmentRequest.sendData(POST, "", JSONBuilder.asJson(ev))
