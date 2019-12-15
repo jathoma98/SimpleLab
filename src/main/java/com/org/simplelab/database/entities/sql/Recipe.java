@@ -42,6 +42,7 @@ public class Recipe extends BaseTable implements UserCreated {
 
     private double ratioOne;
     private double ratioTwo;
+    private double ratioThree;
 
     @Override
     public boolean equals(Object o){
@@ -55,6 +56,7 @@ public class Recipe extends BaseTable implements UserCreated {
                 cast.getEquipmentTwo().equals(this.getEquipmentTwo()) &&
                 cast.getResult().equals(this.getResult()) &&
                 cast.getRatioOne() == ratioOne &&
+                cast.getRatioThree() == ratioThree &&
                 cast.getRatioTwo() == ratioTwo;
     }
 
