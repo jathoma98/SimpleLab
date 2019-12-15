@@ -29,7 +29,7 @@ public class ImageRESTTests extends RESTTestBaseConfig {
         File file = new File(fileName);
         file.delete();
 
-        MockMultipartFile mockMultipartFile = new MockMultipartFile("user-file", fileName, "text/plain", "test data".getBytes());
+        MockMultipartFile mockMultipartFile = new MockMultipartFile("image", fileName, "text/plain", "test data".getBytes());
 
         mvc.perform(MockMvcRequestBuilders.multipart(ImageFileRESTController.BASE_MAPPING + "/upload").file(mockMultipartFile))
                 .andExpect(MockMvcResultMatchers.status().isOk())

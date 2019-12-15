@@ -28,7 +28,7 @@ public class ImageFileRESTController extends BaseRESTController<ImageFile> {
 
     @PostMapping("/upload")
     public RRO uploadImage(MultipartHttpServletRequest request) throws Exception{
-        MultipartFile file = request.getFile("user-file");
+        MultipartFile file = request.getFile("image");
         System.out.println("Name: " + file.getName());
 
         StringWriter writer = new StringWriter();
