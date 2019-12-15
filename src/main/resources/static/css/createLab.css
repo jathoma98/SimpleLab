@@ -436,3 +436,7 @@ padding20px{
     min-height:10%;
     background: #e4e4e4;
 }
+
+.icontoright{
+    display: block!important;
+}

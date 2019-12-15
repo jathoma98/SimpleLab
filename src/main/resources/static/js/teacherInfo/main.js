@@ -68,7 +68,7 @@ $(document).ready(function () {
 
     //load equipment table
     EQUIPMENT_TABLE.reload();
-
+    $(".tooltipped").tooltip();
 
     // $("#liquid").click(function(event){
     //     var selectedOption = event.target.value;

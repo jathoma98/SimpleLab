@@ -40,6 +40,7 @@ let EQUIPMENT_TABLE = {
                         rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL_EQUIP, data, 'click', EQUIPMENT_TABLE.btnEvents);
                         EQUIPMENT_TABLE.checkRadio(equipment.type);
                         EQUIPMENT_TABLE.hideAndShowInput();
+                        $('.tooltipped').tooltip();
                     })
                 }
             })
@@ -246,6 +247,7 @@ let EQUIPMENT_TABLE = {
             rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL_EQUIP, data, "click", EQUIPMENT_TABLE.btnEvents);
             EQUIPMENT_TABLE.checkRadio(EQUIPMENT_TABLE.modal_info.type);
             EQUIPMENT_TABLE.hideAndShowInput();
+            $('.tooltipped').tooltip();
 
         };
         /**
@@ -263,6 +265,7 @@ let EQUIPMENT_TABLE = {
             rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL_EQUIP, data, "click", EQUIPMENT_TABLE.btnEvents);
             EQUIPMENT_TABLE.checkRadio("liquid");
             EQUIPMENT_TABLE.hideAndShowInput();
+            $('.tooltipped').tooltip();
 
         //     $(TEMPLATE_ID.MODAL_EQUIP).find("#equip_image").on("change",()=>{EQUIPMENT_TABLE.loadImg()});
         };
