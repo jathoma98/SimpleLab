@@ -1,25 +1,17 @@
 package com.org.simplelab.resttests;
 
 
-import com.org.simplelab.database.entities.sql.Equipment;
-import com.org.simplelab.database.entities.sql.files.ImageFile;
-import com.org.simplelab.database.validators.ImageFileValidator;
 import com.org.simplelab.restcontrollers.ImageFileRESTController;
 import com.org.simplelab.restrequest.RESTRequest;
-import com.org.simplelab.utils.DBTestUtils;
-import com.org.simplelab.utils.JSONBuilder;
-import com.org.simplelab.utils.TestUtils;
-import com.sun.org.apache.xml.internal.security.utils.Base64;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.Arrays;
-
-import static com.org.simplelab.restrequest.RESTRequest.RequestType.GET;
-import static com.org.simplelab.restrequest.RESTRequest.RequestType.POST;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.io.File;
 
 public class ImageRESTTests extends RESTTestBaseConfig {
 
@@ -33,53 +25,16 @@ public class ImageRESTTests extends RESTTestBaseConfig {
     @Test
     @WithMockUser(username = username, password = username)
     void testFileUpload() throws Exception{
-        ImageFileValidator v = new ImageFileValidator();
-        v.setFileName("testfile");
-        v.setFileType(".png");
-        v.setData("test data");
-        v.set_metadata(metadata);
+        String fileName = "test.txt";
+        File file = new File(fileName);
+        file.delete();
 
-        imageRequest.sendData(POST, "/upload", JSONBuilder.asJson(v))
-                .andExpectSuccess(true);
+        MockMultipartFile mockMultipartFile = new MockMultipartFile("user-file", fileName, "text/plain", "test data".getBytes());
 
-        ImageFile found = imageDB.getRepository().findBy_metadata(metadata).get(0);
-        assertTrue(found.getId() > 0);
-        assertEquals(found.getFileName(), v.getFileName());
-        assertEquals(found.getFileType(), v.getFileType());
-        assertTrue(Arrays.equals(found.getData(), v.getData().getBytes()));
-    }
+        mvc.perform(MockMvcRequestBuilders.multipart(ImageFileRESTController.BASE_MAPPING + "/upload").file(mockMultipartFile))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print());
 
-    @Test
-    @WithMockUser(username = username, password = username)
-    void testFileGet() throws Exception{
-        ImageFile file = new ImageFile();
-        file.setFileType("text");
-        file.setFileName("test");
-        file.setData("test data".getBytes());
-        long file_id = DBTestUtils.insertAndGetId(file, imageDB);
-
-        imageRequest.send(GET, "/" + Long.toString(file_id))
-            .andExpectData(JSONBuilder.asJson(file));
-
-    }
-
-    @Test
-    @WithMockUser(username = username, password = username)
-    void testEquipmentWithFile() throws Exception{
-        Equipment e = TestUtils.createJunkEquipment();
-        e.set_metadata(metadata);
-        ImageFile img = new ImageFile();
-        img.setFileName("name");
-        img.setFileType("type");
-        img.setData("data".getBytes());
-        e.setImg(img);
-
-        equipmentDB.insert(e);
-        Equipment found = equipmentDB.getRepository().findBy_metadata(metadata).get(0);
-        assertTrue(found.getImg().getId() > 0);
-        assertTrue(found.getImg().getFileName().equals(img.getFileName()));
-        assertTrue(found.getImg().getFileType().equals(img.getFileType()));
-        assertTrue(Arrays.equals(found.getImg().getData(), img.getData()));
     }
 
 
