@@ -65,9 +65,16 @@
         <div class="popup_dialog_header">Enter number of liquid</div>
     </nav>
     <div class="modal-content row">
-        <p class="range-field col s8 zeromargin ">
-            <input type="range" min="0" max="0" value="0"/>
-        </p>
+        <div class="range-field col s12">
+            <input  class="rangeval" type="range" min="0" max="0" value="0" onchange="setSameValue(this.value)"/>
+        </div>
+        <div class="row center">
+            <b>OR</b>
+        </div>
+        <div class="col s12">
+            <input  type="number" min="0" max="0" value="0" class="inputval center-align" onchange="setSameValue(this.value)"><span class="unitmargin">ml</span>
+        </div>
+
         <div class="center col s12">
             <a id="add_to_wksp" href="#!" class="modal-close btn my_red">Add</a>
         </div>
@@ -79,9 +86,15 @@
         <div class="popup_dialog_header">Enter number of liquid</div>
     </nav>
     <div class="modal-content row">
-        <p class="range-field col s8 zeromargin ">
-            <input type="range" min="0" max="0" value="0"/>
-        </p>
+        <div class="range-field col s12">
+            <input  class="rangeval" type="range" min="0" max="0" value="0" onchange="setSameValue(this.value)"/>
+        </div>
+        <div class="row center">
+            <b>OR</b>
+        </div>
+        <div class="col s12">
+            <input  type="number" min="0" max="0" value="0" class="inputval center-align" onchange="setSameValue(this.value)"><span class="unitmargin">ml</span>
+        </div>
         <div class="center col s12">
             <a id="add_to_wksp" href="#!" class="modal-close btn my_red">None</a>
         </div>
