@@ -92,6 +92,10 @@ public class CourseDB extends SQLService<Course> {
         c.getStudents().forEach((student) -> {
             User proj = new User();
             proj.setUsername(student.getUsername());
+            proj.setFirstname(student.getFirstname());
+            proj.setLastname(student.getLastname());
+            proj.setEmail(student.getEmail());
+            proj.setInstitution(student.getInstitution());
             students.add(proj);
         });
         return students;
