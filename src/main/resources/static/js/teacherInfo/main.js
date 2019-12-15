@@ -60,10 +60,7 @@ $(document).ready(function () {
     $("#equipBackBtn").on("click",()=>{EQUIPMENT_TABLE.btnSwitch()});
     $("#equipAddBtn").on("click", ()=>{EQUIPMENT_TABLE.create()});
     $("#equipDeleteBtn").on("click", ()=>{EQUIPMENT_TABLE.delete()});
-    // $("#equip_img").load(function () {
-    //     $(this).css('height', '200px').show();
-    // }).hide();
-    $("#equip_input").on("change",()=>{EQUIPMENT_TABLE.loadImg()});
+   
 
 
     //load equipment table

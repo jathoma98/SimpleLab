@@ -9,7 +9,7 @@ public class ImageFileValidator extends Validator<ImageFile> {
 
     private String fileName;
     private String fileType;
-    private byte[] data;
+    private String data;
     private String _metadata;
 
     @Override
@@ -19,6 +19,9 @@ public class ImageFileValidator extends Validator<ImageFile> {
 
     @Override
     public ImageFile build() {
-        return DBUtils.getMapper().map(this, ImageFile.class);
+        ImageFile img = new ImageFile();
+        DBUtils.getMapper().map(this, img);
+        img.setData(data.getBytes());
+        return img;
     }
 }
