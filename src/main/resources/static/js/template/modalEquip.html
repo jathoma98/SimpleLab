@@ -8,14 +8,12 @@
 <div class="row delete_empty">
     <div class="col s4 center delete_empty">
         <img id = "equip_image" class="eq_upload delete_empty" src="../img/upload.png">
-        <div class="file-field input-field col s6 offset-s3">
-            <div class="btn">
+        <div class="file-field input-field col s6 offset-s5 center">
+            <form class="btn tooltipped" data-tooltip="please upload a sprite sheet(250*50) where is one row contains 5 continuous<br> images in the same size(50*50) and for each image, it will <br>represent a state of equipment, for example 20%,40%,60%,80%,100% of liquid <br>and for <b>machine</b>, please only upload a 50*50 of image">
                 <span>File</span>
-                <input id="equip_input" type="file" width="250" length="50" onchange="EQUIPMENT_TABLE.loadImg();">
-            </div>
-            <div class="file-path-wrapper">
-                <input class="file-path validate" type="text">
-            </div>
+                <input id="equip_input"
+                       type="file" onchange="EQUIPMENT_TABLE.loadImg();">
+            </form>
         </div>
     </div>
 <!--    <div class="col s8" id="equip_tab">-->

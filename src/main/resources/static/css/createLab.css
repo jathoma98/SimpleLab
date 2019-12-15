@@ -74,8 +74,8 @@ td, th {
 }
 
 .popup_dialog{
-    width: 500px!important;
-    height: 220px!important;
+    width: 600px!important;
+    height: 300px!important;
 }
 
 .popup_dialog_header{
@@ -435,4 +435,8 @@ padding20px{
     width: 100%;
     min-height:10%;
     background: #e4e4e4;
+}
+
+.icontoright{
+    display: block!important;
 }

@@ -65,9 +65,16 @@
         <div class="popup_dialog_header">Enter number of liquid</div>
     </nav>
     <div class="modal-content row">
-        <p class="range-field col s8 zeromargin ">
-            <input type="range" min="0" max="0" value="0"/>
-        </p>
+        <div class="range-field col s12">
+            <input  class="rangeval" type="range" min="0" max="0" value="0" onchange="setSameValue(this.value)"/>
+        </div>
+        <div class="row center">
+            <b>OR</b>
+        </div>
+        <div class="col s12">
+            <input  type="number" min="0" max="0" value="0" class="inputval center-align" onchange="setSameValue(this.value)"><span class="unitmargin">ml</span>
+        </div>
+
         <div class="center col s12">
             <a id="add_to_wksp" href="#!" class="modal-close btn my_red">Add</a>
         </div>
@@ -79,9 +86,15 @@
         <div class="popup_dialog_header">Enter number of liquid</div>
     </nav>
     <div class="modal-content row">
-        <p class="range-field col s8 zeromargin ">
-            <input type="range" min="0" max="0" value="0"/>
-        </p>
+        <div class="range-field col s12">
+            <input  class="rangeval" type="range" min="0" max="0" value="0" onchange="setSameValue(this.value)"/>
+        </div>
+        <div class="row center">
+            <b>OR</b>
+        </div>
+        <div class="col s12">
+            <input  type="number" min="0" max="0" value="0" class="inputval center-align" onchange="setSameValue(this.value)"><span class="unitmargin">ml</span>
+        </div>
         <div class="center col s12">
             <a id="add_to_wksp" href="#!" class="modal-close btn my_red">None</a>
         </div>
@@ -120,7 +133,7 @@
             </nav>
             <!-- Lab Equipment List-->
             <script id="labequip_list_template" type="mustache">
-                <a href="#add_modal" class="modal-trigger row">
+                <a href="#add_modal" class="{{^machine}}modal-trigger{{/machine}} row">
 
                     <div class="col s4">
                         <img src="../../img/beaker.png" class="item_img" style="margin-top: 30%;">
@@ -157,9 +170,11 @@
             </nav>
 
             <script id="step_list_template" type="mustache">
-                <div class="collapsible-header">
-                    <i class="material-icons">view_list</i>
+                <div class="collapsible-header icontoright">
+                    <i class="material-icons left">view_list</i>
                     Step -- {{stepNum}}--{{targetObject.name}}
+                    <i class="material-icons right my_color_red">check_box</i>
+                    <i class="material-icons right my_color_red">check_box_outline_blank</i>
                 </div>
                 <div class="collapsible-body row">
                     <div class="col s4 delete_empty">
