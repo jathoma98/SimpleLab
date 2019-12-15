@@ -64,7 +64,31 @@ $(document).ready(function () {
     //load equipment table
     EQUIPMENT_TABLE.reload();
 
+
+    // $("#liquid").click(function(event){
+    //     var selectedOption = event.target.value;
+    //     console.log(selectedOption);
+    //     if (selectedOption === 'liquid') {
+    //         $("#equip_name").style.display="none";
+    //         // document.getElementById('text').style.display = 'block';
+    //     }
+    // })
+
+
 })
+
+function on_change(el){
+    var selectedOption = el.target.value;
+    if (selectedOption === 'liquid') {
+        $("#equip_name").style.display="none";
+        // document.getElementById('text').style.display = 'block';
+    } else if(selectedOption === 'soild') {
+        $("#max_volume").style.display="none";
+        // document.getElementById('text').style.display = 'none'; // Hide el
+    }else{
+
+    }
+}
 
 
 
