@@ -102,7 +102,7 @@
         <div class="col s12 section max_volume">
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="max_volume" type="text" class="validate"
+                    <input id="max_volume" type="number" class="validate"
                            value="{{equipment.properties.max_volume}}"><span class="unitmargin">L</span>
                     <label for="max_volume" {{#equipment.properties.max_volume}}
                            class="active" {{/equipment.properties.max_volume}}>Max Volume</label>
@@ -112,7 +112,7 @@
         <div class="col s12 section max_weight">
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="max_weight" type="text" class="validate"
+                    <input id="max_weight" type="number" class="validate"
                            value="{{equipment.properties.max_weight}}"><span class="unitmargin">Kg</span>
                     <label for="max_weight" {{#equipment.properties.max_weight}}
                            class="active" {{/equipment.properties.max_weight}}>Max Weight</label>
@@ -128,7 +128,7 @@
 <!--                           class="active" {{/equipment.properties.min_temperature}}>Min Temperature</label>-->
 <!--                </div>-->
                 <div class="input-field col s12">
-                    <input id="max_temperature" type="text" class="validate"
+                    <input id="max_temperature" type="number" class="validate"
                            value="{{equipment.properties.max_temperature}}"><span class="unitmargin">°C</span>
                     <label for="max_temperature" {{#equipment.properties.max_temperature}}
                            class="active" {{/equipment.properties.max_temperature}}> Default Temperature</label>
@@ -148,7 +148,7 @@
         <div class="col s12 section value_change">
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="min_temperature" type="text" class="validate"
+                    <input id="min_temperature" type="number" class="validate"
                            value="{{equipment.properties.min_temperature}}"><span class="unitmargin">°C</span>
                     <label for="min_temperature" {{#equipment.properties.min_temperature}}
                            class="active" {{/equipment.properties.min_temperature}}>Temperature You Want to Change Everytime</label>
