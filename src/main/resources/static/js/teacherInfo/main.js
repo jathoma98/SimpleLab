@@ -59,16 +59,41 @@ $(document).ready(function () {
     $("#equipEditBtn").on("click",()=>{EQUIPMENT_TABLE.btnSwitch()});
     $("#equipBackBtn").on("click",()=>{EQUIPMENT_TABLE.btnSwitch()});
     $("#equipAddBtn").on("click", ()=>{EQUIPMENT_TABLE.create()});
-    $("#equip_img").load(function () {
-        $(this).css('height', '200px').show();
-    }).hide();
+    $("#equipDeleteBtn").on("click", ()=>{EQUIPMENT_TABLE.delete()});
+    // $("#equip_img").load(function () {
+    //     $(this).css('height', '200px').show();
+    // }).hide();
     $("#equip_input").on("change",()=>{EQUIPMENT_TABLE.loadImg()});
 
 
     //load equipment table
     EQUIPMENT_TABLE.reload();
 
+
+    // $("#liquid").click(function(event){
+    //     var selectedOption = event.target.value;
+    //     console.log(selectedOption);
+    //     if (selectedOption === 'liquid') {
+    //         $("#equip_name").style.display="none";
+    //         // document.getElementById('text').style.display = 'block';
+    //     }
+    // })
+
+
 })
+
+function on_change(el){
+    var selectedOption = el.target.value;
+    if (selectedOption === 'liquid') {
+        $("#equip_name").style.display="none";
+        // document.getElementById('text').style.display = 'block';
+    } else if(selectedOption === 'soild') {
+        $("#max_volume").style.display="none";
+        // document.getElementById('text').style.display = 'none'; // Hide el
+    }else{
+
+    }
+}
 
 
 

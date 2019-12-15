@@ -18,23 +18,79 @@
             </div>
         </div>
     </div>
+<!--    <div class="col s8" id="equip_tab">-->
+<!--        <div class="col s12">-->
+<!--            <ul class="tabs col s12 center-align tabs-fixed-width delete_empty">-->
+<!--                <li class="tab col s3"><a href="#test1">Liquid</a></li>-->
+<!--                <li class="tab col s3"><a class="active" href="#test2">Soild</a></li>-->
+<!--                <li class="tab col s3"><a href="#test3">Machine</a></li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--        <div id="test1" class="col s12">-->
+<!--            <div class="col s12 section">-->
+<!--                <div class="row">-->
+<!--                    <div class="input-field col s12">-->
+<!--                        <input id="equip_name" type="text" class="validate"-->
+<!--                               value="{{equipment.name}}">-->
+<!--                        <label for="equip_name" {{#equipment.name}} class="active" {{/equipment.name}}>Name</label>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col s12 section">-->
+<!--                <div class="row">-->
+<!--                    <div class="input-field col s6">-->
+<!--                        <input id="max_volume" type="text" class="validate"-->
+<!--                               value="{{equipment.properties.max_volume}}"><span class="unitmargin">L</span>-->
+<!--                        <label for="max_volume" {{#equipment.properties.max_volume}}-->
+<!--                               class="active" {{/equipment.properties.max_volume}}>Max Volume</label>-->
+<!--                    </div>-->
+<!--                    <div class="input-field col s6">-->
+<!--                        <input id="max_weight" type="text" class="validate"-->
+<!--                               value="{{equipment.properties.max_weight}}"><span class="unitmargin">Kg</span>-->
+<!--                        <label for="max_weight" {{#equipment.properties.max_weight}}-->
+<!--                               class="active" {{/equipment.properties.max_weight}}>Max Weight</label>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col s12 section">-->
+<!--                <div class="row">-->
+<!--                    <div class="input-field col s12">-->
+<!--                        <input id="max_temperature" type="text" class="validate"-->
+<!--                               value="{{equipment.properties.max_temperature}}"><span class="unitmargin">°C</span>-->
+<!--                        <label for="max_temperature" {{#equipment.properties.max_temperature}}-->
+<!--                               class="active" {{/equipment.properties.max_temperature}}>Default Temperature</label>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash;        //*****************************************************************************************************************************************************************&ndash;&gt;-->
+<!--        &lt;!&ndash;        //*******************************************************************soild**********************************************************************************************&ndash;&gt;-->
+<!--        &lt;!&ndash;        //*****************************************************************************************************************************************************************&ndash;&gt;-->
+<!--        <div id="test2" class="col s12">Test 2</div>-->
+<!--        &lt;!&ndash;        //*****************************************************************************************************************************************************************&ndash;&gt;-->
+<!--        &lt;!&ndash;        //******************************************************************machine***********************************************************************************************&ndash;&gt;-->
+<!--        &lt;!&ndash;        //*****************************************************************************************************************************************************************&ndash;&gt;-->
+<!--        <div id="test3" class="col s12">Test 3</div>-->
+<!--    </div>-->
+
+
     <form class="col s8 valign-wrapper section" id="equip_type">
         <label class="col s2"><h6>Equipment Type: </h6></label>
         <label class="col s3">
-            <input class="with-gap" name="group1" value="liquid" type="radio"{{liquid}}{{#create}} checked{{/create}}/>
+            <input class="with-gap" id="liquid" name="group1" value="liquid"  type="radio"{{liquid}}{{#create}} checked{{/create}}/>
             <span>Liquid</span>
         </label>
         <label class="col s3">
-            <input class="with-gap" name="group1" value="solid" type="radio" {{solid}}/>
+            <input class="with-gap" id="solid" name="group1" value="solid"  type="radio" {{solid}}/>
             <span>Solid</span>
         </label>
         <label class="col s3">
-            <input class="with-gap" name="group1" value="machine" type="radio" {{machine}}/>
+            <input class="with-gap" id="machine" name="group1" value="machine"  type="radio" {{machine}}/>
             <span>Machine</span>
         </label>
     </form>
     <form class="col s8">
-        <div class="col s12 section">
+        <div class="col s12 section equip_name">
             <div class="row">
                 <div class="input-field col s12">
                     <input id="equip_name" type="text" class="validate"
@@ -43,35 +99,59 @@
                 </div>
             </div>
         </div>
-        <div class="col s12 section">
+        <div class="col s12 section max_volume">
             <div class="row">
-                <div class="input-field col s6">
-                    <input id="max_volume" type="text" class="validate"
+                <div class="input-field col s12">
+                    <input id="max_volume" type="number" class="validate"
                            value="{{equipment.properties.max_volume}}"><span class="unitmargin">L</span>
                     <label for="max_volume" {{#equipment.properties.max_volume}}
                            class="active" {{/equipment.properties.max_volume}}>Max Volume</label>
                 </div>
-                <div class="input-field col s6">
-                    <input id="max_weight" type="text" class="validate"
+            </div>
+        </div>
+        <div class="col s12 section max_weight">
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="max_weight" type="number" class="validate"
                            value="{{equipment.properties.max_weight}}"><span class="unitmargin">Kg</span>
                     <label for="max_weight" {{#equipment.properties.max_weight}}
                            class="active" {{/equipment.properties.max_weight}}>Max Weight</label>
                 </div>
             </div>
         </div>
-        <div class="col s12 section">
+        <div class="col s12 section max_temperature">
             <div class="row">
-                <div class="input-field col s6">
-                    <input id="min_temperature" type="text" class="validate"
-                           value="{{equipment.properties.min_temperature}}"><span class="unitmargin">°C</span>
-                    <label for="min_temperature" {{#equipment.properties.min_temperature}}
-                           class="active" {{/equipment.properties.min_temperature}}>Min Temperature</label>
-                </div>
-                <div class="input-field col s6">
-                    <input id="max_temperature" type="text" class="validate"
+<!--                <div class="input-field col s6">-->
+<!--                    <input id="min_temperature" type="text" class="validate"-->
+<!--                           value="{{equipment.properties.min_temperature}}"><span class="unitmargin">°C</span>-->
+<!--                    <label for="min_temperature" {{#equipment.properties.min_temperature}}-->
+<!--                           class="active" {{/equipment.properties.min_temperature}}>Min Temperature</label>-->
+<!--                </div>-->
+                <div class="input-field col s12">
+                    <input id="max_temperature" type="number" class="validate"
                            value="{{equipment.properties.max_temperature}}"><span class="unitmargin">°C</span>
                     <label for="max_temperature" {{#equipment.properties.max_temperature}}
-                           class="active" {{/equipment.properties.max_temperature}}>Max Temperature</label>
+                           class="active" {{/equipment.properties.max_temperature}}> Default Temperature</label>
+                </div>
+            </div>
+        </div>
+<!--        <div class="col s12 section attribute_name">-->
+<!--            <div class="row">-->
+<!--                <div class="input-field col s12">-->
+<!--                    <input id="attribute_name" type="text" class="validate"-->
+<!--                           value="{{equipment.properties.max_weight}}">-->
+<!--                    <label for="attribute_name" {{#equipment.properties.max_weight}}-->
+<!--                           class="active" {{/equipment.properties.max_weight}}>Attribute Name You Want to Change</label>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+        <div class="col s12 section value_change">
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="min_temperature" type="number" class="validate"
+                           value="{{equipment.properties.min_temperature}}"><span class="unitmargin">°C</span>
+                    <label for="min_temperature" {{#equipment.properties.min_temperature}}
+                           class="active" {{/equipment.properties.min_temperature}}>Temperature You Want to Change Everytime</label>
                 </div>
             </div>
         </div>

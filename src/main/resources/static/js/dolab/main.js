@@ -439,7 +439,7 @@ $(document).ready(() => {
     WORK_SPACE.loadEquipments();
     WORK_SPACE.loadSteps();
     WORK_SPACE.loadRecipe();
-    $(ELEM_NAME.OPEERATION_AREA).on("click", (event) => {
-        EQUIPMENT_DRAG_EVENT.select(event);
-    })
+    $(ELEM_NAME.OPEERATION_AREA).on("click", (event)=>{EQUIPMENT_DRAG_EVENT.select(event);})
+
+
 })

@@ -17,6 +17,7 @@ public abstract class Projection {
     @Value
     public static class TeacherLabInfo extends Projection{
         String name, createdDate;
+        String description;
         long id;
     }
 

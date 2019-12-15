@@ -10,6 +10,8 @@ let EQUIPMENT_TABLE = {
         EQUIPMENT_IMAGE: "#euqip_image"
     },
 
+
+
     init() {
         this.toggle = true;
         this.btnEvents = new Array();
@@ -36,6 +38,8 @@ let EQUIPMENT_TABLE = {
                         data.equipmentModal[equipment.type] = " checked";
                         EQUIPMENT_TABLE.modal_info = equipment;
                         rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL_EQUIP, data, 'click', EQUIPMENT_TABLE.btnEvents);
+                        EQUIPMENT_TABLE.checkRadio(equipment.type);
+                        EQUIPMENT_TABLE.hideAndShowInput();
                     })
                 }
             })
@@ -45,6 +49,67 @@ let EQUIPMENT_TABLE = {
         /**
          * Use to pull lab list from server in teacher home page
          **/
+        this.hideAndShowInput=function(){
+            // $("max_weight").prop("readonly", true);
+            // $(".max_weight").prop("readonly", true);
+            // $(".max_temperature").prop("readonly", true);
+            // $(".max_volume").prop("readonly", true);
+            // $(".equip_name").prop("readonly", true);
+            // $(".value_change").prop("readonly", true);
+            // $(".attribute_name").prop("readonly", true);
+            $('input[type="radio"]').click(function(){
+                var inputValue = $(this).attr("value");
+                if (inputValue === 'liquid') {
+                    $(".max_weight").show()
+                    $(".max_temperature").show()
+                    $(".max_volume").show()
+                    $(".equip_name").show()
+                    $(".value_change").hide();
+                    $(".attribute_name").hide();
+                }else if (inputValue === 'solid'){
+                    $(".max_weight").show()
+                    $(".max_temperature").show()
+                    $(".max_volume").hide()
+                    $(".equip_name").show()
+                    $(".value_change").hide();
+                    $(".attribute_name").hide();
+                }else{
+                    $(".max_weight").hide()
+                    $(".max_temperature").hide()
+                    $(".max_volume").hide()
+                    $(".equip_name").show();
+                    $(".value_change").show();
+                    $(".attribute_name").show();
+
+                }
+            });
+        }
+
+        this.checkRadio= function (value) {
+            if (value === 'liquid') {
+                $(".max_weight").show()
+                $(".max_temperature").show()
+                $(".max_volume").show()
+                $(".equip_name").show()
+                $(".value_change").hide();
+                $(".attribute_name").hide();
+            }else if (value === 'solid'){
+                $(".max_weight").show()
+                $(".max_temperature").show()
+                $(".max_volume").hide()
+                $(".equip_name").show()
+                $(".value_change").hide();
+                $(".attribute_name").hide();
+            }else{
+                $(".max_weight").hide()
+                $(".max_temperature").hide()
+                $(".max_volume").hide()
+                $(".equip_name").show();
+                $(".value_change").show();
+                $(".attribute_name").show();
+
+            }
+        }
         this.reload = function () {
             $.ajax({
                 url: "/equipment/rest/loadEquipmentList",
@@ -87,7 +152,8 @@ let EQUIPMENT_TABLE = {
                 contentType: 'application/json; charset=utf-8',
                 data: data_json,
                 success: function (result) {
-                    retObjHandle(result, COURSES_TABLE.reload);
+                    // retObjHandle(result, COURSES_TABLE.reload);
+                    retObjHandle(result, EQUIPMENT_TABLE.reload);
                 }
             })
         };
@@ -149,11 +215,22 @@ let EQUIPMENT_TABLE = {
             })
         };
 
+        /**
+         * Change the Image become byte[]
+         **/
+        this.covImg = function (Img) {
+
+        }
+
+        /**
+         * Upload Image.
+         **/
         this.loadImg = function(){
             $('#equip_image').attr('src', '').hide();
             if ($("#equip_input")[0].files && $("#equip_input")[0].files[0]){
                 let reader = new FileReader();
                 $(reader).load(function(e){
+                    console.log(e.target.result);
                     $("#equip_image").attr('src',e.target.result);
                 });
                 reader.readAsDataURL($("#equip_input")[0].files[0]);
@@ -182,6 +259,8 @@ let EQUIPMENT_TABLE = {
                 }
             }
             rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL_EQUIP, data, "click", EQUIPMENT_TABLE.btnEvents);
+            EQUIPMENT_TABLE.checkRadio("liquid");
+            EQUIPMENT_TABLE.hideAndShowInput();
 
         //     $(TEMPLATE_ID.MODAL_EQUIP).find("#equip_image").on("change",()=>{EQUIPMENT_TABLE.loadImg()});
         };
