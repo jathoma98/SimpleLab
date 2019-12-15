@@ -59,9 +59,10 @@ $(document).ready(function () {
     $("#equipEditBtn").on("click",()=>{EQUIPMENT_TABLE.btnSwitch()});
     $("#equipBackBtn").on("click",()=>{EQUIPMENT_TABLE.btnSwitch()});
     $("#equipAddBtn").on("click", ()=>{EQUIPMENT_TABLE.create()});
-    $("#equip_img").load(function () {
-        $(this).css('height', '200px').show();
-    }).hide();
+    $("#equipDeleteBtn").on("click", ()=>{EQUIPMENT_TABLE.delete()});
+    // $("#equip_img").load(function () {
+    //     $(this).css('height', '200px').show();
+    // }).hide();
     $("#equip_input").on("change",()=>{EQUIPMENT_TABLE.loadImg()});
 
 

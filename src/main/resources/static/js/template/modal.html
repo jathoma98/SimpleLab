@@ -147,12 +147,12 @@ data = {
         <div class="row collapsible-body"{{#active}} style="display: block;"{{/active}}>
             <form class="col s12">
                 <div class="row">
-                    <div class="input-field col s6">
+                    <div class="input-field col s12">
                         <input id="lab_name" type="text" class="validate"
                                value="{{lab.name}}">
                         <label for="lab_name"{{#lab.name}} class="active"{{/lab.name}}>Lab Name</label>
                     </div>
-                    <div class="col s6 valign-wrapper">
+                    <div class="col s6 valign-wrapper" style="display: none;">
                         <label class="col s4"><h6>Security: </h6></label>
                         <label class="col s4">
                             <input class="with-gap" name="group2" type="radio" checked/>
