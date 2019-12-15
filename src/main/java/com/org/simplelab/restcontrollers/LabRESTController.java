@@ -5,8 +5,10 @@ import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.Lab;
 import com.org.simplelab.database.entities.sql.Step;
 import com.org.simplelab.database.repositories.sql.LabRepository;
+import com.org.simplelab.database.services.DBService;
 import com.org.simplelab.database.services.LabDB;
 import com.org.simplelab.database.services.SQLService;
+import com.org.simplelab.database.services.StepDB;
 import com.org.simplelab.database.services.projections.Projection;
 import com.org.simplelab.database.validators.LabValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
@@ -43,6 +45,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
     public static final String LAB_ID_STEP_MAPPING = LAB_ID_MAPPING + "/step";
     public static final String LAB_ID_STEP_NUMBER_MAPPING = LAB_ID_MAPPING + "/{step_number}";
     public static final String LAB_ID_STEP_NUMBER_CHANGE_MAPPING = LAB_ID_MAPPING + "/{step_number}/{move}";
+    public static final String LAB_ID_STEP_UPDATE_MAPPING = LAB_ID_MAPPING + "/{step_number}/update";
     public static final String SEARCH_LAB_MAPPING = "/searchLab";
     public static final String LAB_ID_EQUIPMENT_MAPPING = LAB_ID_MAPPING + "/equipment";
 
@@ -197,6 +200,22 @@ public class LabRESTController extends BaseRESTController<Lab> {
         return super.updateEntity(toUpdate.getId(), dto.getNewLabInfo());
     }
 
+//    @GetMapping(LAB_ID_STEP_UPDATE_MAPPING)
+//    public RRO<Step> stepUpdate(@PathVariable("lab_id") long lab_id,
+//                                     @PathVariable("step_number") int step_num){
+//        Lab found = labDB.findById(lab_id);
+//        if (found == null){
+//            return RRO.sendErrorMessage("Lab Not Found");
+//        }
+//        List<Step> steps = found.getSteps();
+//        Step step=steps.get(step_num-1);
+//        RRO<String> rro = new RRO();
+//        rro.setData(step);
+//        rro.setSuccess(true);
+//        rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
+//        return rro;
+//    }
+
     @GetMapping(LAB_ID_STEP_NUMBER_CHANGE_MAPPING)
     public RRO<String> stepChangeNum(@PathVariable("lab_id") long lab_id,
                                     @PathVariable("step_number") int step_num,
@@ -245,26 +264,78 @@ public class LabRESTController extends BaseRESTController<Lab> {
         return rro;
     }
 
+    @Autowired
+    StepDB stepDB;
+
     @PostMapping(LAB_ID_STEP_MAPPING)
-    public RRO<String> addStepToLab(@PathVariable("lab_id") long lab_id,
+    public RRO addStepToLab(@PathVariable("lab_id") long lab_id,
                                     @RequestBody DTO.AddStepDTO dto){
         Lab found = labDB.findById(lab_id);
         if (found == null){
             return RRO.sendErrorMessage("Lab Not Found");
         }
         //TODO: could make better, but for now
-        Equipment targetObject = equipmentDB.findById(dto.getTargetEquipmentId());
         DTO.LabAddStepDTO f_step = new DTO.LabAddStepDTO();
-        f_step.setStepNum(found.getSteps().size()+1);
+        Equipment targetObject = equipmentDB.findById(dto.getTargetEquipmentId());
+        f_step.setStepNum(dto.getStepNum());
         f_step.setTargetObject(targetObject);
+        f_step.setTargetName(dto.getTargetName());
+        f_step.setTargetTips(dto.getTargetTips());
         f_step.setTargetTemperature(dto.getTargetTemperature());
         f_step.setTargetVolume(dto.getTargetVolume());
         f_step.setTargetWeight(dto.getTargetWeight());
-        Step s = DBUtils.getMapper().map(f_step, Step.class);
-        s.setLab(found);
         List<Step> toAdd = new ArrayList<>();
-        toAdd.add(s);
-        return super.addEntitiesToEntityList(labDB.getStepManager(found), toAdd);
+        if(dto.getStepNum() == -1){
+
+            f_step.setStepNum(found.getSteps().size()+1);
+            Step s = DBUtils.getMapper().map(f_step, Step.class);
+            s.setLab(found);
+            try {
+                stepDB.insert(s);
+            } catch (DBService.EntityDBModificationException e){
+                RRO.sendErrorMessage(e.getMessage());
+            }
+            toAdd.add(s);
+            return super.addEntitiesToEntityList(labDB.getStepManager(found), toAdd);
+
+        }else{
+            Step s = DBUtils.getMapper().map(f_step, Step.class);
+            List<Step> steps=found.getSteps();
+            int stepNum=f_step.getStepNum();
+            for (Step step : steps){
+                if(step.getStepNum() == stepNum){
+                    step.setTargetName(s.getTargetName());
+                    step.setTargetTips(s.getTargetTips());
+                    step.setTargetTemperature(s.getTargetTemperature());
+                    step.setTargetVolume(s.getTargetVolume());
+                    step.setTargetWeight(s.getTargetWeight());
+                    s = step;
+                    break;
+//                    steps.remove(step);
+//                    found.setSteps(steps);
+//                    s.setLab(found);
+//                    try {
+//                        stepDB.insert(s);
+//                    } catch (DBService.EntityDBModificationException e){
+//                        RRO.sendErrorMessage(e.getMessage());
+//                    }
+//                    toAdd.add(s);
+                }
+            }
+
+            try{
+                if (!s.isNew())
+                    stepDB.update(s);
+                else
+                    stepDB.insert(s);
+            }catch (DBService.EntityDBModificationException e) {
+                e.printStackTrace();
+            }
+        }
+        RRO rro = new RRO();
+        rro.setSuccess(true);
+        rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
+        return rro;
     }
 
     @DeleteMapping(LAB_ID_STEP_NUMBER_MAPPING)

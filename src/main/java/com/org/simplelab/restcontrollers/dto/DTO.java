@@ -135,6 +135,8 @@ public abstract class DTO {
          private Equipment targetObject;
          private int stepNum;
          private String targetTemperature;
+         private String targetName;
+         private String targetTips;
          private String targetVolume;
          private String targetWeight;
      }
@@ -159,6 +161,7 @@ public abstract class DTO {
          Long result;
          int ratioOne;
          int ratioTwo;
+         int ratioThree;
      }
 
     @Getter
@@ -166,8 +169,10 @@ public abstract class DTO {
     public static class AddStepDTO extends DTO{
         Long labId;
         Long targetEquipmentId;
-        int stepNum;
+        int stepNum = 0;
         String targetTemperature;
+        String targetName;
+        String targetTips;
         String targetVolume;
         String targetWeight;
     }

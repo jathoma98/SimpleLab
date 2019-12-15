@@ -20,7 +20,13 @@ public class StepDB extends SQLService<Step> {
     public boolean insert(Step step) throws EntityDBModificationException{
         return super.insert(step);
     };
+    public boolean delete(long id) throws EntityDBModificationException{
+        return super.deleteById(id);
+    };
 
+    public boolean update(Step step) throws EntityDBModificationException{
+        return super.update(step);
+    };
     public List<Step> findByLabId(long id){
         return repository.findByLab_id(id);
     }

@@ -48,6 +48,8 @@ public abstract class SpringTestConfig {
     protected  LabInstanceRepository lir;
     @Autowired
     protected LabInstanceDB instanceDB;
+    @Autowired
+    protected ImageFileDB imageDB;
 
 
     protected static final long user_id = 26667;

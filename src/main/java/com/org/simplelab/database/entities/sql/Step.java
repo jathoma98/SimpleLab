@@ -25,6 +25,8 @@ public class Step extends BaseTable{
     private String targetTemperature;
     private String targetVolume;
     private String targetWeight;
+    private String targetName;
+    private String targetTips;
 
     @Override
     public String toString(){

@@ -36,6 +36,7 @@ public class RecipeRESTController extends BaseRESTController<Recipe> {
         rv.setResult(equipmentDB.findById(dto.getResult()));
         rv.setRatioOne(dto.getRatioOne());
         rv.setRatioTwo(dto.getRatioTwo());
+        rv.setRatioThree(dto.getRatioThree());
         try{
             rv.validate();
         }catch (InvalidFieldException e) {
