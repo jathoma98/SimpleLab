@@ -59,6 +59,7 @@ class WorkSpaceEqmInfo {
                 curr_val: this.curr_val,
                 equipment: complex
             }))
+            this.purity = 100;
             $(this.drag_elem).find("p").text(this.equipment.name + " (" + this.purity + ")%");
             return;
         }
@@ -195,21 +196,33 @@ EQUIPMENT_DRAG_EVENT = {
         $("#name").text(eqm.name);
     },
     setInteractionModal: function (drag_eqm_wksp_obj, drop_eqm_wksp_obj) {
-        let title = ""
-        let btnTitle = ""
+        if(drag_eqm_wksp_obj.equipment == TYPE.MACHINE && drop_eqm_wksp_obj.equipment == TYPE.MACHINE){
+            alert("Unknow Recipe machine to machine");
+            return;
+        }
+        let title = "";
+        let btnTitle = "";
+        let max = "";
         switch (drag_eqm_wksp_obj.equipment.type) {
             case TYPE.LIQUID:
                 title += "Pour From " + drag_eqm_wksp_obj.equipment.name + " to " + drop_eqm_wksp_obj.equipment.name + " (L)"
                 btnTitle = "Pour";
+                max = drag_eqm_wksp_obj.curr_val;
                 break;
             case TYPE.SOLID:
                 title += "Take From " + drag_eqm_wksp_obj.equipment.name + " to " + drop_eqm_wksp_obj.equipment.name + " (kg)"
                 btnTitle = "Take";
+                max = drag_eqm_wksp_obj.curr_val;
+                break;
+            case TYPE.MACHINE:
+                title += "Take From " + drop_eqm_wksp_obj.equipment.name + " to " + drag_eqm_wksp_obj.equipment.name + " (Machine)";
+                btnTitle = "Take";
+                max = drop_eqm_wksp_obj.curr_val;
                 break;
         }
         //TODO: create Modal for setup value
         let btn = $(ELEM_NAME.INTERACTION_MODAL).find("a")
-        $(ELEM_NAME.INTERACTION_MODAL).find("input").attr('max', drag_eqm_wksp_obj.curr_val);
+        $(ELEM_NAME.INTERACTION_MODAL).find("input").attr('max', max);
         $(ELEM_NAME.INTERACTION_MODAL).find("input").val(0);
         $(ELEM_NAME.INTERACTION_MODAL).find(".popup_dialog_header").text(title);
         btn.text(btnTitle);
@@ -311,6 +324,19 @@ EQUIPMENT_DRAG_EVENT = {
             WORK_SPACE.AddEquipToWorkSpace(recipe.result, drag_eqm_wksp_obj.curr_val / (recipe.ratioOne/recipe.ratioThree));
             drag_eqm_wksp_obj.curr_val -= tranVal;
         }
+        if (one.type == "machine"  && two.type != "machine" ){
+            if (drop_eqm_wksp_obj.purity !== 100) {alert("Unknow Recipe"); return};
+            let recipe = WORK_SPACE.recipes.find(r => {
+                return r.equipmentOne.id == one.id && r.equipmentTwo.id == two.id;
+            })
+            if (recipe == null) {alert("Unknow Recipe"); return};
+            drop_eqm_wksp_obj.curr_val -= tranVal;
+            drag_eqm_wksp_obj.change(Math.round(drop_eqm_wksp_obj.curr_val / (recipe.ratioTwo/recipe.ratioThree)), recipe.result)
+        }
+        if (one.type == "machine"  && two.type == "machine" ){
+            alert("Unknow Recipe (machine to machine)");
+            return;
+        }
     }
 }
 
@@ -330,6 +356,12 @@ WORK_SPACE = {
                 success: function (result) {
                     retObjHandle(result, () => {
                         WORK_SPACE.recipes = result.data;
+                        WORK_SPACE.recipes.forEach(r=>{
+                                equipmentPropsToKeyValue(r.equipmentOne);
+                                equipmentPropsToKeyValue(r.equipmentTwo);
+                                equipmentPropsToKeyValue(r.result);
+                            }
+                        );
                     });
                 }
             })
