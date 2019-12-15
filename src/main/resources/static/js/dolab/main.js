@@ -21,26 +21,99 @@ class WorkSpaceEqmInfo {
     constructor(id, equipment, curr_val, curr_temp, html_elem, li_elem) {
         this.id = id; //equipment id on the work space.
         this.equipment = equipment; //equipment default info.
-        this.curr_val = curr_val; //equipment current value on work space
-        this.curr_temp = curr_temp;
+        this.curr_val = curr_val * 1; //equipment current value on work space
+        this.curr_temp = curr_temp * 1;
         this.drag_elem = html_elem; //Jquery html element object (drag)
         this.li_elem = li_elem; //Jquery html element object (li)
         this.mix_list = []; //{equipment, value}
+        this.purity = 100;
     }
-    change(equipment, curr_val, mix){
-        this.equipment = equipment;
-        this.curr_val = curr_val;
-        $(this.drag_elem).find("p").text(equipment.name);
-        $(this.li_elem).empty();
-        $(this.li_elem).append(Mustache.render(TEMPLATE.WORKSPACE_EQM_ELEM_BAR, {curr_val: curr_val, equipment:equipment}))
-        if(mix != null){
-            this.mix_list.push(mix);
+
+    isOverflow() {
+        let type = this.equipment.type;
+        if (this.curr_val > (type == "liquid" ? this.equipment.max_volume : this.max_weight)) {
+            let cutoff = this.equipment.max_volume - this.curr_val;
+            let remain = this.curr_val - cutoff;
+            let ratio_remain = remain / this.curr_val;
+            this.mix_list.forEach(m => m.value * ratio_remain);
+            this.curr_val = this.equipment.max_volume;
+            alert("Equipment reach the max " + type + ", extra will be wast.")
         }
     }
 
+    change(val_1, complex, val_2, eqm_2) {
+        if (arguments.length == 1) {
+            this.curr_val = val_1;
+            this.mix_list = [];
+            this.setPurity()
+            this.isOverflow();
+            return;
+        }
+        if (arguments.length == 2) {
+            this.curr_val = val_1
+            this.equipment = complex;
+            this.setPurity()
+            this.isOverflow();
+            $(this.li_elem).empty();
+            $(this.li_elem).append(Mustache.render(TEMPLATE.WORKSPACE_EQM_ELEM_BAR, {
+                curr_val: this.curr_val,
+                equipment: complex
+            }))
+            $(this.drag_elem).find("p").text(this.equipment.name + " (" + this.purity + ")%");
+            return;
+        }
+        if (arguments.length == 4) {
+            this.mix_list = [];
+            this.curr_val = val_1 + val_2;
+            if (val_1 > val_2) {
+                this.equipment = complex;
+                $(this.li_elem).empty();
+                $(this.li_elem).append(Mustache.render(TEMPLATE.WORKSPACE_EQM_ELEM_BAR, {
+                    curr_val: this.curr_val,
+                    equipment: complex
+                }))
+                if (eqm_2 != null) {
+                    this.mix_list.push({equipment: eqm_2, value: val_2});
+                }
+            } else if (val_1 < val_2) {
+                this.equipment = eqm_2;
+                $(this.li_elem).empty();
+                $(this.li_elem).append(Mustache.render(TEMPLATE.WORKSPACE_EQM_ELEM_BAR, {
+                    curr_val: this.curr_val,
+                    equipment: eqm_2
+                }))
+                if (complex != null) {
+                    this.mix_list.push({equipment: complex, value: val_1});
+                }
+            } else {
+                val_2 = Math.round(val_2);
+                this.equipment = complex;
+                $(this.li_elem).empty();
+                $(this.li_elem).append(Mustache.render(TEMPLATE.WORKSPACE_EQM_ELEM_BAR, {
+                    curr_val: this.curr_val,
+                    equipment: complex
+                }))
+                if (eqm_2 != null) {
+                    this.mix_list.push({equipment: eqm_2, value: val_2});
+                }
+            }
+            this.setPurity();
+            this.isOverflow();
+            $(this.drag_elem).find("p").text(this.equipment.name + " (" + this.purity + ")%");
+            return;
+        }
+    }
+
+    setPurity() {
+        let sum_mix = 0;
+        this.mix_list.forEach(m => sum_mix += m.value);
+        this.purity = Math.floor((1 - sum_mix / this.curr_val) * 100);
+        if (this.purity > 97) {
+            this.purity == 100;
+            this.mix_list = [];
+        }
+    }
 };
-
-
 
 
 TYPE = {
@@ -64,29 +137,29 @@ EQUIPMENT_DRAG_EVENT = {
         EQUIPMENT_DRAG_EVENT.setInteractionModal(draggable, droppable)
         $(ELEM_NAME.INTERACTION_MODAL).modal("open");
     },
-    select: function (event, ui, eqm_wksp_obj){
+    select: function (event, ui, eqm_wksp_obj) {
         // if($(event.currentTarget).hasClass("draggable_item")){
-        if(eqm_wksp_obj == WORK_SPACE.selected) return;
-        if(WORK_SPACE.selected != undefined){
+        if (eqm_wksp_obj == WORK_SPACE.selected) return;
+        if (WORK_SPACE.selected != undefined) {
             $(WORK_SPACE.selected.drag_elem).removeClass("selected");
             $(WORK_SPACE.selected.li_elem).removeClass("selected");
         }
-        if(eqm_wksp_obj != undefined ){
+        if (eqm_wksp_obj != undefined) {
             $(eqm_wksp_obj.drag_elem).addClass("selected");
             $(eqm_wksp_obj.li_elem).addClass("selected");
             WORK_SPACE.selected = eqm_wksp_obj;
             EQUIPMENT_DRAG_EVENT.showInfo(eqm_wksp_obj);
-        }else{
+        } else {
             WORK_SPACE.selected = undefined;
-            if ($("#infobar").is(":visible")){
-                $("#infobar").hide("slide", { direction: "right" }, 400);
+            if ($("#infobar").is(":visible")) {
+                $("#infobar").hide("slide", {direction: "right"}, 400);
             }
         }
     },
-    showInfo:function(eqm_wksp_obj){
+    showInfo: function (eqm_wksp_obj) {
         let eqm = eqm_wksp_obj.equipment;
-        if(!$("#infobar").is(":visible")){
-            $("#infobar").show("slide", { direction: "right" }, 400);
+        if (!$("#infobar").is(":visible")) {
+            $("#infobar").show("slide", {direction: "right"}, 400);
         }
         switch (eqm.type) {
             case "liquid":
@@ -111,19 +184,27 @@ EQUIPMENT_DRAG_EVENT = {
                 $("#current_temperature").text("")
                 break;
         }
+        $("#infobar ul").find(".mix_eqm").remove();
+        eqm_wksp_obj.mix_list.forEach(m => {
+            let mix_eqm_li = $('<li class="collection-item row mix_eqm"></li>');
+            mix_eqm_li.append('<div class="col s6 mix_eqm_title"></div><div class="col s6 mix_eqm_value"></div>');
+            mix_eqm_li.find(".mix_eqm_title").text(m.equipment.name);
+            mix_eqm_li.find(".mix_eqm_value").text(m.value + (eqm.type == "liquid" ? " L" : " kg"));
+            $("#infobar ul").append(mix_eqm_li);
+        })
         $("#name").text(eqm.name);
     },
-    setInteractionModal:function(drag_eqm_wksp_obj, drop_eqm_wksp_obj){
+    setInteractionModal: function (drag_eqm_wksp_obj, drop_eqm_wksp_obj) {
         let title = ""
         let btnTitle = ""
         switch (drag_eqm_wksp_obj.equipment.type) {
             case TYPE.LIQUID:
-                title += "Pour From " + drag_eqm_wksp_obj.equipment.name + " to " +drop_eqm_wksp_obj.equipment.name+ " (L)"
-                btnTitle= "Pour";
+                title += "Pour From " + drag_eqm_wksp_obj.equipment.name + " to " + drop_eqm_wksp_obj.equipment.name + " (L)"
+                btnTitle = "Pour";
                 break;
             case TYPE.SOLID:
-                title += "Take From " + drag_eqm_wksp_obj.equipment.name + " to " +drop_eqm_wksp_obj.equipment.name+ " (kg)"
-                btnTitle= "Take";
+                title += "Take From " + drag_eqm_wksp_obj.equipment.name + " to " + drop_eqm_wksp_obj.equipment.name + " (kg)"
+                btnTitle = "Take";
                 break;
         }
         //TODO: create Modal for setup value
@@ -133,42 +214,92 @@ EQUIPMENT_DRAG_EVENT = {
         $(ELEM_NAME.INTERACTION_MODAL).find(".popup_dialog_header").text(title);
         btn.text(btnTitle);
         btn.off("click");
-        btn.on("click", ()=>{
+        btn.on("click", () => {
             EQUIPMENT_DRAG_EVENT.interacting(drag_eqm_wksp_obj, drop_eqm_wksp_obj,
-                $(ELEM_NAME.INTERACTION_MODAL).find("input").val());});
+                $(ELEM_NAME.INTERACTION_MODAL).find("input").val());
+        });
     },
     interacting(drag_eqm_wksp_obj, drop_eqm_wksp_obj, tranVal) {
+        tranVal = tranVal * 1;
         let one = drag_eqm_wksp_obj.equipment;
         let two = drop_eqm_wksp_obj.equipment;
-        //Interaction With same value.
-        if (one.id = one.id){
-            drag_eqm_wksp_obj.curr_val -= tranVal;
+        //Interaction With same equipment.
+        if (one.id == two.id) {
+            drag_eqm_wksp_obj.change(drag_eqm_wksp_obj.curr_val - tranVal)
+            let c = drop_eqm_wksp_obj.curr_val = drop_eqm_wksp_obj.curr_val * 1 + tranVal;
+            drop_eqm_wksp_obj.change(c);
+            return;
         }
-        //Interacting With two differnt iteam.
-        let a = Number(tranVal) , b = Number(drop_eqm_wksp_obj.curr_val);
-        let recipes = WORK_SPACE.recipes.find(r => {
-            return r.equipmentOne.id == one.id && r.equipmentTwo.id == two.id;
-        })
-        let ratio_recipe = recipes.ratioOne / recipes.ratioTwo;
-        let ratio_new = a / b;
-        if (ratio_new > ratio_recipe) {
-            let req_a = b * ratio_recipe;
-            let lef_a = a - req_a;
-            let c = req_a + b;
-            drag_eqm_wksp_obj.curr_val -= tranVal;
-            return drop_eqm_wksp_obj.change(recipes.result, c, {equipemt: one, value:lef_a })
-        } else if (ratio_new < ratio_recipe) {
-            let req_b = a * (1 / ratio_recipe);
-            let lef_b = b - req_b;
-            let c = a + req_b;
-            drag_eqm_wksp_obj.curr_val -= tranVal;
-            return drop_eqm_wksp_obj.change(recipes.result, c, {equipemt: two, value:lef_b })
-        } else {
-            c = a + b;
-            drag_eqm_wksp_obj.curr_val -= tranVal;
-            return drop_eqm_wksp_obj.change(recipes.result, c, undefined)
+        //Interacting With two differnt equipment.
+        if (one.id != two.id) {
+            let a = 0, b = 0;
+            if (drop_eqm_wksp_obj.purity == 100) {
+                a = tranVal * 1, b = drop_eqm_wksp_obj.curr_val * 1;
+                let recipe = WORK_SPACE.recipes.find(r => {
+                    return r.equipmentOne.id == one.id && r.equipmentTwo.id == two.id;
+                })
+                if (recipe == null) {
+                    alert("Unknow Recipe")
+                    return
+                }
+                ;
+                let ratio_recipe = recipe.ratioOne / recipe.ratioTwo;
+                let ratio_new = a / b;
+                if (ratio_new > ratio_recipe) {
+                    let req_a = b * ratio_recipe;
+                    let lef_a = a - req_a;
+                    let c = req_a + b;
+                    drag_eqm_wksp_obj.curr_val -= tranVal;
+                    return drop_eqm_wksp_obj.change(Math.round(c), recipe.result, Math.round(lef_a), one)
+                } else if (ratio_new < ratio_recipe) {
+                    let req_b = a * (1 / ratio_recipe);
+                    let lef_b = b - req_b;
+                    let c = a + req_b;
+                    drag_eqm_wksp_obj.curr_val -= tranVal;
+                    return drop_eqm_wksp_obj.change(Math.round(c), recipe.result, Math.round(lef_b), two);
+                } else {
+                    c = a + b;
+                    drag_eqm_wksp_obj.curr_val -= tranVal;
+                    return drop_eqm_wksp_obj.change(c, recipe.result,)
+                }
+            } else {
+                //TODO: when purity not equal to 100, change two to mix[0].equipment
+                two = drop_eqm_wksp_obj.mix_list[0].equipment;
+                a = tranVal * 1, b = drop_eqm_wksp_obj.mix_list[0].value * 1;
+                let recipe = WORK_SPACE.recipes.find(r => {
+                    return r.equipmentOne.id == one.id && r.equipmentTwo.id == two.id;
+                })
+                if (recipe == null) {
+                    alert("Unknow Recipe");
+                    return
+                }
+                if (drop_eqm_wksp_obj.equipment.id != recipe.result.id) {
+                    alert("Unknow Recipe");
+                    return;
+                } else {
+                    let ratio_recipe = recipe.ratioOne / recipe.ratioTwo;
+                    let ratio_new = a / b;
+                    if (ratio_new > ratio_recipe) {
+                        let req_a = b * ratio_recipe;
+                        let lef_a = a - req_a;
+                        let c = req_a + b;
+                        drag_eqm_wksp_obj.curr_val -= tranVal;
+                        drop_eqm_wksp_obj.change(drop_eqm_wksp_obj.curr_val + Math.round(c), recipe.result, Math.round(lef_a), one)
+                        return
+                    } else if (ratio_new < ratio_recipe) {
+                        let req_b = a * (1 / ratio_recipe);
+                        let lef_b = b - req_b;
+                        let c = a + req_b;
+                        drag_eqm_wksp_obj.curr_val -= tranVal;
+                        return drop_eqm_wksp_obj.change(drop_eqm_wksp_obj.curr_val + Math.round(c), recipe.result, Math.round(lef_b), two);
+                    } else {
+                        c = a + b;
+                        drag_eqm_wksp_obj.curr_val -= tranVal;
+                        return drop_eqm_wksp_obj.change(drop_eqm_wksp_obj.curr_val + c)
+                    }
+                }
+            }
         }
-        console.log(recipes);
     }
 }
 
@@ -181,9 +312,9 @@ WORK_SPACE = {
         this.equip_counter = 0;
         this.last_drag;
         this.recipes;
-        this.loadRecipe = function (){
+        this.loadRecipe = function () {
             $.ajax({
-                url: "/recipe/rest/loadRecipe/" +  LAB_INFO.creator_id,
+                url: "/recipe/rest/loadRecipe/" + LAB_INFO.creator_id,
                 type: 'GET',
                 success: function (result) {
                     retObjHandle(result, () => {
@@ -239,10 +370,10 @@ WORK_SPACE = {
             let template = Mustache.render(TEMPLATE.WORKSPACE_EQM_ELEM,
                 {
                     eqm_wksp_id: WORK_SPACE.last_equips_in_workspace_id,
-                    name: eqm.name,
+                    name: eqm.name + " (100)%",
                 });
             let template_li = $("<li/>");
-            template_li.append(Mustache.render(TEMPLATE.WORKSPACE_EQM_ELEM_BAR, {curr_val: curr_val, equipment:eqm}));
+            template_li.append(Mustache.render(TEMPLATE.WORKSPACE_EQM_ELEM_BAR, {curr_val: curr_val, equipment: eqm}));
 
             let eqm_wksp_obj = new WorkSpaceEqmInfo(WORK_SPACE.equip_counter, eqm,
                 curr_val, eqm.properties.max_temperature, $(template), $(template_li));
@@ -262,14 +393,14 @@ WORK_SPACE = {
                     EQUIPMENT_DRAG_EVENT.drop(event, ui, eqm_wksp_obj)
                 },
             });
-            eqm_wksp_obj.drag_elem.on("click", (event, ui)=>{
+            eqm_wksp_obj.drag_elem.on("click", (event, ui) => {
                 event.stopPropagation();
                 EQUIPMENT_DRAG_EVENT.select(event, ui, eqm_wksp_obj);
             });
             eqm_wksp_obj.drag_elem.appendTo(ELEM_NAME.OPEERATION_AREA);
             eqm_wksp_obj.drag_elem.offset({top: 300, left: 500});
             //li elem set up
-            eqm_wksp_obj.li_elem.on("click", (event, ui)=>{
+            eqm_wksp_obj.li_elem.on("click", (event, ui) => {
                 event.stopPropagation();
                 EQUIPMENT_DRAG_EVENT.select(event, ui, eqm_wksp_obj);
             });
@@ -308,5 +439,7 @@ $(document).ready(() => {
     WORK_SPACE.loadEquipments();
     WORK_SPACE.loadSteps();
     WORK_SPACE.loadRecipe();
-    $(ELEM_NAME.OPEERATION_AREA).on("click", (event)=>{EQUIPMENT_DRAG_EVENT.select(event);})
+    $(ELEM_NAME.OPEERATION_AREA).on("click", (event) => {
+        EQUIPMENT_DRAG_EVENT.select(event);
+    })
 })
