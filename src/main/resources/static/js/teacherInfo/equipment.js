@@ -104,7 +104,7 @@ let EQUIPMENT_TABLE = {
             let validator = {
                 name: $(EQUIPMENT_TABLE.MODAL_ID.EQUIPMENT_NAME).val(),
                 type: $(EQUIPMENT_TABLE.MODAL_ID.EQUIPMENT_TYPE).val(),
-                // image: $(EQUIPMENT_TABLE.MODAL_ID.EQUIPMENT_IMAGE).files[0],
+                image: $(EQUIPMENT_TABLE.MODAL_ID.EQUIPMENT_IMAGE).files[0],
                 properties: [
                     {propertyKey: "max_temperature", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MAX_TEMPERATURE).val()},
                     {propertyKey: "min_temperature", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MIN_TEMPERATURE).val()},
@@ -149,6 +149,9 @@ let EQUIPMENT_TABLE = {
             })
         };
 
+        /**
+         * Upload Image.
+         **/
         this.loadImg = function(){
             $('#equip_image').attr('src', '').hide();
             if ($("#equip_input")[0].files && $("#equip_input")[0].files[0]){
