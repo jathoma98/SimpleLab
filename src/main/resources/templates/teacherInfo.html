@@ -85,7 +85,7 @@
 
 <script id="course_lab_list_tbody" type="mustache">
             <td>
-                <a class="left marginright info" href="#"><i class="material-icons">info</i></a>
+                <a class="left marginright info tooltipped" data-tooltip="id: {{id}}<br>Description:<br>{{description}}" href="#"><i class="material-icons">info</i></a>
                 <span>{{name}}</span>
                 {{^search}}<a class="right del" href="#"><i class="material-icons">remove_circle_outline</i></a>{{/search}}
                 {{#search}}<a class="right add" href="#"><i class="material-icons">add</i></a>{{/search}}

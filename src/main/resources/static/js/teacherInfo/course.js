@@ -296,6 +296,7 @@ let COURSES_TABLE = {
                             "<tr/>", ".add", data, "click", (lab)=>{
                                 COURSES_TABLE.addLabBtnEvent(lab)
                             });
+                        $('.tooltipped').tooltip();
                     })
                 }
             })
@@ -342,6 +343,7 @@ let COURSES_TABLE = {
                             "<tr/>", ".del", data, "click", (lab)=>{
                             COURSES_TABLE.delLabBtnEvent(lab)
                             });
+                        $('.tooltipped').tooltip();
                     })
                 }
             })
