@@ -11,6 +11,7 @@ public class RecipeValidator extends Validator<Recipe> {
     Equipment result;
     double ratioOne;
     double ratioTwo;
+    double ratioThree;
 
     @Override
     public void validate() throws InvalidFieldException {
@@ -30,6 +31,9 @@ public class RecipeValidator extends Validator<Recipe> {
         if (ratioTwo <= 0){
             sb.append("ratioTwo is equal to or less than 0\n");
         }
+        if (ratioThree <= 0){
+            sb.append("ratioThree is equal to or less than 0\n");
+        }
         if (sb.length() > 0)
             throw new InvalidFieldException(sb.toString());
     }
@@ -42,6 +46,7 @@ public class RecipeValidator extends Validator<Recipe> {
         recipe.setResult(result);
         recipe.setRatioOne(this.ratioOne);
         recipe.setRatioTwo(this.ratioTwo);
+        recipe.setRatioThree(this.ratioThree);
         equipmentOne.getEquipmentOne().add(recipe);
         equipmentTwo.getEquipmentTwo().add(recipe);
         return recipe;

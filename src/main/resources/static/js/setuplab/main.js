@@ -125,6 +125,7 @@ RECIPE = {
         result: "",
         ratioOne: "",
         ratioTwo: "",
+        ratioThree: ""
     },
     init() {
         this.setCard = function (eqm) {
@@ -194,6 +195,7 @@ RECIPE = {
         this.save = function () {
             RECIPE.recipe.ratioOne = $(ELEM_NAME.RECIPE_CARD_ONE).find("input").val();
             RECIPE.recipe.ratioTwo = $(ELEM_NAME.RECIPE_CARD_TWO).find("input").val();
+            RECIPE.recipe.ratioThree = $(ELEM_NAME.RECIPE_CARD_RESULT).find("input").val();
             let data_json = JSON.stringify(RECIPE.recipe);
             $.ajax({
                 url: "/recipe/rest",

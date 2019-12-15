@@ -161,6 +161,7 @@ public abstract class DTO {
          Long result;
          int ratioOne;
          int ratioTwo;
+         int ratioThree;
      }
 
     @Getter

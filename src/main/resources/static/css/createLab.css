@@ -251,10 +251,10 @@ td, th {
 
 
 .selectable .ui-selected {
-    background: #dd0052!important;
+    background: #00acc1!important;
     color: white!important; }
 .selectable li { background: white;}
-.selectable li:hover { background: #bdbdbd;}
+.selectable li:hover { background: #e6e6e6;}
 
 .recipemodal{
     height:40%!important;

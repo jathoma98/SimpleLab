@@ -200,23 +200,23 @@
                 <script id="recipe_template" type="mustache">
                     <div class="row">
                         <div class="col s11">
-                            <div class="col s4 center-align">{{equipmentOne.name}}({{equipmentOne.type}})({{ratioOne}})</div>
+                            <div class="col s4 center-align">{{equipmentOne.name}}({{ratioOne}})</div>
                             <div class="col s1 center"><i class="material-icons ">add</i></div>
-                            <div class="col s4 center-align">{{equipmentTwo.name}}({{equipmentTwo.type}})({{ratioTwo}})</div>
+                            <div class="col s4 center-align">{{equipmentTwo.name}}({{ratioTwo}})</div>
                             <div class="col s1 center"><i class="material-icons ">arrow_forward</i></div>
-                            <div class="col s2 center-align">{{result.name}}</div>
+                            <div class="col s2 center-align">{{result.name}}({{ratioThree}})</div>
                         </div>
                         <div class="col s1">
                             <a href="#"><i class="material-icons ">delete</i></a>
                         </div>
                     </div>
-
+<!--({{equipmentOne.type}})({{equipmentTwo.type}})-->
                 </script>
             </div>
             <div class="width2  white right height8 z-depth-2">
                 <nav class="col s12 delete_empty center-align my_rice_yellow"><h5>Current Equipments</h5></nav>
                 <div class="row"></div>
-                <ul class="row my_white height100 scrollbar_y ulstyle" id="recipe_equip_list"></ul>
+                <ul class="row my_white height100 scrollbar_y ulstyle selectable" id="recipe_equip_list"></ul>
                 <script id="recequip_list_template" type="mustache">
                     <div class="row sidebaritem">
                         <div class="col s2">
