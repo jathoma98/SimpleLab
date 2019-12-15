@@ -77,6 +77,7 @@ let COURSES_TABLE = {
                             ".add_student",
                             "click",
                             COURSES_TABLE.addStudentBtnEvent)
+                        $('.tooltipped').tooltip();
                     })
                 }
             })
@@ -136,10 +137,12 @@ let COURSES_TABLE = {
                             ElEM_ID.STUDENT_LIST_TBODY,
                             TEMPLATE_ID.STUDENTS_TBODY,
                             data)
+
                         setTableBodyRowBtnEvent(ElEM_ID.STUDENT_LIST_TBODY,
                             ".del_student",
                             "click",
                             COURSES_TABLE.removeStendtBtnEvent)
+                        $('.tooltipped').tooltip();
                     })
                 }
             })
@@ -293,6 +296,7 @@ let COURSES_TABLE = {
                             "<tr/>", ".add", data, "click", (lab)=>{
                                 COURSES_TABLE.addLabBtnEvent(lab)
                             });
+                        $('.tooltipped').tooltip();
                     })
                 }
             })
@@ -339,6 +343,7 @@ let COURSES_TABLE = {
                             "<tr/>", ".del", data, "click", (lab)=>{
                             COURSES_TABLE.delLabBtnEvent(lab)
                             });
+                        $('.tooltipped').tooltip();
                     })
                 }
             })
