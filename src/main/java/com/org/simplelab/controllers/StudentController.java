@@ -54,6 +54,6 @@ public class StudentController extends BaseController{
         model.addAttribute("user_role",user.getRole());
         model.addAttribute("lab_id", lab.getId());
         model.addAttribute("lab_name", lab.getName());
-        return "dolab";
+        return "doLab";
     }
 }

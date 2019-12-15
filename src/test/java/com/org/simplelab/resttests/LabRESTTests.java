@@ -170,7 +170,7 @@ public class LabRESTTests extends RESTTestBaseConfig {
         Equipment e = TestUtils.createJunkEquipment();
         long equip_id = DBTestUtils.insertAndGetId(e, equipmentDB);
         dto.setTargetEquipmentId(equip_id);
-        dto.setStepNum(0);
+        dto.setStepNum(-1);
         dto.setTargetTemperature("15");
         dto.setTargetVolume("15");
         dto.setTargetWeight("15");
@@ -208,7 +208,7 @@ public class LabRESTTests extends RESTTestBaseConfig {
         //ensure that inserting a step into another lab doesnt cause foreign key exception
         long id2 = DBTestUtils.insertAndGetId(TestUtils.createJunkLabWithSteps(2), labDB);
         String mapping2 = "/" + Long.toString(id2) + "/step";
-        dto.setStepNum(0);
+        dto.setStepNum(-1);
         labRequest.sendData(POST, mapping2, JSONBuilder.asJson(dto))
                 .andExpectSuccess(true);
 

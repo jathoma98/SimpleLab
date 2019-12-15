@@ -324,7 +324,10 @@ public class LabRESTController extends BaseRESTController<Lab> {
             }
 
             try{
-                stepDB.update(s);
+                if (!s.isNew())
+                    stepDB.update(s);
+                else
+                    stepDB.insert(s);
             }catch (DBService.EntityDBModificationException e) {
                 e.printStackTrace();
             }
