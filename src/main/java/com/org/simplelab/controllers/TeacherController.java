@@ -48,6 +48,7 @@ public class TeacherController extends BaseController {
         model.addAttribute("user_role",user.getRole());
         model.addAttribute("lab_id", lab.getId());
         model.addAttribute("lab_name", lab.getName());
+        model.addAttribute("creator_id", lab.getCreator().getId());
         return "dolab";
     }
 }

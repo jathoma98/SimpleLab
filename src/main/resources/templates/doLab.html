@@ -24,7 +24,8 @@
     /*<![CDATA[*/
     LAB_INFO = {
         id:  /*[[${lab_id}]]*/ "",
-        name:  /*[[${lab_name}]]*/ ""
+        name:  /*[[${lab_name}]]*/ "",
+        creator_id:  /*[[${creator_id}]]*/ "",
     }
     /*]]>*/
 </script>
@@ -131,6 +132,21 @@
         </div>
     </div>
 </div>
+
+<div id="interaction_modal" class="modal popup_dialog">
+    <nav class="my_yellow">
+        <div class="popup_dialog_header">Enter number of liquid</div>
+    </nav>
+    <div class="modal-content row">
+        <p class="range-field col s8 zeromargin ">
+            <input type="range" min="0" max="0" value="0"/>
+        </p>
+        <div class="center col s12">
+            <a id="add_to_wksp" href="#!" class="modal-close btn my_red">None</a>
+        </div>
+    </div>
+</div>
+
 <nav class="delete_empty">
     <div class="nav-wrapper row" style="background: #00acc1">
         <div class="col s12 valign-wrapper" style="background: #00b8ce; height: 30px; margin-top: 20px;">
@@ -150,7 +166,7 @@
 <!--    this operation area at the middle-->
 
 <div id="operation_area" class="operation_area delete_empty ">
-    <!--    side bar-->
+    <!--side bar-->
     <div id="sidebar" class="sidebar sidebarhover row">
         <!--Equipment List-->
         <div id="sidebarone" class="sidebar_info delete_empty">
@@ -273,92 +289,34 @@
                 <div class="col s6">
                     Name:
                 </div>
-                <div class="col s6">
-                    vitriol
+                <div id="name" class="col s6">
+                    None
+                </div>
+            </li>
+            <li class="collection-item row">
+                <div id="current_value_title" class="col s6">
+                    Current Value:
+                </div>
+                <div id="current_value" class="col s6">
+                    0
                 </div>
             </li>
             <li class="collection-item row">
                 <div class="col s6">
-                    chemistry exp:
+                    Current Temperature:
                 </div>
-                <div class="col s6">
-                    H2SO4
-                </div>
-            </li>
-            <li class="collection-item row">
-                <div class="col s6">
-                    Color:
-                </div>
-                <div class="col s6">
-                    Blue
+                <div id="current_temperature" class="col s6">
+                    0
                 </div>
             </li>
             <li class="collection-item row">
-                <div class="col s6">
-                    PH:
+                <div id="max_value_title" class="col s6">
+                    Max value:
                 </div>
-                <div class="col s6">
-                    7
-                </div>
-            </li>
-            <li class="collection-item row">
-                <div class="col s12 ">
-                    <button id="addcompound" class="btn waves-effect waves-light modal-trigger"
-                            data-target="#compoundmodal" style="background:#dd0052;">
-                        Add Compound
-                    </button>
-                    <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+                <div id="max_value" class="col s6">
+                    0
                 </div>
             </li>
-
-            <div id="compoundmodal" class="modal">
-                <div class="modal-content">
-                    <nav>
-                        <div class="nav-wrapper my_cran">
-                            <a href="#!" class="brand-logo"><i class="material-icons">view_list</i>Compounds</a>
-                        </div>
-                    </nav>
-                    <form class="col s12">
-                        <div class="row">
-                            <div class="input-field col s6">
-                                <input id="compound_name" type="text" class="validate">
-                                <label for="compound_name">Compound Name</label>
-                            </div>
-                            <div class="input-field col s6">
-                                <input id="compound_chemistry_expression" type="email" class="validate">
-                                <label for="compound_chemistry_expression">Chemistry Expression</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s6">
-                                <input id="compound_volume" type="text" class="validate">
-                                <label for="compound_volume">Compound Volume</label>
-                            </div>
-                            <div class="input-field col s6">
-                                <input id="compound_concentration" type="password" class="validate">
-                                <label for="compound_concentration">Compound Concentration</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s6">
-                                <input id="compound_color" type="email" class="validate">
-                                <label for="compound_color">Compound Color</label>
-                            </div>
-                            <div class="input-field col s6">
-                                <input id="compound_ph" type="text" class="validate">
-                                <label for="compound_ph">PH</label>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button id="" class="btn waves-effect waves-light modal-close my_cran" style="background:#dd0052;">
-                        Save
-                    </button>
-                </div>
-            </div>
-
-
         </ul>
     </div>
 </div>
