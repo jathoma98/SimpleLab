@@ -120,7 +120,7 @@
             </nav>
             <!-- Lab Equipment List-->
             <script id="labequip_list_template" type="mustache">
-                <a href="#add_modal" class="modal-trigger row">
+                <a href="#add_modal" class="{{^machine}}modal-trigger{{/machine}} row">
 
                     <div class="col s4">
                         <img src="../../img/beaker.png" class="item_img" style="margin-top: 30%;">
