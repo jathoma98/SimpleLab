@@ -2,7 +2,6 @@ package com.org.simplelab.database.services;
 
 import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.EquipmentProperty;
-import com.org.simplelab.database.entities.sql.Lab;
 import com.org.simplelab.database.repositories.sql.EquipmentRepository;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +42,6 @@ public class EquipmentDB extends SQLService<Equipment> {
         return new EquipmentPropertySetManager(e.getProperties(), e);
     }
 
-    public boolean insert(Equipment toInsert) throws EntityDBModificationException {
-        return super.insert(toInsert);
-    }
 
     public boolean deleteById(long id) {
         return super.deleteById(id);

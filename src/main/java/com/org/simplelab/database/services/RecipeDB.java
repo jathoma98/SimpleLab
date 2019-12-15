@@ -17,9 +17,6 @@ public class RecipeDB extends SQLService<Recipe> {
     @Autowired
     private RecipeRepository repository;
 
-    public boolean insert(Recipe recipe) throws EntityDBModificationException{
-        return super.insert(recipe);
-    };
 
     public List<Recipe> getRecipeByCreateId(long id){
         return repository.findByCreator_id(id);

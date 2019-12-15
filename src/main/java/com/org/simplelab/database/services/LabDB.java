@@ -65,9 +65,6 @@ public class LabDB extends SQLService<Lab> {
     }
 
 
-    public boolean insert(Lab toInsert) throws EntityDBModificationException {
-        return super.insert(toInsert);
-    }
 
     public boolean deleteById(long id) {
         return super.deleteById(id);

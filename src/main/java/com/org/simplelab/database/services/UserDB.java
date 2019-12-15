@@ -91,13 +91,12 @@ public class UserDB extends SQLService<User> {
      *                                  The username is reserved
      */
     @Override
-    public boolean insert(User user) throws UserInsertionException{
+    public User insert(User user) throws UserInsertionException{
 
         if (findUser(user.getUsername()) != null
                 || isReserved(user.getUsername()))
             throw new UserInsertionException(USERNAME_TAKEN);
-        repository.save(user);
-        return true;
+        return repository.save(user);
     }
 
 

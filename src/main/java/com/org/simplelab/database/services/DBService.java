@@ -17,10 +17,9 @@ public abstract class DBService<BaseEntityType, IDType> {
      * @return - true if insertion was successful
      * @throws SQLService.EntityDBModificationException - If an error occurred during insertion
      */
-    public boolean insert(BaseEntityType toInsert) throws EntityDBModificationException {
+    public BaseEntityType insert(BaseEntityType toInsert) throws EntityDBModificationException {
         checkInsertionCondition(toInsert);
-        getRepository().save(toInsert);
-        return true;
+        return getRepository().save(toInsert);
     }
 
     /**
