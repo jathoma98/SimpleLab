@@ -17,9 +17,7 @@ public class StepDB extends SQLService<Step> {
     @Autowired
     private StepRepository repository;
 
-    public boolean insert(Step step) throws EntityDBModificationException{
-        return super.insert(step);
-    };
+
     public boolean delete(long id) throws EntityDBModificationException{
         return super.deleteById(id);
     };

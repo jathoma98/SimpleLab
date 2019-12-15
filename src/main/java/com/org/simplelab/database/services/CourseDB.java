@@ -34,10 +34,6 @@ public class CourseDB extends SQLService<Course> {
         public StudentSetManager(Set<User> set, Course c) { super(set, c);}
     }
 
-    @Override
-    public boolean insert(Course c) throws EntityDBModificationException{
-        return super.insert(c);
-    }
 
     //Course has additional insertion condition -- needs unique CourseId
     @Override
