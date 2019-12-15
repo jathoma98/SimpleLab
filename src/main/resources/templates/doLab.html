@@ -123,30 +123,28 @@
                 <a href="#add_modal" class="modal-trigger">
                     <div class="row sidebaritem">
                         <div class="col s4">
-                            <img src="../../img/beaker.png" class="item_img">
+                            <img src="../../img/beaker.png" class="item_img" style="margin-top: 30%;">
                         </div>
-                        <div class="col s4">
+                        <div class="col s8">
                             <p>Name: {{name}}</p>
                             <p>Type: {{type}}</p>
+                            {{^machine}}
+                                {{#liquid}}
+                                    <p>Max Volume: {{properties.max_volume}}</p>
+                                {{/liquid}}
+                                {{#solid}}
+                                    <p>Max Weight: {{properties.max_weight}}</p>
+                                {{/solid}}
+                                    <p>Temperature: {{properties.min_temperature}} - {{properties.max_temperature}}</p>
+                            {{/machine}}
+                            {{#machine}}
+                                <div class="col s8"></div>
+                            {{/machine}}
                         </div>
-                        {{^machine}}
-                        <div class="col s4">
-                        {{#liquid}}
-                            <p>Max Volume: {{properties.max_volume}}</p>
-                        {{/liquid}}
-                        {{#solid}}
-                            <p>Max Weight: {{properties.max_weight}}</p>
-                        {{/solid}}
-                            <p>Temperature: {{properties.min_temperature}} - {{properties.max_temperature}}</p>
-                        </div>
-                        {{/machine}}
-                        {{#machine}}
-                        <div class="col s4"></div>
-                        {{/machine}}
                     </div>
                 </a>
             </script>
-            <ul id = "lab_equipment_list" class="collapsible row my_white itemset">
+            <ul id = "lab_equipment_list" class="row my_white itemset scrollbar_y height100">
             </ul>
         </div>
         <!-- Step List -->
@@ -157,33 +155,41 @@
                     <!--                        <a id="sidebar_stepadd" class="right sidebar_add modal-trigger" href="#equipmentModal"><i class="material-icons">add</i></a>-->
                 </div>
             </nav>
+
             <script id="step_list_template" type="mustache">
-                    <div class="row sidebaritem">
-                        <div class="col s2">
-                            <img src="../../img/beaker.png" class="item_img">
-                        </div>
-                        <div class="col s4">
-                            <p>Step - {{stepNum}}</p>
-                            <p>Name: {{targetObject.name}}</p>
-                            <p>Type: {{targetObject.type}}</p>
-                        </div>
-                        {{^targetObject.machine}}
-                        <div class="col s4">
-                        {{#targetObject.liquid}}
-                            <p>Require Volume: {{targetVolume}}</p>
-                        {{/targetObject.liquid}}
-                        {{#targetObject.solid}}
-                            <p>Require Weight: {{targetWeight}}</p>
-                        {{/targetObject.solid}}
-                            <p>Require Temperature: {{targetTemperature}}</p>
-                        </div>
-                        {{/targetObject.machine}}
-                        {{#targetObject.machine}}
-                        <div class="col s4"></div>
-                        {{/targetObject.machine}}
+                <div class="collapsible-header">
+                    <i class="material-icons">view_list</i>
+                    Step -- {{stepNum}}--{{targetObject.name}}
+                </div>
+                <div class="collapsible-body row">
+                    <div class="col s4 delete_empty">
+                        <img src="../../img/beaker.png" class="item_img">
                     </div>
-                </script>
-            <ul id="step_list" class="sortable selectable collection row my_white sidebar_step_collection">
+                    <div class="col s8">
+                        <p class="col s12">Name: {{targetObject.name}}</p>
+                        <p class="col s12">Type: {{targetObject.type}}</p>
+                    </div>
+                    {{^targetObject.machine}}
+                    {{#targetObject.liquid}}
+                        <p>Require Volume: {{targetVolume}}</p>
+                    {{/targetObject.liquid}}
+                    {{#targetObject.solid}}
+                        <p>Require Weight: {{targetWeight}}</p>
+                    {{/targetObject.solid}}
+                    <p>Require Temperature: {{targetTemperature}}</p>
+                    {{/targetObject.machine}}
+                    {{#targetObject.machine}}
+
+                    {{/targetObject.machine}}
+                    <p>Step Tips:</p>
+                    <div class="tipstextfield">
+                        <p>{{targetTips}}</p>
+                    </div>
+                </div>
+            </script>
+
+            <ul id="step_list" class="collapsible row my_white sidebar_step_collection scrollbar_y height100">
+
             </ul>
         </div>
         <!-- WorkSpace Item List -->
@@ -193,7 +199,7 @@
                     <a href="#" class="brand-logo"><i class="material-icons">view_list</i>Current Items</a>
                 </div>
             </nav>
-            <ul id="wksp_eqm_list" class="row my_white current_item_set collection"></ul>
+            <ul id="wksp_eqm_list" class="row my_white current_item_set scrollbar_y height100"></ul>
 
 
         </div>

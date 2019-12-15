@@ -427,3 +427,12 @@ padding20px{
 .unitmargin{
     margin-left:-10%;
 }
+
+#step_list collapsible-body{
+ }
+
+.tipstextfield{
+    width: 100%;
+    min-height:10%;
+    background: #e4e4e4;
+}
