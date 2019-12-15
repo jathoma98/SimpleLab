@@ -38,6 +38,7 @@ public class EquipmentRESTController extends BaseRESTController<Equipment> {
     public static final String EQUIPMENT_OBJ_LIST_MAPPING = "/loadEquipmentObjList";
     public static final String ADD_IMG_MAPPING = EQUIPMENT_ID_MAPPING + "/img";
 
+
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     public RRO<String> saveEquipment(@RequestBody EquipmentValidator validator){
         return super.addEntity(validator);
@@ -99,6 +100,12 @@ public class EquipmentRESTController extends BaseRESTController<Equipment> {
         long userId =  getUserIdFromSession();
         for (Long id : toDelete) {
             //TODO: check ownership
+            System.out.println(equipmentDB.checkUsingEquipment(id));
+            if (!equipmentDB.checkUsingEquipment(id).isEmpty()){
+                rro.setAction(RRO.ACTION_TYPE.PRINT_MSG.name());
+                rro.setMsg("ID: "+id+"  "+ RRO.MSG.EQUIPMENT_DELETE_ERROR.getMsg());
+                return rro;
+            }
             equipmentDB.deleteById(id);
         }
         rro.setSuccess(true);

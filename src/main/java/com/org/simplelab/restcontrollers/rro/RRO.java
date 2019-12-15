@@ -40,7 +40,9 @@ public class RRO<T> {
         ENTITY_UPDATE_ENTITY_NO_FOUND("Failed to update: Entity not found."),
         ENTITY_UPDATE_ERROR("Error while updating entity"),
         RECIPE_NOT_FOUND("Recipe not found"),
-        USER_NO_FOUND("user not found");
+        USER_NO_FOUND("user not found"),
+        EQUIPMENT_DELETE_ERROR("equipment is already used");
+
         private final String msg;
 
         MSG(String msg) {

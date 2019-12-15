@@ -40,6 +40,7 @@ let EQUIPMENT_TABLE = {
                         rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL_EQUIP, data, 'click', EQUIPMENT_TABLE.btnEvents);
                         EQUIPMENT_TABLE.checkRadio(equipment.type);
                         EQUIPMENT_TABLE.hideAndShowInput();
+                        $('.tooltipped').tooltip();
                     })
                 }
             })
@@ -136,6 +137,7 @@ let EQUIPMENT_TABLE = {
                 newEquipmentInfo: {
                     name: $(EQUIPMENT_TABLE.MODAL_ID.EQUIPMENT_NAME).val(),
                     type: $(EQUIPMENT_TABLE.MODAL_ID.EQUIPMENT_TYPE).val(),
+                    image: $("#equip_image")[0].src,
                     properties: [
                         {propertyKey: "max_temperature", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MAX_TEMPERATURE).val()},
                         {propertyKey: "min_temperature", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MIN_TEMPERATURE).val()},
@@ -170,7 +172,7 @@ let EQUIPMENT_TABLE = {
             let validator = {
                 name: $(EQUIPMENT_TABLE.MODAL_ID.EQUIPMENT_NAME).val(),
                 type: $(EQUIPMENT_TABLE.MODAL_ID.EQUIPMENT_TYPE).val(),
-                // image: $(EQUIPMENT_TABLE.MODAL_ID.EQUIPMENT_IMAGE).files[0],
+                image: $("#equip_image")[0].src,
                 properties: [
                     {propertyKey: "max_temperature", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MAX_TEMPERATURE).val()},
                     {propertyKey: "min_temperature", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MIN_TEMPERATURE).val()},
@@ -215,6 +217,7 @@ let EQUIPMENT_TABLE = {
             })
         };
 
+
         /**
          * Change the Image become byte[]
          **/
@@ -244,6 +247,9 @@ let EQUIPMENT_TABLE = {
             }
             data.equipmentModal[EQUIPMENT_TABLE.modal_info.type] = " checked";
             rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL_EQUIP, data, "click", EQUIPMENT_TABLE.btnEvents);
+            EQUIPMENT_TABLE.checkRadio(EQUIPMENT_TABLE.modal_info.type);
+            EQUIPMENT_TABLE.hideAndShowInput();
+            $('.tooltipped').tooltip();
 
         };
         /**
@@ -261,6 +267,7 @@ let EQUIPMENT_TABLE = {
             rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL_EQUIP, data, "click", EQUIPMENT_TABLE.btnEvents);
             EQUIPMENT_TABLE.checkRadio("liquid");
             EQUIPMENT_TABLE.hideAndShowInput();
+            $('.tooltipped').tooltip();
 
         //     $(TEMPLATE_ID.MODAL_EQUIP).find("#equip_image").on("change",()=>{EQUIPMENT_TABLE.loadImg()});
         };

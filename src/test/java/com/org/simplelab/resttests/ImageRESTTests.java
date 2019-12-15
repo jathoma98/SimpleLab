@@ -9,6 +9,7 @@ import com.org.simplelab.restrequest.RESTRequest;
 import com.org.simplelab.utils.DBTestUtils;
 import com.org.simplelab.utils.JSONBuilder;
 import com.org.simplelab.utils.TestUtils;
+import com.sun.org.apache.xml.internal.security.utils.Base64;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -35,7 +36,7 @@ public class ImageRESTTests extends RESTTestBaseConfig {
         ImageFileValidator v = new ImageFileValidator();
         v.setFileName("testfile");
         v.setFileType(".png");
-        v.setData("test data".getBytes());
+        v.setData("test data");
         v.set_metadata(metadata);
 
         imageRequest.sendData(POST, "/upload", JSONBuilder.asJson(v))
@@ -45,7 +46,7 @@ public class ImageRESTTests extends RESTTestBaseConfig {
         assertTrue(found.getId() > 0);
         assertEquals(found.getFileName(), v.getFileName());
         assertEquals(found.getFileType(), v.getFileType());
-        assertTrue(Arrays.equals(found.getData(), v.getData()));
+        assertTrue(Arrays.equals(found.getData(), v.getData().getBytes()));
     }
 
     @Test

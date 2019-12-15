@@ -2,6 +2,7 @@ package com.org.simplelab.database.services;
 
 import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.EquipmentProperty;
+import com.org.simplelab.database.entities.sql.Lab;
 import com.org.simplelab.database.repositories.sql.EquipmentRepository;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +73,8 @@ public class EquipmentDB extends SQLService<Equipment> {
     public List<Equipment> getEquipmentByCreatorId(long id){
         return repository.findByCreator_id(id);
     }
+
+    public List<String> checkUsingEquipment(long id){return repository.checkUsingEquipment(id);}
 
 
 
