@@ -60,7 +60,7 @@ let ACC_INFO ={
                                 user: user,
                             }
                         }
-                        rebuildComponent('#modalAccount ul',"#modalAccTpl", data, ACC_INFO.btnEvents);
+                        rebuildComponent('#modalAccount ul',"#modalAccTpl", data,"click", ACC_INFO.btnEvents);
                     })
                 }
             })
