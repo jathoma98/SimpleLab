@@ -14,7 +14,8 @@ import org.springframework.security.test.context.support.WithMockUser;
 import java.util.ArrayList;
 
 import static com.org.simplelab.restrequest.RESTRequest.RequestType.POST;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class EquipmentRESTTests extends RESTTestBaseConfig {
 
@@ -42,7 +43,7 @@ public class EquipmentRESTTests extends RESTTestBaseConfig {
         file.setFileType("type");
         file.setData("data");
 
-//        ev.setImg(file);
+        ev.setImg(file);
         equipmentRequest.sendData(POST, "", JSONBuilder.asJson(ev))
                 .andExpectSuccess(true);
 
