@@ -136,13 +136,13 @@ let EQUIPMENT_TABLE = {
                 newEquipmentInfo: {
                     name: $(EQUIPMENT_TABLE.MODAL_ID.EQUIPMENT_NAME).val(),
                     type: $(EQUIPMENT_TABLE.MODAL_ID.EQUIPMENT_TYPE).val(),
-                    image: $("#equip_image")[0].src,
                     properties: [
                         {propertyKey: "max_temperature", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MAX_TEMPERATURE).val()},
                         {propertyKey: "min_temperature", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MIN_TEMPERATURE).val()},
                         {propertyKey:"max_volume", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MAX_VOLUME).val()},
                         {propertyKey:"max_weight", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MAX_WEIGHT).val()}
-                    ]
+                    ],
+                    img: $("#equip_image")[0].src,
                 }
             }
             let data_json = JSON.stringify(data);
@@ -171,13 +171,17 @@ let EQUIPMENT_TABLE = {
             let validator = {
                 name: $(EQUIPMENT_TABLE.MODAL_ID.EQUIPMENT_NAME).val(),
                 type: $(EQUIPMENT_TABLE.MODAL_ID.EQUIPMENT_TYPE).val(),
-                image: $("#equip_image")[0].src,
                 properties: [
                     {propertyKey: "max_temperature", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MAX_TEMPERATURE).val()},
                     {propertyKey: "min_temperature", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MIN_TEMPERATURE).val()},
                     {propertyKey:"max_volume", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MAX_VOLUME).val()},
                     {propertyKey:"max_weight", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MAX_WEIGHT).val()}
-                ]
+                ],
+                // img: {
+                //     fileName: $("#equip_image")[0].id,
+                //     fileType: "png",
+                //     data : $("#equip_image")[0].src,
+                // }
             }
             let validator_json = JSON.stringify(validator);
             $.ajax({
@@ -187,7 +191,14 @@ let EQUIPMENT_TABLE = {
                 contentType: 'application/json; charset=utf-8',
                 data: validator_json,
                 success: function (result) {
-                    retObjHandle(result, EQUIPMENT_TABLE.reload)
+                    retObjHandle(result, function(){
+                        let form = $("img_form")[0];
+                        let data = {
+                            equiment_id : result.data.equiment_id,
+
+                        }
+                        EQUIPMENT_TABLE.reload();
+                    })
                 }
             })
         };
@@ -218,17 +229,10 @@ let EQUIPMENT_TABLE = {
 
 
         /**
-         * Change the Image become byte[]
-         **/
-        this.covImg = function (Img) {
-
-        }
-
-        /**
          * Upload Image.
          **/
         this.loadImg = function(){
-            $('#equip_image').attr('src', '').hide();
+            $('#equip_image').attr('src', '');
             if ($("#equip_input")[0].files && $("#equip_input")[0].files[0]){
                 let reader = new FileReader();
                 $(reader).load(function(e){
@@ -237,17 +241,18 @@ let EQUIPMENT_TABLE = {
                 });
                 reader.readAsDataURL($("#equip_input")[0].files[0]);
             }
-            let data = {
-                equipmentModal: {
-                    active: "active",
-                    create: false,
-                    equipment: EQUIPMENT_TABLE.modal_info
-                }
-            }
-            data.equipmentModal[EQUIPMENT_TABLE.modal_info.type] = " checked";
-            rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL_EQUIP, data, "click", EQUIPMENT_TABLE.btnEvents);
-            EQUIPMENT_TABLE.checkRadio(EQUIPMENT_TABLE.modal_info.type);
-            EQUIPMENT_TABLE.hideAndShowInput();
+
+            // let data = {
+            //     equipmentModal: {
+            //         active: "active",
+            //         create: false,
+            //         equipment: EQUIPMENT_TABLE.modal_info
+            //     }
+            // }
+            // data.equipmentModal[EQUIPMENT_TABLE.modal_info.type] = " checked";
+            // rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL_EQUIP, data, "click", EQUIPMENT_TABLE.btnEvents);
+            // EQUIPMENT_TABLE.checkRadio(EQUIPMENT_TABLE.modal_info.type);
+            // EQUIPMENT_TABLE.hideAndShowInput();
 
         };
         /**

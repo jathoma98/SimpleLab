@@ -42,7 +42,7 @@ public class EquipmentRESTTests extends RESTTestBaseConfig {
         file.setFileType("type");
         file.setData("data");
 
-        ev.setImg(file);
+//        ev.setImg(file);
         equipmentRequest.sendData(POST, "", JSONBuilder.asJson(ev))
                 .andExpectSuccess(true);
 
@@ -75,7 +75,7 @@ public class EquipmentRESTTests extends RESTTestBaseConfig {
         assertEquals(ev.getName(), found.getName());
         assertEquals(ev.getType(), found.getType());
         assertEquals(ev.getProperties(), e.getProperties());
-        assertNull(ev.getImg());
+//        assertNull(ev.getImg());
     }
 
 

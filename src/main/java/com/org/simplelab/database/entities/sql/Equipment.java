@@ -47,6 +47,8 @@ public class Equipment extends AbstractEquipment implements UserCreated {
         this.equipmentTwo = new ArrayList<>();
     }
 
+//    private String image;
+
     @PreRemove
     @Transactional
     public void removeFromParents(){

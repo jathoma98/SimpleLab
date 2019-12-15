@@ -27,7 +27,7 @@ public class EquipmentValidator extends Validator<Equipment> {
         if (name == null || name.equals(""))
             sb.append(EMPTY_FIELD);
 
-        //validate image if it exists
+//        validate image if it exists
         if (img != null) {
             try {
                 img.validate();
