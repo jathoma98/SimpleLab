@@ -243,8 +243,6 @@ function selectItem(id){
 function loadInfo(id){
     var element = document.getElementById(id);
     //item info can be write here
-    
-
 }
 
 

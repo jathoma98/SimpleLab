@@ -215,6 +215,26 @@ let EQUIPMENT_TABLE = {
             })
         };
 
+        this.loadImg = function(){
+            $('#equip_image').attr('src', '').hide();
+            if ($("#equip_input")[0].files && $("#equip_input")[0].files[0]){
+                let reader = new FileReader();
+                $(reader).load(function(e){
+                    $("#equip_image").attr('src',e.target.result);
+                });
+                reader.readAsDataURL($("#equip_input")[0].files[0]);
+            }
+            let data = {
+                equipmentModal: {
+                    active: "active",
+                    create: false,
+                    equipment: EQUIPMENT_TABLE.modal_info
+                }
+            }
+            data.equipmentModal[EQUIPMENT_TABLE.modal_info.type] = " checked";
+            rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL_EQUIP, data, "click", EQUIPMENT_TABLE.btnEvents);
+
+        };
         /**
          * Clean data in modal. when user click on
          * add lab button.
@@ -229,6 +249,8 @@ let EQUIPMENT_TABLE = {
             }
             rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL_EQUIP, data, "click", EQUIPMENT_TABLE.btnEvents);
             EQUIPMENT_TABLE.hideAndShowInput();
+
+        //     $(TEMPLATE_ID.MODAL_EQUIP).find("#equip_image").on("change",()=>{EQUIPMENT_TABLE.loadImg()});
         };
 
         this.btnSwitch = function () {
@@ -240,5 +262,7 @@ let EQUIPMENT_TABLE = {
                 removeTableBodyRowEvent(ElEM_ID.EQUIPMENT_TABLE_TBODY)
             }
         }
+
+
     }
 }

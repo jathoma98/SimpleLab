@@ -29,5 +29,3 @@ TEMPLATE = {
         '    {{/equipment.machine}}\n' +
         '</div>'
 }
-
-

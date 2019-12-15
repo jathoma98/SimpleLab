@@ -7,11 +7,11 @@
 <div class="row"></div>
 <div class="row delete_empty">
     <div class="col s4 center delete_empty">
-        <img class="eq_upload delete_empty" src="../img/upload.png">
+        <img id = "equip_image" class="eq_upload delete_empty" src="../img/upload.png">
         <div class="file-field input-field col s6 offset-s3">
             <div class="btn">
                 <span>File</span>
-                <input id="euqip_image" type="file" class="my_cran">
+                <input id="equip_input" type="file" onchange="EQUIPMENT_TABLE.loadImg();">
             </div>
             <div class="file-path-wrapper">
                 <input class="file-path validate" type="text">

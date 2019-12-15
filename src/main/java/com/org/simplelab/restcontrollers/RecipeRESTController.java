@@ -21,6 +21,8 @@ public class RecipeRESTController extends BaseRESTController<Recipe> {
     public static final String BASE_MAPPING = "/recipe/rest";
     public static final String RECIPE_ID_MAPPING = "/{recipe_id}";
     public static final String LOAD_RECIPES = "/loadRecipe";
+    public static final String LOAD_RECIPES_BY_OWN_ID = LOAD_RECIPES + "/{create_id}";
+
 
     @Autowired
     private RecipeDB db;
@@ -48,6 +50,16 @@ public class RecipeRESTController extends BaseRESTController<Recipe> {
         long user_id = getUserIdFromSession();
         RRO rro = new RRO<List<Recipe>>();
         List<Recipe> recipes = recipeDB.getRecipeByCreateId(user_id);
+        rro.setData(recipes);
+        rro.setSuccess(true);
+        rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
+        return rro;
+    }
+
+    @GetMapping(LOAD_RECIPES_BY_OWN_ID)
+    public RRO<List<Recipe>> loadRecipeByCreator_id (@PathVariable("create_id") Long own_id){
+        RRO rro = new RRO<List<Recipe>>();
+        List<Recipe> recipes = recipeDB.getRecipeByCreateId(own_id);
         rro.setData(recipes);
         rro.setSuccess(true);
         rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
