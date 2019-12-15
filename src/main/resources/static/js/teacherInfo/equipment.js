@@ -170,7 +170,7 @@ let EQUIPMENT_TABLE = {
             let validator = {
                 name: $(EQUIPMENT_TABLE.MODAL_ID.EQUIPMENT_NAME).val(),
                 type: $(EQUIPMENT_TABLE.MODAL_ID.EQUIPMENT_TYPE).val(),
-                image: $(EQUIPMENT_TABLE.MODAL_ID.EQUIPMENT_IMAGE).files[0],
+                // image: $(EQUIPMENT_TABLE.MODAL_ID.EQUIPMENT_IMAGE).files[0],
                 properties: [
                     {propertyKey: "max_temperature", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MAX_TEMPERATURE).val()},
                     {propertyKey: "min_temperature", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MIN_TEMPERATURE).val()},
@@ -216,6 +216,13 @@ let EQUIPMENT_TABLE = {
         };
 
         /**
+         * Change the Image become byte[]
+         **/
+        this.covImg = function (Img) {
+
+        }
+
+        /**
          * Upload Image.
          **/
         this.loadImg = function(){
@@ -223,6 +230,7 @@ let EQUIPMENT_TABLE = {
             if ($("#equip_input")[0].files && $("#equip_input")[0].files[0]){
                 let reader = new FileReader();
                 $(reader).load(function(e){
+                    console.log(e.target.result);
                     $("#equip_image").attr('src',e.target.result);
                 });
                 reader.readAsDataURL($("#equip_input")[0].files[0]);
