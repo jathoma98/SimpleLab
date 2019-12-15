@@ -311,15 +311,6 @@ public class LabRESTController extends BaseRESTController<Lab> {
                     step.setTargetWeight(s.getTargetWeight());
                     s = step;
                     break;
-//                    steps.remove(step);
-//                    found.setSteps(steps);
-//                    s.setLab(found);
-//                    try {
-//                        stepDB.insert(s);
-//                    } catch (DBService.EntityDBModificationException e){
-//                        RRO.sendErrorMessage(e.getMessage());
-//                    }
-//                    toAdd.add(s);
                 }
             }
 
