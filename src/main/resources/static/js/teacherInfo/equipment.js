@@ -193,16 +193,27 @@ let EQUIPMENT_TABLE = {
                 data: validator_json,
                 success: function (result) {
                     retObjHandle(result, function(){
-                        let form = $("img_form")[0];
-                        let data = {
-                            equiment_id : result.data.equiment_id,
+                        console.log(result.data);
+                        let equipment_id = result.data;
+                        let formData = new FormData($('#img_form')[0]);
+                        formData.append('image', $('input[type=file]')[0].files[0]);
+                        $.ajax({
+                            type: "POST",
+                            enctype: 'multipart/form-data',
+                            url: "/image/rest/"+equipment_id,
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            cache: false,
+                            success: function (data) {
 
-                        }
+                            }
+                        });
                         EQUIPMENT_TABLE.reload();
-                    })
+                });
                 }
             })
-        };
+            }
         this.btnEvents[ElEM_ID.EQUIPMENT_SAVE_BTN] = EQUIPMENT_TABLE.save;
 
         /**

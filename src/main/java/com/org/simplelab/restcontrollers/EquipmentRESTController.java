@@ -11,6 +11,7 @@ import com.org.simplelab.restcontrollers.rro.RRO;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -55,9 +56,12 @@ public class EquipmentRESTController extends BaseRESTController<Equipment> {
         return super.updateEntity(equipment_id, dto);
     }
 
+    @Transactional
     @GetMapping(EQUIPMENT_ID_MAPPING)
     public RRO<Equipment> getSpecificEquipment(@PathVariable("equipment_id") long equipment_id){
-        return super.getEntityById(equipment_id);
+        RRO<Equipment> rro = super.getEntityById(equipment_id);
+        rro.getData().getImg();
+        return rro;
     }
 
     @GetMapping(EQUIPMENT_LIST_MAPPING)

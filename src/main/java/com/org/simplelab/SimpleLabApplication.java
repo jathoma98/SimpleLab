@@ -42,6 +42,8 @@ public class SimpleLabApplication {
 
 	@Bean
 	public Module datatypeHibernateModule(){
+		Hibernate5Module mod = new Hibernate5Module();
+		mod.configure(Hibernate5Module.Feature.USE_TRANSIENT_ANNOTATION, true);
 		return new Hibernate5Module();
 	}
 
