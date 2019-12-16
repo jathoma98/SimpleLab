@@ -134,10 +134,10 @@ class WorkSpaceEqmInfo {
                     s["isComplete"] = false;
                     return;
                 } else {
-                    s["isComplete"] = true;
                     s.html_li.find(".check_star").removeClass("my_color_gray");
                     s.html_li.find(".check_star").addClass("my_color_red");
                     M.toast({html: '<h5>Step(' + s.stepNum + '): ' + s.targetName + ' is completed</h5>>'})
+                    WORK_SPACE.steps.setComplete(s);
                 }
             }
         })
@@ -318,7 +318,6 @@ EQUIPMENT_DRAG_EVENT = {
             EQUIPMENT_DRAG_EVENT.interacting(drag_eqm_wksp_obj, drop_eqm_wksp_obj,
                 $(ELEM_NAME.INTERACTION_MODAL).find("input").val());
         });
-        $(drag_eqm_wksp_obj.drag_elem).css({"transform": "rotate(45deg)"});
     },
     interacting(drag_eqm_wksp_obj, drop_eqm_wksp_obj, tranVal) {
         tranVal = tranVal * 1;
@@ -625,10 +624,11 @@ WORK_SPACE = {
                         });
                         // let data = {iterable: result.data};
                         WORK_SPACE.steps = result.data
-                        WORK_SPACE.steps.setComplete(step){
+                        WORK_SPACE.steps.complete_count = 0;
+                        WORK_SPACE.steps.setComplete = (step)=>{
                             step.isComplete = true;
                             WORK_SPACE.steps.complete_count++;
-                            if(WORK_SPACE.steps.complete_count = WORK_SPACE.steps.length){
+                            if(WORK_SPACE.steps.complete_count == WORK_SPACE.steps.length){
                                 alert("Congratulation! \nYou Completed this lab.")
                             }
                         }
@@ -656,12 +656,6 @@ $(document).ready(() => {
     WORK_SPACE.loadRecipe();
     $(ELEM_NAME.OPEERATION_AREA).on("click", (event) => {
         EQUIPMENT_DRAG_EVENT.select(event);
-    })
-
-    $("#interaction_modal").modal({
-        onCloseEnd: function (event) {
-            $(WORK_SPACE.selected.drag_elem).css({"transform": "rotate(0deg)"});
-        }
     })
 
 })
