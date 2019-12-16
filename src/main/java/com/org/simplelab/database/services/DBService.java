@@ -50,6 +50,7 @@ public abstract class DBService<BaseEntityType, IDType> {
         return null;
     }
 
+
     protected abstract void checkInsertionCondition(BaseEntityType toInsert) throws EntityDBModificationException;
 
     protected abstract void checkUpdateCondition(BaseEntityType toUpdate) throws EntityDBModificationException;

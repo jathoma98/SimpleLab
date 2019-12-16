@@ -5,7 +5,7 @@ import com.org.simplelab.database.entities.sql.Lab;
 import com.org.simplelab.database.entities.sql.User;
 import com.org.simplelab.database.services.CourseDB;
 import com.org.simplelab.database.services.SQLService;
-import com.org.simplelab.database.services.projections.Projection;
+import com.org.simplelab.database.services.projections.Projections;
 import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
@@ -130,12 +130,12 @@ public class CourseRESTController extends BaseRESTController<Course> {
 
         //we cant use SQL projections on Course because course_id has an underscore in it
         //which isnt allowed in JPA, so we have to manually copy the fields.
-        RRO<List<Projection.TeacherCourseInfo>> rro = new RRO();
-        List<Projection.TeacherCourseInfo> returnInfo = new ArrayList<>();
+        RRO<List<Projections.TeacherCourseInfo>> rro = new RRO();
+        List<Projections.TeacherCourseInfo> returnInfo = new ArrayList<>();
 
         courses.forEach((course) -> {
-            Projection.TeacherCourseInfo mapped =
-                    new Projection.TeacherCourseInfo(course.getName(),
+            Projections.TeacherCourseInfo mapped =
+                    new Projections.TeacherCourseInfo(course.getName(),
                                                     course.getCreatedDate(),
                                                     course.getCourse_id());
             returnInfo.add(mapped);

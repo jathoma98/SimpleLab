@@ -24,7 +24,7 @@ public class Course extends BaseTable implements UserCreated{
     //TODO: put this back to lazy initialization after course edit works again
     @JsonIgnore
     @OneToOne(cascade = {CascadeType.PERSIST},
-            fetch = FetchType.EAGER)
+            fetch = FetchType.LAZY)
     @JoinColumn(name = "creator_id")
     private User creator;
 

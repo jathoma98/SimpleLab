@@ -3,7 +3,6 @@ package com.org.simplelab.database.services;
 import com.org.simplelab.database.entities.sql.BaseTable;
 import com.org.simplelab.database.repositories.sql.BaseRepository;
 import com.org.simplelab.database.services.interfaces.SetModificationCondition;
-import com.org.simplelab.database.services.projections.Projection;
 import lombok.Getter;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,7 +63,7 @@ public abstract class SQLService<T extends BaseTable> extends DBService<T, Long>
     @Override
     public abstract BaseRepository<T> getRepository();
 
-    public <U extends Projection> U findById(long id, Class<U> projection){
+    public <U> U findById(long id, Class<U> projection){
         Optional<U> found = getRepository().findById(id, projection);
         if (found.isPresent()){
             return found.get();

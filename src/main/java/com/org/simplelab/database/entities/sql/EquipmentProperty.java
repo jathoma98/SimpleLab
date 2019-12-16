@@ -21,7 +21,7 @@ public class EquipmentProperty extends BaseTable {
     public static final EquipmentProperty NO_PROPERTY = GEN_NO_PROPERTY();
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     protected Equipment parentEquipment;
 
     protected String propertyKey;
