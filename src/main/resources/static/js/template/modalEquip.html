@@ -145,9 +145,14 @@
 <!--        </div>-->
         <div class="col s12 section value_change">
             <div class="row">
-                <div class="input-field col s12">
-                    <input id="min_temperature" type="number" class="validate"
-                           value="{{equipment.properties.min_temperature}}"><span class="unitmargin">°C</span>
+                <div class="col s4">
+                    <label>
+                        <input type="checkbox" onclick="display_input()">
+                        <span>Allow to change Temperature</span>
+                    </label>
+                </div>
+                <div class="input-field col s8">
+                    <input id="min_temperature" type="number" class="" readonly="true" value="{{equipment.properties.min_temperature}}"><span class="unitmargin">°C</span>
                     <label for="min_temperature" {{#equipment.properties.min_temperature}}
                            class="active" {{/equipment.properties.min_temperature}}>Temperature You Want to Change Everytime</label>
                 </div>
