@@ -48,6 +48,7 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
             return rro;
         }
         T created = validator.build();
+        T inserted = created;
 
         //set the creator if its a UserCreated entity
         if (UserCreated.class.isInstance(created)){
@@ -57,7 +58,7 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
             created_assign.setCreator(u);
         }
         try{
-            getDb().insert(created);
+            inserted = getDb().insert(created);
         } catch (SQLService.EntityDBModificationException e){
             rro.setSuccess(false);
             rro.setMsg(e.getMessage());
@@ -66,6 +67,7 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
         }
         rro.setSuccess(true);
         rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
+        rro.setData("" + inserted.getId());
         return rro;
     }
 

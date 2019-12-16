@@ -137,13 +137,13 @@ let EQUIPMENT_TABLE = {
                 newEquipmentInfo: {
                     name: $(EQUIPMENT_TABLE.MODAL_ID.EQUIPMENT_NAME).val(),
                     type: $(EQUIPMENT_TABLE.MODAL_ID.EQUIPMENT_TYPE).val(),
-                    image: $("#equip_image")[0].src,
                     properties: [
                         {propertyKey: "max_temperature", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MAX_TEMPERATURE).val()},
                         {propertyKey: "min_temperature", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MIN_TEMPERATURE).val()},
                         {propertyKey:"max_volume", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MAX_VOLUME).val()},
                         {propertyKey:"max_weight", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MAX_WEIGHT).val()}
-                    ]
+                    ],
+                    img: $("#equip_image")[0].src,
                 }
             }
             let data_json = JSON.stringify(data);
@@ -172,13 +172,17 @@ let EQUIPMENT_TABLE = {
             let validator = {
                 name: $(EQUIPMENT_TABLE.MODAL_ID.EQUIPMENT_NAME).val(),
                 type: $(EQUIPMENT_TABLE.MODAL_ID.EQUIPMENT_TYPE).val(),
-                image: $("#equip_image")[0].src,
                 properties: [
                     {propertyKey: "max_temperature", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MAX_TEMPERATURE).val()},
                     {propertyKey: "min_temperature", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MIN_TEMPERATURE).val()},
                     {propertyKey:"max_volume", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MAX_VOLUME).val()},
                     {propertyKey:"max_weight", propertyValue: $(EQUIPMENT_TABLE.MODAL_ID.MAX_WEIGHT).val()}
-                ]
+                ],
+                // img: {
+                //     fileName: $("#equip_image")[0].id,
+                //     fileType: "png",
+                //     data : $("#equip_image")[0].src,
+                // }
             }
             let validator_json = JSON.stringify(validator);
             $.ajax({
@@ -188,10 +192,31 @@ let EQUIPMENT_TABLE = {
                 contentType: 'application/json; charset=utf-8',
                 data: validator_json,
                 success: function (result) {
-                    retObjHandle(result, EQUIPMENT_TABLE.reload)
+                    retObjHandle(result, function(){
+                        let formData = new FormData($('#img_form')[0]);
+                        formData.append('image', $('input[type=file]')[0].files[0]);
+                        // let data = {
+                        //     equipment_id : result.data.equipment_id,
+                        //     image : form_trans
+                        // }
+                        // let validator_json = JSON.stringify(data);
+                        $.ajax({
+                            type: "POST",
+                            enctype: 'multipart/form-data',
+                            url: "/image/rest/upload",
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            cache: false,
+                            success: function (data) {
+
+                            }
+                        });
+                        EQUIPMENT_TABLE.reload();
+                });
                 }
             })
-        };
+            }
         this.btnEvents[ElEM_ID.EQUIPMENT_SAVE_BTN] = EQUIPMENT_TABLE.save;
 
         /**
@@ -219,17 +244,10 @@ let EQUIPMENT_TABLE = {
 
 
         /**
-         * Change the Image become byte[]
-         **/
-        this.covImg = function (Img) {
-
-        }
-
-        /**
          * Upload Image.
          **/
         this.loadImg = function(){
-            $('#equip_image').attr('src', '').hide();
+            $('#equip_image').attr('src', '');
             if ($("#equip_input")[0].files && $("#equip_input")[0].files[0]){
                 let reader = new FileReader();
                 $(reader).load(function(e){
@@ -238,18 +256,18 @@ let EQUIPMENT_TABLE = {
                 });
                 reader.readAsDataURL($("#equip_input")[0].files[0]);
             }
-            let data = {
-                equipmentModal: {
-                    active: "active",
-                    create: false,
-                    equipment: EQUIPMENT_TABLE.modal_info
-                }
-            }
-            data.equipmentModal[EQUIPMENT_TABLE.modal_info.type] = " checked";
-            rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL_EQUIP, data, "click", EQUIPMENT_TABLE.btnEvents);
-            EQUIPMENT_TABLE.checkRadio(EQUIPMENT_TABLE.modal_info.type);
-            EQUIPMENT_TABLE.hideAndShowInput();
-            $('.tooltipped').tooltip();
+
+            // let data = {
+            //     equipmentModal: {
+            //         active: "active",
+            //         create: false,
+            //         equipment: EQUIPMENT_TABLE.modal_info
+            //     }
+            // }
+            // data.equipmentModal[EQUIPMENT_TABLE.modal_info.type] = " checked";
+            // rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL_EQUIP, data, "click", EQUIPMENT_TABLE.btnEvents);
+            // EQUIPMENT_TABLE.checkRadio(EQUIPMENT_TABLE.modal_info.type);
+            // EQUIPMENT_TABLE.hideAndShowInput();
 
         };
         /**

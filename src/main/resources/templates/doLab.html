@@ -105,9 +105,9 @@
     <div class="nav-wrapper row" style="background: #00acc1">
         <div class="col s12 valign-wrapper" style="background: #00b8ce; height: 30px; margin-top: 20px;">
             <a href="../../" class="breadcrumb" th:text="${home_navig}">Home</a>
-            <a th:if="${user_role == 'teacher'}" th:href="@{'/'+ ${user_role}+'/setuplab/'+${lab_id}}" class="breadcrumb" th:text="${lab_id}">lab</a>
-            <a th:if="${user_role == 'student'}" href="" class="breadcrumb" th:text="${lab_id}">lab</a>
-            <a href="" class="breadcrumb">Do Lab</a>
+            <a th:if="${user_role == 'teacher'}" th:href="@{'/'+ ${user_role}+'/setuplab/'+${lab_id}}" class="breadcrumb" th:text="'SetLab: '+${lab_name}">lab</a>
+            <a th:if="${user_role == 'student'}" href="" class="breadcrumb" th:text="'DoLab: ' + ${lab_name}">lab</a>
+            <a th:if="${user_role == 'teacher'}" href="" class="breadcrumb" th:text="'DoLab: '+ ${lab_name}" >Do Lab</a>
             <!--      <a href="#!" class="breadcrumb"></a>-->
             <!--      <a href="#!" class="breadcrumb"></a>-->
         </div>
@@ -154,7 +154,6 @@
 
                         {{/machine}}
                     </div>
-
                 </a>
             </script>
             <ul id = "lab_equipment_list" class="row my_white itemset scrollbar_y height100">
