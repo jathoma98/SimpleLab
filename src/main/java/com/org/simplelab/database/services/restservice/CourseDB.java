@@ -1,10 +1,11 @@
-package com.org.simplelab.database.services;
+package com.org.simplelab.database.services.restservice;
 
 
 import com.org.simplelab.database.entities.sql.Course;
 import com.org.simplelab.database.entities.sql.Lab;
 import com.org.simplelab.database.entities.sql.User;
 import com.org.simplelab.database.repositories.sql.CourseRepository;
+import com.org.simplelab.database.services.SQLService;
 import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.exception.CourseTransactionException;
 import com.org.simplelab.exception.EntityDBModificationException;

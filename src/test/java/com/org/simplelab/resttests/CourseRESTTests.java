@@ -287,4 +287,25 @@ public class CourseRESTTests extends RESTTestBaseConfig {
         });
     }
 
+    @Test
+    @WithMockUser(username = username, password = username)
+    void testDeleteStudent() throws Exception{
+        Course c = TestUtils.createJunkCourse();
+        User user1 = TestUtils.createJunkUser();
+        User user2 = TestUtils.createJunkUser();
+        c.getStudents().addAll(Arrays.asList(new User[]{user1, user2}));
+        courseDB.insert(c);
+
+        DTO.CourseUpdateStudentListDTO dto = new DTO.CourseUpdateStudentListDTO();
+        dto.setCourse_id(c.getCourse_id());
+        dto.setUsernameList(Arrays.asList(new String[]{user1.getUsername(), user2.getUsername()}));
+
+        courseRequest.sendData(DELETE, CourseRESTController.DELETE_STUDENTS_MAPPING, JSONBuilder.asJson(dto))
+                .andExpectSuccess(true);
+
+        courseRequest.sendData(POST, CourseRESTController.GET_STUDENTS_MAPPING, JSONBuilder.asJson(dto))
+                .andExpectData("[]");
+
+    }
+
 }

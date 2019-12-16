@@ -3,11 +3,13 @@ package com.org.simplelab.restcontrollers;
 import com.org.simplelab.database.entities.sql.Course;
 import com.org.simplelab.database.entities.sql.Lab;
 import com.org.simplelab.database.entities.sql.User;
-import com.org.simplelab.database.services.CourseDB;
 import com.org.simplelab.database.services.SQLService;
 import com.org.simplelab.database.services.projections.Projections;
+import com.org.simplelab.database.services.restservice.CourseDB;
 import com.org.simplelab.database.validators.CourseValidator;
 import com.org.simplelab.exception.CourseTransactionException;
+import com.org.simplelab.exception.EntityDBModificationException;
+import com.org.simplelab.exception.EntitySetModificationException;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
 import com.org.simplelab.security.SecurityUtils;
@@ -278,18 +280,32 @@ public class CourseRESTController extends BaseRESTController<Course> {
     }
 
 
+    @Transactional
     @DeleteMapping(DELETE_STUDENTS_MAPPING)
     public RRO<String> deleteStudentList(@RequestBody DTO.CourseUpdateStudentListDTO course) {
         List<String> usernameList = course.getUsernameList();
-        List<User> toDelete = new ArrayList<>();
+        SQLService.EntitySetManager<User, Course> toUpdate = courseDB.getStudentsOfCourseByCourseId(course.getCourse_id());
         for (String username: usernameList){
             User u = userDB.findUser(username);
             if (u != null){
-                toDelete.add(u);
+                try {
+                    toUpdate.delete(u);
+                } catch (EntitySetModificationException e){
+                    return RRO.sendErrorMessage(e.getMessage());
+                }
             }
         }
-        SQLService.EntitySetManager<User, Course> toUpdate = courseDB.getStudentsOfCourseByCourseId(course.getCourse_id());
-        return super.removeEntitiesFromEntityList(toUpdate, toDelete);
+        try {
+            courseDB.update(toUpdate.getFullEntity());
+        } catch (EntityDBModificationException e){
+            return RRO.sendErrorMessage(e.getMessage());
+        }
+        RRO rro = new RRO();
+        rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
+        rro.setSuccess(true);
+        return rro;
+        //SQLService.EntitySetManager<User, Course> toUpdate = courseDB.getStudentsOfCourseByCourseId(course.getCourse_id());
+        //return super.removeEntitiesFromEntityList(toUpdate, toDelete);
     }
 
 

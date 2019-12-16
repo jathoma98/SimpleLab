@@ -1,8 +1,9 @@
-package com.org.simplelab.database.services;
+package com.org.simplelab.database.services.restservice;
 
 import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.EquipmentProperty;
 import com.org.simplelab.database.repositories.sql.EquipmentRepository;
+import com.org.simplelab.database.services.SQLService;
 import com.org.simplelab.exception.EntityDBModificationException;
 import com.org.simplelab.exception.EntitySetModificationException;
 import lombok.Getter;

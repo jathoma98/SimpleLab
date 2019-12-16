@@ -19,7 +19,7 @@ public abstract class MongoDBService<T extends BaseDocument> extends DBService<T
 
     public abstract BaseMongoRepository<T> getRepository();
 
-    abstract T getNonexistent();
+    protected abstract T getNonexistent();
 
     @Override
     public T findById(String id){

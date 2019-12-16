@@ -2,7 +2,7 @@ package com.org.simplelab.restcontrollers;
 
 import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.files.ImageFile;
-import com.org.simplelab.database.services.ImageFileDB;
+import com.org.simplelab.database.services.restservice.ImageFileDB;
 import com.org.simplelab.exception.EntityDBModificationException;
 import com.org.simplelab.restcontrollers.rro.RRO;
 import lombok.Getter;

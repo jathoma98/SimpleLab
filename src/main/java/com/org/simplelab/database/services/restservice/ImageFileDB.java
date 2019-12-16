@@ -1,7 +1,8 @@
-package com.org.simplelab.database.services;
+package com.org.simplelab.database.services.restservice;
 
 import com.org.simplelab.database.entities.sql.files.ImageFile;
 import com.org.simplelab.database.repositories.sql.ImageFileRepository;
+import com.org.simplelab.database.services.SQLService;
 import com.org.simplelab.exception.EntityDBModificationException;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
