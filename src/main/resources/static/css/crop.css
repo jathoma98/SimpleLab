@@ -2,6 +2,8 @@
     width:100px;
     height:100px;
     overflow: hidden;
+    margin: 0;
+    padding: 0;
 }
 
 .cropimg1{
