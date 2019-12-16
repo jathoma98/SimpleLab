@@ -29,14 +29,14 @@ public class ImageFileRESTController extends BaseRESTController<ImageFile> {
     @PostMapping("/upload")
     public RRO uploadImage(MultipartHttpServletRequest request) throws Exception{
         MultipartFile file = request.getFile("image");
-        System.out.println("Name: " + file.getName());
+//        System.out.println("Name: " + file.getName());
 
         StringWriter writer = new StringWriter();
         InputStream content = file.getInputStream();
         IOUtils.copy(content, writer, StandardCharsets.UTF_8);
         RRO rro = new RRO();
         rro.setSuccess(true);
-        rro.setMsg("FILENAME: " + file.getName() + " CONTENT: " + writer.toString());
+        rro.setMsg(" CONTENT: " + writer.toString());
         return rro;
     }
 
