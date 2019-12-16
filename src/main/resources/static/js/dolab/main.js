@@ -148,9 +148,9 @@ class WorkSpaceEqmInfo {
     getMaxValue() {
         switch (this.equipment.type) {
             case TYPE.LIQUID:
-                return this.equipment.max_volume;
+                return this.equipment.properties.max_volume;
             case TYPE.SOLID:
-                return this.equipment.max_weight;
+                return this.equipment.properties.max_weight;
         }
         return undefined;
     }
@@ -255,14 +255,14 @@ EQUIPMENT_DRAG_EVENT = {
                 $("#max_value_title").text("Max Volume(mL): ");
                 $("#max_value").text(eqm.properties.max_volume);
                 $("#current_value").text(eqm_wksp_obj.curr_val)
-                $("#current_temperature").text(eqm.curr_temp)
+                $("#current_temperature").text(eqm_wksp_obj.curr_temp)
                 break;
             case "solid":
                 $("#current_value_title").text("Current Weight(kg): ");
                 $("#max_value_title").text("Max Weight(mL): ");
                 $("#max_value").text(eqm.properties.max_weight);
                 $("#current_value").text(eqm_wksp_obj.curr_val)
-                $("#current_temperature").text(eqm.curr_temp)
+                $("#current_temperature").text(eqm_wksp_obj.curr_temp)
                 break;
             default:
                 $("#current_value_title").text("");
@@ -519,6 +519,7 @@ WORK_SPACE = {
         };
 
         this.AddEquipToWorkSpace = function (eqm, curr_val) {
+            let eqm_wksp_obj = undefined;
             if (arguments.length == 1) {
                 let template = Mustache.render(TEMPLATE.WORKSPACE_EQM_ELEM,
                     {
@@ -529,7 +530,7 @@ WORK_SPACE = {
                 let template_li = $("<li/>");
                 template_li.append(Mustache.render(TEMPLATE.WORKSPACE_EQM_ELEM_BAR, {equipment: eqm}));
 
-                let eqm_wksp_obj = new WorkSpaceEqmInfo(WORK_SPACE.equip_counter, eqm,
+                eqm_wksp_obj = new WorkSpaceEqmInfo(WORK_SPACE.equip_counter, eqm,
                     undefined, eqm.properties.max_temperature, $(template), $(template_li));
                 //this function use to change image.
                 eqm_wksp_obj.setImage()
@@ -561,7 +562,6 @@ WORK_SPACE = {
                     EQUIPMENT_DRAG_EVENT.select(event, ui, eqm_wksp_obj);
                 });
                 eqm_wksp_obj.li_elem.appendTo(ELEM_NAME.WKSP_EQM_LIST);
-                return;
             }
             if (arguments.length == 2) {
                 let template = Mustache.render(TEMPLATE.WORKSPACE_EQM_ELEM,
@@ -575,7 +575,7 @@ WORK_SPACE = {
                     curr_val: curr_val,
                     equipment: eqm
                 }));
-                let eqm_wksp_obj = new WorkSpaceEqmInfo(WORK_SPACE.equip_counter, eqm,
+                eqm_wksp_obj = new WorkSpaceEqmInfo(WORK_SPACE.equip_counter, eqm,
                     curr_val, eqm.properties.max_temperature, $(template), $(template_li));
                 eqm_wksp_obj.setImage()
                 WORK_SPACE.equips_in_workspace.push(eqm_wksp_obj);
@@ -606,8 +606,8 @@ WORK_SPACE = {
                     EQUIPMENT_DRAG_EVENT.select(event, ui, eqm_wksp_obj);
                 });
                 eqm_wksp_obj.li_elem.appendTo(ELEM_NAME.WKSP_EQM_LIST);
-                return;
             }
+            eqm_wksp_obj.change(eqm_wksp_obj.curr_val);
         };
 
         this.loadSteps = function () {
