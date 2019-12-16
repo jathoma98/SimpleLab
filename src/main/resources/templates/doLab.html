@@ -137,7 +137,10 @@
                 <a href="#add_modal" class="{{^machine}}modal-trigger{{/machine}} row">
 
                     <div class="col s4">
-                        <img src="../../img/beaker.png" class="item_img" style="margin-top: 30%;">
+                        <div class="crop">
+                            <img src="../../../image/rest/{{id}}" class="cropimg5" style="margin-top: 30%;">
+                        </div>
+
                     </div>
                     <div class="col s8">
                         <p>Name: {{name}}</p>
@@ -177,7 +180,9 @@
                 </div>
                 <div class="collapsible-body row">
                     <div class="col s4 delete_empty">
-                        <img src="../../img/beaker.png" class="item_img">
+                        <div class="crop">
+                            <img src="../../../image/rest/{{targetObject.id}}" class="cropimg5">
+                        </div>
                     </div>
                     <div class="col s8">
                         <p class="col s12">Name: {{targetObject.name}}</p>

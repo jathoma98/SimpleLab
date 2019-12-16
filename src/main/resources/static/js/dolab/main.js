@@ -27,7 +27,7 @@ STEP_COUNTER = {
 
 
 class WorkSpaceEqmInfo {
-    constructor(id, equipment, curr_val, curr_temp, html_elem, li_elem) {
+    constructor(id, equipment, curr_val, curr_temp, html_elem, li_elem){
         this.id = id; //equipment id on the work space.
         this.equipment = equipment; //equipment default info.
         this.curr_val = curr_val == undefined ? undefined : curr_val * 1; //equipment current value on work space
@@ -171,22 +171,22 @@ class WorkSpaceEqmInfo {
         let perc = this.curr_val / this.getMaxValue();
         let cssName = ""
         if(perc <= 0){
-            cssName = "1";
+            cssName = " cropimg ";
         }else if (perc <= 0.25){
-            cssName = "2";
+            cssName = " cropimg2 ";
         }else if (perc <= 0.50){
-            cssName = "3";
+            cssName = " cropimg3 ";
         }else if (perc <= 0.75){
-            cssName = "4";
+            cssName = " cropimg4    ";
         }else if (perc <= 1 || perc > 1){
-            cssName = "5";
+            cssName = " cropimg5 ";
         }
         //remove old css
-        this.li_elem.find("").removeClass("");
-        this.drag_elem.find("").removeClass("");
+        this.li_elem.find("img").removeClass();
+        this.drag_elem.find("img").removeClass();
         //add new css
-        this.li_elem.find("").addClass("");
-        this.drag_elem.find("").addClass("");
+        this.li_elem.find("img").addClass(cssName);
+        this.drag_elem.find("img").addClass(cssName);
         return;
     }
 

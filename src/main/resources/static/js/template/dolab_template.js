@@ -1,13 +1,17 @@
 TEMPLATE = {
     WORKSPACE_EQM_ELEM:
         '<div class="ui-widget-content fixed draggable_item center">' +
-        '   <img src="../../img/cylinder.png" class="item_img">' +
+        '    <div class="crop">'+
+        '        <img src="../../../image/rest/{{id}}" class="cropimg5">\n' +
+        '    </div>'+
         '   <p>{{name}}</p>' +
         '</div>',
     WORKSPACE_EQM_ELEM_BAR:
         '<div class="row sidebaritem">\n' +
-        '    <div class="col s4">\n' +
-        '        <img src="../../img/beaker.png" class="item_img">\n' +
+        '    <div class="col s4 center">\n' +
+        '        <div class="crop">'+
+        '            <img src="../../../image/rest/{{euqipment.id}}" class="cropimg5">\n' +
+        '        </div>'+
         '    </div>\n' +
         '    <div class="col s4">\n' +
         '        <p>Name: {{equipment.name}}</p>\n' +
