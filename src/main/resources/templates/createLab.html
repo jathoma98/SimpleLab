@@ -97,7 +97,7 @@
             <script id="labequip_list_template" type="mustache">
                 <div class="row sidebaritem">
                     <div class="col s2 crop ">
-                        <img src="../../img/percentage.png" class="cropimg5">
+                        <img src="../../../image/rest/{{id}}" class="cropimg5">
                     </div>
                     <div class="col s4">
                         <p>Name: {{name}}</p>
@@ -132,7 +132,7 @@
             <script id="allequip_list_template" type="mustache">
                 <div class="row sidebaritem">
                     <div class="col s2 crop">
-                        <img src="../../img/percentage.png" class="cropimg5">
+                        <img src="../../../image/rest/{{id}}" class="cropimg5">
                     </div>
                     <div class="col s4">
                         <p>Name: {{name}}</p>
@@ -167,8 +167,10 @@
             <div id="equip1" class="col s4 center margintop">
                 <div class="center col s10 offset-s1 z-depth-1 padding4 recipe_equips" id="equip_1">
                     <p class="fontheader">Equipment 1</p>
-                    <div class="crop margintop col s4 offset-s4">
-                        <img src="../../img/percentage.png" class=" cropimg5 ">
+                    <div class="margintop col s4 offset-s4">
+                        <div class="crop">
+                            <img src="../../img/percentage.png" class="cropimg5 ">
+                        </div>
                     </div>
                     <input type="number" placeholder="proportion for item one" class="col s8 offset-s2 center-align click_ignore">
                 </div>
@@ -176,8 +178,10 @@
             <div id="equip2" class="col s4 center margintop">
                 <div class="center col s10 offset-s1 z-depth-1 padding4 recipe_equips" id="equip_2">
                     <p class="fontheader">Equipment 2</p>
-                    <div class="crop margintop col s4 offset-s4">
-                        <img src="../../img/percentage.png" class=" cropimg5 ">
+                    <div class="margintop col s4 offset-s4">
+                        <div class="crop">
+                            <img src="../../img/percentage.png" class="cropimg5 ">
+                        </div>
                     </div>
                     <input type="number" placeholder="proportion for item two" class="col s8 offset-s2 center-align click_ignore">
                 </div>
@@ -185,8 +189,10 @@
             <div id="equip3" class="col s4 center margintop">
                 <div class="center col s10 offset-s1 z-depth-1 padding4 recipe_equips" id="equip_r">
                     <p class="fontheader">Equipment 3</p>
-                    <div class="crop margintop col s4 offset-s4">
-                        <img src="../../img/percentage.png" class=" cropimg5 ">
+                    <div class="margintop col s4 offset-s4">
+                        <div class="crop">
+                            <img src="../../img/percentage.png" class="cropimg5 ">
+                        </div>
                     </div>
                     <input type="number" placeholder="proportion for item three" class="col s8 offset-s2 center-align click_ignore">
                 </div>
@@ -227,7 +233,7 @@
                 <script id="recequip_list_template" type="mustache">
                     <div class="row sidebaritem">
                         <div class="col s2 crop">
-                            <img src="../../img/percentage.png" class="cropimg5">
+                            <img src="../../../image/rest/{{id}}" class="cropimg5">
                         </div>
                         <div class="col s4">
                             <p>Name: {{name}}</p>
@@ -253,7 +259,6 @@
         </div>
     </div>
     <div id="steps" class="row">
-
         <nav class="col s12 delete_empty center-align deep-orange lighten-4"><h5>Step</h5></nav>
         <div id="step_card" class="delete_empty col s12 white recipeheight z-depth-2 valign-wrapper ">
             <div class="col s4">
@@ -311,7 +316,7 @@
                 <script id="step_list_template" type="mustache">
                     <div class="row sidebaritem">
                         <div class="col s2 crop">
-                            <img src="../../img/percentage.png" class="cropimg5">
+                            <img src="../../../image/rest/{{targetObject.id}}" class="cropimg5">
                         </div>
                         <div class="col s4">
                             <p id="stepNum" stepNum={{stepNum}}>Step - {{stepNum}}</p>
@@ -347,7 +352,7 @@
                 <script id="stepequip_list_template" type="mustache">
                     <div class="row sidebaritem">
                         <div class="col s2 crop">
-                            <img src="../../img/percentage.png" class="cropimg5">
+                            <img src="../../../image/rest/{{id}}" class="cropimg5">
                         </div>
                         <div class="col s4">
                             <p>Name: {{name}}</p>

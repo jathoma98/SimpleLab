@@ -147,6 +147,7 @@ RECIPE = {
                         (eqm) => {
                             RECIPE.recipe.equipmentOne = eqm.id;
                             $(ELEM_NAME.RECIPE_CARD_ONE).find("p").text("Equipment 1:" + eqm.name);
+                            $("#equip_1 .crop img").attr("src", ("../../../image/rest/"+eqm.id));
                         });
                     break;
                 case ELEM_NAME.RECIPE_CARD_TWO:
@@ -155,6 +156,7 @@ RECIPE = {
                         (eqm) => {
                             RECIPE.recipe.equipmentTwo = eqm.id;
                             $(ELEM_NAME.RECIPE_CARD_TWO).find("p").text("Equipment 2:" + eqm.name);
+                            $("#equip_2 .crop img").attr("src", ("../../../image/rest/"+eqm.id));
                         });
                     break;
                 case ELEM_NAME.RECIPE_CARD_RESULT:
@@ -164,6 +166,7 @@ RECIPE = {
                         (eqm) => {
                             RECIPE.recipe.result = eqm.id;
                             $(ELEM_NAME.RECIPE_CARD_RESULT).find("p").text("Result:" + eqm.name);
+                            $("#equip_r .crop img").attr("src", ("../../../image/rest/"+eqm.id));
                         });
                     break;
             }
@@ -247,6 +250,7 @@ STEP = {
                     $(event.currentTarget).addClass("eqmli_selected");
                     $(ELEM_NAME.STEP_CARD).find("p").text("Target:" + eqm.name);
                     $(ELEM_NAME.STEP_CARD).find("input").val("");
+                    $("#step_card .crop img").attr("src", ("../../../image/rest/"+eqm.id));
                 });
         }
         this.save = function () {
