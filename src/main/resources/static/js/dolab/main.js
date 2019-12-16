@@ -177,7 +177,7 @@ class WorkSpaceEqmInfo {
         }else if (perc <= 0.50){
             cssName = " cropimg3 ";
         }else if (perc <= 0.75){
-            cssName = " cropimg4    ";
+            cssName = " cropimg4 ";
         }else if (perc <= 1 || perc > 1){
             cssName = " cropimg5 ";
         }
