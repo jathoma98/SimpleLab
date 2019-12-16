@@ -323,7 +323,7 @@ EQUIPMENT_DRAG_EVENT = {
         let two = drop_eqm_wksp_obj.equipment;
 
         //Interaction With same equipment.
-        if (one.id == two.id) {
+        if (one.id == two.id && one.type != "machine") {
             drag_eqm_wksp_obj.change(drag_eqm_wksp_obj.curr_val - tranVal)
             let c = drop_eqm_wksp_obj.curr_val = drop_eqm_wksp_obj.curr_val * 1 + tranVal;
             drop_eqm_wksp_obj.change(c);
