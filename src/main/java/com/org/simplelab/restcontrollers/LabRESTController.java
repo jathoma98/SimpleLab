@@ -260,7 +260,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
         rro.setSuccess(true);
         rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
         rro.setMsg("there must be have list of steps in return of rro");
-        rro.setData(found.getSteps());
+        rro.setData(found.loadAllSteps());
         return rro;
     }
 

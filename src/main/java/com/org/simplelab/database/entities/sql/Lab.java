@@ -1,6 +1,7 @@
 package com.org.simplelab.database.entities.sql;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.interfaces.UserCreated;
 import lombok.Data;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 import java.util.*;
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity(name = DBUtils.LAB_TABLE_NAME)
 @Table(name = DBUtils.LAB_TABLE_NAME)
 public class Lab extends BaseTable implements UserCreated{
@@ -49,7 +51,7 @@ public class Lab extends BaseTable implements UserCreated{
     }
 
     @Transactional
-    public List<Step> getSteps(){
+    public List<Step> loadAllSteps(){
         //iterate over all steps to initialize lazy loading
         steps.forEach(step -> {});
         return steps;
