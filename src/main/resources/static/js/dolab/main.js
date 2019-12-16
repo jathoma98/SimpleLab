@@ -18,7 +18,7 @@ TEMPLATE_ID = {
 STEP_COUNTER = {
     wrong_step_count: 0,
     wrong_step_warning: (str) => {
-        wrong_step_count++;
+        STEP_COUNTER.wrong_step_count++;
         alert(str);
         //TODO:set grade board
 
