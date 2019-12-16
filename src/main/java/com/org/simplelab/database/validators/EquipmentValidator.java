@@ -3,6 +3,7 @@ package com.org.simplelab.database.validators;
 import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.EquipmentProperty;
+import com.org.simplelab.exception.InvalidFieldException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -17,7 +18,6 @@ public class EquipmentValidator extends Validator<Equipment> {
     private String name;
     private String type;
     private Collection<EquipmentProperty> properties;
-    private ImageFileValidator img;
     private String _metadata;
 
     @Override
@@ -27,14 +27,6 @@ public class EquipmentValidator extends Validator<Equipment> {
         if (name == null || name.equals(""))
             sb.append(EMPTY_FIELD);
 
-//        validate image if it exists
-        if (img != null) {
-            try {
-                img.validate();
-            } catch (InvalidFieldException e) {
-                sb.append(e.getMessage());
-            }
-        }
 
         if (sb.length() > 0)
             throw new InvalidFieldException(sb.toString());
@@ -43,9 +35,6 @@ public class EquipmentValidator extends Validator<Equipment> {
     @Override
     public Equipment build() {
         Equipment e = DBUtils.getMapper().map(this, Equipment.class);
-        if (img != null) {
-            e.setImg(img.build());
-        }
         e.getProperties().forEach((p)->p.setParentEquipment(e));
         return e;
     }

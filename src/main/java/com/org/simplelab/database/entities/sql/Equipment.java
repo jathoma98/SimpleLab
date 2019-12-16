@@ -52,8 +52,6 @@ public class Equipment extends AbstractEquipment implements UserCreated {
     @PreRemove
     @Transactional
     public void removeFromParents(){
-        //TODO: this should probably send an alert or warning if there
-        //are recipes/labs that use this equipment.
         Collection<Lab> parents = this.getLab();
         parents.forEach( (parent) -> {
             if (parent.getEquipments() != null)

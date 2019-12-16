@@ -1,4 +1,4 @@
-package com.org.simplelab.database.validators;
+package com.org.simplelab.exception;
 
 public class InvalidFieldException extends Exception{
     public InvalidFieldException(String message){

@@ -32,7 +32,6 @@ public abstract class AbstractEquipment extends BaseTable{
         }
     }
 
-    //TODO-HIGH: this should be a map, not a hashset
     public EquipmentProperty findProperty(String key){
         for (EquipmentProperty eqp : this.getProperties()) {
             if (eqp.getPropertyKey().equals(key)) { return eqp; }
