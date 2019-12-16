@@ -18,10 +18,9 @@ TEMPLATE_ID = {
 STEP_COUNTER = {
     wrong_step_count: 0,
     wrong_step_warning: (str) => {
-        wrong_step_count++;
+        STEP_COUNTER.wrong_step_count++;
         alert(str);
         //TODO:set grade board
-
     }
 }
 
@@ -157,6 +156,9 @@ class WorkSpaceEqmInfo {
     }
 
     setImage() {
+        // make sure image is right image
+        this.li_elem.find("img").attr("src","../../../image/rest/"+this.equipment.id);
+        this.li_elem.find("img").attr("src","../../../image/rest/"+this.equipment.id);
         // If is machine we don't change image
         if(this.equipment.type == TYPE.MACHINE){
             //remove old css
@@ -323,7 +325,7 @@ EQUIPMENT_DRAG_EVENT = {
         let two = drop_eqm_wksp_obj.equipment;
 
         //Interaction With same equipment.
-        if (one.id == two.id) {
+        if (one.id == two.id && one.type != "machine") {
             drag_eqm_wksp_obj.change(drag_eqm_wksp_obj.curr_val - tranVal)
             let c = drop_eqm_wksp_obj.curr_val = drop_eqm_wksp_obj.curr_val * 1 + tranVal;
             drop_eqm_wksp_obj.change(c);
@@ -521,6 +523,7 @@ WORK_SPACE = {
                 let template = Mustache.render(TEMPLATE.WORKSPACE_EQM_ELEM,
                     {
                         eqm_wksp_id: WORK_SPACE.last_equips_in_workspace_id,
+                        id:eqm.id,
                         name: eqm.name + " (Machine)",
                     });
                 let template_li = $("<li/>");
@@ -564,6 +567,7 @@ WORK_SPACE = {
                 let template = Mustache.render(TEMPLATE.WORKSPACE_EQM_ELEM,
                     {
                         eqm_wksp_id: WORK_SPACE.last_equips_in_workspace_id,
+                        id:eqm.id,
                         name: eqm.name + " (100)%",
                     });
                 let template_li = $("<li/>");
@@ -571,9 +575,9 @@ WORK_SPACE = {
                     curr_val: curr_val,
                     equipment: eqm
                 }));
-
                 let eqm_wksp_obj = new WorkSpaceEqmInfo(WORK_SPACE.equip_counter, eqm,
                     curr_val, eqm.properties.max_temperature, $(template), $(template_li));
+                eqm_wksp_obj.setImage()
                 WORK_SPACE.equips_in_workspace.push(eqm_wksp_obj);
                 //drag elem set up
                 eqm_wksp_obj.drag_elem.draggable({

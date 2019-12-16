@@ -10,7 +10,7 @@ TEMPLATE = {
         '<div class="row sidebaritem">\n' +
         '    <div class="col s4 center">\n' +
         '        <div class="crop">'+
-        '            <img src="../../../image/rest/{{euqipment.id}}" class="cropimg5">\n' +
+        '            <img src="../../../image/rest/{{equipment.id}}" class="cropimg5">\n' +
         '        </div>'+
         '    </div>\n' +
         '    <div class="col s4">\n' +
