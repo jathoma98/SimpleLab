@@ -193,17 +193,14 @@ let EQUIPMENT_TABLE = {
                 data: validator_json,
                 success: function (result) {
                     retObjHandle(result, function(){
+                        console.log(result.data);
+                        let equipment_id = result.data;
                         let formData = new FormData($('#img_form')[0]);
                         formData.append('image', $('input[type=file]')[0].files[0]);
-                        // let data = {
-                        //     equipment_id : result.data.equipment_id,
-                        //     image : form_trans
-                        // }
-                        // let validator_json = JSON.stringify(data);
                         $.ajax({
                             type: "POST",
                             enctype: 'multipart/form-data',
-                            url: "/image/rest/upload",
+                            url: "/image/rest/"+equipment_id,
                             data: formData,
                             processData: false,
                             contentType: false,
