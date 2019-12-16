@@ -47,7 +47,6 @@ class WorkSpaceEqmInfo {
             this.mix_list = [];
             this.setPurity()
             this.isOverflow();
-            return;
         }
         if (arguments.length == 2) {
             this.curr_val = val_1
@@ -61,7 +60,6 @@ class WorkSpaceEqmInfo {
             }))
             this.purity = 100;
             $(this.drag_elem).find("p").text(this.equipment.name + " (" + this.purity + ")%");
-            return;
         }
         if (arguments.length == 4) {
             this.mix_list = [];
@@ -101,8 +99,40 @@ class WorkSpaceEqmInfo {
             this.setPurity();
             this.isOverflow();
             $(this.drag_elem).find("p").text(this.equipment.name + " (" + this.purity + ")%");
-            return;
         }
+        if(this.purity != 100) return;
+        WORK_SPACE.steps.forEach(s=>{
+           if( s.targetObject.id == this.equipment.id){
+               let targetVal = 0;
+               let currVal = 0;
+               let check = 2;
+               switch(s.targetObject.type) {
+                   case TYPE.LIQUID:
+                       targetVal = s.targetVolume * 1;
+                       break;
+                   case TYPE.SOLID:
+                       targetVal = s.targetWeight * 1;
+                       break;
+               }
+               if(targetVal <= this.curr_val * 1){
+                   check --;
+               }
+               if(s.targetTemperature == this.curr_temp * 1){
+                   check --;
+               }else if(s.targetTemperature == "" || s.targetObject == undefined){
+                   check --;
+               }
+               if(check > 0){
+                   s["isComplete"] = false;
+                   return;
+               }else{
+                   s["isComplete"] = true;
+                   s.html_li.find(".check_star").removeClass("my_color_gray")
+                   s.html_li.find(".check_star").addClass("my_color_red")
+                   M.toast({html: '<h5>Step(' + s.stepNum + '): '+ s.targetName + ' is completed</h5>>'})
+               }
+           }
+        })
     }
 
     setPurity() {
@@ -407,7 +437,6 @@ WORK_SPACE = {
                                 }else{
                                     WORK_SPACE.AddEquipToWorkSpace(eqm);
                                 }
-
                             });
                     })
                 }
@@ -511,13 +540,22 @@ WORK_SPACE = {
                             step.targetObject[step.targetObject.type] = true;
                             equipmentPropsToKeyValue(step.targetObject);
                         });
-                        let data = {iterable: result.data};
-                        WORK_SPACE.steps = data.iterable;
-                        rebuildRepeatComponent(ELEM_NAME.STEP_LIST, TEMPLATE_ID.STEP_LIST,
-                            "<li/>", undefined, data, "click",
-                            (step, event) => {
-                                //TODO:
-                            });
+                        // let data = {iterable: result.data};
+                        WORK_SPACE.steps = result.data
+                        WORK_SPACE.steps.forEach(s=>{
+                            equipmentPropsToKeyValue(s.targetObject);
+                            s["isComplete"] = false;
+                            let template_li = $("<li/>");
+                            template_li.append(Mustache.render($(TEMPLATE_ID.STEP_LIST).html(), s));
+                            template_li.appendTo(ELEM_NAME.STEP_LIST);
+                            s["html_li"] = template_li;
+
+                        })
+                        // rebuildRepeatComponent(ELEM_NAME.STEP_LIST, TEMPLATE_ID.STEP_LIST,
+                        //     "<li/>", undefined, data, "click",
+                        //     (step, event) => {
+                        //         //TODO:
+                        //     });
                     })
                 }
             })
