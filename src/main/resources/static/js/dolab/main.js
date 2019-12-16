@@ -15,6 +15,13 @@ TEMPLATE_ID = {
     WORKSPACE_EQM_ELEM: "#wksp_eqm_template",
     STEP_LIST: "#step_list_template",
 };
+STEP_COUNTER = {
+    wrong_step_count: 0,
+    wrong_step_warning:(str)=>{
+        wrong_step_count++;
+        alert(str);
+    }
+}
 
 
 class WorkSpaceEqmInfo {
@@ -37,7 +44,7 @@ class WorkSpaceEqmInfo {
             let ratio_remain = remain / this.curr_val;
             this.mix_list.forEach(m => m.value * ratio_remain);
             this.curr_val = this.equipment.max_volume;
-            alert("Equipment reach the max " + type + ", extra will be wast.")
+            STEP_COUNTER.wrong_step_warning("Equipment reach the max " + type + ", extra will be wast.")
         }
     }
 
@@ -127,8 +134,8 @@ class WorkSpaceEqmInfo {
                    return;
                }else{
                    s["isComplete"] = true;
-                   s.html_li.find(".check_star").removeClass("my_color_gray")
-                   s.html_li.find(".check_star").addClass("my_color_red")
+                   s.html_li.find(".check_star").removeClass("my_color_gray");
+                   s.html_li.find(".check_star").addClass("my_color_red");
                    M.toast({html: '<h5>Step(' + s.stepNum + '): '+ s.targetName + ' is completed</h5>>'})
                }
            }
@@ -227,7 +234,7 @@ EQUIPMENT_DRAG_EVENT = {
     },
     setInteractionModal: function (drag_eqm_wksp_obj, drop_eqm_wksp_obj) {
         if(drag_eqm_wksp_obj.equipment == TYPE.MACHINE && drop_eqm_wksp_obj.equipment == TYPE.MACHINE){
-            alert("Unknow Recipe machine to machine");
+            STEP_COUNTER.wrong_step_warning("Unknow Recipe machine to machine");
             return;
         }
         let title = "";
@@ -282,7 +289,7 @@ EQUIPMENT_DRAG_EVENT = {
                     return r.equipmentOne.id == one.id && r.equipmentTwo.id == two.id;
                 })
                 if (recipe == null) {
-                    alert("Unknow Recipe")
+                    STEP_COUNTER.wrong_step_warning("Unknow Recipe")
                     return
                 }
                 ;
@@ -313,11 +320,11 @@ EQUIPMENT_DRAG_EVENT = {
                     return r.equipmentOne.id == one.id && r.equipmentTwo.id == two.id;
                 })
                 if (recipe == null) {
-                    alert("Unknow Recipe");
+                    STEP_COUNTER.wrong_step_warning("Unknow Recipe");
                     return
                 }
                 if (drop_eqm_wksp_obj.equipment.id != recipe.result.id) {
-                    alert("Unknow Recipe");
+                    STEP_COUNTER.wrong_step_warning("Unknow Recipe");
                     return;
                 } else {
                     let ratio_recipe = recipe.ratioOne / recipe.ratioTwo;
@@ -346,25 +353,25 @@ EQUIPMENT_DRAG_EVENT = {
 
         //Interacting With Machine
         if (one.type != "machine"  && two.type == "machine" ){
-            if (drag_eqm_wksp_obj.purity !== 100) {alert("Unknow Recipe"); return};
+            if (drag_eqm_wksp_obj.purity !== 100) {STEP_COUNTER.wrong_step_warning("Unknow Recipe"); return};
             let recipe = WORK_SPACE.recipes.find(r => {
                 return r.equipmentOne.id == one.id && r.equipmentTwo.id == two.id;
             })
-            if (recipe == null) {alert("Unknow Recipe"); return};
+            if (recipe == null) {STEP_COUNTER.wrong_step_warning("Unknow Recipe"); return};
             WORK_SPACE.AddEquipToWorkSpace(recipe.result, drag_eqm_wksp_obj.curr_val / (recipe.ratioOne/recipe.ratioThree));
             drag_eqm_wksp_obj.curr_val -= tranVal;
         }
         if (one.type == "machine"  && two.type != "machine" ){
-            if (drop_eqm_wksp_obj.purity !== 100) {alert("Unknow Recipe"); return};
+            if (drop_eqm_wksp_obj.purity !== 100) {STEP_COUNTER.wrong_step_warning("Unknow Recipe"); return};
             let recipe = WORK_SPACE.recipes.find(r => {
                 return r.equipmentOne.id == one.id && r.equipmentTwo.id == two.id;
             })
-            if (recipe == null) {alert("Unknow Recipe"); return};
+            if (recipe == null) {STEP_COUNTER.wrong_step_warning("Unknow Recipe"); return};
             drop_eqm_wksp_obj.curr_val -= tranVal;
             drag_eqm_wksp_obj.change(Math.round(drop_eqm_wksp_obj.curr_val / (recipe.ratioTwo/recipe.ratioThree)), recipe.result)
         }
         if (one.type == "machine"  && two.type == "machine" ){
-            alert("Unknow Recipe (machine to machine)");
+            STEP_COUNTER.wrong_step_warning("Unknow Recipe (machine to machine)");
             return;
         }
     }
