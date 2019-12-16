@@ -22,7 +22,7 @@ TEMPLATE = {
         '       {{#equipment.liquid}}\n' +
         '       <p>Current Volume: {{curr_val}}</p>\n' +
         '       {{/equipment.liquid}}\n' +
-        '       {{#equipment.solid}}\n' +
+        '            {{#equipment.solid}}\n' +
         '       <p>Current Weight: {{curr_val}}</p>\n' +
         '       {{/equipment.solid}}\n' +
         '       <p>Current Temperature: {{equipment.properties.min_temperature}} - {{properties.max_temperature}}</p>\n' +
