@@ -200,7 +200,7 @@ td, th {
     display: none;
 }
 .vtext1{
-    margin-top: 78px;
+    margin-top: 50px;
     font-size: 20px;
     color: white;
     text-shadow: 2px 2px 4px #000000;
@@ -213,7 +213,7 @@ td, th {
 }
 
 .vtext2{
-    margin-top: 28px;
+    margin-top: 68px;
     font-size: 20px;
     color: white;
     text-shadow: 2px 2px 4px #000000;
@@ -225,6 +225,18 @@ td, th {
     padding-right: 0!important;
 }
 
+.vtext3{
+    margin-top: 40px;
+    font-size: 20px;
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    margin-left: 0!important;
+    margin-right: 0!important;
+    padding-left: 0!important;
+    padding-right: 0!important;
+}
 
 .eq_upload{
     width: 50%;
