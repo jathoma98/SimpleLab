@@ -218,7 +218,11 @@ public class DoLabTests extends SpringTestConfig {
         long lab_id = labDB.searchLabWithKeyword(l.getName()).get(0).getId();
 
         String lab_instance_id = dlc.getLabToDo(lab_id).getData().getInstance_id();
-        dlc.handleSaveWorkspaceState(ieq_set, lab_instance_id);
+        DTO.LabSaveStateDTO dto = new DTO.LabSaveStateDTO();
+        dto.setEquipment(ieq_set);
+        dto.setLabFinished(false);
+        dto.setStep(null);
+        dlc.handleSaveWorkspaceState(dto, lab_instance_id);
 
         List<byte[]> found_ieq = instanceDB.findById(lab_instance_id).getEquipmentInstances();
         Collection<InstantiatedEquipment> found =           found_ieq.stream()

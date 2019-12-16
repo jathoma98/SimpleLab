@@ -73,6 +73,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
      * InvalidFieldException message if user data is formatted improperly
      * Duplicate coursecode error message if the new course code is already taken
      */
+    @Transactional
     @PatchMapping(UPDATE_MAPPING)
     public RRO<String> updateCourse(@RequestBody DTO.CourseUpdateDTO dto, HttpSession session) {
         RRO<String> rro = new RRO();
@@ -87,7 +88,8 @@ public class CourseRESTController extends BaseRESTController<Course> {
             rro.setSuccess(false);
             return rro;
         }
-        if (toUpdate.getCreator().getId() != uid){
+        User creator = toUpdate.getCreator();
+        if (creator.getId() != uid){
             rro.setAction(RRO.ACTION_TYPE.PRINT_MSG.name());
             rro.setMsg(CourseValidator.DUPLICATE_ID);
             rro.setSuccess(false);
