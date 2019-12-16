@@ -73,6 +73,9 @@ public class ImageFileRESTController extends BaseRESTController<ImageFile> {
     @GetMapping(IMG_TO_EQUIPMENT_MAPPING)
     public void showImage(@PathVariable("equipment_id") long equipment_id, HttpServletResponse response) throws Exception{
         Equipment e = equipmentDB.findById(equipment_id);
+        if (e == null){
+            //TODO: return something if no img.
+        }
         ImageFile img = e.getImg();
         response.setContentType(img.getFileType());
         response.getOutputStream().write(img.getData());

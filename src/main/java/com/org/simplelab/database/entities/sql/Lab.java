@@ -23,17 +23,17 @@ public class Lab extends BaseTable implements UserCreated{
     private Set<Course> course;
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE},
-            fetch = FetchType.EAGER)
+            fetch = FetchType.LAZY)
     @JoinColumn(name = "creator_id")
     private User creator;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE},
-                fetch = FetchType.EAGER)
+                fetch = FetchType.LAZY)
     @JoinColumn(name = "lab")
     private Set<Equipment> equipments;
 
     @OneToMany(cascade = {CascadeType.ALL},
-                fetch = FetchType.EAGER,
+                fetch = FetchType.LAZY,
                 mappedBy = "lab",
                 orphanRemoval = true)
     private List<Step> steps;
