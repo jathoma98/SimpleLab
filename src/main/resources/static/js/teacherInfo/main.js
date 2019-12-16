@@ -43,8 +43,7 @@ $(document).ready(function () {
     $("#courseBackBtn").on("click", ()=>{COURSES_TABLE.btnSwitch()});
     //load course table
     COURSES_TABLE.reload();
-
-
+    
     //Lab
     LABS_TABLE.init();
     $("#labAddBtn").on("click", ()=>{LABS_TABLE.create()});
@@ -60,35 +59,19 @@ $(document).ready(function () {
     $("#equipBackBtn").on("click",()=>{EQUIPMENT_TABLE.btnSwitch()});
     $("#equipAddBtn").on("click", ()=>{EQUIPMENT_TABLE.create()});
     $("#equipDeleteBtn").on("click", ()=>{EQUIPMENT_TABLE.delete()});
-   
-
 
     //load equipment table
     EQUIPMENT_TABLE.reload();
     $(".tooltipped").tooltip();
 
-    // $("#liquid").click(function(event){
-    //     var selectedOption = event.target.value;
-    //     console.log(selectedOption);
-    //     if (selectedOption === 'liquid') {
-    //         $("#equip_name").style.display="none";
-    //         // document.getElementById('text').style.display = 'block';
-    //     }
-    // })
-
-
 })
 
-function on_change(el){
-    var selectedOption = el.target.value;
-    if (selectedOption === 'liquid') {
-        $("#equip_name").style.display="none";
-        // document.getElementById('text').style.display = 'block';
-    } else if(selectedOption === 'soild') {
-        $("#max_volume").style.display="none";
-        // document.getElementById('text').style.display = 'none'; // Hide el
+function display_input() {
+    if($("#min_temperature").attr("readonly")){
+        $("#min_temperature").prop('readonly', false);
     }else{
-
+        $("#min_temperature").prop('readonly', true);
+        $("#min_temperature").val("")
     }
 }
 
