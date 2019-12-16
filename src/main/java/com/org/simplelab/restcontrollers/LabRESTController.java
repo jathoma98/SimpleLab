@@ -10,6 +10,7 @@ import com.org.simplelab.database.services.LabDB;
 import com.org.simplelab.database.services.SQLService;
 import com.org.simplelab.database.services.StepDB;
 import com.org.simplelab.database.services.projections.Projection;
+import com.org.simplelab.database.services.projections.Projections;
 import com.org.simplelab.database.validators.LabValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
@@ -123,7 +124,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
         long userId = getUserIdFromSession();
         RRO rro = new RRO<Projection>();
         //Use TeacherLabInfo projection to only get attributes we want
-        List<Projection.TeacherLabInfo> labs = labDB.getLabsByCreatorId(userId, Projection.TeacherLabInfo.class);
+        List<Projections.TeacherLabInfo> labs = labDB.getLabsByCreatorId(userId, Projections.TeacherLabInfo.class);
         if (labs == null) {
             rro.setSuccess(false);
             rro.setAction(RRO.ACTION_TYPE.NOTHING.name());

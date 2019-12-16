@@ -206,7 +206,6 @@ let EQUIPMENT_TABLE = {
                             contentType: false,
                             cache: false,
                             success: function (data) {
-
                             }
                         });
                         EQUIPMENT_TABLE.reload();

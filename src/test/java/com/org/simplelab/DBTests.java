@@ -8,11 +8,13 @@ import com.org.simplelab.database.services.LabDB;
 import com.org.simplelab.database.services.RecipeDB;
 import com.org.simplelab.database.services.SQLService;
 import com.org.simplelab.database.services.UserDB;
+import com.org.simplelab.database.services.projections.Projections;
 import com.org.simplelab.database.validators.LabValidator;
 import com.org.simplelab.restcontrollers.CourseRESTController;
 import com.org.simplelab.restcontrollers.LabRESTController;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
+import com.org.simplelab.utils.DBTestUtils;
 import com.org.simplelab.utils.TestUtils;
 import org.apache.commons.lang3.SerializationUtils;
 import org.junit.jupiter.api.Test;
@@ -421,47 +423,6 @@ class DBTests extends SpringTestConfig {
 	@Autowired
 	RecipeDB rdb;
 
-	//TODO: fix this later
-	/**
-	@Test
-	void recipeTestAdd() throws Exception{
-		int numProperties = 10;
-		Equipment eq1 = TestUtils.createJunkEquipmentWithProperties(numProperties),
-				  eq2 = TestUtils.createJunkEquipmentWithProperties(numProperties),
-				  eq3 = TestUtils.createJunkEquipmentWithProperties(numProperties),
-				  eq4 = TestUtils.createJunkEquipmentWithProperties(numProperties);
-
-		Recipe r1 = new Recipe();
-
-		r1.setName(metadata);
-		r1.setEquipmentOne(eq1);
-		r1.setEquipmentTwo(eq2);
-		r1.setResult(eq3);
-
-		rdb.insert(r1);
-		List<Recipe> found = new ArrayList<>();
-		rdb.getRepository().findAll().forEach((recipe) -> found.add(recipe));
-		assertEquals(found.size(), 1);
-		System.out.println(r1.toString());
-
-		//Test adding another recipe with same equipment in one field.
-
-		Recipe r2 = new Recipe();
-		r2.setName(metadata);
-		r2.setEquipmentOne(eq1);
-		r2.setEquipmentTwo(eq3);
-		r2.setResult(eq4);
-		rdb.insert(r2);
-
-		//Test adding recipe with different equipment but same result
-		Recipe r3 = new Recipe();
-		r3.setName(metadata);
-		r3.setEquipmentOne(eq4);
-		r3.setEquipmentTwo(eq2);
-		r3.setResult(eq3);
-		rdb.insert(r3);
-	}**/
-
 
 
 	@Test
@@ -484,6 +445,13 @@ class DBTests extends SpringTestConfig {
 		});
 	}
 
+	@Test
+	void testEquipComplexProjection() throws Exception{
+		long equip_id = DBTestUtils.insertAndGetId(TestUtils.createJunkEquipmentWithProperties(3), equipmentDB);
+		Projections.TeacherEditEquipmentInfo info = equipmentDB.findById(equip_id, Projections.TeacherEditEquipmentInfo.class);
+		System.out.println(info.getName());
+		info.getProperties().stream().forEach( prop -> System.out.print(prop.getPropertyKey()));
+	}
 
 
 	}

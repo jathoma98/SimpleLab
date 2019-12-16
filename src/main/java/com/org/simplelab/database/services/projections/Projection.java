@@ -1,7 +1,5 @@
 package com.org.simplelab.database.services.projections;
 
-import lombok.Value;
-
 /**
  * Defines projections of DB queries.
  *
@@ -11,32 +9,7 @@ import lombok.Value;
  *
  * All classes need @Value annotation (from lombok, not Spring)
  */
-public abstract class Projection {
+public interface Projection {
 
-    /** For showing list of labs for teacher info page. */
-    @Value
-    public static class TeacherLabInfo extends Projection{
-        String name, createdDate;
-        String description;
-        long id;
-    }
 
-    public static class AllLabInfo extends Projection{
-        String name, description;
-        long id;
-    }
-
-    /** For showing list of courses for teacher info page.
-     * We can't use course_id in projection, because JPA doesnt like underscores
-     * so we have to manually copy fields. */
-    @Value
-    public static class TeacherCourseInfo extends Projection{
-        String name, createdDate, course_id;
-    }
-
-    @Value
-    public static class TeacherEquipmentInfo extends Projection{
-        String name, createdDate, type;
-        long id;
-    }
 }

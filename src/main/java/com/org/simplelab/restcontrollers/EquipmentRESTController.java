@@ -5,6 +5,7 @@ import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.EquipmentProperty;
 import com.org.simplelab.database.services.EquipmentDB;
 import com.org.simplelab.database.services.projections.Projection;
+import com.org.simplelab.database.services.projections.Projections;
 import com.org.simplelab.database.validators.EquipmentValidator;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
@@ -60,16 +61,15 @@ public class EquipmentRESTController extends BaseRESTController<Equipment> {
     @GetMapping(EQUIPMENT_ID_MAPPING)
     public RRO<Equipment> getSpecificEquipment(@PathVariable("equipment_id") long equipment_id){
         RRO<Equipment> rro = super.getEntityById(equipment_id);
-        rro.getData().getImg();
         return rro;
     }
 
     @GetMapping(EQUIPMENT_LIST_MAPPING)
-    public RRO<List<Projection.TeacherEquipmentInfo>> getListOfEquipments (HttpSession session){
+    public RRO<List<Projections.TeacherEquipmentInfo>> getListOfEquipments (HttpSession session){
         long userId = getUserIdFromSession();
         RRO rro = new RRO<Projection>();
         //Use TeacherLabInfo projection to only get attributes we want
-        List<Projection.TeacherEquipmentInfo> equips = equipmentDB.getEquipmentByCreatorId(userId, Projection.TeacherEquipmentInfo.class);
+        List<Projections.TeacherEquipmentInfo> equips = equipmentDB.getEquipmentByCreatorId(userId, Projections.TeacherEquipmentInfo.class);
         if (equips == null) {
             rro.setSuccess(false);
             rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
