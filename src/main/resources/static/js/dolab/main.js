@@ -17,9 +17,11 @@ TEMPLATE_ID = {
 };
 STEP_COUNTER = {
     wrong_step_count: 0,
-    wrong_step_warning:(str)=>{
+    wrong_step_warning: (str) => {
         wrong_step_count++;
         alert(str);
+        //TODO:set grade board
+
     }
 }
 
@@ -107,39 +109,85 @@ class WorkSpaceEqmInfo {
             this.isOverflow();
             $(this.drag_elem).find("p").text(this.equipment.name + " (" + this.purity + ")%");
         }
-        if(this.purity != 100) return;
-        WORK_SPACE.steps.forEach(s=>{
-           if( s.targetObject.id == this.equipment.id){
-               let targetVal = 0;
-               let currVal = 0;
-               let check = 2;
-               switch(s.targetObject.type) {
-                   case TYPE.LIQUID:
-                       targetVal = s.targetVolume * 1;
-                       break;
-                   case TYPE.SOLID:
-                       targetVal = s.targetWeight * 1;
-                       break;
-               }
-               if(targetVal <= this.curr_val * 1){
-                   check --;
-               }
-               if(s.targetTemperature == this.curr_temp * 1){
-                   check --;
-               }else if(s.targetTemperature == "" || s.targetObject == undefined){
-                   check --;
-               }
-               if(check > 0){
-                   s["isComplete"] = false;
-                   return;
-               }else{
-                   s["isComplete"] = true;
-                   s.html_li.find(".check_star").removeClass("my_color_gray");
-                   s.html_li.find(".check_star").addClass("my_color_red");
-                   M.toast({html: '<h5>Step(' + s.stepNum + '): '+ s.targetName + ' is completed</h5>>'})
-               }
-           }
+        if (this.purity != 100) return;
+        WORK_SPACE.steps.forEach(s => {
+            if (s.targetObject.id == this.equipment.id) {
+                let targetVal = 0;
+                let currVal = 0;
+                let check = 2;
+                switch (s.targetObject.type) {
+                    case TYPE.LIQUID:
+                        targetVal = s.targetVolume * 1;
+                        break;
+                    case TYPE.SOLID:
+                        targetVal = s.targetWeight * 1;
+                        break;
+                }
+                if (targetVal <= this.curr_val * 1) {
+                    check--;
+                }
+                if (s.targetTemperature == this.curr_temp * 1) {
+                    check--;
+                } else if (s.targetTemperature == "" || s.targetObject == undefined) {
+                    check--;
+                }
+                if (check > 0) {
+                    s["isComplete"] = false;
+                    return;
+                } else {
+                    s["isComplete"] = true;
+                    s.html_li.find(".check_star").removeClass("my_color_gray");
+                    s.html_li.find(".check_star").addClass("my_color_red");
+                    M.toast({html: '<h5>Step(' + s.stepNum + '): ' + s.targetName + ' is completed</h5>>'})
+                }
+            }
         })
+        //this function use to change image.
+        this.setImage();
+    }
+
+    getMaxValue() {
+        switch (this.equipment.type) {
+            case TYPE.LIQUID:
+                return this.equipment.max_volume;
+            case TYPE.SOLID:
+                return this.equipment.max_weight;
+        }
+        return undefined;
+    }
+
+    setImage() {
+        // If is machine we don't change image
+        if(this.equipment.type == TYPE.MACHINE){
+            //remove old css
+            this.li_elem.find("").removeClass("");
+            this.drag_elem.find("").removeClass("");
+            //add new css
+            this.li_elem.find("").addClass("");
+            this.drag_elem.find("").addClass("");
+            return;
+        }
+        // If not a machine we change image
+        let perc = this.curr_val / this.getMaxValue();
+        let cssName = ""
+        if(perc <= 0){
+            cssName = "1";
+        }else if (perc <= 0.25){
+            cssName = "2";
+        }else if (perc <= 0.50){
+            cssName = "3";
+        }else if (perc <= 0.75){
+            cssName = "4";
+        }else if (perc <= 1 || perc > 1){
+            cssName = "5";
+        }
+        //remove old css
+        this.li_elem.find("").removeClass("");
+        this.drag_elem.find("").removeClass("");
+        //add new css
+        this.li_elem.find("").addClass("");
+        this.drag_elem.find("").addClass("");
+        return;
     }
 
     setPurity() {
@@ -201,15 +249,15 @@ EQUIPMENT_DRAG_EVENT = {
         }
         switch (eqm.type) {
             case "liquid":
-                $("#current_value_title").text("Current Volume(L): ");
-                $("#max_value_title").text("Max Volume(L): ");
+                $("#current_value_title").text("Current Volume(mL): ");
+                $("#max_value_title").text("Max Volume(mL): ");
                 $("#max_value").text(eqm.properties.max_volume);
                 $("#current_value").text(eqm_wksp_obj.curr_val)
                 $("#current_temperature").text(eqm.curr_temp)
                 break;
             case "solid":
                 $("#current_value_title").text("Current Weight(kg): ");
-                $("#max_value_title").text("Max Weight(L): ");
+                $("#max_value_title").text("Max Weight(mL): ");
                 $("#max_value").text(eqm.properties.max_weight);
                 $("#current_value").text(eqm_wksp_obj.curr_val)
                 $("#current_temperature").text(eqm.curr_temp)
@@ -227,13 +275,13 @@ EQUIPMENT_DRAG_EVENT = {
             let mix_eqm_li = $('<li class="collection-item row mix_eqm"></li>');
             mix_eqm_li.append('<div class="col s6 mix_eqm_title"></div><div class="col s6 mix_eqm_value"></div>');
             mix_eqm_li.find(".mix_eqm_title").text(m.equipment.name);
-            mix_eqm_li.find(".mix_eqm_value").text(m.value + (eqm.type == "liquid" ? " L" : " kg"));
+            mix_eqm_li.find(".mix_eqm_value").text(m.value + (eqm.type == "liquid" ? " mL" : " kg"));
             $("#infobar ul").append(mix_eqm_li);
         })
         $("#name").text(eqm.name);
     },
     setInteractionModal: function (drag_eqm_wksp_obj, drop_eqm_wksp_obj) {
-        if(drag_eqm_wksp_obj.equipment == TYPE.MACHINE && drop_eqm_wksp_obj.equipment == TYPE.MACHINE){
+        if (drag_eqm_wksp_obj.equipment == TYPE.MACHINE && drop_eqm_wksp_obj.equipment == TYPE.MACHINE) {
             STEP_COUNTER.wrong_step_warning("Unknow Recipe machine to machine");
             return;
         }
@@ -273,6 +321,7 @@ EQUIPMENT_DRAG_EVENT = {
         tranVal = tranVal * 1;
         let one = drag_eqm_wksp_obj.equipment;
         let two = drop_eqm_wksp_obj.equipment;
+
         //Interaction With same equipment.
         if (one.id == two.id) {
             drag_eqm_wksp_obj.change(drag_eqm_wksp_obj.curr_val - tranVal)
@@ -280,8 +329,9 @@ EQUIPMENT_DRAG_EVENT = {
             drop_eqm_wksp_obj.change(c);
             return;
         }
+
         //Interacting With two differnt equipment.
-        if (one.type != "machine"  && two.type != "machine" ) {
+        if (one.type != "machine" && two.type != "machine") {
             let a = 0, b = 0;
             if (drop_eqm_wksp_obj.purity == 100) {
                 a = tranVal * 1, b = drop_eqm_wksp_obj.curr_val * 1;
@@ -352,25 +402,41 @@ EQUIPMENT_DRAG_EVENT = {
         }
 
         //Interacting With Machine
-        if (one.type != "machine"  && two.type == "machine" ){
-            if (drag_eqm_wksp_obj.purity !== 100) {STEP_COUNTER.wrong_step_warning("Unknow Recipe"); return};
+        if (one.type != "machine" && two.type == "machine") {
+            if (drag_eqm_wksp_obj.purity !== 100) {
+                STEP_COUNTER.wrong_step_warning("Unknow Recipe");
+                return
+            }
+            ;
             let recipe = WORK_SPACE.recipes.find(r => {
                 return r.equipmentOne.id == one.id && r.equipmentTwo.id == two.id;
             })
-            if (recipe == null) {STEP_COUNTER.wrong_step_warning("Unknow Recipe"); return};
-            WORK_SPACE.AddEquipToWorkSpace(recipe.result, drag_eqm_wksp_obj.curr_val / (recipe.ratioOne/recipe.ratioThree));
+            if (recipe == null) {
+                STEP_COUNTER.wrong_step_warning("Unknow Recipe");
+                return
+            }
+            ;
+            WORK_SPACE.AddEquipToWorkSpace(recipe.result, drag_eqm_wksp_obj.curr_val / (recipe.ratioOne / recipe.ratioThree));
             drag_eqm_wksp_obj.curr_val -= tranVal;
         }
-        if (one.type == "machine"  && two.type != "machine" ){
-            if (drop_eqm_wksp_obj.purity !== 100) {STEP_COUNTER.wrong_step_warning("Unknow Recipe"); return};
+        if (one.type == "machine" && two.type != "machine") {
+            if (drop_eqm_wksp_obj.purity !== 100) {
+                STEP_COUNTER.wrong_step_warning("Unknow Recipe");
+                return
+            }
+            ;
             let recipe = WORK_SPACE.recipes.find(r => {
                 return r.equipmentOne.id == one.id && r.equipmentTwo.id == two.id;
             })
-            if (recipe == null) {STEP_COUNTER.wrong_step_warning("Unknow Recipe"); return};
+            if (recipe == null) {
+                STEP_COUNTER.wrong_step_warning("Unknow Recipe");
+                return
+            };
             drop_eqm_wksp_obj.curr_val -= tranVal;
-            drag_eqm_wksp_obj.change(Math.round(drop_eqm_wksp_obj.curr_val / (recipe.ratioTwo/recipe.ratioThree)), recipe.result)
+            drag_eqm_wksp_obj.change(Math.round(drop_eqm_wksp_obj.curr_val / (recipe.ratioTwo / recipe.ratioThree)), recipe.result)
+            EQUIPMENT_DRAG_EVENT.showInfo(drag_eqm_wksp_obj)
         }
-        if (one.type == "machine"  && two.type == "machine" ){
+        if (one.type == "machine" && two.type == "machine") {
             STEP_COUNTER.wrong_step_warning("Unknow Recipe (machine to machine)");
             return;
         }
@@ -393,7 +459,7 @@ WORK_SPACE = {
                 success: function (result) {
                     retObjHandle(result, () => {
                         WORK_SPACE.recipes = result.data;
-                        WORK_SPACE.recipes.forEach(r=>{
+                        WORK_SPACE.recipes.forEach(r => {
                                 equipmentPropsToKeyValue(r.equipmentOne);
                                 equipmentPropsToKeyValue(r.equipmentTwo);
                                 equipmentPropsToKeyValue(r.result);
@@ -433,7 +499,7 @@ WORK_SPACE = {
                                         break;
                                 }
                                 //TODO: create Modal for setup value
-                                if(eqm.type != "machine"){
+                                if (eqm.type != "machine") {
                                     $(ELEM_NAME.ADD_MODAL).find("input").attr('max', max_value);
                                     $(ELEM_NAME.ADD_MODAL).find("input").val(0)
                                     $(ELEM_NAME.ADD_MODAL).find(".popup_dialog_header").text(title)
@@ -441,7 +507,7 @@ WORK_SPACE = {
                                     $(ELEM_NAME.ADD_TO_WKSP_BTN).on("click", (event) => {
                                         WORK_SPACE.AddEquipToWorkSpace(eqm, $(ELEM_NAME.ADD_MODAL).find("input").val());
                                     })
-                                }else{
+                                } else {
                                     WORK_SPACE.AddEquipToWorkSpace(eqm);
                                 }
                             });
@@ -451,7 +517,7 @@ WORK_SPACE = {
         };
 
         this.AddEquipToWorkSpace = function (eqm, curr_val) {
-            if(arguments.length == 1){
+            if (arguments.length == 1) {
                 let template = Mustache.render(TEMPLATE.WORKSPACE_EQM_ELEM,
                     {
                         eqm_wksp_id: WORK_SPACE.last_equips_in_workspace_id,
@@ -462,6 +528,8 @@ WORK_SPACE = {
 
                 let eqm_wksp_obj = new WorkSpaceEqmInfo(WORK_SPACE.equip_counter, eqm,
                     undefined, eqm.properties.max_temperature, $(template), $(template_li));
+                //this function use to change image.
+                eqm_wksp_obj.setImage()
                 WORK_SPACE.equips_in_workspace.push(eqm_wksp_obj);
                 //drag elem set up
                 eqm_wksp_obj.drag_elem.draggable({
@@ -492,14 +560,17 @@ WORK_SPACE = {
                 eqm_wksp_obj.li_elem.appendTo(ELEM_NAME.WKSP_EQM_LIST);
                 return;
             }
-            if(arguments.length == 2){
+            if (arguments.length == 2) {
                 let template = Mustache.render(TEMPLATE.WORKSPACE_EQM_ELEM,
                     {
                         eqm_wksp_id: WORK_SPACE.last_equips_in_workspace_id,
                         name: eqm.name + " (100)%",
                     });
                 let template_li = $("<li/>");
-                template_li.append(Mustache.render(TEMPLATE.WORKSPACE_EQM_ELEM_BAR, {curr_val: curr_val, equipment: eqm}));
+                template_li.append(Mustache.render(TEMPLATE.WORKSPACE_EQM_ELEM_BAR, {
+                    curr_val: curr_val,
+                    equipment: eqm
+                }));
 
                 let eqm_wksp_obj = new WorkSpaceEqmInfo(WORK_SPACE.equip_counter, eqm,
                     curr_val, eqm.properties.max_temperature, $(template), $(template_li));
@@ -549,7 +620,7 @@ WORK_SPACE = {
                         });
                         // let data = {iterable: result.data};
                         WORK_SPACE.steps = result.data
-                        WORK_SPACE.steps.forEach(s=>{
+                        WORK_SPACE.steps.forEach(s => {
                             equipmentPropsToKeyValue(s.targetObject);
                             s["isComplete"] = false;
                             let template_li = $("<li/>");
@@ -558,11 +629,6 @@ WORK_SPACE = {
                             s["html_li"] = template_li;
 
                         })
-                        // rebuildRepeatComponent(ELEM_NAME.STEP_LIST, TEMPLATE_ID.STEP_LIST,
-                        //     "<li/>", undefined, data, "click",
-                        //     (step, event) => {
-                        //         //TODO:
-                        //     });
                     })
                 }
             })
@@ -576,7 +642,9 @@ $(document).ready(() => {
     WORK_SPACE.loadEquipments();
     WORK_SPACE.loadSteps();
     WORK_SPACE.loadRecipe();
-    $(ELEM_NAME.OPEERATION_AREA).on("click", (event)=>{EQUIPMENT_DRAG_EVENT.select(event);})
+    $(ELEM_NAME.OPEERATION_AREA).on("click", (event) => {
+        EQUIPMENT_DRAG_EVENT.select(event);
+    })
 
 })
 

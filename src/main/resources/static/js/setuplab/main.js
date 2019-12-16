@@ -139,7 +139,7 @@ RECIPE = {
             $(this).addClass("card_selected")
             let select_id = "#" + event.currentTarget.id;
             RECIPE.selected = select_id;
-            let data = {iterable: EQUIPMENT.lab_equipment}
+            let data = {iterable: EQUIPMENT.all_equipment}
             switch (select_id) {
                 case ELEM_NAME.RECIPE_CARD_ONE:
                     rebuildRepeatComponent(ELEM_NAME.RECIPE_EQUIP_LIST, TEMPLATE_ID.RECIPE_EQUIPMENT_LIST,
@@ -158,7 +158,7 @@ RECIPE = {
                         });
                     break;
                 case ELEM_NAME.RECIPE_CARD_RESULT:
-                    data.iterable = EQUIPMENT.all_equipment;
+                    // data.iterable = EQUIPMENT.all_equipment;
                     rebuildRepeatComponent(ELEM_NAME.RECIPE_EQUIP_LIST, TEMPLATE_ID.RECIPE_EQUIPMENT_LIST,
                         "<li/>", undefined, data, "click",
                         (eqm) => {
