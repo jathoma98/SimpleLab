@@ -8,13 +8,11 @@ import com.org.simplelab.restcontrollers.rro.RRO;
 import lombok.Getter;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
@@ -70,6 +68,15 @@ public class ImageFileRESTController extends BaseRESTController<ImageFile> {
         rro.setSuccess(true);
         rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
         return rro;
+    }
+
+    @GetMapping(IMG_TO_EQUIPMENT_MAPPING)
+    public void showImage(@PathVariable("equipment_id") long equipment_id, HttpServletResponse response) throws Exception{
+        Equipment e = equipmentDB.findById(equipment_id);
+        ImageFile img = e.getImg();
+        response.setContentType(img.getFileType());
+        response.getOutputStream().write(img.getData());
+        response.getOutputStream().close();
     }
 
 }

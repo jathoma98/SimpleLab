@@ -32,7 +32,7 @@ public class Equipment extends AbstractEquipment implements UserCreated {
 
     @JsonIgnore
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE}
-            ,fetch = FetchType.EAGER)
+            ,fetch = FetchType.LAZY)
     @JoinColumn(name = "creator_id")
     private User creator;
 
