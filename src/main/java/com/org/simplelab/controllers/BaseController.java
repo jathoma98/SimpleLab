@@ -1,6 +1,5 @@
 package com.org.simplelab.controllers;
 
-import com.org.simplelab.database.entities.sql.Step;
 import com.org.simplelab.database.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -36,6 +35,9 @@ public abstract class BaseController {
 
     @Autowired
     protected HttpSession session;
+
+    @Autowired
+    protected ImageFileDB imageDB;
 
     protected long getUserIdFromSession(){
         long userId = -1;
