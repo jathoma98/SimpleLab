@@ -21,16 +21,12 @@ public class Course extends BaseTable implements UserCreated{
     private String description;
     private String invite_code;
 
-    //TODO: put this back to lazy initialization after course edit works again
     @JsonIgnore
     @OneToOne(cascade = {CascadeType.PERSIST},
             fetch = FetchType.LAZY)
     @JoinColumn(name = "creator_id")
     private User creator;
 
-    /**
-     * TODO: think about using SortedSet instead of Set
-     */
     @ManyToMany(cascade = {CascadeType.PERSIST},
             fetch = FetchType.LAZY)
     private Set<User> students;

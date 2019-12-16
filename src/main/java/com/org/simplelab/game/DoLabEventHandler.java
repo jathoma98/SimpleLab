@@ -82,7 +82,6 @@ public class DoLabEventHandler {
         ws.setSteps(originalLab.getSteps());
         ws.setEquipments(originalLab.getEquipments());
         ws.setContinued(true);
-        //TODO: set recipes
 
         ws.setStarting_step(li.getStepRecords().stream()
                         .max(Comparator.comparing(StepRecord::getStepNum))

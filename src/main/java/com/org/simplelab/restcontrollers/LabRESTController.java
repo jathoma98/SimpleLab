@@ -100,7 +100,6 @@ public class LabRESTController extends BaseRESTController<Lab> {
     }
 
 
-    //TODO: clean this up
     @Transactional
     @DeleteMapping(LAB_ID_MAPPING)
     public RRO<String> labDelete(@PathVariable("lab_id") long lab_id){
@@ -357,11 +356,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
         return rro;
     }
 
-    //TODO: implement delete step mapping later, we should get a prototype lab working first
-    /**
-     * THIS IS A TESTING METHOD - deletes all steps in the lab
-     * @return RRO with data field containing the updated lab
-     */
+
     @Transactional
     @DeleteMapping(LAB_ID_STEP_MAPPING)
     public RRO deleteAllStepsFromLab(@PathVariable("lab_id") long lab_id){

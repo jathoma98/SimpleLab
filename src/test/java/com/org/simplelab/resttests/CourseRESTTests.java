@@ -83,7 +83,6 @@ public class CourseRESTTests extends RESTTestBaseConfig {
                 .andExpectSuccess(true);
         Arrays.stream(created).forEach( c -> assertEquals(0, courseDB.findByCourseId(c.getCourse_id()).size()));
 
-        //TODO: test deleting with labs, recipes, equipment in lab
     }
 
     @Test
