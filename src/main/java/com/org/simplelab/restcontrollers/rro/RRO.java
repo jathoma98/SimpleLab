@@ -22,6 +22,11 @@ public class RRO<T> {
         return rro;
     }
 
+    public RRO withData(T data){
+        this.data = data;
+        return this;
+    }
+
     public enum ACTION_TYPE {
         NOTHING,
         REDIRECT,

@@ -1,8 +1,10 @@
 package com.org.simplelab.database.services.projections;
 
+import com.org.simplelab.database.entities.sql.Equipment;
 import lombok.Value;
 
 import java.util.Collection;
+import java.util.List;
 
 public class Projections {
 
@@ -45,5 +47,18 @@ public class Projections {
             byte[] getData();
         }
 
+    }
+
+    public interface TeacherGetStepsOfLab extends Projection{
+        List<StepView> getSteps();
+
+        interface StepView extends Projection{
+            String getTargetVolume();
+            String getTargetWeight();
+            String getTargetTemperature();
+            String getTargetName();
+            String getTargetTips();
+            Equipment getTargetObject();
+        }
     }
 }

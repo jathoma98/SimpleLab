@@ -248,20 +248,19 @@ public class LabRESTController extends BaseRESTController<Lab> {
         return rro;
     }
 
-
+    @Transactional
     @GetMapping(LAB_ID_STEP_MAPPING)
-    public RRO<List<Step>> getLabStep(@PathVariable("lab_id") long lab_id){
-        RRO<List<Step>> rro = new RRO();
+    public RRO getLabStep(@PathVariable("lab_id") long lab_id){
+        RRO rro = new RRO();
         Lab found = labDB.findById(lab_id);
         if (found == null){
             rro.setSuccess(false);
             rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
         }
-        List<Step> step = found.getSteps();
         rro.setSuccess(true);
-        rro.setData(step);
         rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
         rro.setMsg("there must be have list of steps in return of rro");
+        rro.setData(found.getSteps());
         return rro;
     }
 

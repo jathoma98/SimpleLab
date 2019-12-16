@@ -48,6 +48,13 @@ public class Lab extends BaseTable implements UserCreated{
         });
     }
 
+    @Transactional
+    public List<Step> getSteps(){
+        //iterate over all steps to initialize lazy loading
+        steps.forEach(step -> {});
+        return steps;
+    }
+
     @Override
     public int hashCode(){
         return super.hashCode();

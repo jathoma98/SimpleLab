@@ -25,7 +25,7 @@ public class LabRESTTests extends RESTTestBaseConfig {
 
     private RESTRequest labRequest;
 
-    private static final boolean ENABLE_PRINTOUTS = false;
+    private static final boolean ENABLE_PRINTOUTS = true;
 
     @Override
     @BeforeEach
@@ -250,6 +250,15 @@ public class LabRESTTests extends RESTTestBaseConfig {
                  .forEach((i) -> assertEquals(i, steps2.get(i-1).getStepNum()));
     }
 
-    //TODO: add stepChangeNum() test
+    @Test
+    @WithMockUser(username = username, password = username)
+    void testGetSteps() throws Exception{
+        Lab l = TestUtils.createJunkLabWithSteps(3);
+        long lab_id = DBTestUtils.insertAndGetId(l, labDB);
+        String mapping = "/" + lab_id + "/step";
+        labRequest.send(GET, mapping)
+                .andExpectSuccess(true);
+
+    }
 
 }
