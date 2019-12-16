@@ -1,0 +1,25 @@
+.crop{
+    width:100px;
+    height:100px;
+    overflow: hidden;
+}
+
+.cropimg1{
+    margin-left:0px;
+}
+
+.cropimg2{
+    margin-left:-100px;
+}
+
+.cropimg3{
+    margin-left:-200px;
+}
+
+.cropimg4{
+    margin-left:-300px;
+}
+
+.cropimg5{
+    margin-left:-400px;
+}
