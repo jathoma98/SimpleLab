@@ -1,7 +1,7 @@
 TEMPLATE = {
     WORKSPACE_EQM_ELEM:
         '<div class="ui-widget-content fixed draggable_item center">' +
-        '    <div class="crop">'+
+        '    <div class="crop" style="margin-left: 11%;">'+
         '        <img src="../../../image/rest/{{id}}" class="cropimg5">\n' +
         '    </div>'+
         '   <p>{{name}}</p>' +
