@@ -135,12 +135,10 @@
             <!-- Lab Equipment List-->
             <script id="labequip_list_template" type="mustache">
                 <a href="#add_modal" class="{{^machine}}modal-trigger{{/machine}} row">
-
                     <div class="col s4">
                         <div class="crop" style="margin-top: 30%;">
                             <img src="../../../image/rest/{{id}}" class="cropimg5" >
                         </div>
-
                     </div>
                     <div class="col s8">
                         <p>Name: {{name}}</p>
@@ -160,8 +158,10 @@
                     </div>
                 </a>
             </script>
-            <ul id = "lab_equipment_list" class="row my_white itemset scrollbar_y height100">
-            </ul>
+            <div class="scrollbar_y height8">
+                <ul id = "lab_equipment_list" class="row my_white itemset "></ul>
+            </div>
+
         </div>
         <!-- Step List -->
         <div id="sidebartwo" class="sidebar_info">
@@ -206,10 +206,10 @@
                     </div>
                 </div>
             </script>
+            <div class="scrollbar_y height80">
+                <ul id="step_list" class="collapsible row my_white sidebar_step_collection "></ul>
+            </div>
 
-            <ul id="step_list" class="collapsible row my_white sidebar_step_collection scrollbar_y height100">
-
-            </ul>
         </div>
         <!-- WorkSpace Item List -->
         <div id="sidebarthree" class="sidebar_info ">
