@@ -14,6 +14,18 @@ public class InstantiatedEquipment extends AbstractEquipment {
     //x and y positions
     private int x;
     private int y;
+    private int curr_temp;
+    private int curr_val;
+
+    //TODO: discuss equipment field datatype
+
+    //TODO: discuss mix list datatype
+    //private something[] mix_list
+    private float purity;
+
+    //html elements
+    private String li_elem;
+    private String drag_elem;
 
     @Override
     public boolean equals(Object o){
