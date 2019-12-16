@@ -197,11 +197,11 @@
             </thead>
             <script id="lab_tbody" type="mustache">
             {{#labs}}
-                {{#isEnabled}}
+            {{#isEnabled}}
             <tr class = "modal-trigger" href="#modal">
                 <td class = "labcheckcol mycheckbox myhide center">
             {{/isEnabled}}
-                {{^isEnabled}}
+            {{^isEnabled}}
             <tr href="#modal">
                 <td class = "labcheckcol mycheckbox myshow center">
             {{/isEnabled}}
@@ -258,9 +258,14 @@
             </thead>
             <script id="equip_tbody" type="mustache">
             {{#equip}}
+            {{#isEnabled}}
             <tr class = "modal-trigger" href="#modal">
-                <td class = "equipcheckcol mycheckbox{{#isEnabled}}
-                 myhide{{/isEnabled}}{{^isEnabled}} myshow{{/isEnabled}} center">
+                <td class = "equipcheckcol mycheckbox myhide center">
+            {{/isEnabled}}
+            {{^isEnabled}}
+            <tr href="#modal">
+                <td class = "equipcheckcol mycheckbox myshow center">
+            {{/isEnabled}}
                     <label>
                         <input type="checkbox"><span></span>
                     </label>
