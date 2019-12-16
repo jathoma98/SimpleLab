@@ -7,7 +7,7 @@ import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.Lab;
 import com.org.simplelab.database.entities.sql.Recipe;
 import com.org.simplelab.database.entities.sql.Step;
-import com.org.simplelab.database.services.DBService;
+import com.org.simplelab.exception.EntityDBModificationException;
 import com.org.simplelab.game.DoLabEventHandler;
 import com.org.simplelab.game.RecipeHandler;
 import com.org.simplelab.restcontrollers.dto.Workspace;
@@ -277,7 +277,7 @@ public class DoLabController extends BaseController {
             currentInstance.setEquipmentInstances(serializedInstances);
             try {
                 instanceDB.update(currentInstance);
-            } catch (DBService.EntityDBModificationException e) {
+            } catch (EntityDBModificationException e) {
                 return RRO.sendErrorMessage(e.getMessage());
             }
         }

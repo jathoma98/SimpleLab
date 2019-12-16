@@ -6,6 +6,8 @@ import com.org.simplelab.database.entities.sql.Lab;
 import com.org.simplelab.database.entities.sql.User;
 import com.org.simplelab.database.repositories.sql.CourseRepository;
 import com.org.simplelab.database.validators.CourseValidator;
+import com.org.simplelab.exception.CourseTransactionException;
+import com.org.simplelab.exception.EntityDBModificationException;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,13 +24,6 @@ public class CourseDB extends SQLService<Course> {
 
     @Autowired
     private CourseRepository repository;
-
-    public static class CourseTransactionException extends EntityDBModificationException {
-        public static final String NO_COURSE_FOUND = "The requested course could not be found.";
-        CourseTransactionException(String message){
-            super(message);
-        }
-    }
 
     private class StudentSetManager extends EntitySetManager<User, Course>{
         public StudentSetManager(Set<User> set, Course c) { super(set, c);}

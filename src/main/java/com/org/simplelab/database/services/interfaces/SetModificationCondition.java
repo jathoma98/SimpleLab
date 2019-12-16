@@ -1,8 +1,7 @@
 package com.org.simplelab.database.services.interfaces;
 
 import com.org.simplelab.database.entities.sql.BaseTable;
-
-import static com.org.simplelab.database.services.SQLService.EntitySetManager.EntitySetModificationException;
+import com.org.simplelab.exception.EntitySetModificationException;
 
 /**
  * Methods which implement checks for insertion and deletion

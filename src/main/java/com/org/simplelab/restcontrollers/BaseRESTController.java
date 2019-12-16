@@ -8,6 +8,8 @@ import com.org.simplelab.database.entities.sql.User;
 import com.org.simplelab.database.services.SQLService;
 import com.org.simplelab.database.validators.InvalidFieldException;
 import com.org.simplelab.database.validators.Validator;
+import com.org.simplelab.exception.EntityDBModificationException;
+import com.org.simplelab.exception.EntitySetModificationException;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
 import org.modelmapper.ModelMapper;
@@ -59,7 +61,7 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
         }
         try{
             inserted = getDb().insert(created);
-        } catch (SQLService.EntityDBModificationException e){
+        } catch (EntityDBModificationException e){
             rro.setSuccess(false);
             rro.setMsg(e.getMessage());
             rro.setAction(RRO.ACTION_TYPE.PRINT_MSG.name());
@@ -107,7 +109,7 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
         mm.map(dto, toUpdate);
         try{
             getDb().update(toUpdate);
-        } catch (SQLService.EntityDBModificationException e){
+        } catch (EntityDBModificationException e){
             return RRO.sendErrorMessage(e.getMessage());
         }
         rro.setSuccess(true);
@@ -145,7 +147,7 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
             }
             try{
                 set.insert(entity);
-            } catch (SQLService.EntitySetManager.EntitySetModificationException e){
+            } catch (EntitySetModificationException e){
                 rro = RRO.sendErrorMessage(e.getMessage());
             }
         }
@@ -168,7 +170,7 @@ abstract class BaseRESTController<T extends BaseTable> extends BaseController {
         for (U entity: toRemove){
             try{
                 set.delete(entity);
-            } catch (SQLService.EntitySetManager.EntitySetModificationException e){
+            } catch (EntitySetModificationException e){
                 rro.setMsg(e.getMessage());
                 rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
                 rro.setSuccess(false);

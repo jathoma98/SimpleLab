@@ -7,6 +7,7 @@ import com.org.simplelab.database.services.CourseDB;
 import com.org.simplelab.database.services.SQLService;
 import com.org.simplelab.database.services.projections.Projections;
 import com.org.simplelab.database.validators.CourseValidator;
+import com.org.simplelab.exception.CourseTransactionException;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
 import com.org.simplelab.security.SecurityUtils;
@@ -215,7 +216,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
         SQLService.EntitySetManager<Lab, Course> toUpdate;
         try {
             toUpdate = courseDB.getLabsOfCourseByCourseId(dto.getCourse_id());
-        } catch (CourseDB.CourseTransactionException e){
+        } catch (CourseTransactionException e){
             RRO<String> rro = new RRO();
             rro.setMsg(e.getMessage());
             return rro;
@@ -225,7 +226,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
 
     @Transactional
     @PostMapping(DELETE_LABS_MAPPING)
-    public RRO<String> deleteLabList(@RequestBody DTO.CourseUpdateLabListDTO course) throws CourseDB.CourseTransactionException {
+    public RRO<String> deleteLabList(@RequestBody DTO.CourseUpdateLabListDTO course) throws CourseTransactionException {
         long[] labidList = course.getLab_ids();
         List<Lab> toDelete = new ArrayList<>();
         for (Long labid: labidList){
@@ -237,7 +238,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
         SQLService.EntitySetManager<Lab, Course> toUpdate;
         try {
             toUpdate = courseDB.getLabsOfCourseByCourseId(course.getCourse_id());
-        } catch (CourseDB.CourseTransactionException e){
+        } catch (CourseTransactionException e){
             RRO<String> rro = new RRO();
             rro.setMsg(e.getMessage());
             return rro;
@@ -257,7 +258,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
         try {
             students = courseDB.getStudentsOfCourse(course_id);
             rro.setData(students);
-        } catch (CourseDB.CourseTransactionException e) {
+        } catch (CourseTransactionException e) {
             rro.setSuccess(false);
             rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
         }
@@ -266,7 +267,7 @@ public class CourseRESTController extends BaseRESTController<Course> {
 
     @Transactional
     @PostMapping(GET_LABS_MAPPING)
-    public  RRO<List<Lab>> getLabList(@RequestBody DTO.LoadLabListDTO course) throws CourseDB.CourseTransactionException {
+    public  RRO<List<Lab>> getLabList(@RequestBody DTO.LoadLabListDTO course) throws CourseTransactionException {
         String courseid=course.getCourse_id();
         List<Lab> labs=courseDB.getLabsOfCourseByCourseId(courseid).getAsList();
         RRO<List<Lab>> rro = new RRO();
