@@ -3,7 +3,7 @@ package com.org.simplelab;
 import com.org.simplelab.database.entities.sql.*;
 import com.org.simplelab.database.repositories.sql.LabRepository;
 import com.org.simplelab.database.services.SQLService;
-import com.org.simplelab.database.services.projections.Projection;
+import com.org.simplelab.database.services.projections.Projections;
 import com.org.simplelab.restcontrollers.LabRESTController;
 import com.org.simplelab.utils.TestUtils;
 import org.junit.jupiter.api.Test;
@@ -221,7 +221,7 @@ public class LabEquipmentTests extends SpringTestConfig {
         l.setCreator(found);
         labDB.insert(l);
 
-        List<Projection.TeacherLabInfo> returnval = labDB.getLabsByCreatorId(found.getId(), Projection.TeacherLabInfo.class);
+        List<Projections.TeacherLabInfo> returnval = labDB.getLabsByCreatorId(found.getId(), Projections.TeacherLabInfo.class);
         System.out.println(returnval.toString());
 
     }
@@ -237,7 +237,7 @@ public class LabEquipmentTests extends SpringTestConfig {
         labDB.insert(l);
 
         LabRepository lr = labDB.getRepository();
-        Optional<Projection.TeacherLabInfo> foundLab = lr.findById(l.getId(), Projection.TeacherLabInfo.class);
+        Optional<Projections.TeacherLabInfo> foundLab = lr.findById(l.getId(), Projections.TeacherLabInfo.class);
         System.out.println(foundLab.get().toString());
 
     }

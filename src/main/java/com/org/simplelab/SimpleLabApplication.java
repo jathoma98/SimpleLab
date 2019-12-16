@@ -44,6 +44,7 @@ public class SimpleLabApplication {
 	public Module datatypeHibernateModule(){
 		Hibernate5Module mod = new Hibernate5Module();
 		mod.configure(Hibernate5Module.Feature.USE_TRANSIENT_ANNOTATION, true);
+		mod.configure(Hibernate5Module.Feature.FORCE_LAZY_LOADING, true);
 		return new Hibernate5Module();
 	}
 
