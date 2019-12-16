@@ -171,22 +171,22 @@ class WorkSpaceEqmInfo {
         let perc = this.curr_val / this.getMaxValue();
         let cssName = ""
         if(perc <= 0){
-            cssName = "cropimg";
+            cssName = " cropimg ";
         }else if (perc <= 0.25){
-            cssName = "cropimg2";
+            cssName = " cropimg2 ";
         }else if (perc <= 0.50){
-            cssName = "cropimg3";
+            cssName = " cropimg3 ";
         }else if (perc <= 0.75){
-            cssName = "cropimg4";
+            cssName = " cropimg4    ";
         }else if (perc <= 1 || perc > 1){
-            cssName = "cropimg5";
+            cssName = " cropimg5 ";
         }
         //remove old css
-        this.li_elem.find("").removeClass("");
-        this.drag_elem.find("").removeClass("");
+        this.li_elem.find("img").removeClass();
+        this.drag_elem.find("img").removeClass();
         //add new css
-        this.li_elem.find("").addClass("");
-        this.drag_elem.find("").addClass("");
+        this.li_elem.find("img").addClass(cssName);
+        this.drag_elem.find("img").addClass(cssName);
         return;
     }
 
