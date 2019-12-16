@@ -61,7 +61,6 @@ public class EquipmentRESTController extends BaseRESTController<Equipment> {
     @GetMapping(EQUIPMENT_ID_MAPPING)
     public RRO<Equipment> getSpecificEquipment(@PathVariable("equipment_id") long equipment_id){
         RRO<Equipment> rro = super.getEntityById(equipment_id);
-        rro.getData().getImg();
         return rro;
     }
 
