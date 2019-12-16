@@ -2,6 +2,7 @@ package com.org.simplelab.database.services;
 
 import com.org.simplelab.database.entities.mongodb.BaseDocument;
 import com.org.simplelab.database.repositories.mongodb.BaseMongoRepository;
+import com.org.simplelab.exception.EntityDBModificationException;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
@@ -9,7 +10,7 @@ import java.util.Optional;
 @Transactional
 public abstract class MongoDBService<T extends BaseDocument> extends DBService<T, String> {
 
-    public static class MongoModificationException extends EntityDBModificationException{
+    public static class MongoModificationException extends EntityDBModificationException {
         public static final String UPDATE_ERROR = "Error occured while trying to modify this document.";
         MongoModificationException(String msg){
             super(msg);
@@ -18,7 +19,7 @@ public abstract class MongoDBService<T extends BaseDocument> extends DBService<T
 
     public abstract BaseMongoRepository<T> getRepository();
 
-    abstract T getNonexistent();
+    protected abstract T getNonexistent();
 
     @Override
     public T findById(String id){

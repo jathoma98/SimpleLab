@@ -8,9 +8,9 @@ import com.org.simplelab.database.entities.mongodb.StepAction;
 import com.org.simplelab.database.entities.mongodb.StepRecord;
 import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.Lab;
-import com.org.simplelab.database.services.LabDB;
-import com.org.simplelab.database.services.LabInstanceDB;
-import com.org.simplelab.database.services.RecipeDB;
+import com.org.simplelab.database.services.restservice.LabDB;
+import com.org.simplelab.database.services.restservice.LabInstanceDB;
+import com.org.simplelab.database.services.restservice.RecipeDB;
 import com.org.simplelab.restcontrollers.dto.Workspace;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,7 +82,6 @@ public class DoLabEventHandler {
         ws.setSteps(originalLab.getSteps());
         ws.setEquipments(originalLab.getEquipments());
         ws.setContinued(true);
-        //TODO: set recipes
 
         ws.setStarting_step(li.getStepRecords().stream()
                         .max(Comparator.comparing(StepRecord::getStepNum))

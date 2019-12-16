@@ -1,6 +1,7 @@
 package com.org.simplelab.database.entities.sql;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.interfaces.UserCreated;
 import lombok.Data;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 import java.util.*;
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity(name = DBUtils.LAB_TABLE_NAME)
 @Table(name = DBUtils.LAB_TABLE_NAME)
 public class Lab extends BaseTable implements UserCreated{
@@ -23,17 +25,17 @@ public class Lab extends BaseTable implements UserCreated{
     private Set<Course> course;
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE},
-            fetch = FetchType.EAGER)
+            fetch = FetchType.LAZY)
     @JoinColumn(name = "creator_id")
     private User creator;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE},
-                fetch = FetchType.EAGER)
+                fetch = FetchType.LAZY)
     @JoinColumn(name = "lab")
     private Set<Equipment> equipments;
 
     @OneToMany(cascade = {CascadeType.ALL},
-                fetch = FetchType.EAGER,
+                fetch = FetchType.LAZY,
                 mappedBy = "lab",
                 orphanRemoval = true)
     private List<Step> steps;
@@ -46,6 +48,13 @@ public class Lab extends BaseTable implements UserCreated{
             if (parent.getLabs() != null)
                 parent.getLabs().remove(this);
         });
+    }
+
+    @Transactional
+    public List<Step> loadAllSteps(){
+        //iterate over all steps to initialize lazy loading
+        steps.forEach(step -> {});
+        return steps;
     }
 
     @Override

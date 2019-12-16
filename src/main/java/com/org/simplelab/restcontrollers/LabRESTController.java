@@ -5,13 +5,13 @@ import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.Lab;
 import com.org.simplelab.database.entities.sql.Step;
 import com.org.simplelab.database.repositories.sql.LabRepository;
-import com.org.simplelab.database.services.DBService;
-import com.org.simplelab.database.services.LabDB;
 import com.org.simplelab.database.services.SQLService;
-import com.org.simplelab.database.services.StepDB;
 import com.org.simplelab.database.services.projections.Projection;
 import com.org.simplelab.database.services.projections.Projections;
+import com.org.simplelab.database.services.restservice.LabDB;
+import com.org.simplelab.database.services.restservice.StepDB;
 import com.org.simplelab.database.validators.LabValidator;
+import com.org.simplelab.exception.EntityDBModificationException;
 import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.rro.RRO;
 import lombok.Getter;
@@ -100,7 +100,6 @@ public class LabRESTController extends BaseRESTController<Lab> {
     }
 
 
-    //TODO: clean this up
     @Transactional
     @DeleteMapping(LAB_ID_MAPPING)
     public RRO<String> labDelete(@PathVariable("lab_id") long lab_id){
@@ -248,20 +247,19 @@ public class LabRESTController extends BaseRESTController<Lab> {
         return rro;
     }
 
-
+    @Transactional
     @GetMapping(LAB_ID_STEP_MAPPING)
-    public RRO<List<Step>> getLabStep(@PathVariable("lab_id") long lab_id){
-        RRO<List<Step>> rro = new RRO();
+    public RRO getLabStep(@PathVariable("lab_id") long lab_id){
+        RRO rro = new RRO();
         Lab found = labDB.findById(lab_id);
         if (found == null){
             rro.setSuccess(false);
             rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
         }
-        List<Step> step = found.getSteps();
         rro.setSuccess(true);
-        rro.setData(step);
         rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
         rro.setMsg("there must be have list of steps in return of rro");
+        rro.setData(found.loadAllSteps());
         return rro;
     }
 
@@ -293,7 +291,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
             s.setLab(found);
             try {
                 stepDB.insert(s);
-            } catch (DBService.EntityDBModificationException e){
+            } catch (EntityDBModificationException e){
                 RRO.sendErrorMessage(e.getMessage());
             }
             toAdd.add(s);
@@ -320,7 +318,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
                     stepDB.update(s);
                 else
                     stepDB.insert(s);
-            }catch (DBService.EntityDBModificationException e) {
+            }catch (EntityDBModificationException e) {
                 e.printStackTrace();
             }
         }
@@ -350,7 +348,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
         found.setSteps(steps);
         try {
             labDB.update(found);
-        } catch (SQLService.EntityDBModificationException e){
+        } catch (EntityDBModificationException e){
             RRO.sendErrorMessage(e.getMessage());
         }
         rro.setSuccess(true);
@@ -358,11 +356,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
         return rro;
     }
 
-    //TODO: implement delete step mapping later, we should get a prototype lab working first
-    /**
-     * THIS IS A TESTING METHOD - deletes all steps in the lab
-     * @return RRO with data field containing the updated lab
-     */
+
     @Transactional
     @DeleteMapping(LAB_ID_STEP_MAPPING)
     public RRO deleteAllStepsFromLab(@PathVariable("lab_id") long lab_id){
@@ -373,7 +367,7 @@ public class LabRESTController extends BaseRESTController<Lab> {
         steps.clear();
         try {
             labDB.update(found);
-        } catch (SQLService.EntityDBModificationException e){
+        } catch (EntityDBModificationException e){
             RRO.sendErrorMessage(e.getMessage());
         }
         Lab found_after_delete = labDB.findById(lab_id);

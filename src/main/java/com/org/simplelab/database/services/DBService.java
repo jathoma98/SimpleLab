@@ -1,5 +1,6 @@
 package com.org.simplelab.database.services;
 
+import com.org.simplelab.exception.EntityDBModificationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +16,7 @@ public abstract class DBService<BaseEntityType, IDType> {
      * Inserts entity into the DB.
      * @param toInsert - entity of type T to insert.
      * @return - true if insertion was successful
-     * @throws SQLService.EntityDBModificationException - If an error occurred during insertion
+     * @throws EntityDBModificationException - If an error occurred during insertion
      */
     public BaseEntityType insert(BaseEntityType toInsert) throws EntityDBModificationException {
         checkInsertionCondition(toInsert);
@@ -56,17 +57,4 @@ public abstract class DBService<BaseEntityType, IDType> {
     protected abstract void checkUpdateCondition(BaseEntityType toUpdate) throws EntityDBModificationException;
 
 
-    /**
-     * Exception to be thrown when modification of a DB violates some constraint.
-     * The message should include the contraint being violated.
-     */
-    public static class EntityDBModificationException extends Exception{
-        protected static String GENERIC_INVALID_UPDATE_ERROR = "Attempted to call update() on a new entity. " +
-                "update() should only be called on entities which already exist in the DB.";
-        protected static String GENERIC_MODIFICATION_ERROR = "An error occurred while modifying this collection";
-        EntityDBModificationException(){super(GENERIC_MODIFICATION_ERROR);}
-        EntityDBModificationException(String msg){
-            super(msg);
-        }
-    }
 }

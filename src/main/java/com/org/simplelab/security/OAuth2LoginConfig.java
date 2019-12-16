@@ -121,7 +121,6 @@ public class OAuth2LoginConfig extends WebSecurityConfigurerAdapter {
      */
     public class SimpleLabAccessDeniedHandler implements AccessDeniedHandler{
 
-        //TODO: make google accounts sign up properly.
         @Override
         public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException, ServletException {
             httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + LoginController.FORBIDDEN_MAPPING);

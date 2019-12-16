@@ -4,9 +4,8 @@ import com.org.simplelab.SpringMockMVCTestConfig;
 import com.org.simplelab.controllers.BaseController;
 import com.org.simplelab.database.entities.sql.Course;
 import com.org.simplelab.database.entities.sql.Lab;
-import com.org.simplelab.database.entities.sql.User;
-import com.org.simplelab.database.services.CourseDB;
-import com.org.simplelab.database.services.LabDB;
+import com.org.simplelab.database.services.restservice.CourseDB;
+import com.org.simplelab.database.services.restservice.LabDB;
 import com.org.simplelab.restcontrollers.CourseRESTController;
 import com.org.simplelab.restcontrollers.LabRESTController;
 import com.org.simplelab.utils.TestUtils;
@@ -21,7 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -159,63 +159,6 @@ public class RESTTests extends SpringMockMVCTestConfig {
 
     }
 
-
-    //TODO: remake this
-    //@Test
-    @WithMockUser(username = username, password = username)
-    void addGetDeleteStudentFromCourseTests() throws Exception{
-        String cid = "UNIT_TEST" + metadata;
-        session_atr.put("user_id", user_id);
-        session_atr.put("username", username);
-
-        Map<String, String> rawJson = new HashMap<>();
-        rawJson.put("name", metadata);
-        rawJson.put("description", metadata);
-        rawJson.put("course_id", cid);
-        rawJson.put("_metadata", metadata);
-        JSONObject json = new JSONObject(rawJson);
-
-        //add course first
-        sendCourseToPOSTEndpoint(json, "");
-
-        //create DTO to add student
-        rawJson = new HashMap<>();
-        rawJson.put("course_id", cid);
-        rawJson.put("usernameList", "[4321]");
-        json = new JSONObject(rawJson);
-
-        sendCourseToPOSTEndpoint(json, CourseRESTController.ADD_STUDENT_MAPPING);
-
-        boolean found = false;
-        List<User> students = courseDB.getStudentsOfCourse(cid);
-        System.out.println("Students list: " + students.toString());
-
-        assertTrue(!students.isEmpty());
-        assertEquals("4321", students.get(0).getUsername());
-
-        //check if getStudent endpoint works
-        System.out.println("Gettings students from added course...");
-
-        this.mockMvc.perform(post(CourseRESTController.BASE_MAPPING + CourseRESTController.GET_STUDENTS_MAPPING)
-                .sessionAttrs(session_atr)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json.toString()))
-                .andDo(print())
-                .andExpect(status().isOk());
-
-        System.out.println("Deleting student from course");
-
-        //delete the student
-        this.mockMvc.perform(post(CourseRESTController.BASE_MAPPING + CourseRESTController.DELETE_STUDENTS_MAPPING)
-                .sessionAttrs(session_atr)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json.toString()))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().json("[]"));
-
-
-    }
 
     @Autowired
     LabDB labDB;

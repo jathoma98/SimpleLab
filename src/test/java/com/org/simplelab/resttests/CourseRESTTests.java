@@ -83,7 +83,6 @@ public class CourseRESTTests extends RESTTestBaseConfig {
                 .andExpectSuccess(true);
         Arrays.stream(created).forEach( c -> assertEquals(0, courseDB.findByCourseId(c.getCourse_id()).size()));
 
-        //TODO: test deleting with labs, recipes, equipment in lab
     }
 
     @Test
@@ -285,6 +284,27 @@ public class CourseRESTTests extends RESTTestBaseConfig {
             assertTrue(student.getUsername().equals(student1.getUsername())
                     || student.getUsername().equals(student2.getUsername()));
         });
+    }
+
+    @Test
+    @WithMockUser(username = username, password = username)
+    void testDeleteStudent() throws Exception{
+        Course c = TestUtils.createJunkCourse();
+        User user1 = TestUtils.createJunkUser();
+        User user2 = TestUtils.createJunkUser();
+        c.getStudents().addAll(Arrays.asList(new User[]{user1, user2}));
+        courseDB.insert(c);
+
+        DTO.CourseUpdateStudentListDTO dto = new DTO.CourseUpdateStudentListDTO();
+        dto.setCourse_id(c.getCourse_id());
+        dto.setUsernameList(Arrays.asList(new String[]{user1.getUsername(), user2.getUsername()}));
+
+        courseRequest.sendData(DELETE, CourseRESTController.DELETE_STUDENTS_MAPPING, JSONBuilder.asJson(dto))
+                .andExpectSuccess(true);
+
+        courseRequest.sendData(POST, CourseRESTController.GET_STUDENTS_MAPPING, JSONBuilder.asJson(dto))
+                .andExpectData("[]");
+
     }
 
 }

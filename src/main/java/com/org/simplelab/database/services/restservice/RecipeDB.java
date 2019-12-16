@@ -1,7 +1,8 @@
-package com.org.simplelab.database.services;
+package com.org.simplelab.database.services.restservice;
 
 import com.org.simplelab.database.entities.sql.Recipe;
 import com.org.simplelab.database.repositories.sql.RecipeRepository;
+import com.org.simplelab.database.services.SQLService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

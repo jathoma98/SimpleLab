@@ -1,6 +1,7 @@
 package com.org.simplelab.database.validators;
 
 import com.org.simplelab.database.entities.sql.BaseTable;
+import com.org.simplelab.exception.InvalidFieldException;
 import com.org.simplelab.restcontrollers.dto.DTO;
 
 /**

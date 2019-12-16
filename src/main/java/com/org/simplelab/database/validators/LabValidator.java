@@ -2,6 +2,7 @@ package com.org.simplelab.database.validators;
 
 import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.sql.Lab;
+import com.org.simplelab.exception.InvalidFieldException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

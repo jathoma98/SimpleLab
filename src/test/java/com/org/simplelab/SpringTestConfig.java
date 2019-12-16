@@ -4,7 +4,7 @@ import com.org.simplelab.database.repositories.mongodb.LabInstanceRepository;
 import com.org.simplelab.database.repositories.sql.CourseRepository;
 import com.org.simplelab.database.repositories.sql.EquipmentRepository;
 import com.org.simplelab.database.repositories.sql.LabRepository;
-import com.org.simplelab.database.services.*;
+import com.org.simplelab.database.services.restservice.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;

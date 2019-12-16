@@ -1,7 +1,9 @@
-package com.org.simplelab.database.services;
+package com.org.simplelab.database.services.restservice;
 
 import com.org.simplelab.database.entities.sql.Step;
 import com.org.simplelab.database.repositories.sql.StepRepository;
+import com.org.simplelab.database.services.SQLService;
+import com.org.simplelab.exception.EntityDBModificationException;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,7 +20,7 @@ public class StepDB extends SQLService<Step> {
     private StepRepository repository;
 
 
-    public boolean delete(long id) throws EntityDBModificationException{
+    public boolean delete(long id) throws EntityDBModificationException {
         return super.deleteById(id);
     };
 

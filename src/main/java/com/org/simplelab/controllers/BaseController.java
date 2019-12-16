@@ -1,6 +1,6 @@
 package com.org.simplelab.controllers;
 
-import com.org.simplelab.database.services.*;
+import com.org.simplelab.database.services.restservice.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpSession;

@@ -1,7 +1,9 @@
-package com.org.simplelab.database.services;
+package com.org.simplelab.database.services.restservice;
 
 import com.org.simplelab.database.entities.sql.files.ImageFile;
 import com.org.simplelab.database.repositories.sql.ImageFileRepository;
+import com.org.simplelab.database.services.SQLService;
+import com.org.simplelab.exception.EntityDBModificationException;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,7 +21,7 @@ public class ImageFileDB extends SQLService<ImageFile> {
     @Autowired
     private ImageFileRepository repository;
 
-    public ImageFile insertFromMultipartFile(MultipartFile file) throws EntityDBModificationException{
+    public ImageFile insertFromMultipartFile(MultipartFile file) throws EntityDBModificationException {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         try {
             ImageFile imageFile = new ImageFile();

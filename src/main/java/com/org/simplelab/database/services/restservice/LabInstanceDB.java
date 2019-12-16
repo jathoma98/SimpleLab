@@ -1,7 +1,8 @@
-package com.org.simplelab.database.services;
+package com.org.simplelab.database.services.restservice;
 
 import com.org.simplelab.database.entities.mongodb.LabInstance;
 import com.org.simplelab.database.repositories.mongodb.LabInstanceRepository;
+import com.org.simplelab.database.services.MongoDBService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,7 @@ public class LabInstanceDB extends MongoDBService<LabInstance> {
     private LabInstanceRepository repository;
 
     @Override
-    LabInstance getNonexistent() {
+    protected LabInstance getNonexistent() {
         return LabInstance.NO_INSTANCE;
     }
 

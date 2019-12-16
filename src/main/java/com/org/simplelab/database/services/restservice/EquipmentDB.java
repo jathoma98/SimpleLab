@@ -1,8 +1,11 @@
-package com.org.simplelab.database.services;
+package com.org.simplelab.database.services.restservice;
 
 import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.EquipmentProperty;
 import com.org.simplelab.database.repositories.sql.EquipmentRepository;
+import com.org.simplelab.database.services.SQLService;
+import com.org.simplelab.exception.EntityDBModificationException;
+import com.org.simplelab.exception.EntitySetModificationException;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,7 +26,7 @@ public class EquipmentDB extends SQLService<Equipment> {
         }
 
         @Override
-        public void insert(EquipmentProperty toInsert) throws EntitySetModificationException{
+        public void insert(EquipmentProperty toInsert) throws EntitySetModificationException {
             toInsert.setParentEquipment(this.getFullEntity());
             super.insert(toInsert);
         }
@@ -47,7 +50,7 @@ public class EquipmentDB extends SQLService<Equipment> {
         return super.deleteById(id);
     }
 
-    public boolean update(Equipment toUpdate) throws SQLService.EntityDBModificationException {
+    public boolean update(Equipment toUpdate) throws EntityDBModificationException {
         return super.update(toUpdate);
     }
 

@@ -1,6 +1,7 @@
 package com.org.simplelab.database.validators;
 
 import com.org.simplelab.database.entities.sql.User;
+import com.org.simplelab.exception.InvalidFieldException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -42,7 +43,7 @@ public class UserValidator extends Validator<User> {
     private String identity;
     private String institution;
 
-    public void validate() throws InvalidFieldException{
+    public void validate() throws InvalidFieldException {
         StringBuilder errors = new StringBuilder();
 
         //check min and max length of username

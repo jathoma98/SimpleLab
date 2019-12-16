@@ -3,6 +3,8 @@ package com.org.simplelab.database.services;
 import com.org.simplelab.database.entities.sql.BaseTable;
 import com.org.simplelab.database.repositories.sql.BaseRepository;
 import com.org.simplelab.database.services.interfaces.SetModificationCondition;
+import com.org.simplelab.exception.EntityDBModificationException;
+import com.org.simplelab.exception.EntitySetModificationException;
 import lombok.Getter;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,14 +30,6 @@ public abstract class SQLService<T extends BaseTable> extends DBService<T, Long>
     @Getter
     public static class EntitySetManager<T extends BaseTable, U extends BaseTable>
             implements SetModificationCondition<T>{
-        /**
-         * Exception to be thrown in case of illegal modification of the entity set.
-         */
-        public static class EntitySetModificationException extends Exception{
-            EntitySetModificationException(String msg){
-                super(msg);
-            }
-        }
 
         private Collection<T> entitySet;
         private U fullEntity;
@@ -45,7 +39,7 @@ public abstract class SQLService<T extends BaseTable> extends DBService<T, Long>
             this.fullEntity = fullEntity;
         }
 
-        public void insert(T toInsert) throws EntitySetModificationException{
+        public void insert(T toInsert) throws EntitySetModificationException {
             checkLegalInsertion(toInsert);
             entitySet.add(toInsert);
         }
@@ -73,7 +67,7 @@ public abstract class SQLService<T extends BaseTable> extends DBService<T, Long>
     }
 
 
-    protected void checkUpdateCondition(T toUpdate) throws EntityDBModificationException{
+    protected void checkUpdateCondition(T toUpdate) throws EntityDBModificationException {
         if (toUpdate.isNew()){
             throw new EntityDBModificationException(EntityDBModificationException.GENERIC_INVALID_UPDATE_ERROR);
         }

@@ -1,9 +1,12 @@
-package com.org.simplelab.database.services;
+package com.org.simplelab.database.services.restservice;
 
 import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.Lab;
 import com.org.simplelab.database.entities.sql.Step;
 import com.org.simplelab.database.repositories.sql.LabRepository;
+import com.org.simplelab.database.services.SQLService;
+import com.org.simplelab.exception.EntityDBModificationException;
+import com.org.simplelab.exception.EntitySetModificationException;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -43,7 +46,7 @@ public class LabDB extends SQLService<Lab> {
         }
 
         @Override
-        public void checkLegalInsertion(Step toInsert) throws EntitySetModificationException{
+        public void checkLegalInsertion(Step toInsert) throws EntitySetModificationException {
             //make sure there is a step with where stepnum = toInsert.stepnum -1
             //to ensure sequential ordering
             long countPredecessor = this.getEntitySet().stream()
@@ -81,7 +84,7 @@ public class LabDB extends SQLService<Lab> {
         return new StepSetManager(l.getSteps(), l);
     }
 
-    public boolean update(Lab toUpdate) throws SQLService.EntityDBModificationException {
+    public boolean update(Lab toUpdate) throws EntityDBModificationException {
         return super.update(toUpdate);
     }
 

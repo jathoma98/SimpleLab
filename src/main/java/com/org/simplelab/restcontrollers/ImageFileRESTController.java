@@ -2,8 +2,8 @@ package com.org.simplelab.restcontrollers;
 
 import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.files.ImageFile;
-import com.org.simplelab.database.services.DBService;
-import com.org.simplelab.database.services.ImageFileDB;
+import com.org.simplelab.database.services.restservice.ImageFileDB;
+import com.org.simplelab.exception.EntityDBModificationException;
 import com.org.simplelab.restcontrollers.rro.RRO;
 import lombok.Getter;
 import org.apache.commons.io.IOUtils;
@@ -62,7 +62,7 @@ public class ImageFileRESTController extends BaseRESTController<ImageFile> {
             ImageFile img = imageDB.insertFromMultipartFile(file);
             eq.setImg(img);
             equipmentDB.update(eq);
-        } catch (DBService.EntityDBModificationException e){
+        } catch (EntityDBModificationException e){
             return RRO.sendErrorMessage(e.getMessage());
         }
         rro.setSuccess(true);
@@ -73,6 +73,9 @@ public class ImageFileRESTController extends BaseRESTController<ImageFile> {
     @GetMapping(IMG_TO_EQUIPMENT_MAPPING)
     public void showImage(@PathVariable("equipment_id") long equipment_id, HttpServletResponse response) throws Exception{
         Equipment e = equipmentDB.findById(equipment_id);
+        if (e == null){
+            //TODO: return something if no img.
+        }
         ImageFile img = e.getImg();
         response.setContentType(img.getFileType());
         response.getOutputStream().write(img.getData());
