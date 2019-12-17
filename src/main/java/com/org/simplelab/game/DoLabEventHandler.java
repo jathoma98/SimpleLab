@@ -55,11 +55,6 @@ public class DoLabEventHandler {
         li.setLabId(l.getId());
         li.setUserId(user_id);
 
-        //build first step record
-        StepRecord sr = new StepRecord();
-        sr.setStepNum(1);
-        li.getStepRecords().add(sr);
-
         try {
             instanceDB.insert(li);
         } catch (Exception e){}
@@ -74,7 +69,7 @@ public class DoLabEventHandler {
     @Transactional
     public Workspace buildWorkspaceFromLabInstance(LabInstance li, long user_id){
         Workspace ws = new Workspace();
-        //Lab originalLab = DBUtils.deserialize(li.getSerialized_lab()
+        //TODO: should probably reference serialized lab
         Lab originalLab = labDB.findById(li.getLabId());
         ws.setInstance_id(li.get_id());
         ws.setName(li.getLabName());

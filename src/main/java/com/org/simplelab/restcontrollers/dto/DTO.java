@@ -1,5 +1,7 @@
 package com.org.simplelab.restcontrollers.dto;
 
+import com.org.simplelab.database.entities.mongodb.InstantiatedEquipment;
+import com.org.simplelab.database.entities.mongodb.StepRecord;
 import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.User;
 import com.org.simplelab.database.validators.CourseValidator;
@@ -8,6 +10,7 @@ import com.org.simplelab.database.validators.LabValidator;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -175,6 +178,14 @@ public abstract class DTO {
         String targetTips;
         String targetVolume;
         String targetWeight;
+    }
+
+    @Getter
+    @Setter
+    public static class LabSaveStateDTO extends DTO{
+        private Collection<InstantiatedEquipment> equipment;
+        private StepRecord step;
+        private boolean labFinished = false;
     }
 }
 

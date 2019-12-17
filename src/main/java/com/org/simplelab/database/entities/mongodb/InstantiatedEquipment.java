@@ -3,6 +3,8 @@ package com.org.simplelab.database.entities.mongodb;
 import com.org.simplelab.database.entities.sql.AbstractEquipment;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * Represents an Equipment object instantiated within a Do Lab instance.
  * We're ignoring the SQL annotations of the superclass -- this is just being
@@ -14,6 +16,16 @@ public class InstantiatedEquipment extends AbstractEquipment {
     //x and y positions
     private int x;
     private int y;
+    private int curr_temp;
+    private int curr_val;
+
+
+    private List<Mixture> mix_list;
+    private float purity;
+
+    //html elements
+    private String li_elem;
+    private String drag_elem;
 
     @Override
     public boolean equals(Object o){
