@@ -267,7 +267,7 @@ public class DoLabController extends BaseController {
     public RRO handleSaveWorkspaceState(@RequestBody DTO.LabSaveStateDTO dto,
                                         @PathVariable("instance_id") long instance_id){
 
-        Collection<InstantiatedEquipment> workspaceEquipment = dto.getEquipment();
+        Collection<InstantiatedEquipment> workspaceEquipment = dto.getEquipments();
         List<byte[]> serializedInstances = workspaceEquipment.stream()
                                                          .map((instance) -> DBUtils.serialize(instance))
                                                          .collect(Collectors.toList());
@@ -275,7 +275,7 @@ public class DoLabController extends BaseController {
         LabInstance currentInstance = currentInstanceList.size() > 0? currentInstanceList.get(0) : LabInstance.NO_INSTANCE;
         if (currentInstance.exists()){
             currentInstance.setEquipmentInstances(serializedInstances);
-            currentInstance.getStepRecords().add(dto.getStep());
+            currentInstance.getStepRecords().add(dto.getSteps());
             try {
                 instanceDB.update(currentInstance);
             } catch (EntityDBModificationException e) {

@@ -184,7 +184,7 @@ public abstract class DTO {
     @Setter
     public static class LabSaveStateDTO extends DTO{
         private Collection<InstantiatedEquipment> equipments;
-        private StepRecord step;
+        private StepRecord steps;
         private boolean labFinished = false;
     }
 }

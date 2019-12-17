@@ -112,7 +112,7 @@ equipmentPropsToKeyValue = function (equipment){
 }
 
 equipmentPropsDolab = function (equipment){
-    equipment.props = []
+    equipment.props = {}
     equipment.properties.forEach(p=> equipment.props[p.propertyKey] = p.propertyValue);
 }
 

@@ -26,7 +26,7 @@ STEP_COUNTER = {
 
 
 class WorkSpaceEqmInfo {
-    constructor(id, equipment, curr_val, curr_temp, html_elem, li_elem){
+    constructor(id, equipment, curr_val, curr_temp, html_elem, li_elem) {
         this.id = id; //equipment id on the work space.
         this.equipment = equipment; //equipment default info.
         this.curr_val = curr_val == undefined ? undefined : curr_val * 1; //equipment current value on work space
@@ -111,39 +111,7 @@ class WorkSpaceEqmInfo {
         //this function use to change image.
         this.setImage();
         if (this.purity != 100) return;
-        WORK_SPACE.steps.forEach(s => {
-            if (s.targetObject.id == this.equipment.id) {
-                let targetVal = 0;
-                let currVal = 0;
-                let check = 2;
-                switch (s.targetObject.type) {
-                    case TYPE.LIQUID:
-                        targetVal = s.targetVolume * 1;
-                        break;
-                    case TYPE.SOLID:
-                        targetVal = s.targetWeight * 1;
-                        break;
-                }
-                if (targetVal <= this.curr_val * 1) {
-                    check--;
-                }
-                if (s.targetTemperature == this.curr_temp * 1) {
-                    check--;
-                } else if (s.targetTemperature == "" || s.targetObject == undefined) {
-                    check--;
-                }
-                if (check > 0) {
-                    s["isComplete"] = false;
-                    return;
-                } else {
-                    s.html_li.find(".check_star").removeClass("my_color_gray");
-                    s.html_li.find(".check_star").addClass("my_color_red");
-                    M.toast({html: '<h5>Step(' + s.stepNum + '): ' + s.targetName + ' is completed</h5>>'})
-                    WORK_SPACE.steps.setComplete(s);
-                }
-            }
-        })
-
+        WORK_SPACE.checkStepsWith(this)
     }
 
     getMaxValue() {
@@ -158,10 +126,10 @@ class WorkSpaceEqmInfo {
 
     setImage() {
         // make sure image is right image
-        this.li_elem.find("img").attr("src","../../../image/rest/"+this.equipment.id);
-        this.li_elem.find("img").attr("src","../../../image/rest/"+this.equipment.id);
+        this.li_elem.find("img").attr("src", "../../../image/rest/" + this.equipment.id);
+        this.li_elem.find("img").attr("src", "../../../image/rest/" + this.equipment.id);
         // If is machine we don't change image
-        if(this.equipment.type == TYPE.MACHINE){
+        if (this.equipment.type == TYPE.MACHINE) {
             //remove old css
             this.li_elem.find("").removeClass("");
             this.drag_elem.find("").removeClass("");
@@ -173,15 +141,15 @@ class WorkSpaceEqmInfo {
         // If not a machine we change image
         let perc = this.curr_val / this.getMaxValue();
         let cssName = ""
-        if(perc <= 0){
+        if (perc <= 0) {
             cssName = " cropimg ";
-        }else if (perc <= 0.25){
+        } else if (perc <= 0.25) {
             cssName = " cropimg2 ";
-        }else if (perc <= 0.50){
+        } else if (perc <= 0.50) {
             cssName = " cropimg3 ";
-        }else if (perc <= 0.75){
+        } else if (perc <= 0.75) {
             cssName = " cropimg4 ";
-        }else if (perc <= 1 || perc > 1){
+        } else if (perc <= 1 || perc > 1) {
             cssName = " cropimg5 ";
         }
         //remove old css
@@ -434,7 +402,8 @@ EQUIPMENT_DRAG_EVENT = {
             if (recipe == null) {
                 STEP_COUNTER.wrong_step_warning("Unknow Recipe");
                 return
-            };
+            }
+            ;
             drop_eqm_wksp_obj.change(drop_eqm_wksp_obj.curr_val -= tranVal);
             drag_eqm_wksp_obj.change(Math.round(drop_eqm_wksp_obj.curr_val / (recipe.ratioTwo / recipe.ratioThree)), recipe.result)
             EQUIPMENT_DRAG_EVENT.showInfo(drag_eqm_wksp_obj)
@@ -456,6 +425,49 @@ WORK_SPACE = {
         this.last_drag;
         this.recipes;
         this.finish = false;
+
+        this.setCompleteStep = function (step) {
+            step.isComplete = true;
+            WORK_SPACE.steps.complete_count++;
+            if (WORK_SPACE.steps.complete_count == WORK_SPACE.steps.length) {
+                alert("Congratulation! \nYou Completed this lab.")
+                WORK_SPACE.finish = true;
+            }
+        }
+        this.checkStepsWith= function (wksp_eqm) {
+            WORK_SPACE.steps.forEach(s => {
+                if (s.targetObject.id == wksp_eqm.equipment.id) {
+                    let targetVal = 0;
+                    let check = 2;
+                    switch (s.targetObject.type) {
+                        case TYPE.LIQUID:
+                            targetVal = s.targetVolume * 1;
+                            break;
+                        case TYPE.SOLID:
+                            targetVal = s.targetWeight * 1;
+                            break;
+                    }
+                    if (targetVal <= wksp_eqm.curr_val * 1) {
+                        check--;
+                    }
+                    if (s.targetTemperature == wksp_eqm.curr_temp * 1) {
+                        check--;
+                    } else if (s.targetTemperature == "" || s.targetObject == undefined) {
+                        check--;
+                    }
+                    if (check > 0) {
+                        s["isComplete"] = false;
+                        return;
+                    } else {
+                        s.html_li.find(".check_star").removeClass("my_color_gray");
+                        s.html_li.find(".check_star").addClass("my_color_red");
+                        M.toast({html: '<h5>Step(' + s.stepNum + '): ' + s.targetName + ' is completed</h5>>'})
+                        WORK_SPACE.setCompleteStep(s);
+                    }
+                }
+            })
+        }
+
         this.loadRecipe = function () {
             $.ajax({
                 url: "/recipe/rest/loadRecipe/" + LAB_INFO.creator_id,
@@ -526,7 +538,7 @@ WORK_SPACE = {
                 let template = Mustache.render(TEMPLATE.WORKSPACE_EQM_ELEM,
                     {
                         eqm_wksp_id: WORK_SPACE.last_equips_in_workspace_id,
-                        id:eqm.id,
+                        id: eqm.id,
                         name: eqm.name + " (Machine)",
                     });
                 let template_li = $("<li/>");
@@ -535,39 +547,15 @@ WORK_SPACE = {
                 eqm_wksp_obj = new WorkSpaceEqmInfo(WORK_SPACE.equip_counter, eqm,
                     undefined, eqm.props.max_temperature, $(template), $(template_li));
                 WORK_SPACE.equips_in_workspace.push(eqm_wksp_obj);
-                //drag elem set up
-                eqm_wksp_obj.drag_elem.draggable({
-                    containment: ELEM_NAME.OPEERATION_AREA,
-                    start: (event, ui) => {
-                        EQUIPMENT_DRAG_EVENT.start(event, ui, eqm_wksp_obj)
-                    },
-                    stop: (event, ui) => {
-                        EQUIPMENT_DRAG_EVENT.stop(event, ui, eqm_wksp_obj)
-                    },
-                });
-                eqm_wksp_obj.drag_elem.droppable({
-                    drop: (event, ui) => {
-                        EQUIPMENT_DRAG_EVENT.drop(event, ui, eqm_wksp_obj)
-                    },
-                });
-                eqm_wksp_obj.drag_elem.on("click", (event, ui) => {
-                    event.stopPropagation();
-                    EQUIPMENT_DRAG_EVENT.select(event, ui, eqm_wksp_obj);
-                });
-                eqm_wksp_obj.drag_elem.appendTo(ELEM_NAME.OPEERATION_AREA);
-                eqm_wksp_obj.drag_elem.offset({top: 300, left: 500});
+                WORK_SPACE.addDrag_elem(eqm_wksp_obj, {top: 300, left: 500});
                 //li elem set up
-                eqm_wksp_obj.li_elem.on("click", (event, ui) => {
-                    event.stopPropagation();
-                    EQUIPMENT_DRAG_EVENT.select(event, ui, eqm_wksp_obj);
-                });
-                eqm_wksp_obj.li_elem.appendTo(ELEM_NAME.WKSP_EQM_LIST);
+                WORK_SPACE.addLi_elem(eqm_wksp_obj);
             }
             if (arguments.length == 2) {
                 let template = Mustache.render(TEMPLATE.WORKSPACE_EQM_ELEM,
                     {
                         eqm_wksp_id: WORK_SPACE.last_equips_in_workspace_id,
-                        id:eqm.id,
+                        id: eqm.id,
                         name: eqm.name + " (100)%",
                     });
                 let template_li = $("<li/>");
@@ -578,33 +566,8 @@ WORK_SPACE = {
                 eqm_wksp_obj = new WorkSpaceEqmInfo(WORK_SPACE.equip_counter, eqm,
                     curr_val, eqm.props.max_temperature, $(template), $(template_li));
                 WORK_SPACE.equips_in_workspace.push(eqm_wksp_obj);
-                //drag elem set up
-                eqm_wksp_obj.drag_elem.draggable({
-                    containment: ELEM_NAME.OPEERATION_AREA,
-                    start: (event, ui) => {
-                        EQUIPMENT_DRAG_EVENT.start(event, ui, eqm_wksp_obj)
-                    },
-                    stop: (event, ui) => {
-                        EQUIPMENT_DRAG_EVENT.stop(event, ui, eqm_wksp_obj)
-                    },
-                });
-                eqm_wksp_obj.drag_elem.droppable({
-                    drop: (event, ui) => {
-                        EQUIPMENT_DRAG_EVENT.drop(event, ui, eqm_wksp_obj)
-                    },
-                });
-                eqm_wksp_obj.drag_elem.on("click", (event, ui) => {
-                    event.stopPropagation();
-                    EQUIPMENT_DRAG_EVENT.select(event, ui, eqm_wksp_obj);
-                });
-                eqm_wksp_obj.drag_elem.appendTo(ELEM_NAME.OPEERATION_AREA);
-                eqm_wksp_obj.drag_elem.offset({top: 300, left: 500});
-                //li elem set up
-                eqm_wksp_obj.li_elem.on("click", (event, ui) => {
-                    event.stopPropagation();
-                    EQUIPMENT_DRAG_EVENT.select(event, ui, eqm_wksp_obj);
-                });
-                eqm_wksp_obj.li_elem.appendTo(ELEM_NAME.WKSP_EQM_LIST);
+                WORK_SPACE.addDrag_elem(eqm_wksp_obj, {top: 300, left: 500});
+                WORK_SPACE.addLi_elem(eqm_wksp_obj);
             }
             eqm_wksp_obj.change(eqm_wksp_obj.curr_val);
         };
@@ -618,37 +581,72 @@ WORK_SPACE = {
                         if (result.data == undefined) return;
                         result.data = result.data.sort((a, b) => a.stepNum - b.stepNum);
                         result.data.forEach((step) => {
+                            step["isComplete"] = false;
                             step.targetObject[step.targetObject.type] = true;
                             equipmentPropsDolab(step.targetObject);
                         });
-                        // let data = {iterable: result.data};
-                        WORK_SPACE.steps = result.data
-                        WORK_SPACE.steps.complete_count = 0;
-                        WORK_SPACE.steps.setComplete = (step)=>{
-                            step.isComplete = true;
-                            WORK_SPACE.steps.complete_count++;
-                            if(WORK_SPACE.steps.complete_count == WORK_SPACE.steps.length){
-                                alert("Congratulation! \nYou Completed this lab.")
-                                WORK_SPACE.finish = true;
-                            }
-                        }
-                        WORK_SPACE.steps.forEach(s => {
-                            equipmentPropsDolab(s.targetObject);
-                            s["isComplete"] = false;
-                            let template_li = $("<li/>");
-                            template_li.append(Mustache.render($(TEMPLATE_ID.STEP_LIST).html(), s));
-                            template_li.appendTo(ELEM_NAME.STEP_LIST);
-                            s["html_li"] = template_li;
+                        WORK_SPACE.buildStepSideBar(result.data);
 
-                        })
                     })
                 }
             })
         }
 
-        this.save = function(){
+        this.buildStepSideBar = function (steps) {
+            // let data = {iterable: result.data};
+            $(ELEM_NAME.STEP_LIST).empty();
+            WORK_SPACE.steps = steps
+            WORK_SPACE.steps.complete_count = 0;
+            WORK_SPACE.steps.forEach(step => {
+                let template_li = $("<li/>");
+                template_li.append(Mustache.render($(TEMPLATE_ID.STEP_LIST).html(), step));
+                template_li.appendTo(ELEM_NAME.STEP_LIST);
+                step["html_li"] = template_li;
+                if (step.isComplete == true) {
+                    WORK_SPACE.steps++;
+                    step.html_li.find(".check_star").removeClass("my_color_gray");
+                    step.html_li.find(".check_star").addClass("my_color_red");
+                    M.toast({html: '<h5>Step(' + step.stepNum + '): ' + step.targetName + ' is completed</h5>>'})
+                    WORK_SPACE.setCompleteStep(step);
+                }
+            })
+        };
+
+        this.addLi_elem = function (eqm_wksp_obj) {
+            //li elem set up
+            eqm_wksp_obj.li_elem.on("click", (event, ui) => {
+                event.stopPropagation();
+                EQUIPMENT_DRAG_EVENT.select(event, ui, eqm_wksp_obj);
+            });
+            eqm_wksp_obj.li_elem.appendTo(ELEM_NAME.WKSP_EQM_LIST);
+        }
+        this.addDrag_elem = function (eqm_wksp_obj, offset) {
+            //drag elem set up
+            eqm_wksp_obj.drag_elem.draggable({
+                containment: ELEM_NAME.OPEERATION_AREA,
+                start: (event, ui) => {
+                    EQUIPMENT_DRAG_EVENT.start(event, ui, eqm_wksp_obj)
+                },
+                stop: (event, ui) => {
+                    EQUIPMENT_DRAG_EVENT.stop(event, ui, eqm_wksp_obj)
+                },
+            });
+            eqm_wksp_obj.drag_elem.droppable({
+                drop: (event, ui) => {
+                    EQUIPMENT_DRAG_EVENT.drop(event, ui, eqm_wksp_obj)
+                },
+            });
+            eqm_wksp_obj.drag_elem.on("click", (event, ui) => {
+                event.stopPropagation();
+                EQUIPMENT_DRAG_EVENT.select(event, ui, eqm_wksp_obj);
+            });
+            eqm_wksp_obj.drag_elem.appendTo(ELEM_NAME.OPEERATION_AREA);
+            eqm_wksp_obj.drag_elem.offset(offset);
+        }
+
+        this.save = function () {
             let docs = [];
-            WORK_SPACE.equips_in_workspace.forEach(wseqm=>{
+            WORK_SPACE.equips_in_workspace.forEach(wseqm => {
                 let d = new savedoc(
                     wseqm.id,
                     wseqm.equipment,
@@ -673,8 +671,24 @@ WORK_SPACE = {
                 contentType: 'application/json; charset=utf-8',
                 data: data_json,
                 success: function (result) {
-                    retObjHandle(result, function(){
+                    retObjHandle(result, undefined);
+                }
+            })
+        }
 
+        this.continue = function () {
+            $.ajax({
+                url: "/student/doLab/" + LAB_INFO.id,
+                type: 'GET',
+                success: function (result) {
+                    retObjHandle(result, function () {
+                        result.data.equipments.forEach(e => {
+                            let wsobj = new WorkSpaceEqmInfo(e.id, e.equipment, e.curr_val, e.curr_temp,
+                                $(e.drag_elem), $(e.li_elem), e.mix_list, e.purity)
+                            WORK_SPACE.addDrag_elem(wsobj);
+                            WORK_SPACE.addLi_elem(wsobj);
+                        })
+                        WORK_SPACE.buildStepSideBar(result.data.steps);
                     });
                 }
             })
@@ -684,17 +698,18 @@ WORK_SPACE = {
 
 
 class savedoc {
-    constructor(id, equipment, curr_val, curr_temp, html_elem, li_elem, mix_list, purity) {
+    constructor(id, equipment, curr_val, curr_temp, drag_elem, li_elem, mix_list, purity) {
         this.id = id; //equipment id on the work space.
         this.equipment = equipment; //equipment default info.
         this.curr_val = curr_val;
         this.curr_temp = curr_temp;
-        this.drag_elem = html_elem; //Jquery html element object (drag)
+        this.drag_elem = drag_elem; //Jquery html element object (drag)
         this.li_elem = li_elem; //Jquery html element object (li)
         this.mix_list = []; //{equipment, value}
         this.purity = purity;
     }
 }
+
 
 $(document).ready(() => {
     WORK_SPACE.init();
