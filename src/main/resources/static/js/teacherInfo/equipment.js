@@ -154,7 +154,6 @@ let EQUIPMENT_TABLE = {
                 contentType: 'application/json; charset=utf-8',
                 data: data_json,
                 success: function (result) {
-                    // retObjHandle(result, COURSES_TABLE.reload);
                     retObjHandle(result, EQUIPMENT_TABLE.reload);
                 }
             })
