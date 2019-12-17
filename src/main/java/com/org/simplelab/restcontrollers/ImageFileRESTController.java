@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping(ImageFileRESTController.BASE_MAPPING)
@@ -30,6 +32,15 @@ public class ImageFileRESTController extends BaseRESTController<ImageFile> {
     public static final String IMG_TO_EQUIPMENT_MAPPING = "/{equipment_id}";
 
     private static final String FILENAME = "image";
+    private static final Map<String, Long> typeToDefaultImg = loadDefaults();
+
+    private static Map<String, Long> loadDefaults(){
+        Map<String, Long> typeToImg = new HashMap<>();
+        typeToImg.put("liquid", new Long(47142));
+        typeToImg.put("solid", new Long(47198));
+        typeToImg.put("machine", new Long(47154));
+        return typeToImg;
+    }
 
     //test method, dont actually use
     @PostMapping("/upload")
@@ -79,10 +90,10 @@ public class ImageFileRESTController extends BaseRESTController<ImageFile> {
         Equipment e = equipmentDB.findById(equipment_id);
         ImageFile img = e.getImg();
         if (img == null){
-            long def_id = 47027;
-            ImageFile default_img = imageRepo.findById(def_id).get();
-            response.setContentType(default_img.getFileType());
-            response.getOutputStream().write(default_img.getData());
+            long def_id = typeToDefaultImg.getOrDefault(e.getType(), new Long(47027));
+            img = imageRepo.findById(def_id).get();
+            response.setContentType(img.getFileType());
+            response.getOutputStream().write(img.getData());
             response.getOutputStream().close();
         } else {
             response.setContentType(img.getFileType());

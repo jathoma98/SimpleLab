@@ -223,22 +223,27 @@ EQUIPMENT_DRAG_EVENT = {
                 $("#current_value_title").text("Current Volume(mL): ");
                 $("#max_value_title").text("Max Volume(mL): ");
                 $("#max_value").text(eqm.props.max_volume);
-                $("#current_value").text(eqm_wksp_obj.curr_val)
-                $("#current_temperature").text(eqm_wksp_obj.curr_temp)
+                $("#current_value").text(eqm_wksp_obj.curr_val);
+                $("#current_temperature").text(eqm_wksp_obj.curr_temp);
+                $("#current_temp_title").text("Current Temperature: ");
+
                 break;
             case "solid":
                 $("#current_value_title").text("Current Weight(kg): ");
                 $("#max_value_title").text("Max Weight(mL): ");
                 $("#max_value").text(eqm.props.max_weight);
-                $("#current_value").text(eqm_wksp_obj.curr_val)
-                $("#current_temperature").text(eqm_wksp_obj.curr_temp)
+                $("#current_value").text(eqm_wksp_obj.curr_val);
+                $("#current_temperature").text(eqm_wksp_obj.curr_temp);
+                $("#current_temp_title").text("Current Temperature: ");
                 break;
             default:
                 $("#current_value_title").text("");
                 $("#max_value_title").text("");
                 $("#max_value").text("");
-                $("#current_value").text("")
-                $("#current_temperature").text("")
+                $("#current_value").text("");
+                $("#current_temperature").text("");
+                $("#current_temp_title").text("");
+
                 break;
         }
         $("#infobar ul").find(".mix_eqm").remove();
@@ -432,12 +437,12 @@ WORK_SPACE = {
             if(step.isComplete == true) return;
             step.isComplete = true;
             M.toast({html: '<h5>Step(' + step.stepNum + '): ' + step.targetName + ' is completed</h5>'})
-            WORK_SPACE.save();
             WORK_SPACE.complete_count++;
             if (WORK_SPACE.complete_count == WORK_SPACE.steps.length) {
                 alert("Congratulation! \nYou Completed this lab.")
                 WORK_SPACE.finish = true;
             }
+            WORK_SPACE.save();
         }
         this.checkStepsWith= function (wksp_eqm) {
             WORK_SPACE.steps.forEach(s => {
@@ -686,9 +691,12 @@ WORK_SPACE = {
                 type: 'GET',
                 success: function (result) {
                     retObjHandle(result, function () {
-                        if (result.data.step.length != 0 && result.data.step != undefined) {
-                            WORK_SPACE.buildStepSideBar(result.data.step);
+                        if (!result.data.continued){
+                            return;
                         }
+                        // if ( result.data.step != undefined && result.data.step.length != 0) {
+                        //     WORK_SPACE.buildStepSideBar(result.data.step);
+                        // }
                         result.data.equipment_instances.forEach(e => {
                             equipmentPropsDolab(e.equipment);
                             let template;
