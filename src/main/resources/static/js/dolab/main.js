@@ -645,6 +645,11 @@ WORK_SPACE = {
                 }
             })
         }
+
+        this.save = function(){
+            
+            return
+        }
     }
 }
 
@@ -664,7 +669,6 @@ function setSameValue(value) {
     $(".rangeval").val(value);
     $(".inputval").val(value);
 }
-
 
 
 
