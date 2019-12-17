@@ -265,13 +265,14 @@ public class DoLabController extends BaseController {
      */
     @PostMapping(INTERACTION_SAVE_STATE)
     public RRO handleSaveWorkspaceState(@RequestBody DTO.LabSaveStateDTO dto,
-                                        @PathVariable("instance_id") String instance_id){
+                                        @PathVariable("instance_id") long instance_id){
 
         Collection<InstantiatedEquipment> workspaceEquipment = dto.getEquipment();
         List<byte[]> serializedInstances = workspaceEquipment.stream()
                                                          .map((instance) -> DBUtils.serialize(instance))
                                                          .collect(Collectors.toList());
-        LabInstance currentInstance = instanceDB.findById(instance_id);
+        List<LabInstance> currentInstanceList = instanceDB.findByLabIdAndUserId(instance_id, getUserIdFromSession());
+        LabInstance currentInstance = currentInstanceList.size() > 0? currentInstanceList.get(0) : LabInstance.NO_INSTANCE;
         if (currentInstance.exists()){
             currentInstance.setEquipmentInstances(serializedInstances);
             currentInstance.getStepRecords().add(dto.getStep());
