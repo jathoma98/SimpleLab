@@ -5,6 +5,7 @@ import org.apache.commons.lang3.SerializationUtils;
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 
+import java.io.Serializable;
 import java.security.MessageDigest;
 
 public class DBUtils {
@@ -58,14 +59,14 @@ public class DBUtils {
      * are being pulled from DB or being saved to DB.
      */
 
-    public static <T extends BaseTable> byte[] serialize(T o){
-        o.setNew(false);
+    public static  byte[] serialize(Serializable o){
+        //o.setNew(false);
         return SerializationUtils.serialize(o);
     }
 
-    public static <T extends BaseTable> T deserialize(byte[] serial){
-        T built = SerializationUtils.deserialize(serial);
-        built.setNew(false);
+    public static Serializable deserialize(byte[] serial){
+        Serializable built = SerializationUtils.deserialize(serial);
+        //built.setNew(false);
         return built;
     }
 

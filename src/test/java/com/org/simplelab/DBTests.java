@@ -453,6 +453,15 @@ class DBTests extends SpringTestConfig {
 		info.getProperties().stream().forEach( prop -> System.out.print(prop.getPropertyKey()));
 	}
 
+	@Test
+	void testSerialize() throws Exception{
+		Equipment e = TestUtils.createJunkEquipmentWithProperties(3);
+		Equipment deserialized = SerializationUtils.roundtrip(e);
+
+		assertEquals(e, deserialized);
+
+	}
+
 
 	}
 

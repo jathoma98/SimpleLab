@@ -30,7 +30,7 @@ public class StepRecord {
     }
 
     public Equipment buildTargetObject(){
-        return DBUtils.deserialize(this.getTargetObject());
+        return (Equipment)DBUtils.deserialize(this.getTargetObject());
     }
 
 }

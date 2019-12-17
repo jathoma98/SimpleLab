@@ -202,7 +202,7 @@ public class DoLabController extends BaseController {
         /**
          * Now we load the current step from the Lab that this instance manages.
          */
-        Lab currentLab = DBUtils.deserialize(currentInstance.getSerialized_lab());
+        Lab currentLab = (Lab)DBUtils.deserialize(currentInstance.getSerialized_lab());
         Step currentStep =  currentLab.getSteps()
                              .stream()
                              .filter(step -> step.getStepNum() == dto.getStepNum())

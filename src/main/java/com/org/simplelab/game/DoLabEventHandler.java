@@ -13,10 +13,12 @@ import com.org.simplelab.database.services.restservice.LabInstanceDB;
 import com.org.simplelab.database.services.restservice.RecipeDB;
 import com.org.simplelab.restcontrollers.dto.Workspace;
 import lombok.Data;
+import org.apache.commons.lang3.SerializationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -78,14 +80,21 @@ public class DoLabEventHandler {
         ws.setEquipments(originalLab.getEquipments());
         ws.setContinued(true);
 
-        ws.setStarting_step(li.getStepRecords().stream()
-                        .max(Comparator.comparing(StepRecord::getStepNum))
-                        .get().getStepNum());
+        List<StepRecord> steps = li.getStepRecords();
+        ws.setStarting_step(steps.size() + 1);
 
-        List<InstantiatedEquipment> restoredEquipment = li.getEquipmentInstances()
+        /**
+        List<InstantiatedEquipment> desEquipment = li.getEquipmentInstances()
                                                         .stream()
-                                                        .map(serial -> (InstantiatedEquipment)DBUtils.deserialize(serial))
-                                                        .collect(Collectors.toList());
+                                                        .map(serial -> (InstantiatedEquipment)SerializationUtils.deserialize(serial))
+                                                        .collect(Collectors.toList());**/
+
+        List<InstantiatedEquipment> restoredEquipment = new ArrayList<>();
+        for (byte[] serial: li.getEquipmentInstances()){
+            InstantiatedEquipment deserial = SerializationUtils.deserialize(serial);
+            restoredEquipment.add(deserial);
+        }
+
         ws.setEquipment_instances(restoredEquipment);
         ws.setRecipes(recipeDB.getRecipeByCreateId(li.getCreatorId()));
         return ws;
