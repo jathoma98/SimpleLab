@@ -1,6 +1,7 @@
 package com.org.simplelab.database.entities.mongodb;
 
 import com.org.simplelab.database.entities.sql.AbstractEquipment;
+import com.org.simplelab.database.entities.sql.Equipment;
 import lombok.Data;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class InstantiatedEquipment extends AbstractEquipment {
 
     private List<Mixture> mix_list;
     private float purity;
+    private Equipment equipment;
 
     //html elements
     private String li_elem;
