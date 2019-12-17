@@ -108,6 +108,8 @@ class WorkSpaceEqmInfo {
             this.isOverflow();
             $(this.drag_elem).find("p").text(this.equipment.name + " (" + this.purity + ")%");
         }
+        //this function use to change image.
+        this.setImage();
         if (this.purity != 100) return;
         WORK_SPACE.steps.forEach(s => {
             if (s.targetObject.id == this.equipment.id) {
@@ -141,16 +143,15 @@ class WorkSpaceEqmInfo {
                 }
             }
         })
-        //this function use to change image.
-        this.setImage();
+
     }
 
     getMaxValue() {
         switch (this.equipment.type) {
             case TYPE.LIQUID:
-                return this.equipment.properties.max_volume;
+                return this.equipment.props.max_volume;
             case TYPE.SOLID:
-                return this.equipment.properties.max_weight;
+                return this.equipment.props.max_weight;
         }
         return undefined;
     }
@@ -253,14 +254,14 @@ EQUIPMENT_DRAG_EVENT = {
             case "liquid":
                 $("#current_value_title").text("Current Volume(mL): ");
                 $("#max_value_title").text("Max Volume(mL): ");
-                $("#max_value").text(eqm.properties.max_volume);
+                $("#max_value").text(eqm.props.max_volume);
                 $("#current_value").text(eqm_wksp_obj.curr_val)
                 $("#current_temperature").text(eqm_wksp_obj.curr_temp)
                 break;
             case "solid":
                 $("#current_value_title").text("Current Weight(kg): ");
                 $("#max_value_title").text("Max Weight(mL): ");
-                $("#max_value").text(eqm.properties.max_weight);
+                $("#max_value").text(eqm.props.max_weight);
                 $("#current_value").text(eqm_wksp_obj.curr_val)
                 $("#current_temperature").text(eqm_wksp_obj.curr_temp)
                 break;
@@ -351,17 +352,17 @@ EQUIPMENT_DRAG_EVENT = {
                     let req_a = b * ratio_recipe;
                     let lef_a = a - req_a;
                     let c = req_a + b;
-                    drag_eqm_wksp_obj.curr_val -= tranVal;
+                    drag_eqm_wksp_obj.change(drag_eqm_wksp_obj.curr_val -= tranVal);
                     return drop_eqm_wksp_obj.change(Math.round(c), recipe.result, Math.round(lef_a), one)
                 } else if (ratio_new < ratio_recipe) {
                     let req_b = a * (1 / ratio_recipe);
                     let lef_b = b - req_b;
                     let c = a + req_b;
-                    drag_eqm_wksp_obj.curr_val -= tranVal;
+                    drag_eqm_wksp_obj.change(drag_eqm_wksp_obj.curr_val -= tranVal);
                     return drop_eqm_wksp_obj.change(Math.round(c), recipe.result, Math.round(lef_b), two);
                 } else {
                     c = a + b;
-                    drag_eqm_wksp_obj.curr_val -= tranVal;
+                    drag_eqm_wksp_obj.change(drag_eqm_wksp_obj.curr_val -= tranVal);
                     return drop_eqm_wksp_obj.change(c, recipe.result,)
                 }
             } else {
@@ -385,14 +386,14 @@ EQUIPMENT_DRAG_EVENT = {
                         let req_a = b * ratio_recipe;
                         let lef_a = a - req_a;
                         let c = req_a + b;
-                        drag_eqm_wksp_obj.curr_val -= tranVal;
+                        drag_eqm_wksp_obj.change(drag_eqm_wksp_obj.curr_val -= tranVal);
                         drop_eqm_wksp_obj.change(drop_eqm_wksp_obj.curr_val + Math.round(c), recipe.result, Math.round(lef_a), one)
                         return
                     } else if (ratio_new < ratio_recipe) {
                         let req_b = a * (1 / ratio_recipe);
                         let lef_b = b - req_b;
                         let c = a + req_b;
-                        drag_eqm_wksp_obj.curr_val -= tranVal;
+                        drag_eqm_wksp_obj.change(drag_eqm_wksp_obj.curr_val -= tranVal);
                         return drop_eqm_wksp_obj.change(drop_eqm_wksp_obj.curr_val + Math.round(c), recipe.result, Math.round(lef_b), two);
                     } else {
                         c = a + b;
@@ -419,7 +420,7 @@ EQUIPMENT_DRAG_EVENT = {
             }
             ;
             WORK_SPACE.AddEquipToWorkSpace(recipe.result, drag_eqm_wksp_obj.curr_val / (recipe.ratioOne / recipe.ratioThree));
-            drag_eqm_wksp_obj.curr_val -= tranVal;
+            drag_eqm_wksp_obj.change(drag_eqm_wksp_obj.curr_val -= tranVal);
         }
         if (one.type == "machine" && two.type != "machine") {
             if (drop_eqm_wksp_obj.purity !== 100) {
@@ -434,7 +435,7 @@ EQUIPMENT_DRAG_EVENT = {
                 STEP_COUNTER.wrong_step_warning("Unknow Recipe");
                 return
             };
-            drop_eqm_wksp_obj.curr_val -= tranVal;
+            drop_eqm_wksp_obj.change(drop_eqm_wksp_obj.curr_val -= tranVal);
             drag_eqm_wksp_obj.change(Math.round(drop_eqm_wksp_obj.curr_val / (recipe.ratioTwo / recipe.ratioThree)), recipe.result)
             EQUIPMENT_DRAG_EVENT.showInfo(drag_eqm_wksp_obj)
         }
@@ -454,6 +455,7 @@ WORK_SPACE = {
         this.equip_counter = 0;
         this.last_drag;
         this.recipes;
+        this.finish = false;
         this.loadRecipe = function () {
             $.ajax({
                 url: "/recipe/rest/loadRecipe/" + LAB_INFO.creator_id,
@@ -462,9 +464,9 @@ WORK_SPACE = {
                     retObjHandle(result, () => {
                         WORK_SPACE.recipes = result.data;
                         WORK_SPACE.recipes.forEach(r => {
-                                equipmentPropsToKeyValue(r.equipmentOne);
-                                equipmentPropsToKeyValue(r.equipmentTwo);
-                                equipmentPropsToKeyValue(r.result);
+                                equipmentPropsDolab(r.equipmentOne);
+                                equipmentPropsDolab(r.equipmentTwo);
+                                equipmentPropsDolab(r.result);
                             }
                         );
                     });
@@ -483,7 +485,7 @@ WORK_SPACE = {
                         }
                         data.iterable.forEach((eqm) => {
                             eqm[eqm.type] = true;
-                            equipmentPropsToKeyValue(eqm);
+                            equipmentPropsDolab(eqm);
                         });
                         rebuildRepeatComponent(ELEM_NAME.LAB_EQUIPMENT_LIST, TEMPLATE_ID.LAB_EQUIPMENT_LIST,
                             "<li/>", undefined, data, "click",
@@ -492,11 +494,11 @@ WORK_SPACE = {
                                 let title = "Enter Contain "
                                 switch (eqm.type) {
                                     case TYPE.LIQUID:
-                                        max_value = eqm.properties.max_volume;
+                                        max_value = eqm.props.max_volume;
                                         title += "Volume (L)"
                                         break;
                                     case TYPE.SOLID:
-                                        max_value = eqm.properties.max_weight;
+                                        max_value = eqm.props.max_weight;
                                         title += "Weight (kg)"
                                         break;
                                 }
@@ -531,9 +533,7 @@ WORK_SPACE = {
                 template_li.append(Mustache.render(TEMPLATE.WORKSPACE_EQM_ELEM_BAR, {equipment: eqm}));
 
                 eqm_wksp_obj = new WorkSpaceEqmInfo(WORK_SPACE.equip_counter, eqm,
-                    undefined, eqm.properties.max_temperature, $(template), $(template_li));
-                //this function use to change image.
-                eqm_wksp_obj.setImage()
+                    undefined, eqm.props.max_temperature, $(template), $(template_li));
                 WORK_SPACE.equips_in_workspace.push(eqm_wksp_obj);
                 //drag elem set up
                 eqm_wksp_obj.drag_elem.draggable({
@@ -576,8 +576,7 @@ WORK_SPACE = {
                     equipment: eqm
                 }));
                 eqm_wksp_obj = new WorkSpaceEqmInfo(WORK_SPACE.equip_counter, eqm,
-                    curr_val, eqm.properties.max_temperature, $(template), $(template_li));
-                eqm_wksp_obj.setImage()
+                    curr_val, eqm.props.max_temperature, $(template), $(template_li));
                 WORK_SPACE.equips_in_workspace.push(eqm_wksp_obj);
                 //drag elem set up
                 eqm_wksp_obj.drag_elem.draggable({
@@ -620,7 +619,7 @@ WORK_SPACE = {
                         result.data = result.data.sort((a, b) => a.stepNum - b.stepNum);
                         result.data.forEach((step) => {
                             step.targetObject[step.targetObject.type] = true;
-                            equipmentPropsToKeyValue(step.targetObject);
+                            equipmentPropsDolab(step.targetObject);
                         });
                         // let data = {iterable: result.data};
                         WORK_SPACE.steps = result.data
@@ -630,10 +629,11 @@ WORK_SPACE = {
                             WORK_SPACE.steps.complete_count++;
                             if(WORK_SPACE.steps.complete_count == WORK_SPACE.steps.length){
                                 alert("Congratulation! \nYou Completed this lab.")
+                                WORK_SPACE.finish = true;
                             }
                         }
                         WORK_SPACE.steps.forEach(s => {
-                            equipmentPropsToKeyValue(s.targetObject);
+                            equipmentPropsDolab(s.targetObject);
                             s["isComplete"] = false;
                             let template_li = $("<li/>");
                             template_li.append(Mustache.render($(TEMPLATE_ID.STEP_LIST).html(), s));
@@ -647,12 +647,54 @@ WORK_SPACE = {
         }
 
         this.save = function(){
+            let docs = [];
+            WORK_SPACE.equips_in_workspace.forEach(wseqm=>{
+                let d = new savedoc(
+                    wseqm.id,
+                    wseqm.equipment,
+                    wseqm.curr_val,
+                    wseqm.curr_temp,
+                    wseqm.html_elem.html(),
+                    wseqm.li_elem.html(),
+                    wseqm.mix_list,
+                    wseqm.purity);
+                docs.push(d)
+            })
+            let data = {
+                equipments: docs,
+                step: WORK_SPACE.steps,
+                labFinished: WORK_SPACE.finish,
+            }
+            let data_json = JSON.stringify(data);
+            $.ajax({
+                url: "/student/doLab/" + LAB_INFO.id + "/saveState",
+                type: 'POST',
+                dataTye: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: data_json,
+                success: function (result) {
+                    retObjHandle(result, function(){
 
-            return
+                    });
+                }
+            })
         }
     }
 }
 
+
+class savedoc {
+    constructor(id, equipment, curr_val, curr_temp, html_elem, li_elem, mix_list, purity) {
+        this.id = id; //equipment id on the work space.
+        this.equipment = equipment; //equipment default info.
+        this.curr_val = curr_val;
+        this.curr_temp = curr_temp;
+        this.drag_elem = html_elem; //Jquery html element object (drag)
+        this.li_elem = li_elem; //Jquery html element object (li)
+        this.mix_list = []; //{equipment, value}
+        this.purity = purity;
+    }
+}
 
 $(document).ready(() => {
     WORK_SPACE.init();
@@ -662,7 +704,6 @@ $(document).ready(() => {
     $(ELEM_NAME.OPEERATION_AREA).on("click", (event) => {
         EQUIPMENT_DRAG_EVENT.select(event);
     })
-
 })
 
 function setSameValue(value) {
