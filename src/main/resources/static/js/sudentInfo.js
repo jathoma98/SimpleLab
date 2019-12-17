@@ -69,7 +69,6 @@ function jumptoCourseLab() {
     let toSearch = {
         course_id: $(this)[0].getAttribute("courseid")
     };
-    console.log(toSearch)
     let toSearch_json = JSON.stringify(toSearch);
     $.ajax({
         url: "/course/rest/getLabs",
@@ -78,7 +77,6 @@ function jumptoCourseLab() {
         contentType: 'application/json; charset=utf-8',
         data: toSearch_json,
         success: function (result) {
-            console.log(result);
             retObjHandle(result, function () {
                 result.data.sort();
                 let courseTable = '';

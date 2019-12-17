@@ -271,11 +271,16 @@ public class CourseRESTController extends BaseRESTController<Course> {
     @PostMapping(GET_LABS_MAPPING)
     public  RRO<List<Lab>> getLabList(@RequestBody DTO.LoadLabListDTO course) throws CourseTransactionException {
         String courseid=course.getCourse_id();
-        List<Lab> labs=courseDB.getLabsOfCourseByCourseId(courseid).getAsList();
         RRO<List<Lab>> rro = new RRO();
         rro.setSuccess(true);
         rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
-        rro.setData(labs);
+        try {
+            List<Lab> labs = courseDB.getLabsOfCourseByCourseId(courseid).getAsList();
+            rro.setData(labs);
+        }catch (CourseTransactionException e){
+            rro.setSuccess(false);
+            rro.setAction(RRO.ACTION_TYPE.NOTHING.name());
+        }
         return rro;
     }
 
