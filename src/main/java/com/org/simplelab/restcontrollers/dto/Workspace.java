@@ -1,6 +1,5 @@
 package com.org.simplelab.restcontrollers.dto;
 
-import com.org.simplelab.database.entities.mongodb.InstantiatedEquipment;
 import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.Recipe;
 import com.org.simplelab.database.entities.sql.Step;
@@ -26,7 +25,7 @@ public class Workspace extends DTO {
 
     //if isContinued = true:
     int starting_step;
-    List<InstantiatedEquipment> equipment_instances;
+    List<Object> equipment_instances;
 
     private static Workspace GEN_NO_WORKSPACE(){
         Workspace ws = new Workspace();

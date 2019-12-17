@@ -2,7 +2,6 @@ package com.org.simplelab.game;
 
 import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.interfaces.Interaction;
-import com.org.simplelab.database.entities.mongodb.InstantiatedEquipment;
 import com.org.simplelab.database.entities.mongodb.LabInstance;
 import com.org.simplelab.database.entities.mongodb.StepAction;
 import com.org.simplelab.database.entities.mongodb.StepRecord;
@@ -19,9 +18,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Handles transformations and events in doLab.
@@ -89,9 +86,9 @@ public class DoLabEventHandler {
                                                         .map(serial -> (InstantiatedEquipment)SerializationUtils.deserialize(serial))
                                                         .collect(Collectors.toList());**/
 
-        List<InstantiatedEquipment> restoredEquipment = new ArrayList<>();
+        List<Object> restoredEquipment = new ArrayList<>();
         for (byte[] serial: li.getEquipmentInstances()){
-            InstantiatedEquipment deserial = SerializationUtils.deserialize(serial);
+            Object deserial = SerializationUtils.deserialize(serial);
             restoredEquipment.add(deserial);
         }
 
