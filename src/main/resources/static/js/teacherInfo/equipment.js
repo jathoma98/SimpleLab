@@ -275,7 +275,7 @@ let EQUIPMENT_TABLE = {
                 equipmentModal: {
                     active: "active",
                     create: true,
-                    equipment: true
+                    equipment: false
                 }
             }
             rebuildComponent(ElEM_ID.MODAL_UL, TEMPLATE_ID.MODAL_EQUIP, data, "click", EQUIPMENT_TABLE.btnEvents);
