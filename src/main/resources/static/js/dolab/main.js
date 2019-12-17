@@ -667,7 +667,7 @@ WORK_SPACE = {
             }
             let data_json = JSON.stringify(data);
             $.ajax({
-                url: "/student/doLab",
+                url: "/student/doLab/" + LAB_INFO.id + "/saveState",
                 type: 'POST',
                 dataTye: 'json',
                 contentType: 'application/json; charset=utf-8',
