@@ -102,7 +102,7 @@ function jumptoCourseLab() {
                     $("#studentCourseModal ul").html(courseTable);
                 })
             }else{
-                M.toast({html: 'There is no lab in this course'})
+                M.toast({html: 'There is no lab in this course!!!'})
             }
 
         }
