@@ -686,7 +686,9 @@ WORK_SPACE = {
                 type: 'GET',
                 success: function (result) {
                     retObjHandle(result, function () {
-                        WORK_SPACE.buildStepSideBar(result.data.step);
+                        if (result.data.step.length != 0 && result.data.step != undefined) {
+                            WORK_SPACE.buildStepSideBar(result.data.step);
+                        }
                         result.data.equipment_instances.forEach(e => {
                             equipmentPropsDolab(e.equipment);
                             let template;
