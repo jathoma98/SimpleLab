@@ -2,13 +2,11 @@ package com.org.simplelab.resttests;
 
 import com.org.simplelab.SpringMockMVCTestConfig;
 import com.org.simplelab.controllers.BaseController;
-import com.org.simplelab.database.entities.sql.Course;
 import com.org.simplelab.database.entities.sql.Lab;
 import com.org.simplelab.database.services.restservice.CourseDB;
 import com.org.simplelab.database.services.restservice.LabDB;
 import com.org.simplelab.restcontrollers.CourseRESTController;
 import com.org.simplelab.restcontrollers.LabRESTController;
-import com.org.simplelab.utils.TestUtils;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +20,8 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -68,51 +66,6 @@ public class RESTTests extends SpringMockMVCTestConfig {
 
 
 
-    @Test
-    @WithMockUser(username = username, password = username)
-    void testCreateGetCourseTeacher() throws Exception{
-        Map<String, String> rawJson = new HashMap<>();
-        rawJson.put("name", metadata);
-        rawJson.put("description", metadata);
-        rawJson.put("course_id", "UNIT_TEST" + metadata);
-        rawJson.put("_metadata", metadata);
-        JSONObject json = new JSONObject(rawJson);
-
-        sendCourseToPOSTEndpoint(json, "");
-
-        this.mockMvc.perform(get("/course/rest" + CourseRESTController.LOAD_LIST_COURSE_MAPPING)
-                             .principal(TestUtils.getUnitTestPrincipal())
-                             .sessionAttrs(session_atr))
-                            //.andDo(print())
-                            .andExpect(status().isOk());
-
-        /**
-         * @Test: update course
-         */
-        Map<String, Object> newDTO = new HashMap<>();
-        rawJson.put("description", metadata + "UPDATED");
-        newDTO.put("course_id_old", "UNIT_TEST" + metadata);
-        newDTO.put("newCourseInfo", new JSONObject(rawJson));
-        json = new JSONObject(newDTO);
-        this.mockMvc.perform(patch(CourseRESTController.BASE_MAPPING + CourseRESTController.UPDATE_MAPPING)
-                            .sessionAttrs(session_atr)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(json.toString()))
-                            .andDo(print())
-                            .andExpect(status().isOk())
-                            .andExpect(content().json("{'success': true}"));
-
-        //make sure the course in the DB has the new info
-        Course updated = courseDB.findByCourseId("UNIT_TEST" + metadata).get(0);
-        assertEquals(updated.getDescription(), metadata + "UPDATED");
-
-
-        //delete the course afterwards
-        List<Course> found = courseDB.findCourseByName(metadata);
-        courseDB.deleteById(found.get(0).getId());
-
-
-    }
 
     @Test
     @WithMockUser(username = username, password = username)
