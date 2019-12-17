@@ -223,22 +223,27 @@ EQUIPMENT_DRAG_EVENT = {
                 $("#current_value_title").text("Current Volume(mL): ");
                 $("#max_value_title").text("Max Volume(mL): ");
                 $("#max_value").text(eqm.props.max_volume);
-                $("#current_value").text(eqm_wksp_obj.curr_val)
-                $("#current_temperature").text(eqm_wksp_obj.curr_temp)
+                $("#current_value").text(eqm_wksp_obj.curr_val);
+                $("#current_temperature").text(eqm_wksp_obj.curr_temp);
+                $("#current_temp_title").text("Current Temperature: ");
+
                 break;
             case "solid":
                 $("#current_value_title").text("Current Weight(kg): ");
                 $("#max_value_title").text("Max Weight(mL): ");
                 $("#max_value").text(eqm.props.max_weight);
-                $("#current_value").text(eqm_wksp_obj.curr_val)
-                $("#current_temperature").text(eqm_wksp_obj.curr_temp)
+                $("#current_value").text(eqm_wksp_obj.curr_val);
+                $("#current_temperature").text(eqm_wksp_obj.curr_temp);
+                $("#current_temp_title").text("Current Temperature: ");
                 break;
             default:
                 $("#current_value_title").text("");
                 $("#max_value_title").text("");
                 $("#max_value").text("");
-                $("#current_value").text("")
-                $("#current_temperature").text("")
+                $("#current_value").text("");
+                $("#current_temperature").text("");
+                $("#current_temp_title").text("");
+
                 break;
         }
         $("#infobar ul").find(".mix_eqm").remove();
