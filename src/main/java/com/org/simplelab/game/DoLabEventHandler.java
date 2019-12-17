@@ -5,6 +5,7 @@ import com.org.simplelab.database.entities.interfaces.Interaction;
 import com.org.simplelab.database.entities.mongodb.LabInstance;
 import com.org.simplelab.database.entities.mongodb.StepAction;
 import com.org.simplelab.database.entities.mongodb.StepRecord;
+import com.org.simplelab.database.entities.mongodb.StepRecordDTO;
 import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.Lab;
 import com.org.simplelab.database.services.restservice.LabDB;
@@ -13,6 +14,7 @@ import com.org.simplelab.database.services.restservice.RecipeDB;
 import com.org.simplelab.restcontrollers.dto.Workspace;
 import lombok.Data;
 import org.apache.commons.lang3.SerializationUtils;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -76,9 +78,17 @@ public class DoLabEventHandler {
         ws.setSteps(originalLab.getSteps());
         ws.setEquipments(originalLab.getEquipments());
         ws.setContinued(true);
-
         List<StepRecord> steps = li.getStepRecords();
-        ws.setStarting_step(steps.size() + 1);
+
+        ModelMapper mm = DBUtils.getMapper();
+        List<StepRecordDTO> toSend = new ArrayList<>();
+        for (StepRecord s: steps){
+            StepRecordDTO stepdto = new StepRecordDTO();
+            mm.map(s, stepdto);
+            stepdto.buildTargetObject();
+            toSend.add(stepdto);
+        }
+        ws.setStep(toSend);
 
         /**
         List<InstantiatedEquipment> desEquipment = li.getEquipmentInstances()

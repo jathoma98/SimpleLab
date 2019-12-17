@@ -1,5 +1,6 @@
 package com.org.simplelab.database.entities.mongodb;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.sql.Equipment;
 import lombok.Data;
@@ -10,13 +11,15 @@ import java.util.List;
 @Data
 public class StepRecord {
 
-    private int stepNum;
-    private String targetName;
-    private String targetTemperature;
-    private String targetTips;
-    private String targetVolume;
-    private String targetWeight;
-    private byte[] targetObject;
+    protected int stepNum;
+    protected String targetName;
+    protected String targetTemperature;
+    protected String targetTips;
+    protected String targetVolume;
+    protected String targetWeight;
+
+    @JsonIgnore
+    protected byte[] targetObjectSerial;
 
     private List<StepAction> userActions;
     private boolean isComplete;
@@ -26,11 +29,8 @@ public class StepRecord {
     }
 
     public void setTargetObject(Equipment e){
-        this.targetObject = DBUtils.serialize(e);
+        this.targetObjectSerial = DBUtils.serialize(e);
     }
 
-    public Equipment buildTargetObject(){
-        return (Equipment)DBUtils.deserialize(this.getTargetObject());
-    }
 
 }

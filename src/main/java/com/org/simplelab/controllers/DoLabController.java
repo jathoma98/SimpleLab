@@ -275,7 +275,7 @@ public class DoLabController extends BaseController {
         LabInstance currentInstance = currentInstanceList.size() > 0? currentInstanceList.get(0) : LabInstance.NO_INSTANCE;
         if (currentInstance.exists()){
             currentInstance.setEquipmentInstances(serializedInstances);
-            currentInstance.getStepRecords().add(dto.getSteps());
+            currentInstance.setStepRecords(dto.getStep());
             try {
                 instanceDB.update(currentInstance);
             } catch (EntityDBModificationException e) {

@@ -122,7 +122,7 @@ public class DoLabTests extends SpringTestConfig {
         DTO.LabSaveStateDTO dto = new DTO.LabSaveStateDTO();
         dto.setEquipments(ieq_set);
         dto.setLabFinished(false);
-        dto.setSteps(null);
+        dto.setStep(null);
 //        dlc.handleSaveWorkspaceState(dto, lab_instance_id);
 
         List<byte[]> found_ieq = instanceDB.findById(lab_instance_id).getEquipmentInstances();
