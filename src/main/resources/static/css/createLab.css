@@ -121,7 +121,7 @@ td, th {
     right: 5px;
     width: 15%;
     max-height:50%;
-    border:2px solid black;
+    /*border:2px solid black;*/
     border-radius: 5px;
 }
 
