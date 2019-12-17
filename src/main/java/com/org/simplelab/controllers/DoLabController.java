@@ -10,6 +10,7 @@ import com.org.simplelab.database.entities.sql.Step;
 import com.org.simplelab.exception.EntityDBModificationException;
 import com.org.simplelab.game.DoLabEventHandler;
 import com.org.simplelab.game.RecipeHandler;
+import com.org.simplelab.restcontrollers.dto.DTO;
 import com.org.simplelab.restcontrollers.dto.Workspace;
 import com.org.simplelab.restcontrollers.rro.RRO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -243,19 +244,16 @@ public class DoLabController extends BaseController {
 
     /**
      * Handles saving the current workspace state to the current LabInstance (all equipment in the UI)
-     * ex: User completes a step -> Client sends all workspace equipment to this endpoint to save objects and their positions.
+     * ex: User completes a step -> Client sends all workspace equipment to this endpoint to save objects.
      *
      * Note that we don't need to save equipment in the sidebar -- sidebar equipment is already saved.
      * This only saves equipment in the actual UI, so that student can come back and finish labs they left before completing.
      *
-     * @DTO format: list of Equipment with format:
-     * [
-     *   {
-     *        All Equipment info (name, description, properties, etc.) -- send all equipment fields
-     *        x: int -- x position of the Equipment in workspace
-     *        y: int -- y position of the Equipment in workspace
-     *   }
-     * ]
+     * @DTO format: {
+     *     equipment: List<InstantiatedEquipment> -- list of equipment in workspace
+     *     step: StepRecord -- subclass of Step which includes isComplete boolean variable
+     *     labFinished: boolean -- whether user has finished lab or not.
+     * }
      *
      * @Return:
      * On success:
@@ -266,19 +264,24 @@ public class DoLabController extends BaseController {
      *
      */
     @PostMapping(INTERACTION_SAVE_STATE)
-    public RRO handleSaveWorkspaceState(@RequestBody Collection<InstantiatedEquipment> workspaceEquipment,
+    public RRO handleSaveWorkspaceState(@RequestBody DTO.LabSaveStateDTO dto,
                                         @PathVariable("instance_id") String instance_id){
 
+        Collection<InstantiatedEquipment> workspaceEquipment = dto.getEquipment();
         List<byte[]> serializedInstances = workspaceEquipment.stream()
                                                          .map((instance) -> DBUtils.serialize(instance))
                                                          .collect(Collectors.toList());
         LabInstance currentInstance = instanceDB.findById(instance_id);
         if (currentInstance.exists()){
             currentInstance.setEquipmentInstances(serializedInstances);
+            currentInstance.getStepRecords().add(dto.getStep());
             try {
                 instanceDB.update(currentInstance);
             } catch (EntityDBModificationException e) {
                 return RRO.sendErrorMessage(e.getMessage());
+            }
+            if (dto.isLabFinished()){
+                eventHandler.finalizeInstance(currentInstance);
             }
         }
         RRO rro = new RRO();
