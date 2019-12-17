@@ -25,7 +25,7 @@
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Setup</title>
-    <link rel="icon" type="image/png" href="../../img/icon.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="../../img/icon.png" sizes="32x32"/>
 </head>
 
 <script th:inline="javascript">
@@ -94,7 +94,8 @@
         <div class="col s6 delete_empty center">
             <nav class="deep-orange lighten-4 col s11 z-depth-2"><h5>Lab Equipment</h5></nav>
             <div class="col s11 center-align delete_empty z-depth-5">
-                <ul class="my_white equipmentheight scrollbar_y height80 delete_empty ulstyle" id="lab_equipment_list"></ul>
+                <ul class="my_white equipmentheight scrollbar_y height80 delete_empty ulstyle"
+                    id="lab_equipment_list"></ul>
             </div>
             <script id="labequip_list_template" type="mustache">
                 <div class="row sidebaritem">
@@ -110,19 +111,20 @@
                     {{#liquid}}
                         <p>Max Volume: {{properties.max_volume}}</p>
                     {{/liquid}}
-                    {{#solid}}
+                {{#solid}}
                         <p>Max Weight: {{properties.max_weight}}</p>
                     {{/solid}}
                         <p>Temperature: {{properties.min_temperature}} - {{properties.max_temperature}}</p>
                     </div>
                     {{/machine}}
-                    {{#machine}}
+                {{#machine}}
                     <div class="col s4"></div>
                     {{/machine}}
                     <div class="col s2 margintop4">
                         <a href="# " class="my_red btn center"><i class="material-icons">delete</i></a>
                     </div>
                 </div>
+
             </script>
 
         </div>
@@ -145,19 +147,20 @@
                     {{#liquid}}
                         <p>Max Volume: {{properties.max_volume}}</p>
                     {{/liquid}}
-                    {{#solid}}
+                {{#solid}}
                         <p>Max Weight: {{properties.max_weight}}</p>
                     {{/solid}}
                         <p>Temperature: {{properties.min_temperature}} - {{properties.max_temperature}}</p>
                     </div>
                     {{/machine}}
-                    {{#machine}}
+                {{#machine}}
                     <div class="col s4"></div>
                     {{/machine}}
                     <div class="col s2 margintop4">
                          <a href="# " class="my_red btn center"><i class="material-icons">add</i></a>
                     </div>
                 </div>
+
             </script>
         </div>
     </div>
@@ -174,7 +177,8 @@
                             <img src="../../img/percentage.png" class="cropimg5 ">
                         </div>
                     </div>
-                    <input type="number" placeholder="proportion for item one" class="col s8 offset-s2 center-align click_ignore">
+                    <input type="number" placeholder="proportion for item one"
+                           class="col s8 offset-s2 center-align click_ignore">
                 </div>
             </div>
             <div id="equip2" class="col s4 center margintop">
@@ -185,7 +189,8 @@
                             <img src="../../img/percentage.png" class="cropimg5 ">
                         </div>
                     </div>
-                    <input type="number" placeholder="proportion for item two" class="col s8 offset-s2 center-align click_ignore">
+                    <input type="number" placeholder="proportion for item two"
+                           class="col s8 offset-s2 center-align click_ignore">
                 </div>
             </div>
             <div id="equip3" class="col s4 center margintop">
@@ -196,7 +201,8 @@
                             <img src="../../img/percentage.png" class="cropimg5 ">
                         </div>
                     </div>
-                    <input type="number" placeholder="proportion for item three" class="col s8 offset-s2 center-align click_ignore">
+                    <input type="number" placeholder="proportion for item three"
+                           class="col s8 offset-s2 center-align click_ignore">
                 </div>
             </div>
             <div class="row parent_weight">
@@ -226,6 +232,7 @@
                         </div>
                     </div>
 <!--({{equipmentOne.type}})({{equipmentTwo.type}})-->
+
                 </script>
             </div>
             <div class="width2  white right height8 z-depth-2">
@@ -246,16 +253,17 @@
                         {{#liquid}}
                             <p>Max Volume: {{properties.max_volume}}</p>
                         {{/liquid}}
-                        {{#solid}}
+                    {{#solid}}
                             <p>Max Weight: {{properties.max_weight}}</p>
                         {{/solid}}
                             <p>Temperature: {{properties.min_temperature}} - {{properties.max_temperature}}</p>
                         </div>
                         {{/machine}}
-                        {{#machine}}
+                    {{#machine}}
                         <div class="col s4"></div>
                         {{/machine}}
                     </div>
+
                 </script>
             </div>
         </div>
@@ -295,7 +303,8 @@
                 <div class="col s12 margintop10">
                     <div class="col s2 steptopmargin">Temperature:</div>
                     <div class="col s10">
-                        <input id="step_temperature" type="number" class="center-align "><span class="unitmargin">°C</span>
+                        <input id="step_temperature" type="number" class="center-align "><span
+                            class="unitmargin">°C</span>
                     </div>
                 </div>
                 <div class="col s12 margintop10">
@@ -330,13 +339,13 @@
                         {{#targetObject.liquid}}
                             <p>Require Volume: {{targetVolume}}</p>
                         {{/targetObject.liquid}}
-                        {{#targetObject.solid}}
+                    {{#targetObject.solid}}
                             <p>Require Weight: {{targetWeight}}</p>
                         {{/targetObject.solid}}
                             <p>Require Temperature: {{targetTemperature}}</p>
                         </div>
                         {{/targetObject.machine}}
-                        {{#targetObject.machine}}
+                    {{#targetObject.machine}}
                         <div class="col s4"></div>
                         {{/targetObject.machine}}
                         <div class="col s2">
@@ -345,6 +354,7 @@
                             <a class="step_remove btn my_red"><i class=" material-icons step_remove">delete</i></a>
                         </div>
                     </div>
+
                 </script>
             </div>
             <div class="width2 height6 white right z-depth-2 ">
@@ -365,25 +375,27 @@
                         {{#liquid}}
                             <p>Max Volume: {{properties.max_volume}}</p>
                         {{/liquid}}
-                        {{#solid}}
+                    {{#solid}}
                             <p>Max Weight: {{properties.max_weight}}</p>
                         {{/solid}}
                             <p>Temperature: {{properties.min_temperature}} - {{properties.max_temperature}}</p>
                         </div>
                         {{/machine}}
-                        {{#machine}}
+                    {{#machine}}
                         <div class="col s4"></div>
                         {{/machine}}
                     </div>
+
 
                 </script>
             </div>
         </div>
     </div>
 </div>
-    <div class="right-button">
-        <a th:href="@{'../dolab/'+ ${lab_id}}" class="btn-floating btn-large waves-effect waves-light my_red"><i class="material-icons">play_arrow</i></a>
-    </div>
+<div class="right-button">
+    <a th:href="@{'../dolab/'+ ${lab_id}}" class="btn-floating btn-large waves-effect waves-light my_red"><i
+            class="material-icons">play_arrow</i></a>
+</div>
 <!--JavaScript at end of body for optimized loading-->
 <script type="text/javascript" th:src="@{../../libs/materialize.min.js}"></script>
 </body>

@@ -417,6 +417,7 @@ EQUIPMENT_DRAG_EVENT = {
 
 WORK_SPACE = {
     init() {
+        STEP_COUNTER.wrong_step_count = 0;
         this.selected_eqm;
         this.lab_equipment;
         this.steps;
@@ -425,11 +426,15 @@ WORK_SPACE = {
         this.last_drag;
         this.recipes;
         this.finish = false;
+        this.complete_count = 0;
 
         this.setCompleteStep = function (step) {
+            if(step.isComplete == true) return;
             step.isComplete = true;
-            WORK_SPACE.steps.complete_count++;
-            if (WORK_SPACE.steps.complete_count == WORK_SPACE.steps.length) {
+            M.toast({html: '<h5>Step(' + step.stepNum + '): ' + step.targetName + ' is completed</h5>'})
+            WORK_SPACE.save();
+            WORK_SPACE.complete_count++;
+            if (WORK_SPACE.complete_count == WORK_SPACE.steps.length) {
                 alert("Congratulation! \nYou Completed this lab.")
                 WORK_SPACE.finish = true;
             }
@@ -461,7 +466,6 @@ WORK_SPACE = {
                     } else {
                         s.html_li.find(".check_star").removeClass("my_color_gray");
                         s.html_li.find(".check_star").addClass("my_color_red");
-                        M.toast({html: '<h5>Step(' + s.stepNum + '): ' + s.targetName + ' is completed</h5>>'})
                         WORK_SPACE.setCompleteStep(s);
                     }
                 }
@@ -537,7 +541,7 @@ WORK_SPACE = {
             if (arguments.length == 1) {
                 let template = Mustache.render(TEMPLATE.WORKSPACE_EQM_ELEM,
                     {
-                        eqm_wksp_id: WORK_SPACE.last_equips_in_workspace_id,
+                        eqm_wksp_id: WORK_SPACE.last_equips_in_workspace_id++,
                         id: eqm.id,
                         name: eqm.name + " (Machine)",
                     });
@@ -554,7 +558,7 @@ WORK_SPACE = {
             if (arguments.length == 2) {
                 let template = Mustache.render(TEMPLATE.WORKSPACE_EQM_ELEM,
                     {
-                        eqm_wksp_id: WORK_SPACE.last_equips_in_workspace_id,
+                        eqm_wksp_id: WORK_SPACE.last_equips_in_workspace_id++,
                         id: eqm.id,
                         name: eqm.name + " (100)%",
                     });
@@ -581,7 +585,7 @@ WORK_SPACE = {
                         if (result.data == undefined) return;
                         result.data = result.data.sort((a, b) => a.stepNum - b.stepNum);
                         result.data.forEach((step) => {
-                            step["isComplete"] = false;
+                            step.isComplete = false;
                             step.targetObject[step.targetObject.type] = true;
                             equipmentPropsDolab(step.targetObject);
                         });
@@ -596,19 +600,19 @@ WORK_SPACE = {
             // let data = {iterable: result.data};
             $(ELEM_NAME.STEP_LIST).empty();
             WORK_SPACE.steps = steps
-            WORK_SPACE.steps.complete_count = 0;
+
             WORK_SPACE.steps.forEach(step => {
+                equipmentPropsDolab(step.targetObject);
                 let template_li = $("<li/>");
                 template_li.append(Mustache.render($(TEMPLATE_ID.STEP_LIST).html(), step));
                 template_li.appendTo(ELEM_NAME.STEP_LIST);
                 step["html_li"] = template_li;
                 if (step.isComplete == true) {
-                    WORK_SPACE.steps++;
                     step.html_li.find(".check_star").removeClass("my_color_gray");
                     step.html_li.find(".check_star").addClass("my_color_red");
-                    M.toast({html: '<h5>Step(' + step.stepNum + '): ' + step.targetName + ' is completed</h5>>'})
-                    WORK_SPACE.setCompleteStep(step);
+                    M.toast({html: '<h5>Step(' + step.stepNum + '): ' + step.targetName + ' is completed</h5>'});
                 }
+
             })
         };
 
@@ -682,13 +686,43 @@ WORK_SPACE = {
                 type: 'GET',
                 success: function (result) {
                     retObjHandle(result, function () {
-                        result.data.equipments.forEach(e => {
+                        WORK_SPACE.buildStepSideBar(result.data.step);
+                        result.data.equipment_instances.forEach(e => {
+                            equipmentPropsDolab(e.equipment);
+                            let template;
+                            let template_li;
+                            switch (e.type){
+                                case TYPE.MACHINE:
+                                    template = Mustache.render(TEMPLATE.WORKSPACE_EQM_ELEM,
+                                        {
+                                            eqm_wksp_id: WORK_SPACE.last_equips_in_workspace_id++,
+                                            id: e.equipment.id,
+                                            name: e.equipment.name + " (Machine)",
+                                        });
+                                    template_li = $("<li/>");
+                                    template_li.append(Mustache.render(TEMPLATE.WORKSPACE_EQM_ELEM_BAR, {equipment: e.equipment}));
+                                    break;
+                                default:
+                                    template = Mustache.render(TEMPLATE.WORKSPACE_EQM_ELEM,
+                                        {
+                                            eqm_wksp_id: WORK_SPACE.last_equips_in_workspace_id++,
+                                            id:  e.equipment.id,
+                                            name:  e.equipment.name + " (100)%",
+                                        });
+                                    template_li = $("<li/>");
+                                    template_li.append(Mustache.render(TEMPLATE.WORKSPACE_EQM_ELEM_BAR, {
+                                        curr_val: e.curr_val,
+                                        equipment: e.equipment
+                                    }));
+
+                            }
                             let wsobj = new WorkSpaceEqmInfo(e.id, e.equipment, e.curr_val, e.curr_temp,
-                                $(e.drag_elem), $(e.li_elem), e.mix_list, e.purity)
-                            WORK_SPACE.addDrag_elem(wsobj);
+                                $(template), $(template_li), e.mix_list, e.purity)
+                            WORK_SPACE.addDrag_elem(wsobj,{top: 300, left: 500});
                             WORK_SPACE.addLi_elem(wsobj);
+                            wsobj.change(wsobj.curr_val);
+                            WORK_SPACE.equips_in_workspace.push(wsobj);
                         })
-                        WORK_SPACE.buildStepSideBar(result.data.steps);
                     });
                 }
             })
@@ -718,6 +752,15 @@ $(document).ready(() => {
     WORK_SPACE.loadRecipe();
     $(ELEM_NAME.OPEERATION_AREA).on("click", (event) => {
         EQUIPMENT_DRAG_EVENT.select(event);
+    })
+    WORK_SPACE.continue()
+    $("#restart").on("click", ()=>{
+        WORK_SPACE.init();
+        WORK_SPACE.loadEquipments();
+        WORK_SPACE.loadSteps();
+        WORK_SPACE.loadRecipe();
+        M.toast({html: '<h5>"Restart Lab"</h5>'});
+
     })
 })
 
