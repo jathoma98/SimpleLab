@@ -16,7 +16,7 @@ public class StepRecord {
     private String targetTips;
     private String targetVolume;
     private String targetWeight;
-    private byte[] targetObject; //serialized
+    private byte[] targetObject;
 
     private List<StepAction> userActions;
     private boolean isComplete;

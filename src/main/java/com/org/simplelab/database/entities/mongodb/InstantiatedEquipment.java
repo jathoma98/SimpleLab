@@ -3,6 +3,8 @@ package com.org.simplelab.database.entities.mongodb;
 import com.org.simplelab.database.entities.sql.AbstractEquipment;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * Represents an Equipment object instantiated within a Do Lab instance.
  * We're ignoring the SQL annotations of the superclass -- this is just being
@@ -17,10 +19,8 @@ public class InstantiatedEquipment extends AbstractEquipment {
     private int curr_temp;
     private int curr_val;
 
-    //TODO: discuss equipment field datatype
 
-    //TODO: discuss mix list datatype
-    //private something[] mix_list
+    private List<Mixture> mix_list;
     private float purity;
 
     //html elements

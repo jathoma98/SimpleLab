@@ -274,7 +274,6 @@ public class DoLabController extends BaseController {
         LabInstance currentInstance = instanceDB.findById(instance_id);
         if (currentInstance.exists()){
             currentInstance.setEquipmentInstances(serializedInstances);
-            //TODO: check if this works
             currentInstance.getStepRecords().add(dto.getStep());
             try {
                 instanceDB.update(currentInstance);
