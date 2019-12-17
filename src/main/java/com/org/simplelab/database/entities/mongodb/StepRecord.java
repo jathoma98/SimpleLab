@@ -1,6 +1,7 @@
 package com.org.simplelab.database.entities.mongodb;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.org.simplelab.database.DBUtils;
 import com.org.simplelab.database.entities.sql.Equipment;
 import lombok.Data;
@@ -22,6 +23,8 @@ public class StepRecord {
     protected byte[] targetObjectSerial;
 
     private List<StepAction> userActions;
+
+    @JsonProperty(value = "isComplete")
     private boolean isComplete;
 
     public StepRecord(){
