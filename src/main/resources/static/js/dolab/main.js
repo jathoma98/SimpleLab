@@ -759,6 +759,8 @@ $(document).ready(() => {
         WORK_SPACE.loadEquipments();
         WORK_SPACE.loadSteps();
         WORK_SPACE.loadRecipe();
+        $("#wksp_eqm_list").empty();
+        $(".draggable_item").remove();
         M.toast({html: '<h5>"Restart Lab"</h5>'});
 
     })
