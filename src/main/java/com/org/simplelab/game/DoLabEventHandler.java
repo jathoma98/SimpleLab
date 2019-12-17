@@ -77,29 +77,29 @@ public class DoLabEventHandler {
         ws.setDescription(li.getLabDescription());
         ws.setSteps(originalLab.getSteps());
         ws.setEquipments(originalLab.getEquipments());
-        ws.setContinued(true);
-        List<StepRecord> steps = li.getStepRecords();
-
-        ModelMapper mm = DBUtils.getMapper();
-        List<StepRecordDTO> toSend = new ArrayList<>();
-        for (StepRecord s: steps){
-            StepRecordDTO stepdto = new StepRecordDTO();
-            mm.map(s, stepdto);
-            stepdto.buildTargetObject();
-            toSend.add(stepdto);
-        }
-        ws.setStep(toSend);
-
-        /**
-        List<InstantiatedEquipment> desEquipment = li.getEquipmentInstances()
-                                                        .stream()
-                                                        .map(serial -> (InstantiatedEquipment)SerializationUtils.deserialize(serial))
-                                                        .collect(Collectors.toList());**/
+        if (li.getStepRecords().size() > 0)
+            ws.setContinued(true);
+        else
+            ws.setContinued(false);
 
         List<Object> restoredEquipment = new ArrayList<>();
-        for (byte[] serial: li.getEquipmentInstances()){
-            Object deserial = SerializationUtils.deserialize(serial);
-            restoredEquipment.add(deserial);
+        if (ws.isContinued()) {
+            List<StepRecord> steps = li.getStepRecords();
+
+            ModelMapper mm = DBUtils.getMapper();
+            List<StepRecordDTO> toSend = new ArrayList<>();
+            for (StepRecord s : steps) {
+                StepRecordDTO stepdto = new StepRecordDTO();
+                mm.map(s, stepdto);
+                stepdto.buildTargetObject();
+                toSend.add(stepdto);
+            }
+            ws.setStep(toSend);
+
+            for (byte[] serial : li.getEquipmentInstances()) {
+                Object deserial = SerializationUtils.deserialize(serial);
+                restoredEquipment.add(deserial);
+            }
         }
 
         ws.setEquipment_instances(restoredEquipment);

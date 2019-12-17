@@ -81,7 +81,7 @@ public class DoLabController extends BaseController {
         //check if there is an unfinished instance of this lab
         long user_id = getUserIdFromSession();
         LabInstance activeInstance = instanceDB.findActiveLab(lab_id, user_id);
-        if (activeInstance.exists() && activeInstance.getStepRecords().size() > 0) {
+        if (activeInstance.exists()) {
             ws = eventHandler.buildWorkspaceFromLabInstance(activeInstance, user_id);
         } else {
             ws = eventHandler.buildNewWorkspaceFromLab(found, getUserIdFromSession());
