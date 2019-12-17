@@ -51,7 +51,7 @@ public class DoLabEventHandler {
         LabInstance li = new LabInstance();
         li.setLabName(l.getName());
         li.setLabDescription(l.getDescription());
-        li.setSerialized_lab(DBUtils.serialize(l));
+        li.setSerialized_lab(SerializationUtils.serialize(l));
         li.setCreatorId(l.getCreator().getId());
         li.setLabId(l.getId());
         li.setUserId(user_id);
@@ -70,36 +70,36 @@ public class DoLabEventHandler {
     @Transactional
     public Workspace buildWorkspaceFromLabInstance(LabInstance li, long user_id){
         Workspace ws = new Workspace();
-        //TODO: should probably reference serialized lab
         Lab originalLab = labDB.findById(li.getLabId());
         ws.setInstance_id(li.get_id());
         ws.setName(li.getLabName());
         ws.setDescription(li.getLabDescription());
+        originalLab.loadAllSteps();
         ws.setSteps(originalLab.getSteps());
         ws.setEquipments(originalLab.getEquipments());
-        ws.setContinued(true);
-        List<StepRecord> steps = li.getStepRecords();
-
-        ModelMapper mm = DBUtils.getMapper();
-        List<StepRecordDTO> toSend = new ArrayList<>();
-        for (StepRecord s: steps){
-            StepRecordDTO stepdto = new StepRecordDTO();
-            mm.map(s, stepdto);
-            stepdto.buildTargetObject();
-            toSend.add(stepdto);
-        }
-        ws.setStep(toSend);
-
-        /**
-        List<InstantiatedEquipment> desEquipment = li.getEquipmentInstances()
-                                                        .stream()
-                                                        .map(serial -> (InstantiatedEquipment)SerializationUtils.deserialize(serial))
-                                                        .collect(Collectors.toList());**/
+        if (li.getStepRecords().size() > 0)
+            ws.setContinued(true);
+        else
+            ws.setContinued(false);
 
         List<Object> restoredEquipment = new ArrayList<>();
-        for (byte[] serial: li.getEquipmentInstances()){
-            Object deserial = SerializationUtils.deserialize(serial);
-            restoredEquipment.add(deserial);
+        if (ws.isContinued()) {
+            List<StepRecord> steps = li.getStepRecords();
+
+            ModelMapper mm = DBUtils.getMapper();
+            List<StepRecordDTO> toSend = new ArrayList<>();
+            for (StepRecord s : steps) {
+                StepRecordDTO stepdto = new StepRecordDTO();
+                mm.map(s, stepdto);
+                stepdto.buildTargetObject();
+                toSend.add(stepdto);
+            }
+            ws.setStep(toSend);
+
+            for (byte[] serial : li.getEquipmentInstances()) {
+                Object deserial = SerializationUtils.deserialize(serial);
+                restoredEquipment.add(deserial);
+            }
         }
 
         ws.setEquipment_instances(restoredEquipment);
