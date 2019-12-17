@@ -2,6 +2,7 @@ package com.org.simplelab.restcontrollers;
 
 import com.org.simplelab.database.entities.sql.Equipment;
 import com.org.simplelab.database.entities.sql.files.ImageFile;
+import com.org.simplelab.database.repositories.sql.ImageFileRepository;
 import com.org.simplelab.database.services.restservice.ImageFileDB;
 import com.org.simplelab.exception.EntityDBModificationException;
 import com.org.simplelab.restcontrollers.rro.RRO;
@@ -70,13 +71,24 @@ public class ImageFileRESTController extends BaseRESTController<ImageFile> {
         return rro;
     }
 
+    @Autowired
+    ImageFileRepository imageRepo;
+
     @GetMapping(IMG_TO_EQUIPMENT_MAPPING)
     public void showImage(@PathVariable("equipment_id") long equipment_id, HttpServletResponse response) throws Exception{
         Equipment e = equipmentDB.findById(equipment_id);
         ImageFile img = e.getImg();
-        response.setContentType(img.getFileType());
-        response.getOutputStream().write(img.getData());
-        response.getOutputStream().close();
+        if (img == null){
+            long def_id = 47027;
+            ImageFile default_img = imageRepo.findById(def_id).get();
+            response.setContentType(default_img.getFileType());
+            response.getOutputStream().write(default_img.getData());
+            response.getOutputStream().close();
+        } else {
+            response.setContentType(img.getFileType());
+            response.getOutputStream().write(img.getData());
+            response.getOutputStream().close();
+        }
     }
 
 }
