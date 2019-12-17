@@ -55,8 +55,8 @@ td, th {
 }
 
 .draggable_item{
-    width: 150px;
-    max-height: 180px;
+    width: 140px;
+    max-height: 140px;
 }
 
 .itembarheight{
@@ -121,7 +121,7 @@ td, th {
     right: 5px;
     width: 15%;
     max-height:50%;
-    border:2px solid black;
+    /*border:2px solid black;*/
     border-radius: 5px;
 }
 
@@ -293,10 +293,10 @@ td, th {
 }
 
 .margintop{
-    margin-top: 3%!important;
+    margin-top: 2%!important;
 }
 .margintop10{
-    margin-top: 10px!important;
+    margin-top: 1%!important;
 }
 
 .margintop4{
@@ -304,7 +304,7 @@ td, th {
 }
 
 .recipeheight{
-    height: 50%!important;
+    height: 40%!important;
 }
 .padding4{
     padding: 1%!important;
@@ -367,9 +367,9 @@ padding20px{
 }
 
 .stepsavebtn{
-    margin-top: 20px;
-    margin-right: 35px;
-    margin-bottom: 10px;
+    margin-top: 1%;
+    margin-right: 4%;
+    margin-bottom: 2%;
 
 }
 .height8{
@@ -383,7 +383,7 @@ padding20px{
 }
 
 .steptopmargin{
-    margin-top:17px;
+    margin-top:2%;
 }
 
 .recipebotheight{

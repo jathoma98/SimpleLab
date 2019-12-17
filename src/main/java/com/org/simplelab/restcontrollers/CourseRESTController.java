@@ -133,20 +133,18 @@ public class CourseRESTController extends BaseRESTController<Course> {
 
         //we cant use SQL projections on Course because course_id has an underscore in it
         //which isnt allowed in JPA, so we have to manually copy the fields.
-        RRO<List<Projections.TeacherCourseInfo>> rro = new RRO();
+        RRO rro = new RRO();
         List<Projections.TeacherCourseInfo> returnInfo = new ArrayList<>();
 
         courses.forEach((course) -> {
-            Projections.TeacherCourseInfo mapped =
-                    new Projections.TeacherCourseInfo(course.getName(),
-                                                    course.getCreatedDate(),
-                                                    course.getCourse_id());
-            returnInfo.add(mapped);
+            course.setCreator(null);
+            course.setInvite_code(null);
+            course.setDescription(null);
         });
 
         rro.setSuccess(true);
         rro.setAction(RRO.ACTION_TYPE.LOAD_DATA.name());
-        rro.setData(returnInfo);
+        rro.setData(courses);
         return rro;
     }
 
