@@ -123,7 +123,7 @@ public class DoLabTests extends SpringTestConfig {
         dto.setEquipment(ieq_set);
         dto.setLabFinished(false);
         dto.setStep(null);
-        dlc.handleSaveWorkspaceState(dto, lab_instance_id);
+//        dlc.handleSaveWorkspaceState(dto, lab_instance_id);
 
         List<byte[]> found_ieq = instanceDB.findById(lab_instance_id).getEquipmentInstances();
         Collection<InstantiatedEquipment> found =           found_ieq.stream()
