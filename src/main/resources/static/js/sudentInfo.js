@@ -64,8 +64,6 @@ function loadCourse() {
     })
 }
 function jumptoCourseLab() {
-
-
     let toSearch = {
         course_id: $(this)[0].getAttribute("courseid")
     };
