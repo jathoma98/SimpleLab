@@ -92,7 +92,7 @@
     <div class="row"></div>
     <div id="equipment_in_lab" class="row" style="height:1000px;">
         <div class="col s6 delete_empty center">
-            <nav class="deep-orange lighten-4 col s11 z-depth-2"><h5>Lab Equipment</h5></nav>
+            <nav class="deep-orange lighten-4 col s11 z-depth-2"><h5>Equipment For This Lab</h5></nav>
             <div class="col s11 center-align delete_empty z-depth-5">
                 <ul class="my_white equipmentheight scrollbar_y height80 delete_empty ulstyle"
                     id="lab_equipment_list"></ul>
@@ -114,7 +114,7 @@
                 {{#solid}}
                         <p>Max Weight: {{properties.max_weight}}</p>
                     {{/solid}}
-                        <p>Temperature: {{properties.min_temperature}} - {{properties.max_temperature}}</p>
+                        <p>Temperature: {{properties.max_temperature}}</p>
                     </div>
                     {{/machine}}
                 {{#machine}}
@@ -129,7 +129,7 @@
 
         </div>
         <div class="col s6 delete_empty center">
-            <nav class="deep-orange lighten-4 col s11 right z-depth-2"><h5>Lab Equipment</h5></nav>
+            <nav class="deep-orange lighten-4 col s11 right z-depth-2"><h5>All Equipments</h5></nav>
             <div class="col s11 right center-align delete_empty z-depth-5">
                 <ul class="my_white equipmentheight scrollbar_y height80 delete_empty ulstyle" id="all_equipment"></ul>
             </div>
@@ -150,7 +150,7 @@
                 {{#solid}}
                         <p>Max Weight: {{properties.max_weight}}</p>
                     {{/solid}}
-                        <p>Temperature: {{properties.min_temperature}} - {{properties.max_temperature}}</p>
+                        <p>Temperature: {{properties.max_temperature}}</p>
                     </div>
                     {{/machine}}
                 {{#machine}}
@@ -256,7 +256,7 @@
                     {{#solid}}
                             <p>Max Weight: {{properties.max_weight}}</p>
                         {{/solid}}
-                            <p>Temperature: {{properties.min_temperature}} - {{properties.max_temperature}}</p>
+                            <p>Temperature: {{properties.max_temperature}}</p>
                         </div>
                         {{/machine}}
                     {{#machine}}
@@ -378,7 +378,7 @@
                     {{#solid}}
                             <p>Max Weight: {{properties.max_weight}}</p>
                         {{/solid}}
-                            <p>Temperature: {{properties.min_temperature}} - {{properties.max_temperature}}</p>
+                            <p>Temperature: {{properties.max_temperature}}</p>
                         </div>
                         {{/machine}}
                     {{#machine}}
