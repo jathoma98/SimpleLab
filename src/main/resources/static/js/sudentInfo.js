@@ -64,7 +64,7 @@ function loadCourse() {
     })
 }
 function jumptoCourseLab() {
-    $('#studentCourseModal').modal('open');
+
 
     let toSearch = {
         course_id: $(this)[0].getAttribute("courseid")
@@ -77,26 +77,33 @@ function jumptoCourseLab() {
         contentType: 'application/json; charset=utf-8',
         data: toSearch_json,
         success: function (result) {
-            retObjHandle(result, function () {
-                result.data.sort();
-                let courseTable = '';
-                for (let f = 0; f < result.data.length; f++) {
-                    courseTable +='<li>\n' +
-                        '                    <div class="collapsible-header"><i class="material-icons">whatshot</i>'+result.data[f].name+'</div>\n' +
-                        '                    <div class="collapsible-body labheight">\n' +
-                        '                        <div>\n' +
-                        '                            <div class="">\n' +
-                        '                                <p>Lab Name:  '+result.data[f].name+'</p>\n' +
-                        '                            </div>\n' +
-                        '                            <p class="labdescriptionheight"> '+result.data[f].description+'</p>\n' +
-                        '                            <a href="student/dolab/'+result.data[f].id+'"  class="waves-effect waves-light btn right startlab my_red">Start<i class="material-icons right">send</i></a>\n' +
-                        '                        </div>\n' +
-                        '                    </div>\n' +
-                        '                </li>'
+            console.log(result);
+            if(result.data.length!=0){
+                $('#studentCourseModal').modal('open');
+                retObjHandle(result, function () {
+                    result.data.sort();
+                    let courseTable = '';
+                    for (let f = 0; f < result.data.length; f++) {
+                        courseTable +='<li>\n' +
+                            '                    <div class="collapsible-header"><i class="material-icons">whatshot</i>'+result.data[f].name+'</div>\n' +
+                            '                    <div class="collapsible-body labheight">\n' +
+                            '                        <div>\n' +
+                            '                            <div class="">\n' +
+                            '                                <p>Lab Name:  '+result.data[f].name+'</p>\n' +
+                            '                            </div>\n' +
+                            '                            <p class="labdescriptionheight"> '+result.data[f].description+'</p>\n' +
+                            '                            <a href="student/dolab/'+result.data[f].id+'"  class="waves-effect waves-light btn right startlab my_red">Start<i class="material-icons right">send</i></a>\n' +
+                            '                        </div>\n' +
+                            '                    </div>\n' +
+                            '                </li>'
 
-                }
-                $("#studentCourseModal ul").html(courseTable);
-            })
+                    }
+                    $("#studentCourseModal ul").html(courseTable);
+                })
+            }else{
+                M.toast({html: 'There is no lab in this course!!!'})
+            }
+
         }
     })
 }

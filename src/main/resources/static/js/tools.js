@@ -102,8 +102,6 @@ rebuildRepeatComponent = function (component, template_id, repeatElem, subRepeat
             repElem.on(action, (event)=>eventFn(obj, event));
         }
         repElem.appendTo(component);
-
-
     })
 };
 
@@ -113,3 +111,12 @@ equipmentPropsToKeyValue = function (equipment){
     props.forEach(p=>equipment.properties[p.propertyKey] = p.propertyValue);
 }
 
+equipmentPropsDolab = function (equipment){
+    equipment.props = []
+    equipment.properties.forEach(p=> equipment.props[p.propertyKey] = p.propertyValue);
+}
+
+equipmentPropsSetBack = function (equipment){
+    let props = equipment.properties;
+    equipment.properties = equipment.old_prop;
+}

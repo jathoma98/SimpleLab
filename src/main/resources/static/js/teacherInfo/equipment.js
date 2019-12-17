@@ -192,7 +192,7 @@ let EQUIPMENT_TABLE = {
                 contentType: 'application/json; charset=utf-8',
                 data: validator_json,
                 success: function (result) {
-                    retObjHandle(result, function(){
+                    retObjHandle(result, function () {
                         console.log(result.data);
                         let equipment_id = result.data;
                         let formData = new FormData($('#img_form')[0]);
@@ -200,7 +200,7 @@ let EQUIPMENT_TABLE = {
                         $.ajax({
                             type: "POST",
                             enctype: 'multipart/form-data',
-                            url: "/image/rest/"+equipment_id,
+                            url: "/image/rest/" + equipment_id,
                             data: formData,
                             processData: false,
                             contentType: false,
@@ -209,10 +209,10 @@ let EQUIPMENT_TABLE = {
                             }
                         });
                         EQUIPMENT_TABLE.reload();
-                });
+                    });
                 }
             })
-            }
+        }
         this.btnEvents[ElEM_ID.EQUIPMENT_SAVE_BTN] = EQUIPMENT_TABLE.save;
 
         /**

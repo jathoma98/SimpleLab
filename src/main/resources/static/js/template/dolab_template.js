@@ -25,7 +25,7 @@ TEMPLATE = {
         '            {{#equipment.solid}}\n' +
         '       <p>Current Weight: {{curr_val}}</p>\n' +
         '       {{/equipment.solid}}\n' +
-        '       <p>Current Temperature: {{equipment.properties.min_temperature}} - {{properties.max_temperature}}</p>\n' +
+        '       <p>Current Temperature: {{equipment.props.max_temperature}}</p>\n' +
         '    </div>\n' +
         '    {{/equipment.machine}}\n' +
         '    {{#equipment.machine}}\n' +
