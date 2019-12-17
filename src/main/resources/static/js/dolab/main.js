@@ -654,7 +654,7 @@ WORK_SPACE = {
                     wseqm.equipment,
                     wseqm.curr_val,
                     wseqm.curr_temp,
-                    wseqm.html_elem.html(),
+                    wseqm.drag_elem.html(),
                     wseqm.li_elem.html(),
                     wseqm.mix_list,
                     wseqm.purity);

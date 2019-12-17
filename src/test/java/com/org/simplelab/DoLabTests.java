@@ -133,11 +133,5 @@ public class DoLabTests extends SpringTestConfig {
         found.forEach( instance -> {
             assertTrue(ieq_set.contains(instance));
         });
-
-
-
-
     }
-
-
 }
